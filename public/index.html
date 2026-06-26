@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Agent 前端交互界面</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar">
+      <div>
+        <div class="eyebrow">AI Agent Workspace</div>
+        <h1>AI Agent</h1>
+        <p class="subtitle">Node.js 前端直接对接 Python /chat 接口，支持多轮对话、文件读取与工具展示。</p>
+      </div>
+      <div class="status-card">
+        <div class="status-label">Backend</div>
+        <div id="statusText" class="status-value">Connecting...</div>
+        <div class="status-hint">http://localhost:8000</div>
+      </div>
+    </header>
+
+    <main class="layout">
+      <aside class="sidebar left">
+        <section class="panel">
+          <div class="panel-head">
+            <h2>API 接口</h2>
+          </div>
+          <div class="api-list">
+            <div class="api-item">POST /chat</div>
+            <div class="api-item">GET /health</div>
+            <div class="api-item">GET /config</div>
+          </div>
+          <p class="panel-copy">前端会把完整 messages 数组传给后端，后端返回 reply 与 tool_calls。</p>
+        </section>
+
+        <section class="panel">
+          <div class="panel-head">
+            <h2>示例指令</h2>
+          </div>
+          <div class="quick-actions">
+            <button class="chip" data-sample="你好">你好</button>
+            <button class="chip" data-sample="读取当前目录下的test.txt">读取 test.txt</button>
+            <button class="chip" data-sample="继续刚才的话题">继续对话</button>
+          </div>
+        </section>
+      </aside>
+
+      <section class="panel chat-panel">
+        <div class="panel-head chat-head">
+          <div>
+            <h2>对话窗口</h2>
+            <p class="panel-copy">按 Enter 发送，Shift+Enter 换行。</p>
+          </div>
+          <button id="clearBtn" class="ghost-btn">清空对话</button>
+        </div>
+
+        <div id="chatWindow" class="chat-window"></div>
+
+        <form id="chatForm" class="composer">
+          <textarea id="chatInput" rows="3" placeholder="输入自然语言指令，例如：读取当前目录下的test.txt"></textarea>
+          <div class="composer-actions">
+            <button type="submit" class="primary-btn">发送</button>
+          </div>
+        </form>
+      </section>
+
+      <aside class="sidebar right">
+        <section class="panel">
+          <div class="panel-head">
+            <h2>聊天窗口</h2>
+          </div>
+          <div class="mini-box">
+            <div class="mini-label">会话状态</div>
+            <div id="sessionState" class="mini-value">0 条消息</div>
+          </div>
+          <div class="mini-box">
+            <div class="mini-label">最近工具</div>
+            <div id="toolState" class="mini-value">无</div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-head">
+            <h2>工具调用记录</h2>
+          </div>
+          <div id="toolLog" class="tool-log">暂无工具调用。</div>
+        </section>
+      </aside>
+    </main>
+  </div>
+
+  <script src="/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI agent-1</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="app-topbar">
+      <div class="brand-block">
+        <div class="eyebrow">Local workspace agent</div>
+        <div class="brand-row">
+          <h1>AI agent-1</h1>
+          <span class="status-chip" id="serverStatus">启动中</span>
+        </div>
+        <p class="subtitle">文件读写，多轮对话，和一个可直接调用的大模型接口。</p>
+      </div>
+      <div class="topbar-meta">
+        <div class="meta-item">
+          <span class="meta-label">Workspace</span>
+          <span id="workspacePath" class="meta-value"></span>
+        </div>
+      </div>
+    </header>
+
+    <main class="app-grid">
+      <aside class="left-rail">
+        <section class="rail-card">
+          <div class="rail-head">
+            <h2>文件清单</h2>
+            <button id="reloadFilesBtn" class="ghost-btn icon-btn" title="刷新文件列表">↻</button>
+          </div>
+          <div id="fileList" class="file-list compact"></div>
+        </section>
+
+        <section class="rail-card">
+          <div class="rail-head">
+            <h2>API 接口</h2>
+            <button id="refreshStateBtn" class="ghost-btn icon-btn" title="刷新状态">↻</button>
+          </div>
+          <div class="api-summary">
+            <div class="api-endpoint">GET /api/llm/config</div>
+            <div class="api-endpoint">POST /api/llm/chat</div>
+          </div>
+          <div id="llmStatus" class="status-box"></div>
+        </section>
+      </aside>
+
+      <section class="chat-stage panel">
+        <div class="panel-head">
+          <div>
+            <h2>对话窗口</h2>
+            <p class="panel-copy">把你的任务直接发给本地 agent，或从右侧文件列表快速读取。</p>
+          </div>
+          <div class="panel-actions">
+            <button id="sampleTaskBtn" class="ghost-btn">示例任务</button>
+            <button id="resetBtn" class="ghost-btn">清空对话</button>
+          </div>
+        </div>
+
+        <div class="chat-window">
+          <div class="chat-pane">
+            <div class="chat-pane-head">
+              <span>聊天记录</span>
+              <span class="muted" id="chatMeta">本地会话</span>
+            </div>
+            <div id="chatLog" class="chat-log"></div>
+          </div>
+
+          <form id="chatForm" class="composer">
+            <textarea id="chatInput" rows="3" placeholder="输入内容，例如：列出几个文本文件，或者帮我总结这些文档。"></textarea>
+            <div class="composer-actions">
+              <button type="submit" class="primary-btn">发送</button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <aside class="right-rail">
+        <section class="rail-card">
+          <div class="rail-head">
+            <h2>文件读取</h2>
+          </div>
+          <div class="field">
+            <label for="readPath">路径</label>
+            <input id="readPath" type="text" placeholder="例如：tafel/3.20-3-tafel.txt" />
+          </div>
+          <button id="readBtn" class="ghost-btn full-width" type="button">读取文件</button>
+          <pre id="filePreview" class="preview compact"></pre>
+        </section>
+
+        <section class="rail-card">
+          <div class="rail-head">
+            <h2>文件写入</h2>
+          </div>
+          <div class="field">
+            <label for="writePath">路径</label>
+            <input id="writePath" type="text" placeholder="例如：AI agent-1/output/note.txt" />
+          </div>
+          <div class="field">
+            <label for="writeContent">内容</label>
+            <textarea id="writeContent" rows="7" placeholder="在这里输入要写入的文本。"></textarea>
+          </div>
+          <button id="writeBtn" class="ghost-btn full-width">写入文件</button>
+          <div id="sampleTaskResult" class="status-box"></div>
+        </section>
+
+        <section class="rail-card">
+          <div class="rail-head">
+            <h2>大模型</h2>
+          </div>
+          <div class="field">
+            <label for="llmBaseUrl">Base URL</label>
+            <input id="llmBaseUrl" type="text" placeholder="https://api.openai.com/v1" />
+          </div>
+          <div class="field">
+            <label for="llmModel">Model</label>
+            <input id="llmModel" type="text" placeholder="gpt-4o-mini" />
+          </div>
+          <div class="field">
+            <label for="llmApiKey">API Key</label>
+            <input id="llmApiKey" type="password" placeholder="sk-..." />
+          </div>
+          <div class="field inline-2">
+            <div>
+              <label for="llmTemperature">Temperature</label>
+              <input id="llmTemperature" type="number" min="0" max="2" step="0.1" value="0.2" />
+            </div>
+            <div>
+              <label for="llmMaxTokens">Max tokens</label>
+              <input id="llmMaxTokens" type="number" min="1" step="1" placeholder="可选" />
+            </div>
+          </div>
+          <div class="field">
+            <label for="llmInput">输入</label>
+            <textarea id="llmInput" rows="4" placeholder="给大模型发一条文本消息。"></textarea>
+          </div>
+          <div class="composer-actions">
+            <button id="llmSendBtn" class="primary-btn" type="button">发送到模型</button>
+            <button id="llmResetBtn" class="ghost-btn" type="button">清空模型对话</button>
+          </div>
+          <div id="llmLog" class="preview tall"></div>
+        </section>
+      </aside>
+    </main>
+  </div>
+  <script src="/app.js"></script>
+</body>
+</html>

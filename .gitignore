@@ -1,0 +1,17 @@
+.env
+.venv/
+node_modules/
+__pycache__/
+*.pyc
+*.log
+*.out.log
+*.err.log
+*.stdout.log
+*.stderr.log
+output/
+state/
+pip
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.DS_Store
