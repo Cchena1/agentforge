@@ -133,7 +133,7 @@ The default pipeline favors deterministic evaluation and low setup cost:
 ### Clone and install
 
 ```powershell
-git clone https://github.com/chenchufan8-prog/agent.git
+git clone https://github.com/chenchufan8-prog/agentforge.git
 cd agent
 Copy-Item .env.example .env
 uv sync --all-groups
