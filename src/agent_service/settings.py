@@ -25,7 +25,7 @@ class Settings(BaseSettings):
         case_sensitive=False,
     )
 
-    app_name: str = "AI Agent Service"
+    app_name: str = "AgentForge"
     debug: bool = Field(
         default=False, validation_alias=AliasChoices("AI_AGENT_DEBUG", "DEBUG")
     )

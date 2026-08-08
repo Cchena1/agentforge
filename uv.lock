@@ -35,7 +35,7 @@ wheels = [
 ]
 
 [[package]]
-name = "ai-agent-service"
+name = "agentforge-service"
 version = "0.2.0"
 source = { editable = "." }
 dependencies = [

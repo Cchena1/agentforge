@@ -17,5 +17,5 @@ app.get("/", (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`AI Agent frontend running at http://localhost:${port}`);
+  console.log(`AgentForge frontend running at http://localhost:${port}`);
 });

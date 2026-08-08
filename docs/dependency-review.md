@@ -1,4 +1,4 @@
-# 依赖评审与高星项目调研
+# AgentForge 依赖评审与高星项目调研
 
 > 快照日期：**2026-08-08**。GitHub 元数据保存在 [research-snapshot.json](research-snapshot.json)。星数和活跃度会变化，不能作为唯一选型依据。
 

@@ -1,6 +1,6 @@
-# AI Agent Service
+# AgentForge
 
-一个以 **LangGraph + asyncio + Pydantic v2** 为核心的异步 Agent 服务。当前版本从单文件 Demo 升级为有明确数据契约、状态所有权、失败策略和验收证据的模块化实现，同时保留原有 `POST /chat` 的 `reply` 与 `tool_calls[].name/arguments/result` 字段兼容。
+**AgentForge** 是一个以 **LangGraph + asyncio + Pydantic v2** 为核心的异步 Agent 服务。当前版本从单文件 Demo 升级为有明确数据契约、状态所有权、失败策略和验收证据的模块化实现，同时保留原有 `POST /chat` 的 `reply` 与 `tool_calls[].name/arguments/result` 字段兼容。
 
 ## 已实现能力
 
