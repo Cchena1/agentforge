@@ -1,4 +1,2 @@
-fastapi>=0.115.0
-uvicorn[standard]>=0.30.0
-openai>=1.0.0
-python-dotenv>=1.0.1
+# Compatibility install path. The authoritative dependency specification is pyproject.toml/uv.lock.
+-e .

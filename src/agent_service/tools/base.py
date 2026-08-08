@@ -1,0 +1,251 @@
+from __future__ import annotations
+
+import asyncio
+import time
+from collections import defaultdict
+from collections.abc import Awaitable, Callable
+from dataclasses import dataclass, field
+from typing import Any, Generic, Literal, TypeVar
+
+from pydantic import BaseModel, ValidationError
+
+from ..schemas import ExecutionPlan, PlannedToolCall, ToolError, ToolResult, ToolStatus
+
+ArgsT = TypeVar("ArgsT", bound=BaseModel)
+ToolHandler = Callable[[ArgsT], Awaitable[dict[str, Any]]]
+
+
+@dataclass(slots=True)
+class ToolDefinition(Generic[ArgsT]):
+    name: str
+    summary: str
+    when_to_use: str
+    when_not_to_use: str
+    args_model: type[ArgsT]
+    handler: ToolHandler[ArgsT]
+    output_contract: str
+    side_effects: Literal["none", "read", "write"] = "none"
+    resource_keys: Callable[[ArgsT], set[str]] = field(default=lambda _args: set())
+
+    def model_description(self) -> str:
+        return (
+            f"PURPOSE: {self.summary}\n"
+            f"USE ONLY WHEN: {self.when_to_use}\n"
+            f"DO NOT USE WHEN: {self.when_not_to_use}\n"
+            f"SIDE EFFECTS: {self.side_effects}.\n"
+            f"RETURNS: {self.output_contract}\n"
+            "If required inputs are missing or ambiguous, do not guess; ask the user or choose escalate_to_human."
+        )
+
+    def openai_schema(self) -> dict[str, Any]:
+        schema = _strict_json_schema(self.args_model.model_json_schema())
+        return {
+            "type": "function",
+            "function": {
+                "name": self.name,
+                "description": self.model_description(),
+                "strict": True,
+                "parameters": schema,
+            },
+        }
+
+
+def _strict_json_schema(schema: dict[str, Any]) -> dict[str, Any]:
+    """Normalize Pydantic JSON Schema for OpenAI strict function tools."""
+    normalized = dict(schema)
+    properties = normalized.get("properties")
+    if isinstance(properties, dict):
+        normalized["properties"] = {
+            key: _strict_json_schema(value) if isinstance(value, dict) else value
+            for key, value in properties.items()
+        }
+        normalized["required"] = list(properties)
+        normalized["additionalProperties"] = False
+    definitions = normalized.get("$defs")
+    if isinstance(definitions, dict):
+        normalized["$defs"] = {
+            key: _strict_json_schema(value) if isinstance(value, dict) else value
+            for key, value in definitions.items()
+        }
+    for keyword in ("anyOf", "oneOf", "allOf", "items"):
+        value = normalized.get(keyword)
+        if isinstance(value, list):
+            normalized[keyword] = [
+                _strict_json_schema(item) if isinstance(item, dict) else item for item in value
+            ]
+        elif isinstance(value, dict):
+            normalized[keyword] = _strict_json_schema(value)
+    return normalized
+
+
+class ToolRegistry:
+    def __init__(self) -> None:
+        self._tools: dict[str, ToolDefinition[Any]] = {}
+
+    def register(self, tool: ToolDefinition[Any]) -> None:
+        if tool.name in self._tools:
+            raise ValueError(f"duplicate tool: {tool.name}")
+        self._tools[tool.name] = tool
+
+    def get(self, name: str) -> ToolDefinition[Any]:
+        try:
+            return self._tools[name]
+        except KeyError as exc:
+            raise KeyError(f"unknown tool: {name}") from exc
+
+    def schemas(self, names: set[str] | None = None) -> list[dict[str, Any]]:
+        values = self._tools.values() if names is None else (self._tools[name] for name in names if name in self._tools)
+        return [tool.openai_schema() for tool in values]
+
+    @property
+    def names(self) -> set[str]:
+        return set(self._tools)
+
+
+class AsyncToolExecutor:
+    """Executes a validated dependency DAG; independent calls run concurrently."""
+
+    def __init__(self, registry: ToolRegistry, *, timeout_seconds: float, max_parallel: int) -> None:
+        self.registry = registry
+        self.timeout_seconds = timeout_seconds
+        self._semaphore = asyncio.Semaphore(max_parallel)
+        self._resource_locks: defaultdict[str, asyncio.Lock] = defaultdict(asyncio.Lock)
+
+    async def execute_plan(self, plan: ExecutionPlan) -> list[ToolResult]:
+        _validate_dag(plan)
+        calls = {call.call_id: call for call in plan.calls}
+        pending = set(calls)
+        results: dict[str, ToolResult] = {}
+        while pending:
+            ready = [
+                calls[call_id]
+                for call_id in pending
+                if all(dependency in results for dependency in calls[call_id].depends_on)
+            ]
+            if not ready:
+                raise ValueError("tool dependency graph contains a cycle or unresolved dependency")
+            batch_results = await asyncio.gather(*(self._execute_one(call, results) for call in ready))
+            for result in batch_results:
+                results[result.call_id] = result
+                pending.remove(result.call_id)
+        return [results[call.call_id] for call in plan.calls]
+
+    async def _execute_one(self, call: PlannedToolCall, prior: dict[str, ToolResult]) -> ToolResult:
+        started = time.perf_counter()
+        try:
+            tool = self.registry.get(call.tool_name)
+        except KeyError as exc:
+            return _error_result(call, started, "UNKNOWN_TOOL", str(exc), False)
+
+        failed_dependencies = [
+            dep for dep in call.depends_on if prior[dep].status is not ToolStatus.SUCCESS
+        ]
+        if failed_dependencies:
+            return ToolResult(
+                call_id=call.call_id,
+                tool_name=call.tool_name,
+                status=ToolStatus.SKIPPED,
+                error=ToolError(
+                    code="DEPENDENCY_FAILED",
+                    message=f"Dependencies failed: {', '.join(failed_dependencies)}",
+                    retryable=False,
+                ),
+                latency_ms=(time.perf_counter() - started) * 1000,
+            )
+        try:
+            resolved_arguments = _resolve_references(call.arguments, prior)
+            args = tool.args_model.model_validate(resolved_arguments, strict=True)
+        except (ValidationError, KeyError, TypeError, ValueError) as exc:
+            return _error_result(call, started, "INVALID_ARGUMENTS", str(exc), False)
+
+        resource_keys = sorted(tool.resource_keys(args))
+        locks = [self._resource_locks[key] for key in resource_keys]
+        try:
+            async with self._semaphore:
+                for lock in locks:
+                    await lock.acquire()
+                try:
+                    async with asyncio.timeout(self.timeout_seconds):
+                        data = await tool.handler(args)
+                finally:
+                    for lock in reversed(locks):
+                        lock.release()
+            return ToolResult(
+                call_id=call.call_id,
+                tool_name=call.tool_name,
+                status=ToolStatus.SUCCESS,
+                data=data,
+                summary=str(data.get("summary", ""))[:2000],
+                latency_ms=(time.perf_counter() - started) * 1000,
+            )
+        except TimeoutError:
+            return _error_result(call, started, "TOOL_TIMEOUT", "tool execution timed out", True, ToolStatus.TIMEOUT)
+        except Exception as exc:  # noqa: BLE001 - tool boundary must normalize third-party failures
+            return _error_result(call, started, "TOOL_FAILURE", str(exc), False)
+
+
+def _error_result(
+    call: PlannedToolCall,
+    started: float,
+    code: str,
+    message: str,
+    retryable: bool,
+    status: ToolStatus = ToolStatus.ERROR,
+) -> ToolResult:
+    return ToolResult(
+        call_id=call.call_id,
+        tool_name=call.tool_name,
+        status=status,
+        error=ToolError(code=code, message=message, retryable=retryable),
+        latency_ms=(time.perf_counter() - started) * 1000,
+    )
+
+
+def _validate_dag(plan: ExecutionPlan) -> None:
+    ids = [call.call_id for call in plan.calls]
+    if len(ids) != len(set(ids)):
+        raise ValueError("tool call ids must be unique")
+    known = set(ids)
+    for call in plan.calls:
+        missing = set(call.depends_on) - known
+        if missing:
+            raise ValueError(f"unknown dependencies for {call.call_id}: {sorted(missing)}")
+    visiting: set[str] = set()
+    visited: set[str] = set()
+    graph = {call.call_id: call.depends_on for call in plan.calls}
+
+    def visit(node: str) -> None:
+        if node in visiting:
+            raise ValueError("tool dependency graph contains a cycle")
+        if node in visited:
+            return
+        visiting.add(node)
+        for dependency in graph[node]:
+            visit(dependency)
+        visiting.remove(node)
+        visited.add(node)
+
+    for node in graph:
+        visit(node)
+
+
+def _resolve_references(value: Any, results: dict[str, ToolResult]) -> Any:
+    if isinstance(value, dict):
+        if set(value) == {"$ref"} and isinstance(value["$ref"], str):
+            return _lookup_reference(value["$ref"], results)
+        return {key: _resolve_references(item, results) for key, item in value.items()}
+    if isinstance(value, list):
+        return [_resolve_references(item, results) for item in value]
+    return value
+
+
+def _lookup_reference(reference: str, results: dict[str, ToolResult]) -> Any:
+    parts = reference.split(".")
+    if len(parts) < 2 or parts[0] not in results:
+        raise KeyError(f"invalid result reference: {reference}")
+    value: Any = results[parts[0]].model_dump(mode="json")
+    for part in parts[1:]:
+        if not isinstance(value, dict) or part not in value:
+            raise KeyError(f"invalid result reference: {reference}")
+        value = value[part]
+    return value

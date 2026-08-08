@@ -1,0 +1,102 @@
+[
+    {
+        "repo":  "langchain-ai/langgraph",
+        "stars":  39216,
+        "pushed_at":  "2026-08-08T11:08:58Z",
+        "updated_at":  "2026-08-08T14:46:22Z",
+        "archived":  false,
+        "license":  "MIT",
+        "default_branch":  "main",
+        "html_url":  "https://github.com/langchain-ai/langgraph"
+    },
+    {
+        "repo":  "microsoft/autogen",
+        "stars":  60312,
+        "pushed_at":  "2026-04-15T11:59:09Z",
+        "updated_at":  "2026-08-08T12:43:41Z",
+        "archived":  false,
+        "license":  "CC-BY-4.0",
+        "default_branch":  "main",
+        "html_url":  "https://github.com/microsoft/autogen"
+    },
+    {
+        "repo":  "mem0ai/mem0",
+        "stars":  62812,
+        "pushed_at":  "2026-08-07T13:34:33Z",
+        "updated_at":  "2026-08-08T14:29:46Z",
+        "archived":  false,
+        "license":  "Apache-2.0",
+        "default_branch":  "main",
+        "html_url":  "https://github.com/mem0ai/mem0"
+    },
+    {
+        "repo":  "docling-project/docling",
+        "stars":  64417,
+        "pushed_at":  "2026-08-08T06:02:29Z",
+        "updated_at":  "2026-08-08T14:20:19Z",
+        "archived":  false,
+        "license":  "MIT",
+        "default_branch":  "main",
+        "html_url":  "https://github.com/docling-project/docling"
+    },
+    {
+        "repo":  "qdrant/qdrant",
+        "stars":  33851,
+        "pushed_at":  "2026-08-08T11:30:07Z",
+        "updated_at":  "2026-08-08T13:52:57Z",
+        "archived":  false,
+        "license":  "Apache-2.0",
+        "default_branch":  "master",
+        "html_url":  "https://github.com/qdrant/qdrant"
+    },
+    {
+        "repo":  "BerriAI/litellm",
+        "stars":  55867,
+        "pushed_at":  "2026-08-08T11:05:55Z",
+        "updated_at":  "2026-08-08T14:34:28Z",
+        "archived":  false,
+        "license":  "NOASSERTION",
+        "default_branch":  "litellm_internal_staging",
+        "html_url":  "https://github.com/BerriAI/litellm"
+    },
+    {
+        "repo":  "567-labs/instructor",
+        "stars":  13701,
+        "pushed_at":  "2026-08-08T01:10:29Z",
+        "updated_at":  "2026-08-08T12:31:16Z",
+        "archived":  false,
+        "license":  "MIT",
+        "default_branch":  "main",
+        "html_url":  "https://github.com/567-labs/instructor"
+    },
+    {
+        "repo":  "pydantic/pydantic-ai",
+        "stars":  19142,
+        "pushed_at":  "2026-08-08T05:45:08Z",
+        "updated_at":  "2026-08-08T14:10:26Z",
+        "archived":  false,
+        "license":  "MIT",
+        "default_branch":  "main",
+        "html_url":  "https://github.com/pydantic/pydantic-ai"
+    },
+    {
+        "repo":  "run-llama/llama_index",
+        "stars":  51456,
+        "pushed_at":  "2026-08-07T21:23:50Z",
+        "updated_at":  "2026-08-08T14:15:19Z",
+        "archived":  false,
+        "license":  "MIT",
+        "default_branch":  "main",
+        "html_url":  "https://github.com/run-llama/llama_index"
+    },
+    {
+        "repo":  "deepset-ai/haystack",
+        "stars":  26144,
+        "pushed_at":  "2026-08-07T18:24:41Z",
+        "updated_at":  "2026-08-08T08:42:46Z",
+        "archived":  false,
+        "license":  "Apache-2.0",
+        "default_branch":  "main",
+        "html_url":  "https://github.com/deepset-ai/haystack"
+    }
+]

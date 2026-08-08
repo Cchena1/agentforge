@@ -2,6 +2,7 @@ const BACKEND_URL = "http://localhost:8000";
 
 const state = {
   messages: [],
+  sessionId: null,
 };
 
 const $ = (id) => document.getElementById(id);
@@ -42,7 +43,8 @@ function renderMessages() {
         item.className = "tool-item";
         const argsText = call.arguments ? ` ${escapeText(JSON.stringify(call.arguments))}` : "";
         const resultText = call.result ? ` -> ${escapeText(call.result)}` : "";
-        item.textContent = `${call.name || "tool"}${argsText}${resultText}`;
+        const statusText = call.status ? ` [${call.status}]` : "";
+        item.textContent = `${call.tool_name || call.name || "tool"}${statusText}${argsText}${resultText}`;
         tools.appendChild(item);
       }
 
@@ -73,11 +75,11 @@ function setToolLog(toolCalls) {
     .map((item) => {
       const args = item.arguments ? JSON.stringify(item.arguments) : "{}";
       const result = item.result ? `\n结果：${item.result}` : "";
-      return `${item.name}(${args})${result}`;
+      return `${item.tool_name || item.name}(${args}) [${item.status || "unknown"}]${result}`;
     })
     .join("\n\n");
 
-  $("toolState").textContent = toolCalls[toolCalls.length - 1]?.name || "有";
+  $("toolState").textContent = toolCalls[toolCalls.length - 1]?.tool_name || toolCalls[toolCalls.length - 1]?.name || "有";
 }
 
 async function fetchBackend(path, options = {}) {
@@ -100,9 +102,10 @@ async function sendMessage(message) {
   const history = state.messages.map(({ role, content }) => ({ role, content }));
   const payload = await fetchBackend("/chat", {
     method: "POST",
-    body: JSON.stringify({ message, history }),
+    body: JSON.stringify({ message, history, session_id: state.sessionId }),
   });
 
+  state.sessionId = payload.session_id || state.sessionId;
   addMessage("assistant", payload.reply || "", payload.tool_calls || []);
   setToolLog(payload.tool_calls || []);
 }
@@ -118,6 +121,7 @@ async function refreshBackendStatus() {
 
 function clearChat() {
   state.messages = [];
+  state.sessionId = null;
   renderMessages();
   setToolLog([]);
 }
