@@ -4,7 +4,7 @@ AgentForge is an evaluation-oriented asynchronous agent service built with **Lan
 
 The project upgrades a single-file demonstration into a modular agent baseline with explicit data contracts, state ownership, failure handling, dependency-aware tool execution, and reproducible acceptance evidence. The existing `POST /chat` response fields remain backward compatible throughout the 0.x line.
 
-> **Evaluation status — August 8, 2026:** Ruff passed, mypy strict passed for 15 source files, and pytest passed all 17 tests. No pressure, throughput, or sustained-load testing was performed, as explicitly excluded from the evaluation scope.
+> **Evaluation status - August 14, 2026:** Ruff passed, mypy strict passed for 17 source files, and pytest passed all 47 tests. The RAG milestone includes lifecycle, migration, failure-injection, tenant/ACL isolation, compatibility, and concurrency semantics tests. No pressure, throughput, or sustained-load testing was performed, as explicitly excluded from the evaluation scope.
 
 ## Reviewer Quick Path
 
@@ -14,7 +14,7 @@ An evaluator can inspect the project in this order:
 2. Run the service without a model API key to verify the safe local fallback path.
 3. Execute the [quality gates](#quality-gates-and-reproducible-evidence).
 4. Inspect `src/agent_service/` for the supported implementation.
-5. Consult the detailed [architecture](docs/architecture.md), [dependency review](docs/dependency-review.md), and [acceptance evidence](docs/acceptance-evidence.md).
+5. Consult the detailed [architecture](docs/architecture.md), [dependency review](docs/dependency-review.md), [RAG engineering plan](docs/rag-engineering-plan.md), [RAG migration guide](docs/rag-versioning-migration.md), [authorization ADR](docs/adr-007-rag-authorization-boundary.md), and [implementation evidence](docs/rag-implementation-evidence.md).
 
 The repository can be evaluated without external model access. If `AI_AGENT_API_KEY` is empty, AgentForge does not fabricate an online model result; it enters a controlled local fallback mode and reports degradation explicitly.
 
@@ -30,10 +30,11 @@ The repository can be evaluated without external model access. If `AI_AGENT_API_
 | Layered memory | Graph state owns the current turn; SQLite WAL stores session-scoped short-term history; rolling summaries compact context; vectorized long-term memory is isolated by user namespace. | `src/agent_service/memory.py`; `tests/test_memory.py` |
 | Multi-agent collaboration | Workers execute concurrently with isolated context and memory namespaces. They return compressed summaries, facts, citations, artifacts, and warnings instead of raw reasoning traces. | `src/agent_service/multi_agent.py`; `test_multi_agent_context_isolated_and_result_compressed` |
 | Loop prevention | The graph enforces a maximum step count, repeated tool-call signature limit, tool timeout, and handoff path. | `src/agent_service/graph.py`; `test_langgraph_stops_repeated_tool_loop` |
-| RAG | The pipeline performs parsing, semantic-boundary chunking, embedding, retrieval, lightweight lexical/vector fusion, deduplication, and citation aggregation. | `src/agent_service/rag.py`; `src/agent_service/documents.py`; `test_rag_semantic_chunks_and_returns_citations` |
+| RAG lifecycle correctness | Content and pipeline profiles produce immutable version IDs. Ingestion is idempotent, candidate chunks stay invisible until activation, failed replacements preserve the previous active version, and retrieval reports its active-version snapshot. | `src/agent_service/rag.py`; `src/agent_service/rag_registry.py`; lifecycle, migration, and concurrency tests in `tests/test_rag.py` |
+| RAG tenant and ACL isolation | Document identity is scoped by `(tenant_id, source_id)`. Empty ACLs are tenant-wide; non-empty ACLs require principal intersection. SQLite filters before vector decoding, Qdrant filters in the vector query, unauthorized versions are omitted from `index_versions`, and legacy records migrate only to the `public` tenant. The registry uses a composite-foreign-key v2 table while retaining and dual-writing legacy public tables during the 0.x rollback window. | `src/agent_service/rag.py`; `src/agent_service/rag_registry.py`; `src/agent_service/vector_store.py`; tenant/ACL and rollback-migration tests in `tests/test_rag.py`, `tests/test_qdrant.py`, and `tests/test_api.py` |
 | Scanned documents and tables | TXT, Markdown, CSV, TSV, and text PDFs are supported directly. Table rows are preserved as semantic blocks. Scanned PDFs are detected and request the optional Docling OCR/layout fallback. | `tests/test_rag.py`; optional `documents` dependency group |
 | Vector storage | SQLite exact search is the default zero-service backend. Qdrant is available for HNSW and metadata filtering when a service is deployed. | `src/agent_service/vector_store.py`; `test_qdrant_adapter_in_memory_round_trip` |
-| Retrieval observability | Retrieval and tool results expose `latency_ms`; citations preserve source, chunk, page or locator, quote, and score where available. | `src/agent_service/schemas.py`; `src/agent_service/rag.py` |
+| Retrieval observability | Retrieval and tool results expose `latency_ms`; citations preserve source, chunk, page or locator, quote, and score where available; `index_versions` records the active source snapshot used by a search. | `src/agent_service/schemas.py`; `src/agent_service/rag.py`; `docs/rag-evaluation-contract.md` |
 | Type and dependency discipline | Source code is type annotated, checked with mypy strict, linted with Ruff, and locked with `uv.lock`. Optional heavy integrations are isolated in extras. | `pyproject.toml`; `uv.lock`; quality-gate results below |
 
 ## Architecture
@@ -96,7 +97,9 @@ The default pipeline favors deterministic evaluation and low setup cost:
 2. Split on headings, paragraphs, page boundaries, and table rows before applying character-budget and overlap fallbacks.
 3. Use the deterministic hash embedding for offline tests or an OpenAI-compatible embedding route for semantic quality.
 4. Use SQLite exact retrieval for small local corpora or Qdrant HNSW for larger filtered collections.
-5. Fuse vector and lexical signals, remove duplicate chunks, and return structured citations.
+5. Build immutable chunks under a deterministic content-and-pipeline version, then atomically activate the source pointer only after vector persistence succeeds.
+6. Serialize revisions of the same `source_id` while allowing different sources to overlap asynchronously.
+7. Fuse vector and lexical signals, remove duplicate chunks, and return structured citations plus the active `index_versions` snapshot.
 
 ## Repository Layout
 
@@ -110,14 +113,20 @@ The default pipeline favors deterministic evaluation and low setup cost:
 |   |-- schemas.py                  # Strict Pydantic contracts
 |   |-- memory.py                   # Short-term and long-term memory
 |   |-- documents.py                # Parsing and semantic chunk preparation
-|   |-- rag.py                      # Retrieval, reranking, and citations
+|   |-- rag.py                      # Versioned ingestion, retrieval, and citations
+|   |-- rag_registry.py             # Durable version lifecycle and active pointers
 |   |-- vector_store.py             # SQLite and Qdrant adapters
 |   |-- multi_agent.py              # Isolated parallel worker coordination
 |   `-- tools/                      # Tool registry, DAG executor, built-in tools
-|-- tests/                          # 17 functional and contract tests
+|-- tests/                          # 32 functional, contract, migration, and failure tests
 |-- docs/architecture.md            # Design decisions and failure strategies
 |-- docs/dependency-review.md       # Maintained-project and dependency review
 |-- docs/acceptance-evidence.md     # Detailed acceptance evidence
+|-- docs/rag-engineering-plan.md    # Research-backed target RAG architecture
+|-- docs/rag-versioning-migration.md # Persistent-format migration and rollback
+|-- docs/rag-implementation-evidence.md # RAG claim-to-test evidence
+|-- eval/                           # Versioned golden-query contract examples
+|-- scripts/evaluate_rag.py         # Offline retrieval metric evaluator
 |-- pyproject.toml                  # Dependencies and tool configuration
 `-- uv.lock                         # Reproducible dependency lock
 ```
@@ -242,14 +251,21 @@ Additional endpoints:
 - `POST /documents/search`
 - `POST /memory`
 
+`POST /documents/ingest` additively accepts `tenant_id` (default `public`) and `acl` (default empty, meaning tenant-wide), and adds version evidence to the response: `version_id`, `content_sha256`, and `idempotent`. `POST /documents/search` additively accepts `tenant_id` and `principals`, and adds `index_versions`, which identifies only the authorized active source versions used by that retrieval. Existing callers that omit the new fields retain the public-tenant behavior during the 0.x migration window.
+
+Authorization semantics are deliberately fail-closed within a tenant: a non-empty document ACL requires intersection with the caller principals, and both hits and `index_versions` omit unauthorized sources. These request fields are an authorization-context contract, not authentication. A production deployment must derive them from a trusted gateway or identity middleware rather than accepting end-user assertions. The model-facing `search_knowledge` tool remains bound to the public tenant so the model cannot choose an authorization scope.
+
+The persistent-format and rollback procedure is documented in [RAG Versioning and Migration](docs/rag-versioning-migration.md).
+
 ## Quality Gates and Reproducible Evidence
 
 Run:
 
 ```powershell
-uv run ruff check src main.py tests
-uv run mypy src/agent_service
+uv run ruff check src main.py tests scripts
+uv run mypy src scripts
 uv run pytest
+uv run python scripts/evaluate_rag.py --queries eval/golden_queries.example.jsonl
 node --check public/app.js
 node --check server.js
 ```
@@ -258,8 +274,9 @@ Latest verified result on CPython 3.12.13:
 
 ```text
 Ruff:  all checks passed
-mypy:  success, no issues in 15 source files
-pytest: 17 passed, 1 warning
+mypy:  success, no issues in 17 source files
+pytest: 47 passed, 1 warning
+RAG evaluator: 2 schema-valid example queries; no quality claim
 Node:  both JavaScript syntax checks passed
 PowerShell: run.ps1 parsed successfully
 ```
@@ -279,9 +296,23 @@ Representative tests:
 - `test_multi_agent_context_isolated_and_result_compressed`
 - `test_langgraph_stops_repeated_tool_loop`
 - `test_rag_semantic_chunks_and_returns_citations`
+- `test_existing_unversioned_sqlite_index_migrates_without_data_loss`
+- `test_legacy_rows_remain_visible_until_first_version_activates`
+- `test_failed_replacement_keeps_previous_version_searchable`
+- `test_building_version_is_invisible_until_activation`
+- `test_same_source_ingests_are_serialized`
+- `test_different_source_ingests_can_overlap`
+- `test_source_mutation_during_ingestion_is_rejected`
 - `test_scanned_pdf_is_detected_and_requests_ocr_fallback`
 - `test_backward_compatible_chat_contract_and_offline_fallback`
 - `test_path_escape_is_rejected`
+- `test_cross_tenant_retrieval_isolated_before_scoring`
+- `test_acl_requires_principal_intersection_and_hides_index_versions`
+- `test_same_source_id_is_isolated_per_tenant`
+- `test_qdrant_filters_tenant_and_acl_before_returning_candidates`
+- `test_sqlite_authorization_filter_runs_before_vector_decoding`
+- `test_registry_v2_uses_composite_identity_and_public_dual_write`
+- `test_registry_reconciles_public_writes_after_legacy_rollback`
 
 ## Evaluation Scope and Known Limitations
 
@@ -295,6 +326,10 @@ The following boundaries are intentional and should be considered during evaluat
 6. Multi-agent coordination is currently a library-level component; it does not yet expose a public orchestration API, authorization model, cost budget, or conflict arbitration policy.
 7. Long-term memory still requires production policies for retention, deletion, export, consent, and personally identifiable information.
 8. SQLite exact vector search is appropriate for the local evaluation baseline; larger corpora should move to Qdrant or another indexed vector store after workload-specific validation.
+9. Ingestion is not yet a durable background job system. Per-`(tenant_id, source_id)` locks are process-local, and multi-process writers require a single-writer deployment or a future distributed lease.
+10. A crash after vector upsert but before activation may leave invisible orphan chunks; garbage collection and retention policy are deferred.
+11. Tenant/ACL filtering is functionally enforced, but authentication is external: production callers must receive trusted tenant/principal context from an identity boundary. Chat-tool retrieval remains public-tenant only.
+12. The example golden-query JSONL validates the evaluation contract but is not a representative benchmark and does not justify retrieval-quality claims.
 
 ## Compatibility and Migration Policy
 

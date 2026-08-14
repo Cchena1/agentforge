@@ -16,6 +16,7 @@ from .graph import AgentGraph
 from .llm import ModelGateway
 from .memory import MemoryStore
 from .rag import RAGService
+from .rag_registry import SQLiteVersionRegistry
 from .schemas import (
     ChatMessage,
     ChatRequest,
@@ -64,6 +65,7 @@ class Services:
             SemanticChunker(),
             self.embeddings,
             self.vector_store,
+            SQLiteVersionRegistry(config.resolved_state_dir / "rag_registry.sqlite3"),
         )
         self.memory = MemoryStore(
             config.resolved_state_dir / "memory.sqlite3",
@@ -87,7 +89,7 @@ class Services:
         )
 
     async def initialize(self) -> None:
-        await self.vector_store.initialize()
+        await self.rag.initialize()
         await self.memory.initialize()
 
 
@@ -192,7 +194,13 @@ def create_app(config: Settings = settings) -> FastAPI:
 
     @app.post("/documents/search", response_model=RetrievalResponse)
     async def search_documents(request: RetrievalRequest) -> RetrievalResponse:
-        return await services().rag.retrieve(request.query, request.top_k, request.source_ids)
+        return await services().rag.retrieve(
+            request.query,
+            request.top_k,
+            request.source_ids,
+            request.tenant_id,
+            request.principals,
+        )
 
     @app.post("/memory", response_model=MemoryRecord)
     async def write_memory(request: MemoryWrite) -> MemoryRecord:

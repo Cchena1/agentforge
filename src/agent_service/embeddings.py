@@ -13,6 +13,7 @@ _TOKEN_RE = re.compile(r"[\w\u4e00-\u9fff]+", re.UNICODE)
 
 class EmbeddingProvider(Protocol):
     dimension: int
+    profile_id: str
 
     async def embed(self, texts: Sequence[str]) -> list[list[float]]: ...
 
@@ -24,6 +25,7 @@ class HashEmbedding:
         if dimension < 64:
             raise ValueError("dimension must be >= 64")
         self.dimension = dimension
+        self.profile_id = f"hash-blake2b-v1:{dimension}"
 
     async def embed(self, texts: Sequence[str]) -> list[list[float]]:
         return [self._embed_one(text) for text in texts]
@@ -45,14 +47,17 @@ class OpenAIEmbedding:
         self.client = client
         self.model = model
         self.dimension = dimension
+        self.profile_id = f"openai:{model}:{dimension}"
 
     async def embed(self, texts: Sequence[str]) -> list[list[float]]:
         if not texts:
             return []
         response = await self.client.embeddings.create(model=self.model, input=list(texts))
         vectors = [item.embedding for item in sorted(response.data, key=lambda item: item.index)]
-        if vectors:
-            self.dimension = len(vectors[0])
+        if any(len(vector) != self.dimension for vector in vectors):
+            raise RuntimeError(
+                f"embedding dimension mismatch for {self.profile_id}: expected {self.dimension}"
+            )
         return vectors
 
 

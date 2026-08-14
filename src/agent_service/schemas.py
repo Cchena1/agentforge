@@ -118,7 +118,25 @@ class ModelTurn(StrictModel):
 class DocumentIngestRequest(StrictModel):
     file_path: str = Field(min_length=1, max_length=4096)
     source_id: str | None = Field(default=None, max_length=256)
+    tenant_id: str = Field(
+        default="public", min_length=1, max_length=128, pattern=r"^[A-Za-z0-9_.:-]+$"
+    )
+    acl: list[str] = Field(default_factory=list, max_length=100)
     metadata: dict[str, str | int | float | bool] = Field(default_factory=dict)
+
+    @field_validator("acl")
+    @classmethod
+    def normalize_acl(cls, value: list[str]) -> list[str]:
+        if any(
+            not item
+            or len(item) > 128
+            or any(character.isspace() or ord(character) < 32 for character in item)
+            for item in value
+        ):
+            raise ValueError(
+                "ACL principals must contain 1-128 non-whitespace printable characters"
+            )
+        return sorted(set(value))
 
 
 class DocumentIngestResponse(StrictModel):
@@ -127,12 +145,40 @@ class DocumentIngestResponse(StrictModel):
     chunks_created: int = Field(ge=0)
     parser: str
     warnings: list[str] = Field(default_factory=list)
+    version_id: str | None = Field(
+        default=None,
+        description="Active immutable document version; additive in the 0.x compatibility window.",
+    )
+    content_sha256: str | None = Field(
+        default=None,
+        pattern=r"^[0-9a-f]{64}$",
+        description="Content identity used for idempotent ingestion.",
+    )
+    idempotent: bool = False
 
 
 class RetrievalRequest(StrictModel):
     query: str = Field(min_length=1, max_length=10_000)
     top_k: int = Field(default=6, ge=1, le=30)
     source_ids: list[str] | None = Field(default=None, max_length=100)
+    tenant_id: str = Field(
+        default="public", min_length=1, max_length=128, pattern=r"^[A-Za-z0-9_.:-]+$"
+    )
+    principals: list[str] = Field(default_factory=list, max_length=100)
+
+    @field_validator("principals")
+    @classmethod
+    def normalize_principals(cls, value: list[str]) -> list[str]:
+        if any(
+            not item
+            or len(item) > 128
+            or any(character.isspace() or ord(character) < 32 for character in item)
+            for item in value
+        ):
+            raise ValueError(
+                "principals must contain 1-128 non-whitespace printable characters"
+            )
+        return sorted(set(value))
 
 
 class RetrievalHit(StrictModel):
@@ -147,6 +193,10 @@ class RetrievalHit(StrictModel):
 class RetrievalResponse(StrictModel):
     hits: list[RetrievalHit]
     latency_ms: float = Field(ge=0)
+    index_versions: dict[str, str] = Field(
+        default_factory=dict,
+        description="Active source-version snapshot used by retrieval.",
+    )
 
 
 class MemoryWrite(StrictModel):

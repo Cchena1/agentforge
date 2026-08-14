@@ -3,12 +3,20 @@ from __future__ import annotations
 import asyncio
 import csv
 import hashlib
+import importlib.metadata
 import re
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, ClassVar, Protocol
 
 from pypdf import PdfReader
+
+
+def _package_version(distribution: str) -> str:
+    try:
+        return importlib.metadata.version(distribution)
+    except importlib.metadata.PackageNotFoundError:
+        return "unavailable"
 
 
 @dataclass(slots=True)
@@ -37,10 +45,14 @@ class Chunk:
 
 
 class DocumentParser(Protocol):
+    @property
+    def profile_id(self) -> str: ...
+
     async def parse(self, path: Path) -> ParsedDocument: ...
 
 
 class BuiltinDocumentParser:
+    profile_id = f"builtin-v1:pypdf={_package_version('pypdf')}"
     TEXT_EXTENSIONS: ClassVar[set[str]] = {".txt", ".md", ".rst", ".py", ".json", ".yaml", ".yml", ".log"}
     TABLE_EXTENSIONS: ClassVar[set[str]] = {".csv", ".tsv"}
 
@@ -93,6 +105,8 @@ class BuiltinDocumentParser:
 class DoclingDocumentParser:
     """Optional high-fidelity parser for scans, layout and tables."""
 
+    profile_id = f"docling-markdown-v1:docling={_package_version('docling')}"
+
     async def parse(self, path: Path) -> ParsedDocument:
         try:
             from docling.document_converter import (
@@ -114,6 +128,13 @@ class CompositeDocumentParser:
         self.prefer_docling = prefer_docling
         self.builtin = BuiltinDocumentParser()
         self.docling = DoclingDocumentParser()
+
+    @property
+    def profile_id(self) -> str:
+        return (
+            f"composite-v1:prefer_docling={self.prefer_docling}:"
+            f"builtin={self.builtin.profile_id}:docling={self.docling.profile_id}"
+        )
 
     async def parse(self, path: Path) -> ParsedDocument:
         if self.prefer_docling and path.suffix.lower() in {".pdf", ".docx", ".pptx", ".xlsx", ".html"}:
