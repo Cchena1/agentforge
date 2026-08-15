@@ -11,6 +11,41 @@ class StrictModel(BaseModel):
     model_config = ConfigDict(extra="forbid", strict=True)
 
 
+class BoundingBoxModel(StrictModel):
+    left: float
+    top: float
+    right: float
+    bottom: float
+
+
+class PdfLocation(StrictModel):
+    kind: Literal["pdf"] = "pdf"
+    page_number: int = Field(ge=1)
+    bbox: BoundingBoxModel | None = None
+    block_id: str
+    reading_order: int = Field(ge=0)
+
+
+class DocxLocation(StrictModel):
+    kind: Literal["docx"] = "docx"
+    section_index: int = Field(default=0, ge=0)
+    heading_path: list[str] = Field(default_factory=list)
+    paragraph_index: int | None = Field(default=None, ge=0)
+    table_index: int | None = Field(default=None, ge=0)
+    row_index: int | None = Field(default=None, ge=0)
+    column_index: int | None = Field(default=None, ge=0)
+    asset_id: str | None = None
+    block_id: str | None = None
+
+
+class TextLocation(StrictModel):
+    kind: Literal["text"] = "text"
+    locator: str | None = None
+    block_id: str | None = None
+
+
+DocumentLocation = PdfLocation | DocxLocation | TextLocation
+
 class ChatMessage(StrictModel):
     role: str = Field(min_length=1, max_length=32)
     content: str = ""
@@ -33,7 +68,10 @@ class Citation(StrictModel):
     locator: str | None = None
     quote: str | None = Field(default=None, max_length=500)
     score: float | None = None
-
+    citation_id: str | None = None
+    location: DocumentLocation | None = None
+    content_sha256: str | None = Field(default=None, pattern=r"^[0-9a-f]{64}$")
+    parser: str | None = None
 
 class ToolCallRecord(StrictModel):
     call_id: str
@@ -157,6 +195,31 @@ class DocumentIngestResponse(StrictModel):
     idempotent: bool = False
 
 
+class IngestionJobStatus(StrEnum):
+    QUEUED = "queued"
+    PARSING = "parsing"
+    QUALITY_CHECK = "quality_check"
+    FALLBACK = "fallback"
+    CHUNKING = "chunking"
+    EMBEDDING = "embedding"
+    INDEXING = "indexing"
+    VALIDATING = "validating"
+    COMPLETED = "completed"
+    FAILED = "failed"
+    NEEDS_REVIEW = "needs_review"
+    CANCELLED = "cancelled"
+
+
+class IngestionJobResponse(StrictModel):
+    job_id: str
+    status: IngestionJobStatus
+    stage: str
+    created_at: datetime
+    updated_at: datetime
+    result: DocumentIngestResponse | None = None
+    error: str | None = None
+    warnings: list[str] = Field(default_factory=list)
+
 class RetrievalRequest(StrictModel):
     query: str = Field(min_length=1, max_length=10_000)
     top_k: int = Field(default=6, ge=1, le=30)
@@ -197,7 +260,8 @@ class RetrievalResponse(StrictModel):
         default_factory=dict,
         description="Active source-version snapshot used by retrieval.",
     )
-
+    warnings: list[str] = Field(default_factory=list)
+    degraded_retrieval: bool = False
 
 class MemoryWrite(StrictModel):
     namespace: str = Field(min_length=1, max_length=256)

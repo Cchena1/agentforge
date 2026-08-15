@@ -4,7 +4,14 @@ import json
 from pathlib import Path
 from typing import Literal
 
-from pydantic import AliasChoices, BaseModel, Field, SecretStr, field_validator
+from pydantic import (
+    AliasChoices,
+    BaseModel,
+    Field,
+    SecretStr,
+    field_validator,
+    model_validator,
+)
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -49,6 +56,13 @@ class Settings(BaseSettings):
     short_term_message_limit: int = Field(default=24, ge=4, le=200)
     short_term_char_budget: int = Field(default=24000, ge=2000)
     rag_top_k: int = Field(default=6, ge=1, le=30)
+    rag_ocr_enabled: bool = False
+    rag_cloud_fallback_enabled: bool = False
+    rag_parser_max_attempts: int = Field(default=3, ge=1, le=3)
+    rag_ingestion_parallelism: int = Field(default=2, ge=1, le=16)
+    rag_chunk_target_tokens: int = Field(default=500, ge=64, le=4096)
+    rag_chunk_max_tokens: int = Field(default=650, ge=128, le=8192)
+    rag_chunk_overlap_tokens: int = Field(default=60, ge=0, le=1024)
     embedding_provider: Literal["hash", "openai"] = "hash"
     embedding_model: str = "text-embedding-3-small"
     vector_backend: Literal["sqlite", "qdrant"] = "sqlite"
@@ -59,6 +73,23 @@ class Settings(BaseSettings):
     @classmethod
     def resolve_workspace(cls, value: Path) -> Path:
         return value.expanduser().resolve()
+
+    @model_validator(mode="after")
+    def validate_rag_chunk_budget(self) -> Settings:
+        if not (
+            0
+            <= self.rag_chunk_overlap_tokens
+            < self.rag_chunk_target_tokens
+            <= self.rag_chunk_max_tokens
+        ):
+            raise ValueError(
+                "RAG chunk budgets must satisfy overlap < target <= max tokens"
+            )
+        if self.rag_cloud_fallback_enabled:
+            raise ValueError(
+                "Cloud document fallback has no configured provider in v0.3; keep it disabled"
+            )
+        return self
 
     @property
     def resolved_state_dir(self) -> Path:

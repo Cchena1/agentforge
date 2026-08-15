@@ -6,13 +6,18 @@ from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
 from typing import Any, cast
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Response
 from fastapi.middleware.cors import CORSMiddleware
 from openai import AsyncOpenAI
 
-from .documents import CompositeDocumentParser, SemanticChunker
+from .document_pipeline import (
+    DocumentNeedsReviewError,
+    ParentChildChunker,
+    QualityGatedDocumentParser,
+)
 from .embeddings import EmbeddingProvider, HashEmbedding, OpenAIEmbedding
 from .graph import AgentGraph
+from .ingestion_jobs import IngestionJobManager
 from .llm import ModelGateway
 from .memory import MemoryStore
 from .rag import RAGService
@@ -24,6 +29,7 @@ from .schemas import (
     Citation,
     DocumentIngestRequest,
     DocumentIngestResponse,
+    IngestionJobResponse,
     MemoryRecord,
     MemoryWrite,
     RetrievalRequest,
@@ -59,13 +65,28 @@ class Services:
             self.vector_store = SQLiteVectorStore(
                 config.resolved_state_dir / "rag.sqlite3", self.embeddings
             )
+        parser = QualityGatedDocumentParser(
+            prefer_docling=True,
+            enable_ocr_fallback=config.rag_ocr_enabled,
+            max_attempts=config.rag_parser_max_attempts,
+        )
+        chunker = ParentChildChunker(
+            target_tokens=config.rag_chunk_target_tokens,
+            max_tokens=config.rag_chunk_max_tokens,
+            overlap_tokens=config.rag_chunk_overlap_tokens,
+        )
         self.rag = RAGService(
             config.workspace_root,
-            CompositeDocumentParser(prefer_docling=True),
-            SemanticChunker(),
+            parser,
+            chunker,
             self.embeddings,
             self.vector_store,
             SQLiteVersionRegistry(config.resolved_state_dir / "rag_registry.sqlite3"),
+        )
+        self.ingestion_jobs = IngestionJobManager(
+            config.resolved_state_dir / "rag_ingestion_jobs.sqlite3",
+            self.rag,
+            max_parallel=config.rag_ingestion_parallelism,
         )
         self.memory = MemoryStore(
             config.resolved_state_dir / "memory.sqlite3",
@@ -91,6 +112,10 @@ class Services:
     async def initialize(self) -> None:
         await self.rag.initialize()
         await self.memory.initialize()
+        await self.ingestion_jobs.initialize()
+
+    async def close(self) -> None:
+        await self.ingestion_jobs.close()
 
 
 @asynccontextmanager
@@ -98,7 +123,10 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     services = Services(settings)
     await services.initialize()
     app.state.services = services
-    yield
+    try:
+        yield
+    finally:
+        await services.close()
 
 
 def create_app(config: Settings = settings) -> FastAPI:
@@ -107,9 +135,12 @@ def create_app(config: Settings = settings) -> FastAPI:
         services = Services(config)
         await services.initialize()
         app.state.services = services
-        yield
+        try:
+            yield
+        finally:
+            await services.close()
 
-    app = FastAPI(title=config.app_name, version="0.2.0", lifespan=configured_lifespan)
+    app = FastAPI(title=config.app_name, version="0.3.0", lifespan=configured_lifespan)
     app.add_middleware(
         CORSMiddleware,
         allow_origins=config.cors_origin_list or ["*"],
@@ -126,7 +157,7 @@ def create_app(config: Settings = settings) -> FastAPI:
         svc = services()
         return {
             "status": "ok",
-            "version": "0.2.0",
+            "version": "0.3.0",
             "model_routes": [route.name for route in svc.gateway.routes],
             "online_model": svc.gateway.online,
             "memory": "sqlite-wal",
@@ -144,7 +175,10 @@ def create_app(config: Settings = settings) -> FastAPI:
             "max_agent_steps": config.max_agent_steps,
             "embedding_provider": config.embedding_provider,
             "vector_backend": config.vector_backend,
-            "deprecated_fields": [],
+            "rag_ocr_enabled": config.rag_ocr_enabled,
+            "rag_parser_max_attempts": config.rag_parser_max_attempts,
+            "rag_ingestion_parallelism": config.rag_ingestion_parallelism,
+            "deprecated_fields": ["POST /documents/ingest"],
         }
 
     @app.post("/chat", response_model=ChatResponse)
@@ -185,12 +219,42 @@ def create_app(config: Settings = settings) -> FastAPI:
             warnings=result["warnings"],
         )
 
-    @app.post("/documents/ingest", response_model=DocumentIngestResponse)
-    async def ingest_document(request: DocumentIngestRequest) -> DocumentIngestResponse:
+    @app.post("/documents/ingest", response_model=DocumentIngestResponse, deprecated=True)
+    async def ingest_document(
+        request: DocumentIngestRequest, response: Response
+    ) -> DocumentIngestResponse:
+        response.headers["Deprecation"] = "true"
+        response.headers["X-AgentForge-Migration"] = "Use POST /rag/ingestions; removal is planned for v1.0."
         try:
             return await services().rag.ingest(request)
+        except DocumentNeedsReviewError as exc:
+            raise HTTPException(status_code=422, detail=str(exc)) from exc
         except (FileNotFoundError, PermissionError, ValueError, RuntimeError) as exc:
             raise HTTPException(status_code=400, detail=str(exc)) from exc
+
+    @app.post(
+        "/rag/ingestions", response_model=IngestionJobResponse, status_code=202
+    )
+    async def create_ingestion_job(
+        request: DocumentIngestRequest, response: Response
+    ) -> IngestionJobResponse:
+        job = await services().ingestion_jobs.create(request)
+        response.headers["Location"] = f"/rag/ingestions/{job.job_id}"
+        return job
+
+    @app.get("/rag/ingestions/{job_id}", response_model=IngestionJobResponse)
+    async def get_ingestion_job(job_id: str) -> IngestionJobResponse:
+        try:
+            return await services().ingestion_jobs.get(job_id)
+        except KeyError as exc:
+            raise HTTPException(status_code=404, detail="ingestion job not found") from exc
+
+    @app.post("/rag/ingestions/{job_id}/cancel", response_model=IngestionJobResponse)
+    async def cancel_ingestion_job(job_id: str) -> IngestionJobResponse:
+        try:
+            return await services().ingestion_jobs.cancel(job_id)
+        except KeyError as exc:
+            raise HTTPException(status_code=404, detail="ingestion job not found") from exc
 
     @app.post("/documents/search", response_model=RetrievalResponse)
     async def search_documents(request: RetrievalRequest) -> RetrievalResponse:

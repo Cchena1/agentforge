@@ -64,3 +64,31 @@ Before adding any package, record:
 ## Evidence sources
 
 The comparative research snapshot is stored in `docs/research-snapshot.json`, and the paper/project mapping is documented in `docs/rag-engineering-plan.md`. The architectural decision for this milestone is `docs/adr-006-rag-correctness-first.md`.
+
+## 2026-08-14 document parser admission decision
+
+| Dependency/project | License posture | Maintenance/security review | Capability used | Admission state |
+|---|---|---|---|---|
+| Docling | MIT project; transitive models/dependencies still require lockfile review | Existing `documents` extra is locked; runtime not installed in the verification environment | PDF/DOCX structure, layout provenance, tables, pictures | Approved optional primary parser; real-corpus PoC outstanding |
+| pypdf | BSD-style package already in the base dependency set | Existing dependency and tests | Emergency digital-PDF text fallback | Approved with quality gate; not valid for scans/multicolumn/table claims |
+| PaddleOCR / PP-StructureV3 | Apache-2.0 project; model packages must be reviewed with the chosen profile | Adapter implemented without adding an unreviewed package to the lockfile | OCR/layout/table fallback | Deferred runtime admission pending isolated PoC |
+| MinerU | Repository/model license requires separate legal review | Active project, but not required by the selected runtime | Quality-rule and shadow-benchmark reference | Not admitted |
+| RAGFlow | Apache-2.0 | Platform-scale dependency footprint is unnecessary here | Parser registry/job/citation patterns | Pattern reference only |
+| RAG-Anything | MIT | Platform integration would exceed current scope | Asset registry and async boundaries | Pattern reference only |
+| OmniDocBench | Research benchmark assets | Evaluation-only | Quality dimensions | Evaluation reference only |
+| Marker | Code/model licenses vary by component/profile | Challenger only | Shadow parsing | Not admitted |
+| olmOCR | Apache-2.0 project; hardware profile is the binding constraint | 6 GB local GPU is not a suitable primary path | Hard-page VLM parser | Not admitted locally |
+| OpenDataLoader PDF | Apache-2.0 | Adds a Java runtime not otherwise required | Deterministic parser challenger | Deferred |
+
+### Existing dependency capability checklist
+
+- FastAPI: async API and OpenAPI deprecation metadata.
+- Pydantic v2: strict request/response/location validation and cross-field settings validation.
+- asyncio: `TaskGroup`, bounded `Semaphore`, cooperative cancellation, executor boundaries.
+- aiosqlite: durable job state, version registry, memory, and local exact-search persistence.
+- pypdf: emergency PDF text extraction only.
+- Docling optional extra: primary PDF/DOCX parser adapter.
+- Qdrant optional extra: HNSW and metadata filtering for larger corpora.
+- Tenacity: bounded transient model retry; not used to hide deterministic parser quality failures.
+
+No new runtime dependency was added in this milestone. PaddleOCR remains an explicit candidate rather than an undeclared installation requirement.

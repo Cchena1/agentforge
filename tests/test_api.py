@@ -145,3 +145,64 @@ def test_document_authorization_context_rejects_whitespace_principals(tmp_path) 
         )
 
     assert response.status_code == 422
+
+
+def test_async_ingestion_job_api_completes_and_legacy_route_is_deprecated(tmp_path) -> None:
+    import time
+
+    (tmp_path / "async-guide.md").write_text(
+        "async ingestion evidence with traceable citation", encoding="utf-8"
+    )
+    config = Settings(workspace_root=tmp_path, state_dir=tmp_path / "state", api_key="")
+    with TestClient(create_app(config)) as client:
+        legacy = client.post(
+            "/documents/ingest",
+            json={"file_path": "async-guide.md", "source_id": "legacy-guide"},
+        )
+        created = client.post(
+            "/rag/ingestions",
+            json={"file_path": "async-guide.md", "source_id": "async-guide"},
+        )
+        assert created.status_code == 202
+        assert created.headers["location"].endswith(created.json()["job_id"])
+        job = created.json()
+        for _ in range(100):
+            status = client.get(f"/rag/ingestions/{job['job_id']}")
+            assert status.status_code == 200
+            job = status.json()
+            if job["status"] in {"completed", "failed", "needs_review", "cancelled"}:
+                break
+            time.sleep(0.01)
+
+        search = client.post(
+            "/documents/search",
+            json={"query": "traceable citation", "source_ids": ["async-guide"]},
+        )
+
+    assert legacy.status_code == 200
+    assert legacy.headers["deprecation"] == "true"
+    assert job["status"] == "completed"
+    assert job["result"]["version_id"]
+    assert search.status_code == 200
+    citation = search.json()["hits"][0]["citation"]
+    assert citation["citation_id"].startswith("cit_")
+    assert citation["content_sha256"] == job["result"]["content_sha256"]
+    assert citation["location"]["kind"] == "text"
+    assert citation["quote"] in search.json()["hits"][0]["text"]
+    import sqlite3
+
+    with sqlite3.connect(tmp_path / "state" / "rag_ingestion_jobs.sqlite3") as db:
+        schema_version = db.execute(
+            "SELECT schema_version FROM rag_ingestion_jobs WHERE job_id = ?",
+            (job["job_id"],),
+        ).fetchone()[0]
+    assert schema_version == 1
+
+
+def test_async_ingestion_job_not_found_is_explicit(tmp_path) -> None:
+    config = Settings(workspace_root=tmp_path, state_dir=tmp_path / "state", api_key="")
+    with TestClient(create_app(config)) as client:
+        missing = client.get("/rag/ingestions/ij_missing")
+        cancelled = client.post("/rag/ingestions/ij_missing/cancel")
+    assert missing.status_code == 404
+    assert cancelled.status_code == 404

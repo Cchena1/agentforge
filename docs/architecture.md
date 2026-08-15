@@ -277,15 +277,57 @@ Removal of unversioned compatibility is reserved for a future breaking release a
 
 ## 18. Deferred engineering work
 
-1. Durable ingestion jobs, worker leases, cancellation, progress, and restart recovery.
+1. Multi-process worker leases and distributed write coordination; v0.3 jobs are durable within the local SQLite/single-service deployment boundary.
 2. Orphan/retired-version retention and garbage collection.
-3. Distributed write coordination.
-4. Authentication middleware and trusted identity propagation into API and graph/tool execution.
-5. Representative parser fixtures and production OCR/table verification.
-6. Tokenizer-aware hierarchical chunks and parent-child retrieval.
-7. Dense+sparse retrieval, RRF, learned reranking, and typed fallback profiles.
-8. Evidence sufficiency, bounded corrective retrieval, abstention, and claim-level citation verification.
-9. A versioned representative golden dataset and release thresholds.
-10. Remote Qdrant and provider-backed integration verification.
+3. Authentication middleware and trusted identity propagation into API and graph/tool execution.
+4. Representative parser fixtures and production OCR/table verification, including true page-selective OCR replacement.
+5. Learned or provider-backed reranking; v0.3 uses deterministic reranking after Vector/Lexical/Metadata RRF.
+6. Claim-level evidence sufficiency and natural-language abstention policy; v0.3 validates citation identity and exact quote membership.
+7. A versioned representative golden dataset and release thresholds.
+8. Remote Qdrant and provider-backed integration verification.
 
 Architectural rationale and rejected alternatives are recorded in `docs/adr-006-rag-correctness-first.md`.
+
+## 19. Quality-gated document RAG implementation (v0.3)
+
+### Canonical ownership
+
+- `document_models.py` owns parser-neutral blocks, assets, attempts, quality reports, locations, and parent-child chunks.
+- `document_pipeline.py` owns parser adapters, deterministic quality routing, repeating page-artifact classification, and token-aware chunking.
+- `ingestion_jobs.py` owns durable asynchronous job state and restart recovery.
+- `rag.py` owns content identity, immutable candidate versions, embedding/index stages, active-version validation, and bounded corrective retrieval.
+- `vector_store.py` owns authorization-filtered Vector/Lexical/Metadata scoring, RRF fusion, deterministic reranking, and code-generated citations.
+
+### Dependency graph
+
+```mermaid
+flowchart LR
+    API["FastAPI ingestion API"] --> Jobs["IngestionJobManager"]
+    Jobs --> RAG["RAGService"]
+    RAG --> Parser["QualityGatedDocumentParser"]
+    Parser --> Docling["Docling primary"]
+    Parser --> OCR["PaddleOCR optional"]
+    Parser --> PyPDF["pypdf emergency"]
+    RAG --> Chunker["ParentChildChunker"]
+    RAG --> Embed["EmbeddingProvider"]
+    RAG --> Store["SQLite / Qdrant"]
+    RAG --> Registry["Version Registry"]
+    Store --> Citation["Validated Citation"]
+```
+
+The parser returns exactly one authoritative `ParsedDocument`; downstream modules never merge competing parser bodies. Job state, index state, and active-version state remain separately owned.
+
+### Bounded failure policy
+
+| Boundary | Maximum | Terminal behavior |
+|---|---:|---|
+| Parser attempts | 3/document | `needs_review` |
+| OCR route | disabled by default | no silent OCR claim |
+| Corrective retrieval | 2 additional queries | return verified evidence only |
+| Structured model repair | 1 repair after initial response | reject invalid output |
+| Agent steps | configured, default 8 | handoff/degraded response |
+| Repeated tool signature | configured, default 2 | stop loop |
+
+### Verification boundary
+
+The local suite validates routing, attempt bounds, table/header chunking, strict location schemas, asynchronous job completion, deprecation headers, immutable activation, and tenant/ACL filtering. It does not validate Docling/PaddleOCR extraction quality on a representative production corpus and does not perform load testing.

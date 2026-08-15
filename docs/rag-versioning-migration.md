@@ -156,3 +156,46 @@ The test suite covers:
 - active-version filtering in SQLite and Qdrant adapters.
 
 See `docs/rag-implementation-evidence.md` for exact commands and current results.
+
+## Asynchronous ingestion API migration (v0.3)
+
+The blocking `POST /documents/ingest` contract is now in the deprecation stage. It remains behavior-compatible in the 0.x line and adds these response headers:
+
+- `Deprecation: true`
+- `X-AgentForge-Migration: Use POST /rag/ingestions; removal is planned for v1.0.`
+
+The migration target is:
+
+```text
+POST /rag/ingestions
+GET  /rag/ingestions/{job_id}
+POST /rag/ingestions/{job_id}/cancel
+```
+
+Job states are `queued`, `parsing`, `quality_check`, `fallback`, `chunking`, `embedding`, `indexing`, `validating`, and one terminal state: `completed`, `failed`, `needs_review`, or `cancelled`.
+
+### State ownership
+
+- `rag_ingestion_jobs.sqlite3` owns job state and recovery.
+- `rag_registry.sqlite3` owns immutable document versions and the active pointer.
+- The vector store owns candidate chunks.
+- Modules communicate through explicit method calls and status events; they do not share mutable global state.
+
+### Migration stages
+
+1. **Deprecation (current v0.3):** both APIs are available; OpenAPI marks the blocking route deprecated.
+2. **Migration window (remaining 0.x releases):** external callers move to job creation and polling; compatibility tests remain active.
+3. **Removal (v1.0 or later):** removal requires a caller audit, release notes, a completed migration window, and updated contract tests. No removal is implemented now.
+
+### Failure and restart semantics
+
+- Non-terminal jobs are returned to `queued` during service initialization and restarted.
+- Cancellation is cooperative and cannot roll back an already activated version.
+- A failed parser, embedding provider, vector upsert, or validation phase does not move the active pointer.
+- The job database and version registry are separate persistence domains and should be backed up with the vector store for operational recovery.
+## v0.3 schema-version ownership
+
+- Canonical document/index metadata uses `document_schema_version=1`.
+- The document schema version participates in the pipeline profile and therefore in immutable `version_id` generation. A future incompatible canonical-model revision must rebuild a candidate version and activate it through the normal migration window; readers must not infer a conversion from old metadata.
+- `rag_ingestion_jobs.sqlite3` adds `schema_version INTEGER NOT NULL DEFAULT 1` through an additive startup migration. Existing v0.3-compatible rows receive version 1. A non-terminal row with an unsupported future version is marked `failed` rather than deserialized heuristically.
+- Removal of schema-1 readers is reserved for a documented breaking release after a migration and rebuild window.

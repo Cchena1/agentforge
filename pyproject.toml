@@ -1,6 +1,6 @@
 [project]
 name = "agentforge-service"
-version = "0.2.0"
+version = "0.3.0"
 description = "AgentForge: async, schema-first agent service with LangGraph, layered memory, RAG, retries and fallbacks."
 readme = "README.md"
 requires-python = ">=3.12,<3.15"
@@ -41,6 +41,7 @@ packages = ["src/agent_service"]
 
 [tool.pytest.ini_options]
 addopts = "-q"
+pythonpath = ["."]
 asyncio_mode = "auto"
 testpaths = ["tests"]
 

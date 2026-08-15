@@ -29,7 +29,7 @@ Redesign the demo into an evaluation-ready Agent engineering project while prese
 **Result**
 
 - Converted the demo into a typed, modular service with reproducible `uv.lock` dependency management and external-evaluator documentation.
-- Verified the current milestone with **47 passing tests**, **Ruff passing**, and **strict mypy passing across 17 source files**.
+- Verified the current milestone with **56 passing tests**, **Ruff passing**, and **strict mypy passing across 20 Python files**.
 - Preserved existing API fields while adding `version_id`, `content_sha256`, `idempotent`, and retrieval `index_versions` during a documented migration window.
 - Demonstrated failure-safe RAG behavior: readers continue using the previous complete version until a replacement is fully stored and activated.
 - Produced implementation, migration, ADR, dependency, and acceptance evidence suitable for code review and interview discussion.
@@ -41,13 +41,13 @@ Redesign the demo into an evaluation-ready Agent engineering project while prese
 - Implemented a **dependency-aware parallel tool DAG** with semaphores, `$ref` data flow, cycle detection, failure propagation, timeouts, and resource locks to prevent conflicting mutations.
 - Designed **layered memory and multi-agent isolation** using bounded session context, rolling summaries, user-namespaced vector memory, isolated worker context, and compressed citation-bearing results.
 - Delivered **failure-safe versioned RAG** with content hashing, pipeline-profile identity, idempotent ingestion, active-pointer switching, SQLite/Qdrant version filters, legacy-data migration, and source-level concurrency control.
-- Established executable evidence with **47 pytest cases, Ruff, strict mypy for 17 source files, migration/failure-injection tests, and a JSONL retrieval evaluator**, without claiming unperformed pressure testing.
+- Established executable evidence with **56 pytest cases, Ruff, strict mypy for 20 Python files, migration/failure-injection tests, and a JSONL retrieval evaluator**, without claiming unperformed pressure testing.
 
 ## 60-second interview introduction
 
 I started from an agent demo that could call an LLM but had none of the controls needed for reliable delivery. I separated graph state, memory, tools, model routing, and retrieval behind typed interfaces. The runtime is async end to end, and tool calls form a dependency DAG rather than an uncontrolled list. Pydantic validates every model-produced structure, while retry is limited to transient failures and fallback is explicit.
 
-The most important RAG change was not adding a fashionable retriever. I first fixed the evidence lifecycle. Each document build now has a deterministic content-and-pipeline version. Candidate chunks are stored invisibly, and a durable registry activates the new version only after storage succeeds. Failure-injection tests show that a failed replacement keeps the old version searchable, concurrent revisions do not race in one process, and old SQLite data migrates additively. I then added tenant-scoped source identity and ACL filtering at the storage boundary, with adversarial tests for cross-tenant reads, same-ID tenant isolation, legacy leakage, and authorization-before-scoring. I documented the remaining boundary honestly: authentication context still has to come from a trusted gateway, alongside durable ingestion jobs, remote Qdrant verification, and representative retrieval-quality evaluation.
+The most important RAG change was not adding a fashionable retriever. I first fixed the evidence lifecycle. Each document build now has a deterministic content-and-pipeline version. Candidate chunks are stored invisibly, and a durable registry activates the new version only after storage succeeds. Failure-injection tests show that a failed replacement keeps the old version searchable, concurrent revisions do not race in one process, and old SQLite data migrates additively. I then added tenant-scoped source identity and ACL filtering at the storage boundary, with adversarial tests for cross-tenant reads, same-ID tenant isolation, legacy leakage, and authorization-before-scoring. I documented the remaining boundary honestly: authentication context still has to come from a trusted gateway, while multi-process worker leasing, remote Qdrant verification, and representative retrieval-quality evaluation remain outside the verified boundary.
 
 ## Interview deep dives
 
@@ -81,7 +81,7 @@ Hash before parsing and hash again after parsing. If the values differ, reject t
 
 ### 8. What are the current limits?
 
-No pressure testing was performed. The golden file is only a schema example. Tenant/ACL filtering is functionally verified, but authentication and trusted identity propagation are external. Durable ingestion jobs, distributed writer coordination, orphan cleanup, production OCR quality, provider embedding quality, learned reranking, and remote Qdrant operation are not yet claimed.
+No pressure testing was performed. The golden file is only a schema example. Tenant/ACL filtering is functionally verified, but authentication and trusted identity propagation are external. Durable local SQLite ingestion jobs are implemented and functionally verified, but multi-process worker leasing, distributed writer coordination, orphan cleanup, production OCR quality, provider embedding quality, learned reranking, and remote Qdrant operation are not claimed.
 
 ## Evidence index
 
@@ -112,3 +112,11 @@ Do not claim:
 - complete claim-level citation verification.
 
 These boundaries make the resume narrative credible and provide clear follow-up engineering topics.
+
+## Document RAG engineering extension
+
+- Designed and implemented a quality-gated Docling/PaddleOCR/pypdf parser registry around a parser-neutral Canonical Document Model, preserving PDF/DOCX provenance, asset relationships, parser attempts, and deterministic quality reports.
+- Migrated blocking document ingestion toward a durable asynchronous job API with restart recovery, bounded concurrency, idempotent immutable versions, and atomic active-index activation.
+- Replaced character-only splitting with token-aware Parent-Child chunking, table row-group splitting, repeating header/footer exclusion, and structure-aware citation locations.
+- Added parallel Vector/Lexical/Metadata retrieval, RRF fusion, bounded corrective retrieval, exact-substring evidence quotes, and Pydantic-enforced citation contracts.
+- Expanded the regression suite to 56 tests while explicitly excluding pressure-test and unverified OCR-quality claims.

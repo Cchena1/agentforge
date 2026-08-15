@@ -4,7 +4,7 @@
 
 AgentForge 将早期单文件 Demo 重构为模块化、可验证、可降级的 Agent 工程基线。项目重点不是展示一段 Prompt，而是解决真实 Agent 系统中更容易失控的部分：数据契约、状态所有权、异步并发、工具依赖、失败恢复、上下文隔离、RAG 生命周期、租户权限、引用溯源和兼容迁移。
 
-> **最近一次验收：2026 年 8 月 14 日。** Ruff 检查通过；mypy strict 对 17 个源文件检查通过；pytest 共 47 项测试通过。RAG 测试覆盖版本生命周期、迁移、故障注入、Tenant/ACL 隔离、兼容性和并发语义。按照项目范围约定，**未进行压力测试、吞吐量测试或持续负载测试**。
+> **最近一次验收：2026 年 8 月 14 日。** Ruff 检查通过；mypy 对 20 个 Python 文件检查通过（19 个服务源文件 + 1 个离线评估脚本）；pytest 共 56 项测试通过。RAG 测试覆盖版本生命周期、迁移、故障注入、Tenant/ACL 隔离、兼容性和并发语义。按照项目范围约定，**未进行压力测试、吞吐量测试或持续负载测试**。
 
 ## 项目价值
 
@@ -234,106 +234,80 @@ flowchart LR
 
 ## RAG 工程流程
 
-RAG 分为 **Ingestion Plane** 和 **Retrieval Plane**。写入侧通过候选版本构建和原子激活确保失败替换不会破坏当前可用版本；检索侧先执行 Tenant/ACL 过滤，再进行向量与词法召回、融合、去重和引用生成。
+当前实现以“原文件是最终证据源、解析结果必须可回溯、低质量内容不得静默入库”为核心不变量。Markdown 只是派生产物；索引保存 Canonical Document Model 的 Block、结构锚点、Parser、内容哈希和 Active Version。
+
+### 文档解析与状态流转
 
 ```mermaid
-flowchart TB
-    subgraph Ingestion["Ingestion Plane：文档入库"]
-        File["TXT / Markdown / CSV / TSV / PDF"] --> Parse["解析文本、页码、表格和 Locator"]
-        Parse --> Scan{"扫描型 PDF?"}
-        Scan -->|是| OCR["Optional Docling<br/>OCR + Layout + Table"]
-        Scan -->|否| Normalize["内容规范化"]
-        OCR --> Normalize
-        Normalize --> Chunk["Semantic-first Chunking<br/>标题 / 段落 / 页面 / 表格行"]
-        Chunk --> FallbackChunk["字符预算 + Overlap Fallback"]
-        FallbackChunk --> Hash["Content SHA256 + Pipeline Profile"]
-        Hash --> Version["Deterministic Immutable Version ID"]
-        Version --> Embed["Hash 或 OpenAI-compatible Embedding"]
-        Embed --> Candidate["写入 Candidate Chunks"]
-        Candidate --> Persist{"向量持久化成功?"}
-        Persist -->|否| KeepOld["保留旧 Active Version"]
-        Persist -->|是| Activate["原子切换 Active Pointer"]
-    end
-
-    subgraph Retrieval["Retrieval Plane：查询与引用"]
-        Query["用户 Query + 可信 Tenant/Principals"] --> Auth["Tenant / ACL Pre-filter"]
-        Auth --> QEmbed["Query Embedding"]
-        QEmbed --> Vector["Vector Recall"]
-        Auth --> Lexical["Lexical Recall"]
-        Vector --> Fusion["Vector + Lexical Fusion"]
-        Lexical --> Fusion
-        Fusion --> Dedup["Deduplication"]
-        Dedup --> Rerank["Lightweight Reranking"]
-        Rerank --> TopK["Top-K Context"]
-        TopK --> Cite["Citation Assembly<br/>source / page / quote / score"]
-        Cite --> Snapshot["Authorized index_versions Snapshot"]
-        Snapshot --> Answer["Grounded Answer with Citations"]
-    end
-
-    Activate -.->|仅 Active Version 可见| Auth
+stateDiagram-v2
+    [*] --> DetectFormat
+    DetectFormat --> DoclingPDF: PDF
+    DetectFormat --> DoclingDOCX: DOCX
+    DetectFormat --> Builtin: TXT / MD / CSV / TSV
+    DetectFormat --> Reject: DOC / DOCM
+    DoclingPDF --> QualityGate
+    QualityGate --> Accepted: 质量合格
+    QualityGate --> PaddleOCR: 显式启用且需要 OCR
+    QualityGate --> PyPDF: 技术失败后的简单 PDF 降级
+    PaddleOCR --> PageQualityGate
+    PageQualityGate --> Accepted: OCR 输出合格
+    PageQualityGate --> ManualReview: 尝试达到上限
+    PyPDF --> SimpleGate
+    SimpleGate --> Accepted: 可恢复纯文本
+    SimpleGate --> ManualReview: 结构不足
+    DoclingDOCX --> WordQualityGate
+    WordQualityGate --> Accepted: 结构完整
+    WordQualityGate --> ManualReview: 证据不完整
+    Builtin --> Accepted
+    Accepted --> Chunking --> Embedding --> CandidateIndex --> Validate --> AtomicActivate
+    AtomicActivate --> [*]
 ```
 
-### 文档解析与 Chunking
+Parser 路由完全由代码和确定性质量指标控制，不允许 LLM 自行决定。单文档最多 3 次 Attempt；PaddleOCR 与 Cloud Fallback 默认关闭。每次 Attempt 记录 Parser、耗时、状态、质量分数、Warning 和 Failure Code；最终不合格时进入 `needs_review`，不会激活低质量索引。
 
-当前直接支持：
+### Canonical Model 与 Token-aware Parent-Child Chunking
 
-- TXT、Markdown
-- CSV、TSV
-- 文本型 PDF
-- 扫描型 PDF 检测
-- 可选 Docling OCR、Layout analysis 和复杂表格抽取
+- `ParsedDocument` 保存 Blocks、Assets、Relationships、Provenance、Attempts 和 Quality Report；Canonical/index metadata 显式携带 `document_schema_version=1`，并参与 Pipeline Profile 和不可变 Version ID 计算，后续不兼容版本必须重建后原子切换，禁止猜测式原地转换。
+- PDF Block 保存页码、Bounding Box、Reading Order 和 Block ID；DOCX 使用 Section、Heading Path、Paragraph/Table Anchor，不承诺稳定页码。
+- 高频页眉、页脚和页码保留在 Provenance 中，但默认不进入 Embedding。
+- Child 默认 Target 500 Tokens、Max 650 Tokens、Overlap 60 Tokens；检索命中后保留 Parent ID、标题路径和资产关系。
+- 表格不按字符从中间截断；超大表格按行组切片并重复表头。
 
-Chunking 不是单纯固定长度切片，而是：
+### 异步 Ingestion 与原子激活
 
-1. 优先按标题、段落、页面边界和表格行保留语义结构。
-2. 对超长 Block 再按字符预算切分。
-3. 通过 Overlap 保留跨块上下文。
-4. 每个 Chunk 保留 source、page/locator、chunk index 和版本 metadata。
+```mermaid
+flowchart LR
+    A["POST /rag/ingestions"] --> B["Durable SQLite Job"]
+    B --> C["queued"] --> D["parsing"] --> E["quality_check"]
+    E --> F["fallback"]
+    E --> G["chunking"]
+    F --> G --> H["embedding"] --> I["indexing"] --> J["validating"]
+    J --> K["atomic active-version switch"] --> L["completed"]
+    E --> M["needs_review"]
+    D --> N["failed"]
+    C --> O["cancelled"]
+```
 
-扫描型 PDF 若无法直接提取文本，会显式请求 OCR Fallback；默认测试只验证扫描件检测和 Fallback 信号，不宣称 OCR 质量。表格以语义 Block 保留行级结构，复杂布局可启用 `documents` extra 中的 Docling。
+`POST /rag/ingestions` 返回 `202`、`job_id` 与 `Location`；查询和取消分别使用 `GET /rag/ingestions/{job_id}` 与 `POST /rag/ingestions/{job_id}/cancel`。Job 状态存入独立 SQLite，非终态 Job 在进程重启后恢复为 `queued`。文件级并发由有界 `Semaphore` 控制，同一 `(tenant_id, source_id)` 仍串行构建；Candidate 未验证前不可见，失败不会移动 Active Pointer。旧 `POST /documents/ingest` 在 0.x 迁移窗口保留并返回 `Deprecation: true`，计划仅在 v1.0 或更晚 Breaking Release 删除。
 
-### Embedding 选型
+### 并行混合检索与 Citation Contract
 
-| 场景 | 推荐方案 | 取舍 |
-|---|---|---|
-| 离线测试、CI、零外部依赖 | Deterministic hash embedding | 可复现、无网络、无费用；不代表生产语义质量 |
-| 通用语义检索 | OpenAI-compatible embedding | 语义质量通常更好，但增加费用、网络延迟和供应商依赖 |
-| 强领域语料 | 先构建标注集再选择领域模型 | 必须用真实 Query 和文档评估，不能仅凭模型榜单决定 |
+```mermaid
+flowchart TD
+    Q["Query"] --> N["Normalization"]
+    N --> V["Vector Score"]
+    N --> K["Lexical Score"]
+    N --> M["Metadata / Structure Score"]
+    V --> RRF["RRF Fusion"]
+    K --> RRF
+    M --> RRF
+    RRF --> RR["Deterministic Rerank"] --> EV["Evidence Validator"]
+    EV -->|充分| C["Context Builder"] --> LLM["Generation"] --> CV["Citation Validator"] --> A["Grounded Answer"]
+    EV -->|不足且未达上限| CR["Corrective Retrieval"] --> N
+    EV -->|达到上限| AB["Abstain / Manual Review"]
+```
 
-Embedding 差异必须在同一 Chunk、同一语料和同一授权过滤条件下，用 Recall@K、MRR、nDCG 和 Citation 指标比较。当前仓库只提供 evaluator 契约样例，不对生产检索质量作无证据声明。
-
-### Vector Store 与索引策略
-
-| Backend | 使用场景 | 索引与过滤特点 |
-|---|---|---|
-| SQLite | 本地 Demo、小规模语料、确定性验收 | Exact vector search、零额外服务、便于调试和迁移验证 |
-| Qdrant | 更大语料、需要 ANN 与 metadata filtering | HNSW、Tenant/ACL filter、独立服务部署 |
-
-SQLite 在向量解码和评分前执行授权过滤；Qdrant 将 Tenant/ACL 条件放入向量查询 Filter。未经授权的 Chunk 不参与候选评分，相关 `index_versions` 也不会泄漏。
-
-### Reranking 与引用生成
-
-当前默认使用轻量级 vector/lexical fusion，而不是 Cross-Encoder：
-
-1. 分别获得 vector 与 lexical 信号。
-2. 融合分数并对重复 Chunk 去重。
-3. 选择 Top-K 上下文。
-4. 返回结构化 Citation，包括来源、Chunk、页码或 Locator、Quote、Score。
-5. 同时返回本次检索实际使用的授权 Active Version 快照。
-
-若引入 Cross-Encoder，应先在领域标注集上证明质量收益能够覆盖新增延迟、模型成本和运维复杂度。
-
-### RAG 版本生命周期与一致性
-
-- `content_sha256 + pipeline profile` 生成确定性版本标识。
-- 相同内容和 Pipeline 重复入库具有 idempotency。
-- Candidate Chunk 在激活前不可被检索。
-- Vector 持久化完成后才原子切换 Active Pointer。
-- 新版本写入失败时，旧 Active Version 继续可用。
-- 同一 `(tenant_id, source_id)` 的写入串行化，不同 Source 可异步重叠。
-- 检索响应通过 `index_versions` 标记实际使用的版本快照。
-- 旧 public-tenant 表在 0.x 迁移窗口内保留并 dual-write，支持回滚。
-
+Vector、Lexical、Metadata 三个本地评分分支使用 `asyncio.TaskGroup` 并行计算，Fusion 等待依赖完成，Corrective Retrieval 最多 2 轮。任一独立评分分支失败时，其余分支继续工作，响应通过 `degraded_retrieval` 和具体 Warning 暴露降级；全部分支失败才终止请求。Citation 由代码从证据构造，`quote` 必须是原 Chunk 的精确子串，并校验 `source_id`、`chunk_id`、`content_sha256`、Parser、结构位置与 Active Version。文档和 Tool 输出均视为不可信数据，不能改变系统指令、工具策略或 Tenant/Principal 授权上下文。
 ## 能力—证据矩阵
 
 | 评估项 | 已实现方案 | 主要代码或测试证据 |
@@ -469,6 +443,19 @@ uv sync --all-groups --extra documents
 AI_AGENT_FALLBACK_ROUTES_JSON=[{"name":"backup","model":"backup-model","base_url":"https://example.com/v1","api_key":"replace-me","timeout_seconds":45,"max_attempts":2}]
 ```
 
+### 文档 RAG 新增配置（v0.3）
+
+| 变量 | 默认值 | 说明 |
+|---|---:|---|
+| `AI_AGENT_RAG_OCR_ENABLED` | `false` | 启用 PaddleOCR Adapter；未安装审核过的 OCR Profile 时不得开启 |
+| `AI_AGENT_RAG_CLOUD_FALLBACK_ENABLED` | `false` | 仅保留边界；v0.3 开启会被 Pydantic 拒绝 |
+| `AI_AGENT_RAG_PARSER_MAX_ATTEMPTS` | `3` | 单文档 Attempt 上限，范围 1–3 |
+| `AI_AGENT_RAG_INGESTION_PARALLELISM` | `2` | 单进程 Ingestion Job 并发上限 |
+| `AI_AGENT_RAG_CHUNK_TARGET_TOKENS` | `500` | Child 目标 Token |
+| `AI_AGENT_RAG_CHUNK_MAX_TOKENS` | `650` | Child 最大 Token |
+| `AI_AGENT_RAG_CHUNK_OVERLAP_TOKENS` | `60` | 连续正文 Overlap |
+
+Pydantic 在启动前验证 `overlap < target <= max`。
 ## API 契约
 
 ### `POST /chat`
@@ -510,6 +497,14 @@ AI_AGENT_FALLBACK_ROUTES_JSON=[{"name":"backup","model":"backup-model","base_url
 
 授权语义在 Tenant 内 fail-closed：文档 ACL 非空时必须与调用方 Principals 相交。请求中的 Tenant/Principal 是授权上下文契约，不是身份认证机制；生产环境必须由可信 Gateway 或 Identity Middleware 注入，不能直接信任终端用户声明。面向模型的 `search_knowledge` Tool 固定绑定 public tenant，模型不能自行选择授权范围。
 
+### 异步文档写入（推荐）
+
+- `POST /rag/ingestions`：创建 Durable Job，返回 202。
+- `GET /rag/ingestions/{job_id}`：读取状态、阶段、结果或错误。
+- `POST /rag/ingestions/{job_id}/cancel`：取消非终态 Job。
+- `POST /documents/ingest`：0.x 兼容接口，已标记 Deprecated。
+
+Citation 在兼容字段之外新增 `citation_id`、结构化 `location`、`content_sha256` 和 `parser`。
 ## 质量门禁与复现命令
 
 ```powershell
@@ -525,8 +520,8 @@ node --check server.js
 
 ```text
 Ruff:  all checks passed
-mypy:  success, no issues in 17 source files
-pytest: 47 passed, 1 warning
+mypy:  success, no issues in 20 source files
+pytest: 56 passed, 1 warning
 RAG evaluator: 2 schema-valid example queries; no quality claim
 Node:  public/app.js 与 server.js syntax check 通过
 PowerShell: run.ps1 解析通过
@@ -578,9 +573,11 @@ PowerShell: run.ps1 解析通过
 
 ### Result
 
-将原始 Demo 重构为模块化 AgentForge 服务；正式实现拆分为 17 个类型检查源文件；建立 47 项自动化测试，覆盖正常路径、失败恢复、并发语义、RAG 迁移和 Tenant/ACL 隔离；最近一次验收中 Ruff、mypy strict、pytest 和 JavaScript syntax check 均通过。项目不虚构压力测试和生产检索质量数据，明确记录当前证据边界。
+将原始 Demo 重构为模块化 AgentForge 服务；核心服务拆分为 19 个类型检查源文件，并对 1 个离线评估脚本执行同级检查；建立 56 项自动化测试，覆盖正常路径、失败恢复、并发语义、RAG 迁移和 Tenant/ACL 隔离；最近一次验收中 Ruff、mypy strict、pytest 和 JavaScript syntax check 均通过。项目不虚构压力测试和生产检索质量数据，明确记录当前证据边界。
 
 ## 评估范围与已知限制
+> 文档 RAG 验证边界：当前 56 项自动化测试覆盖路由、Attempt 上限、结构切片、异步 Job、版本一致性、ACL 与 Citation Schema；当前环境尚未安装 Docling/PaddleOCR 可选运行时，因此未声明真实复杂 PDF/DOCX/OCR 的 Recall@5 或 Citation Precision 指标。未进行任何压力测试。
+
 
 1. **未进行压力测试。** 当前并发测试只验证并发语义和时间重叠，不声明吞吐量、饱和点、p95/p99 Latency 或长时间稳定性。
 2. 验收未使用生产模型凭据，因此未覆盖真实 Provider 的 Function Calling 差异、Rate Limit 和跨 Provider Fallback。

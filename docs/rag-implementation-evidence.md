@@ -82,3 +82,48 @@ Results are updated in the root `README.md` after the target copy is verified.
 - Parser profile identity is conservative and can trigger re-ingestion when optional parser package versions change.
 - Remote Qdrant operation, production OCR quality, provider embeddings, and learned reranking are not verified.
 - The example golden file is not representative enough to set release thresholds.
+
+## Document RAG v0.3 milestone evidence (2026-08-14)
+
+### Implemented
+
+- Parser-neutral Canonical Document Model with PDF/DOCX/text locations, assets, parser attempts, and quality reports.
+- Docling primary adapter, optional PaddleOCR adapter, bounded pypdf fallback, and explicit DOC/DOCM rejection.
+- Deterministic quality gate; low-quality output raises `DocumentNeedsReviewError` and is not activated.
+- Token-aware Parent-Child chunking with page artifact exclusion and table row-group splitting with repeated headers.
+- Durable asynchronous ingestion jobs with create/get/cancel APIs, restart recovery, bounded parallelism, and stage events.
+- Additive deprecation of the blocking ingestion API.
+- Parallel local Vector/Lexical/Metadata scoring with RRF fusion and deterministic rerank.
+- Code-generated citations containing exact evidence quotes, structured locations, content hashes, parser identity, and active-version checks.
+- Cross-field Pydantic settings validation and strict citation location validation.
+
+### Claim-to-test map
+
+| Claim | Evidence |
+|---|---|
+| Fallback selects one authoritative parser and stops after acceptance | `test_quality_gate_uses_one_authoritative_fallback_and_records_attempts` |
+| Parser retries are bounded and low-quality evidence is not accepted | `test_parser_attempts_are_bounded_and_low_quality_content_is_not_indexable` |
+| DOC/DOCM are rejected explicitly | `test_unsafe_or_legacy_word_formats_are_explicitly_rejected` |
+| Headers/page numbers are excluded and table headers survive splits | `test_parent_child_chunking_excludes_page_artifacts_and_preserves_table_headers` |
+| Wrong-typed provenance is rejected before business logic | `test_citation_schema_rejects_missing_or_wrong_typed_pdf_provenance` |
+| Async job completes and blocking route exposes deprecation | `test_async_ingestion_job_api_completes_and_legacy_route_is_deprecated` |
+| Missing jobs are explicit 404s | `test_async_ingestion_job_not_found_is_explicit` |
+| Failed replacement preserves the active version | `test_failed_replacement_keeps_previous_version_searchable` |
+| Unauthorized content is removed before scoring | `test_sqlite_authorization_filter_runs_before_vector_decoding` |
+
+### Latest local verification
+
+```text
+ruff check src tests: all checks passed
+mypy src scripts: success, no issues found in 20 source files
+pytest -q -p no:cacheprovider: 56 passed, 1 Starlette/httpx deprecation warning
+pressure/load testing: not performed by design
+```
+
+### Not yet verified
+
+- Real Docling PDF/DOCX extraction in this environment.
+- PaddleOCR installation, page-level selective OCR, and real Chinese scan quality.
+- Representative Recall@5, Citation Precision, abstention-rate, and complex-document regression thresholds.
+- Remote Qdrant persistence/index tuning and any cloud parser provider.
+- `tests/test_rag.py::test_retrieval_degrades_when_one_scoring_branch_fails` proves that an isolated Vector scoring failure preserves Lexical/Metadata retrieval and emits a typed degradation warning.

@@ -217,6 +217,15 @@ async def test_rag_semantic_chunks_and_returns_citations(tmp_path) -> None:
     assert response.hits[0].citation.chunk_id
     assert response.index_versions[ingested.source_id] == ingested.version_id
     assert response.latency_ms >= 0
+    with sqlite3.connect(tmp_path / "rag.sqlite3") as db:
+        metadata = json.loads(
+            db.execute(
+                "SELECT metadata_json FROM document_chunks WHERE version_id = ? LIMIT 1",
+                (ingested.version_id,),
+            ).fetchone()[0]
+        )
+    assert metadata["document_schema_version"] == 1
+    assert metadata["pipeline_profile"].startswith("document_schema=1|")
 
 
 @pytest.mark.asyncio
@@ -792,3 +801,26 @@ async def test_acl_version_identity_uses_unambiguous_canonical_encoding(tmp_path
     )
 
     assert combined.version_id != split.version_id
+
+
+@pytest.mark.asyncio
+async def test_retrieval_degrades_when_one_scoring_branch_fails(
+    tmp_path, monkeypatch
+) -> None:
+    import agent_service.vector_store as vector_store_module
+
+    rag = build_rag(tmp_path)
+    (tmp_path / "guide.md").write_text(
+        "Retry fallback evidence remains searchable.", encoding="utf-8"
+    )
+    await rag.ingest(DocumentIngestRequest(file_path="guide.md", source_id="guide"))
+
+    def fail_vector_branch(*args, **kwargs):
+        raise ValueError("simulated vector scorer failure")
+
+    monkeypatch.setattr(vector_store_module, "_vector_scores", fail_vector_branch)
+    response = await rag.retrieve("retry fallback evidence", 5, source_ids=["guide"])
+
+    assert response.hits
+    assert response.degraded_retrieval is True
+    assert "degraded_retrieval:vector:ValueError" in response.warnings

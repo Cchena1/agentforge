@@ -25,6 +25,7 @@ The top-level legacy demo files are compatibility artifacts, not the architectur
 | `docs/rag-engineering-plan.md` | Research-backed target architecture and phased roadmap |
 | `docs/adr-006-rag-correctness-first.md` | First-principles and adversarial RAG decision |
 | `docs/adr-007-rag-authorization-boundary.md` | Tenant/ACL identity, trust boundary, pre-scoring enforcement, and migration decision |
+| `docs/adr-008-document-parser-routing.md` | Quality-gated Docling/PaddleOCR/pypdf parser routing and license boundaries |
 | `docs/rag-versioning-migration.md` | Persistent-format compatibility, migration, and rollback |
 | `docs/rag-evaluation-contract.md` | Versioned golden-query schema and metric rules |
 | `docs/rag-implementation-evidence.md` | Claim-to-test evidence and known limits |
@@ -44,7 +45,10 @@ The top-level legacy demo files are compatibility artifacts, not the architectur
 | `tools/` | Function-calling registry and dependency-aware async executor |
 | `memory.py` | Session-scoped short-term and namespaced long-term memory |
 | `multi_agent.py` | Isolated parallel workers and compressed results |
-| `documents.py` | Parsing, scan detection, table preservation, and chunks |
+| `documents.py` | Legacy parser/chunker compatibility during the migration window |
+| `document_models.py` | Parser-neutral canonical blocks, assets, attempts, quality, and chunks |
+| `document_pipeline.py` | Parser registry, deterministic quality gate, fallbacks, and parent-child chunking |
+| `ingestion_jobs.py` | Durable asynchronous ingestion job state and restart recovery |
 | `embeddings.py` | Embedding profiles and validation |
 | `rag.py` | Versioned ingestion, retrieval, and citations |
 | `rag_registry.py` | Durable lifecycle and active-version pointers |
@@ -53,7 +57,7 @@ The top-level legacy demo files are compatibility artifacts, not the architectur
 ## Verification path for external reviewers
 
 1. Read the root `README.md` capability matrix.
-2. Inspect `docs/adr-006-rag-correctness-first.md` for the RAG engineering rationale.
+2. Inspect `docs/adr-006-rag-correctness-first.md` and `docs/adr-008-document-parser-routing.md` for the RAG engineering rationale and parser decision.
 3. Inspect `docs/rag-implementation-evidence.md` for executable claims.
 4. Run pytest, Ruff, mypy, JavaScript syntax checks, and the RAG contract evaluator.
 5. Review known limitations before treating any design-stage feature as implemented.

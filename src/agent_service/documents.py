@@ -11,6 +11,8 @@ from typing import Any, ClassVar, Protocol
 
 from pypdf import PdfReader
 
+from .document_models import CANONICAL_DOCUMENT_SCHEMA_VERSION
+
 
 def _package_version(distribution: str) -> str:
     try:
@@ -33,6 +35,7 @@ class ParsedDocument:
     blocks: list[ParsedBlock]
     parser: str
     warnings: list[str] = field(default_factory=list)
+    schema_version: int = CANONICAL_DOCUMENT_SCHEMA_VERSION
 
 
 @dataclass(slots=True)
