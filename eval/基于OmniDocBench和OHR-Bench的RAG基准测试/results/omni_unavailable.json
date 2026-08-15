@@ -1,0 +1,7 @@
+[
+  {
+    "stratum": "english_exam_multicolumn",
+    "image_name": "docstructbench_llm-raw-the-eye-o.O-Character%20Sheet%20-%20Form%20Fillable.pdf_2.jpg",
+    "error": "404 Client Error: Not Found for url: https://huggingface.co/datasets/opendatalab/OmniDocBench/resolve/main/images/docstructbench_llm-raw-the-eye-o.O-Character%20Sheet%20-%20Form%20Fillable.pdf_2.jpg?download=true"
+  }
+]

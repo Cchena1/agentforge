@@ -1,0 +1,8133 @@
+[
+  {
+    "qa_id": "01139f6f-ec0a-4b3d-8bf5-e9fa5b54dfb1",
+    "domain": "administration",
+    "evidence_source": "text",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-031",
+      "ohr-032"
+    ],
+    "hit_source_ids": [
+      "ohr-077",
+      "ohr-078",
+      "ohr-079",
+      "ohr-077",
+      "ohr-031"
+    ],
+    "first_relevant_rank": 5,
+    "latency_ms": 360.278100008145,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "03848bb1-b073-466e-b28e-90e293468a46",
+    "domain": "academic",
+    "evidence_source": "text",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-012",
+      "ohr-013"
+    ],
+    "hit_source_ids": [
+      "ohr-013",
+      "ohr-014",
+      "ohr-018",
+      "ohr-011",
+      "ohr-019"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 315.0563999952283,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "138eadb6-e460-4675-8278-b8db900caefd",
+    "domain": "finance",
+    "evidence_source": "table",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-059"
+    ],
+    "hit_source_ids": [
+      "ohr-059",
+      "ohr-057",
+      "ohr-059",
+      "ohr-060",
+      "ohr-078"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 289.44930000579916,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "139e5ca2-b9e7-4780-821c-f26265739938",
+    "domain": "finance",
+    "evidence_source": "text",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-056"
+    ],
+    "hit_source_ids": [
+      "ohr-051",
+      "ohr-055",
+      "ohr-056",
+      "ohr-057",
+      "ohr-052"
+    ],
+    "first_relevant_rank": 3,
+    "latency_ms": 273.05829999386333,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "14318eb0-9a04-4183-81f1-35fb8968e5e1",
+    "domain": "finance",
+    "evidence_source": "table",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-049"
+    ],
+    "hit_source_ids": [
+      "ohr-057",
+      "ohr-109",
+      "ohr-049",
+      "ohr-057",
+      "ohr-121"
+    ],
+    "first_relevant_rank": 3,
+    "latency_ms": 268.93079999717884,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "143a863b-a651-4b48-a0f1-f143a529c5c4",
+    "domain": "finance",
+    "evidence_source": "table",
+    "answer_form": "Free-form",
+    "relevant_source_ids": [
+      "ohr-049"
+    ],
+    "hit_source_ids": [
+      "ohr-078",
+      "ohr-055",
+      "ohr-078",
+      "ohr-057",
+      "ohr-056"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 267.9665999894496,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "143f5774-4b97-4969-8d1a-1119f04ccd77",
+    "domain": "finance",
+    "evidence_source": "table",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-049"
+    ],
+    "hit_source_ids": [
+      "ohr-049",
+      "ohr-050",
+      "ohr-050",
+      "ohr-051",
+      "ohr-056"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 258.46549999550916,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "1450e2ed-3da1-44bc-b565-e82a79a975ca",
+    "domain": "finance",
+    "evidence_source": "table",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-060"
+    ],
+    "hit_source_ids": [
+      "ohr-078",
+      "ohr-078",
+      "ohr-057",
+      "ohr-077",
+      "ohr-057"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 271.4550999808125,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "14593a40-d5a4-4471-969c-8c1e9650f418",
+    "domain": "finance",
+    "evidence_source": "table",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-059"
+    ],
+    "hit_source_ids": [
+      "ohr-059",
+      "ohr-111",
+      "ohr-107",
+      "ohr-014",
+      "ohr-059"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 260.97169998683967,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "1480f037-d39a-4bb0-962b-68d41880fa4b",
+    "domain": "finance",
+    "evidence_source": "formula",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-058"
+    ],
+    "hit_source_ids": [
+      "ohr-057",
+      "ohr-055",
+      "ohr-057",
+      "ohr-069",
+      "ohr-109"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 268.2765999925323,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "14827a89-5e63-44c6-b0ac-79dd0b5aafef",
+    "domain": "finance",
+    "evidence_source": "table",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-058"
+    ],
+    "hit_source_ids": [
+      "ohr-057",
+      "ohr-056",
+      "ohr-051",
+      "ohr-055",
+      "ohr-059"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 272.1390000078827,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "148680de-b9e7-49c6-96f4-8941ad283c0d",
+    "domain": "finance",
+    "evidence_source": "table",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-058"
+    ],
+    "hit_source_ids": [
+      "ohr-078",
+      "ohr-079",
+      "ohr-056",
+      "ohr-050",
+      "ohr-078"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 270.6291000067722,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "148a23d2-ad09-4b96-980b-9ba8a0013df0",
+    "domain": "finance",
+    "evidence_source": "table",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-057"
+    ],
+    "hit_source_ids": [
+      "ohr-057",
+      "ohr-057",
+      "ohr-078",
+      "ohr-077",
+      "ohr-078"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 310.6975000118837,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "148b2758-d7ab-4928-89e4-69e6ec62b2c8",
+    "domain": "finance",
+    "evidence_source": "table",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-057"
+    ],
+    "hit_source_ids": [
+      "ohr-057",
+      "ohr-078",
+      "ohr-078",
+      "ohr-077",
+      "ohr-079"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 255.2912999817636,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "1493c30f-de9a-48b8-a40b-bb28c322b4ff",
+    "domain": "finance",
+    "evidence_source": "table",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-057"
+    ],
+    "hit_source_ids": [
+      "ohr-057",
+      "ohr-057",
+      "ohr-055",
+      "ohr-078",
+      "ohr-078"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 266.82739998796023,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "19e14e1c-7d72-4b88-8b18-570b864364a8",
+    "domain": "law",
+    "evidence_source": "text",
+    "answer_form": "Yes/No",
+    "relevant_source_ids": [
+      "ohr-082"
+    ],
+    "hit_source_ids": [
+      "ohr-080",
+      "ohr-082",
+      "ohr-079",
+      "ohr-080",
+      "ohr-081"
+    ],
+    "first_relevant_rank": 2,
+    "latency_ms": 256.8835999991279,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "19faa06e-0c0a-4967-b579-501a62fda854",
+    "domain": "law",
+    "evidence_source": "text",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-086"
+    ],
+    "hit_source_ids": [
+      "ohr-077",
+      "ohr-079",
+      "ohr-078",
+      "ohr-080",
+      "ohr-082"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 254.81400001444854,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "1a00cb00-31f1-44f4-8c9d-c9a84da3ea8f",
+    "domain": "law",
+    "evidence_source": "text",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-086"
+    ],
+    "hit_source_ids": [
+      "ohr-086",
+      "ohr-084",
+      "ohr-084",
+      "ohr-078",
+      "ohr-069"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 277.6721000263933,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "1a13a2e2-5064-49fe-a6bd-df899e688137",
+    "domain": "law",
+    "evidence_source": "text",
+    "answer_form": "Yes/No",
+    "relevant_source_ids": [
+      "ohr-081"
+    ],
+    "hit_source_ids": [
+      "ohr-109",
+      "ohr-040",
+      "ohr-039",
+      "ohr-082",
+      "ohr-081"
+    ],
+    "first_relevant_rank": 5,
+    "latency_ms": 267.56579999346286,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "1a266e6c-0f03-4ad4-820d-8a8fe5c7120e",
+    "domain": "law",
+    "evidence_source": "text",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-085"
+    ],
+    "hit_source_ids": [
+      "ohr-060",
+      "ohr-085",
+      "ohr-126",
+      "ohr-146",
+      "ohr-111"
+    ],
+    "first_relevant_rank": 2,
+    "latency_ms": 272.7080000040587,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "1a34e471-f038-4e07-9d55-932c7f41f949",
+    "domain": "law",
+    "evidence_source": "text",
+    "answer_form": "Yes/No",
+    "relevant_source_ids": [
+      "ohr-085"
+    ],
+    "hit_source_ids": [
+      "ohr-074",
+      "ohr-082",
+      "ohr-085",
+      "ohr-079",
+      "ohr-083"
+    ],
+    "first_relevant_rank": 3,
+    "latency_ms": 253.5613999934867,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "1a47b4a9-ffb4-4662-944d-b1d2243974b8",
+    "domain": "law",
+    "evidence_source": "text",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-083"
+    ],
+    "hit_source_ids": [
+      "ohr-083",
+      "ohr-085",
+      "ohr-082",
+      "ohr-086",
+      "ohr-083"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 267.9305999772623,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "1a54acb2-265a-4190-95b1-f1c6059251e1",
+    "domain": "law",
+    "evidence_source": "text",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-084"
+    ],
+    "hit_source_ids": [
+      "ohr-086",
+      "ohr-084",
+      "ohr-041",
+      "ohr-078",
+      "ohr-069"
+    ],
+    "first_relevant_rank": 2,
+    "latency_ms": 261.3392999919597,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "1a54b019-4aef-436d-9f0e-b872f6dfafe1",
+    "domain": "law",
+    "evidence_source": "text",
+    "answer_form": "Yes/No",
+    "relevant_source_ids": [
+      "ohr-084"
+    ],
+    "hit_source_ids": [
+      "ohr-084",
+      "ohr-079",
+      "ohr-078",
+      "ohr-080",
+      "ohr-078"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 275.51259999745525,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "1a876490-6bc0-47af-b348-d420b6605c8d",
+    "domain": "law",
+    "evidence_source": "text",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-087"
+    ],
+    "hit_source_ids": [
+      "ohr-079",
+      "ohr-079",
+      "ohr-081",
+      "ohr-078",
+      "ohr-080"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 303.0890999943949,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "1a8e75a0-d905-4a48-a7f0-398110237a0f",
+    "domain": "law",
+    "evidence_source": "text",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-087"
+    ],
+    "hit_source_ids": [
+      "ohr-078",
+      "ohr-079",
+      "ohr-080",
+      "ohr-087",
+      "ohr-078"
+    ],
+    "first_relevant_rank": 4,
+    "latency_ms": 275.43119998881593,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "1a8fbfdb-a941-404b-bb42-a6d69ecc67c8",
+    "domain": "law",
+    "evidence_source": "text",
+    "answer_form": "Yes/No",
+    "relevant_source_ids": [
+      "ohr-087"
+    ],
+    "hit_source_ids": [
+      "ohr-084",
+      "ohr-087",
+      "ohr-083",
+      "ohr-086",
+      "ohr-085"
+    ],
+    "first_relevant_rank": 2,
+    "latency_ms": 272.0645999943372,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "232f3fae-cbe4-45f7-b702-8e97005161c1",
+    "domain": "law",
+    "evidence_source": "text",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-079"
+    ],
+    "hit_source_ids": [
+      "ohr-078",
+      "ohr-077",
+      "ohr-079",
+      "ohr-078",
+      "ohr-147"
+    ],
+    "first_relevant_rank": 3,
+    "latency_ms": 271.3899999798741,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "234bbe59-7ec8-452d-9e2d-2fb4fdfd610a",
+    "domain": "law",
+    "evidence_source": "text",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-077"
+    ],
+    "hit_source_ids": [
+      "ohr-077",
+      "ohr-078",
+      "ohr-078",
+      "ohr-079",
+      "ohr-077"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 279.54079999472015,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "234e8815-30ff-44f6-a876-826d9173c6c9",
+    "domain": "law",
+    "evidence_source": "text",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-077"
+    ],
+    "hit_source_ids": [
+      "ohr-078",
+      "ohr-055",
+      "ohr-077",
+      "ohr-077",
+      "ohr-039"
+    ],
+    "first_relevant_rank": 3,
+    "latency_ms": 281.9630000158213,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "2359698f-3a98-4017-87de-5502f74f31a7",
+    "domain": "law",
+    "evidence_source": "text",
+    "answer_form": "Yes/No",
+    "relevant_source_ids": [
+      "ohr-077"
+    ],
+    "hit_source_ids": [
+      "ohr-077",
+      "ohr-077",
+      "ohr-078",
+      "ohr-078",
+      "ohr-079"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 281.0923999932129,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "2367ad9e-8dcd-4d64-b9e8-e4ee8b7f6d7a",
+    "domain": "law",
+    "evidence_source": "text",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-080"
+    ],
+    "hit_source_ids": [
+      "ohr-077",
+      "ohr-078",
+      "ohr-080",
+      "ohr-079",
+      "ohr-078"
+    ],
+    "first_relevant_rank": 3,
+    "latency_ms": 264.41390000400133,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "237f91cb-cc28-4e3d-9db0-2d929f141ca2",
+    "domain": "law",
+    "evidence_source": "text",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-080"
+    ],
+    "hit_source_ids": [
+      "ohr-080",
+      "ohr-077",
+      "ohr-079",
+      "ohr-078",
+      "ohr-078"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 286.90049998112954,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "238b0af3-cf0d-49bb-92a7-d8b4bdd8c3c3",
+    "domain": "law",
+    "evidence_source": "text",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-080"
+    ],
+    "hit_source_ids": [
+      "ohr-077",
+      "ohr-078",
+      "ohr-080",
+      "ohr-079",
+      "ohr-078"
+    ],
+    "first_relevant_rank": 3,
+    "latency_ms": 269.06140000210144,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "23a59293-3ffe-4e99-9fe5-162e9a726e89",
+    "domain": "law",
+    "evidence_source": "text",
+    "answer_form": "Yes/No",
+    "relevant_source_ids": [
+      "ohr-078"
+    ],
+    "hit_source_ids": [
+      "ohr-078",
+      "ohr-078",
+      "ohr-079",
+      "ohr-077",
+      "ohr-060"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 275.426799984416,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "26d30fca-62f8-437a-a066-cae8f3e3c451",
+    "domain": "law",
+    "evidence_source": "text",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-070"
+    ],
+    "hit_source_ids": [
+      "ohr-078",
+      "ohr-069",
+      "ohr-146",
+      "ohr-087",
+      "ohr-079"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 330.1792000129353,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "26d700e8-eb97-45d4-8cf7-bf47fa077600",
+    "domain": "law",
+    "evidence_source": "text",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-070"
+    ],
+    "hit_source_ids": [
+      "ohr-070",
+      "ohr-023",
+      "ohr-078",
+      "ohr-070",
+      "ohr-069"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 265.8023999829311,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "26fc574c-358d-4e42-ad1e-054f5fb786f4",
+    "domain": "law",
+    "evidence_source": "text",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-071"
+    ],
+    "hit_source_ids": [
+      "ohr-071",
+      "ohr-071",
+      "ohr-068",
+      "ohr-069",
+      "ohr-074"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 281.60429999115877,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "2719a4b7-8186-4a79-870b-93875ae83c9a",
+    "domain": "law",
+    "evidence_source": "text",
+    "answer_form": "Yes/No",
+    "relevant_source_ids": [
+      "ohr-076"
+    ],
+    "hit_source_ids": [
+      "ohr-076",
+      "ohr-079",
+      "ohr-111",
+      "ohr-057",
+      "ohr-111"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 268.9910999906715,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "271e2d2f-62eb-405a-8e67-df6eae3c944e",
+    "domain": "law",
+    "evidence_source": "text",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-076"
+    ],
+    "hit_source_ids": [
+      "ohr-145",
+      "ohr-078",
+      "ohr-069",
+      "ohr-024",
+      "ohr-057"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 258.670399984112,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "2728806c-d70b-4671-a0b6-d54703fed939",
+    "domain": "law",
+    "evidence_source": "text",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-069"
+    ],
+    "hit_source_ids": [
+      "ohr-077",
+      "ohr-079",
+      "ohr-074",
+      "ohr-067",
+      "ohr-069"
+    ],
+    "first_relevant_rank": 5,
+    "latency_ms": 264.4084999919869,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "2776c381-3ab4-4e25-bc22-e39e36283e54",
+    "domain": "law",
+    "evidence_source": "text",
+    "answer_form": "Yes/No",
+    "relevant_source_ids": [
+      "ohr-075"
+    ],
+    "hit_source_ids": [
+      "ohr-077",
+      "ohr-078",
+      "ohr-080",
+      "ohr-079",
+      "ohr-080"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 263.42629999271594,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "27836433-60c3-446c-bc6b-f04b5a3d4eac",
+    "domain": "law",
+    "evidence_source": "text",
+    "answer_form": "Yes/No",
+    "relevant_source_ids": [
+      "ohr-068"
+    ],
+    "hit_source_ids": [
+      "ohr-068",
+      "ohr-071",
+      "ohr-040",
+      "ohr-039",
+      "ohr-039"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 277.20129999215715,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "2789e561-747a-439a-aadf-28328271b43b",
+    "domain": "law",
+    "evidence_source": "text",
+    "answer_form": "Yes/No",
+    "relevant_source_ids": [
+      "ohr-068"
+    ],
+    "hit_source_ids": [
+      "ohr-068",
+      "ohr-068",
+      "ohr-085",
+      "ohr-072",
+      "ohr-069"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 273.31129999947734,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "27a80347-2150-4b63-a4c2-5a9d9d7928fa",
+    "domain": "law",
+    "evidence_source": "text",
+    "answer_form": "Yes/No",
+    "relevant_source_ids": [
+      "ohr-067"
+    ],
+    "hit_source_ids": [
+      "ohr-067",
+      "ohr-078",
+      "ohr-079",
+      "ohr-078",
+      "ohr-079"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 273.3606999972835,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "27b22a70-a945-4a96-a123-9c7249ace049",
+    "domain": "law",
+    "evidence_source": "text",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-073"
+    ],
+    "hit_source_ids": [
+      "ohr-078",
+      "ohr-057",
+      "ohr-118",
+      "ohr-147",
+      "ohr-073"
+    ],
+    "first_relevant_rank": 5,
+    "latency_ms": 301.7033000069205,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "27be0381-6544-497d-a078-9f97213c121c",
+    "domain": "law",
+    "evidence_source": "text",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-073"
+    ],
+    "hit_source_ids": [
+      "ohr-073",
+      "ohr-087",
+      "ohr-087",
+      "ohr-078",
+      "ohr-111"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 331.2740999972448,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "27d35f1e-71ac-4ff7-9ad3-60c9ee2caacc",
+    "domain": "law",
+    "evidence_source": "text",
+    "answer_form": "Yes/No",
+    "relevant_source_ids": [
+      "ohr-074"
+    ],
+    "hit_source_ids": [
+      "ohr-078",
+      "ohr-078",
+      "ohr-087",
+      "ohr-071",
+      "ohr-087"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 262.9544999799691,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "27e4bbe6-0b08-4a95-9fee-599a0878f6db",
+    "domain": "law",
+    "evidence_source": "text",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-074"
+    ],
+    "hit_source_ids": [
+      "ohr-074",
+      "ohr-067",
+      "ohr-069",
+      "ohr-145",
+      "ohr-068"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 260.96380001399666,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "27fa8b8a-909b-471c-8d1f-0a7fd0fce922",
+    "domain": "law",
+    "evidence_source": "text",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-072"
+    ],
+    "hit_source_ids": [
+      "ohr-072",
+      "ohr-071",
+      "ohr-024",
+      "ohr-071",
+      "ohr-067"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 271.97940001497045,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "499e9ebb-93fd-411f-b674-bb4c633609a2",
+    "domain": "manual",
+    "evidence_source": "table",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-095"
+    ],
+    "hit_source_ids": [
+      "ohr-078",
+      "ohr-078",
+      "ohr-095",
+      "ohr-079",
+      "ohr-077"
+    ],
+    "first_relevant_rank": 3,
+    "latency_ms": 271.85270001064055,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "49a815dc-7f51-48de-9812-8635495deb56",
+    "domain": "manual",
+    "evidence_source": "formula",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-095"
+    ],
+    "hit_source_ids": [
+      "ohr-095",
+      "ohr-087",
+      "ohr-078",
+      "ohr-103",
+      "ohr-114"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 277.98089999123476,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "49af952d-431d-49d8-8fc7-301ce0a82395",
+    "domain": "manual",
+    "evidence_source": "text",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-089"
+    ],
+    "hit_source_ids": [
+      "ohr-057",
+      "ohr-057",
+      "ohr-107",
+      "ohr-127",
+      "ohr-128"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 260.86639999994077,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "49b3fe66-3b4c-4730-a53d-f737c2185e77",
+    "domain": "manual",
+    "evidence_source": "formula",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-089"
+    ],
+    "hit_source_ids": [
+      "ohr-095",
+      "ohr-002",
+      "ohr-111",
+      "ohr-003",
+      "ohr-118"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 261.11049999599345,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "49bcf4a8-bc62-44a8-9f93-e802e1c25cd1",
+    "domain": "manual",
+    "evidence_source": "formula",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-089"
+    ],
+    "hit_source_ids": [
+      "ohr-078",
+      "ohr-078",
+      "ohr-079",
+      "ohr-057",
+      "ohr-077"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 272.1912999986671,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "49bf1bd2-3aaa-4be6-a994-6bed26fef269",
+    "domain": "manual",
+    "evidence_source": "text",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-091"
+    ],
+    "hit_source_ids": [
+      "ohr-041",
+      "ohr-118",
+      "ohr-057",
+      "ohr-127",
+      "ohr-109"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 263.89480000943877,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "49c066d8-39f9-4789-83dc-25c9b2087dca",
+    "domain": "manual",
+    "evidence_source": "table",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-091"
+    ],
+    "hit_source_ids": [
+      "ohr-057",
+      "ohr-060",
+      "ohr-023",
+      "ohr-107",
+      "ohr-145"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 270.7448999863118,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "49c1ce42-ee12-4a33-aa88-3ae17ca6a633",
+    "domain": "manual",
+    "evidence_source": "table",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-091"
+    ],
+    "hit_source_ids": [
+      "ohr-059",
+      "ohr-111",
+      "ohr-091",
+      "ohr-127",
+      "ohr-003"
+    ],
+    "first_relevant_rank": 3,
+    "latency_ms": 285.7289999956265,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "49c7c9e8-3bec-4480-aec6-88d45ad68541",
+    "domain": "manual",
+    "evidence_source": "table",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-088"
+    ],
+    "hit_source_ids": [
+      "ohr-088",
+      "ohr-057",
+      "ohr-012",
+      "ohr-117",
+      "ohr-057"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 321.8122999824118,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "49cf808d-25e7-4238-a474-2ec74af05b76",
+    "domain": "manual",
+    "evidence_source": "table",
+    "answer_form": "Yes/No",
+    "relevant_source_ids": [
+      "ohr-088"
+    ],
+    "hit_source_ids": [
+      "ohr-088",
+      "ohr-001",
+      "ohr-078",
+      "ohr-078",
+      "ohr-016"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 273.45720000448637,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "49dd3b0e-a29d-46e0-af57-14d7a0be4a1c",
+    "domain": "manual",
+    "evidence_source": "table",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-088"
+    ],
+    "hit_source_ids": [
+      "ohr-088",
+      "ohr-077",
+      "ohr-080",
+      "ohr-018",
+      "ohr-080"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 280.24720001849346,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "49e19b4d-61c6-48ce-8d5d-97908a2a1b8e",
+    "domain": "manual",
+    "evidence_source": "table",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-094"
+    ],
+    "hit_source_ids": [
+      "ohr-006",
+      "ohr-127",
+      "ohr-015",
+      "ohr-012",
+      "ohr-127"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 274.88030001404695,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "49e78dcc-9dd3-49c3-8b75-471e1a340ed5",
+    "domain": "manual",
+    "evidence_source": "table",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-094"
+    ],
+    "hit_source_ids": [
+      "ohr-127",
+      "ohr-096",
+      "ohr-041",
+      "ohr-122",
+      "ohr-146"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 273.72070000274107,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "49e86c3b-afdd-4fbb-94e9-b1deb4eb1e34",
+    "domain": "manual",
+    "evidence_source": "table",
+    "answer_form": "Yes/No",
+    "relevant_source_ids": [
+      "ohr-094"
+    ],
+    "hit_source_ids": [
+      "ohr-132",
+      "ohr-117",
+      "ohr-078",
+      "ohr-146",
+      "ohr-023"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 377.80390001717024,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "49fcba05-6171-43cd-9894-6afec047a884",
+    "domain": "manual",
+    "evidence_source": "table",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-092"
+    ],
+    "hit_source_ids": [
+      "ohr-079",
+      "ohr-091",
+      "ohr-079",
+      "ohr-095",
+      "ohr-038"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 281.6342999867629,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "4a058311-c479-4523-af31-b7de4cd003c5",
+    "domain": "manual",
+    "evidence_source": "table",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-092"
+    ],
+    "hit_source_ids": [
+      "ohr-057",
+      "ohr-118",
+      "ohr-128",
+      "ohr-113",
+      "ohr-127"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 282.5838999997359,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "4a082de7-4f6d-4f01-b0dc-2737db807618",
+    "domain": "manual",
+    "evidence_source": "table",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-092"
+    ],
+    "hit_source_ids": [
+      "ohr-079",
+      "ohr-079",
+      "ohr-142",
+      "ohr-084",
+      "ohr-078"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 303.8585000031162,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "4a206ae6-ec00-456c-acd5-e0cb69de6c8c",
+    "domain": "manual",
+    "evidence_source": "text",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-098"
+    ],
+    "hit_source_ids": [
+      "ohr-077",
+      "ohr-078",
+      "ohr-079",
+      "ohr-080",
+      "ohr-111"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 281.00800001993775,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "4a276dda-34c3-494a-812e-a9b8e7e13ed8",
+    "domain": "manual",
+    "evidence_source": "text",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-098"
+    ],
+    "hit_source_ids": [
+      "ohr-057",
+      "ohr-134",
+      "ohr-057",
+      "ohr-023",
+      "ohr-133"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 318.0233000020962,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "4a4b2d54-1962-4d4a-94d0-04cc0ad8dc14",
+    "domain": "manual",
+    "evidence_source": "table",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-093"
+    ],
+    "hit_source_ids": [
+      "ohr-079",
+      "ohr-118",
+      "ohr-079",
+      "ohr-078",
+      "ohr-109"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 274.0668000187725,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "4a4ece57-9d98-410d-9c8b-845cb78166d2",
+    "domain": "manual",
+    "evidence_source": "table",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-093"
+    ],
+    "hit_source_ids": [
+      "ohr-079",
+      "ohr-057",
+      "ohr-078",
+      "ohr-079",
+      "ohr-113"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 354.2944999935571,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "4a5f7899-ee82-4918-b805-1d7499aa0225",
+    "domain": "manual",
+    "evidence_source": "table",
+    "answer_form": "Yes/No",
+    "relevant_source_ids": [
+      "ohr-093"
+    ],
+    "hit_source_ids": [
+      "ohr-040",
+      "ohr-060",
+      "ohr-111",
+      "ohr-095",
+      "ohr-039"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 316.71559999813326,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "4a6edc95-c641-4236-9874-81a2d38b5acf",
+    "domain": "manual",
+    "evidence_source": "text",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-096"
+    ],
+    "hit_source_ids": [
+      "ohr-096",
+      "ohr-095",
+      "ohr-012",
+      "ohr-095",
+      "ohr-057"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 293.5703000111971,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "4a814d53-964d-4b77-a025-f0ae35354579",
+    "domain": "manual",
+    "evidence_source": "text",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-097"
+    ],
+    "hit_source_ids": [
+      "ohr-087",
+      "ohr-070",
+      "ohr-069",
+      "ohr-067",
+      "ohr-097"
+    ],
+    "first_relevant_rank": 5,
+    "latency_ms": 288.8871999748517,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "4a8b77da-5cfa-48b1-9836-78eef3ca5f64",
+    "domain": "manual",
+    "evidence_source": "table",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-097"
+    ],
+    "hit_source_ids": [
+      "ohr-057",
+      "ohr-078",
+      "ohr-095",
+      "ohr-023",
+      "ohr-057"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 267.104600003222,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "4bdafd11-1d8e-4d8c-a707-6ee06f2462d0",
+    "domain": "news",
+    "evidence_source": "text",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-128"
+    ],
+    "hit_source_ids": [
+      "ohr-111",
+      "ohr-128",
+      "ohr-120",
+      "ohr-117",
+      "ohr-119"
+    ],
+    "first_relevant_rank": 2,
+    "latency_ms": 269.80090001598,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "4bdb0bcf-9efa-4314-a5a0-74814273de5a",
+    "domain": "news",
+    "evidence_source": "text",
+    "answer_form": "Yes/No",
+    "relevant_source_ids": [
+      "ohr-128"
+    ],
+    "hit_source_ids": [
+      "ohr-128",
+      "ohr-109",
+      "ohr-113",
+      "ohr-147",
+      "ohr-107"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 269.121899997117,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "4bdc511a-d746-4872-ace1-46850eaa73e9",
+    "domain": "news",
+    "evidence_source": "text",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-128"
+    ],
+    "hit_source_ids": [
+      "ohr-128",
+      "ohr-112",
+      "ohr-067",
+      "ohr-114",
+      "ohr-118"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 260.6849000148941,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "4be91cbc-caa2-410f-8c40-70985dd64593",
+    "domain": "news",
+    "evidence_source": "text",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-125"
+    ],
+    "hit_source_ids": [
+      "ohr-125",
+      "ohr-048",
+      "ohr-077",
+      "ohr-077",
+      "ohr-078"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 276.04799999971874,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "4bebcf4f-2c94-451d-92fa-3935ff283550",
+    "domain": "news",
+    "evidence_source": "text",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-125"
+    ],
+    "hit_source_ids": [
+      "ohr-125",
+      "ohr-113",
+      "ohr-034",
+      "ohr-114",
+      "ohr-057"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 329.4136000040453,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "4bf41e10-1c62-4f82-9081-3d923aca43f2",
+    "domain": "news",
+    "evidence_source": "text",
+    "answer_form": "Yes/No",
+    "relevant_source_ids": [
+      "ohr-125"
+    ],
+    "hit_source_ids": [
+      "ohr-125",
+      "ohr-033",
+      "ohr-087",
+      "ohr-061",
+      "ohr-078"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 265.50790001056157,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "4c43745b-8063-4ef2-a534-28bbb20ed719",
+    "domain": "news",
+    "evidence_source": "text",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-114"
+    ],
+    "hit_source_ids": [
+      "ohr-114",
+      "ohr-122",
+      "ohr-126",
+      "ohr-122",
+      "ohr-017"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 321.1460000020452,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "4c4b91fe-6c14-4fc6-9750-ca7e246cb09c",
+    "domain": "news",
+    "evidence_source": "text",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-114"
+    ],
+    "hit_source_ids": [
+      "ohr-114",
+      "ohr-114",
+      "ohr-034",
+      "ohr-112",
+      "ohr-118"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 325.2570000186097,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "4c5b5072-7bdc-406d-ae19-b84936df59df",
+    "domain": "news",
+    "evidence_source": "text",
+    "answer_form": "Yes/No",
+    "relevant_source_ids": [
+      "ohr-114"
+    ],
+    "hit_source_ids": [
+      "ohr-114",
+      "ohr-120",
+      "ohr-114",
+      "ohr-109",
+      "ohr-112"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 288.10320000047795,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "4cfbe8d1-32e0-4da3-bb65-5d51dde97098",
+    "domain": "news",
+    "evidence_source": "text",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-117"
+    ],
+    "hit_source_ids": [
+      "ohr-117",
+      "ohr-121",
+      "ohr-078",
+      "ohr-039",
+      "ohr-119"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 317.4713999906089,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "4cfe1f8a-cc66-4efe-a233-0da619e0f5b7",
+    "domain": "news",
+    "evidence_source": "text",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-117"
+    ],
+    "hit_source_ids": [
+      "ohr-117",
+      "ohr-111",
+      "ohr-111",
+      "ohr-128",
+      "ohr-113"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 276.96930000092834,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "4d69120e-3605-4b40-934d-f03173faf83e",
+    "domain": "news",
+    "evidence_source": "text",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-119"
+    ],
+    "hit_source_ids": [
+      "ohr-119",
+      "ohr-119",
+      "ohr-114",
+      "ohr-111",
+      "ohr-126"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 288.1379000027664,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "4d697998-3ef8-473d-98cd-5bb4f9831c23",
+    "domain": "news",
+    "evidence_source": "text",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-119"
+    ],
+    "hit_source_ids": [
+      "ohr-119",
+      "ohr-115",
+      "ohr-125",
+      "ohr-077",
+      "ohr-112"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 276.5633999952115,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "4d90f38e-ad69-4131-920c-131ff94cde5e",
+    "domain": "news",
+    "evidence_source": "text",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-122"
+    ],
+    "hit_source_ids": [
+      "ohr-122",
+      "ohr-118",
+      "ohr-126",
+      "ohr-122",
+      "ohr-111"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 289.0874000149779,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "4d94eaa8-21e3-4e50-b70b-082e6a9c25ca",
+    "domain": "news",
+    "evidence_source": "text",
+    "answer_form": "Yes/No",
+    "relevant_source_ids": [
+      "ohr-122"
+    ],
+    "hit_source_ids": [
+      "ohr-111",
+      "ohr-122",
+      "ohr-126",
+      "ohr-111",
+      "ohr-114"
+    ],
+    "first_relevant_rank": 2,
+    "latency_ms": 298.5319000144955,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "4de9ddda-a81f-4b67-acc8-8981651c115f",
+    "domain": "news",
+    "evidence_source": "text",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-109"
+    ],
+    "hit_source_ids": [
+      "ohr-128",
+      "ohr-078",
+      "ohr-118",
+      "ohr-111",
+      "ohr-079"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 360.2223000198137,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "4deaa29b-debe-4758-8431-e88c4427635e",
+    "domain": "news",
+    "evidence_source": "text",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-109"
+    ],
+    "hit_source_ids": [
+      "ohr-109",
+      "ohr-111",
+      "ohr-111",
+      "ohr-121",
+      "ohr-115"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 288.59969999757595,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "4df746d7-fa2e-41ad-97cb-44c2f7183702",
+    "domain": "news",
+    "evidence_source": "text",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-109"
+    ],
+    "hit_source_ids": [
+      "ohr-078",
+      "ohr-080",
+      "ohr-109",
+      "ohr-078",
+      "ohr-077"
+    ],
+    "first_relevant_rank": 3,
+    "latency_ms": 317.7008000202477,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "4e53a623-0920-4923-81b3-bffc35422fb7",
+    "domain": "news",
+    "evidence_source": "text",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-120"
+    ],
+    "hit_source_ids": [
+      "ohr-120",
+      "ohr-126",
+      "ohr-115",
+      "ohr-123",
+      "ohr-111"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 276.63080001366325,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "4e58cfdd-d17c-489e-b91f-c8ece49a8e3b",
+    "domain": "news",
+    "evidence_source": "text",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-120"
+    ],
+    "hit_source_ids": [
+      "ohr-119",
+      "ohr-125",
+      "ohr-136",
+      "ohr-120",
+      "ohr-126"
+    ],
+    "first_relevant_rank": 4,
+    "latency_ms": 270.7269999955315,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "4e5afa7f-708a-4ed4-ae29-afcc5e2e9fed",
+    "domain": "news",
+    "evidence_source": "text",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-120"
+    ],
+    "hit_source_ids": [
+      "ohr-115",
+      "ohr-120",
+      "ohr-123",
+      "ohr-112",
+      "ohr-112"
+    ],
+    "first_relevant_rank": 2,
+    "latency_ms": 290.60130001744255,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "4e60ae0c-df6a-4985-aecb-0b067dcc900a",
+    "domain": "news",
+    "evidence_source": "text",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-127"
+    ],
+    "hit_source_ids": [
+      "ohr-127",
+      "ohr-111",
+      "ohr-114",
+      "ohr-118",
+      "ohr-114"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 269.4346000207588,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "4e676ca1-0502-411a-89bb-9204f5bfd913",
+    "domain": "news",
+    "evidence_source": "text",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-127"
+    ],
+    "hit_source_ids": [
+      "ohr-111",
+      "ohr-111",
+      "ohr-126",
+      "ohr-059",
+      "ohr-128"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 281.27600002335384,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "4e81d61c-e1d8-4f79-95db-2389ee5e937b",
+    "domain": "news",
+    "evidence_source": "text",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-124"
+    ],
+    "hit_source_ids": [
+      "ohr-117",
+      "ohr-112",
+      "ohr-123",
+      "ohr-118",
+      "ohr-116"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 301.19139997987077,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "4e84e106-e8a7-4310-a473-b9048beeb82c",
+    "domain": "news",
+    "evidence_source": "text",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-124"
+    ],
+    "hit_source_ids": [
+      "ohr-125",
+      "ohr-124",
+      "ohr-057",
+      "ohr-057",
+      "ohr-124"
+    ],
+    "first_relevant_rank": 2,
+    "latency_ms": 281.81479999329895,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "4e850ca1-18a0-4a93-985c-b514e550dcea",
+    "domain": "news",
+    "evidence_source": "text",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-124"
+    ],
+    "hit_source_ids": [
+      "ohr-124",
+      "ohr-080",
+      "ohr-118",
+      "ohr-080",
+      "ohr-124"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 291.4572000154294,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "4ead1428-3595-4257-810b-89c02692a859",
+    "domain": "news",
+    "evidence_source": "text",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-118"
+    ],
+    "hit_source_ids": [
+      "ohr-118",
+      "ohr-109",
+      "ohr-111",
+      "ohr-111",
+      "ohr-111"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 300.16559999785386,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "4ead9f57-d230-4bcd-b1cf-794967065201",
+    "domain": "news",
+    "evidence_source": "text",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-118"
+    ],
+    "hit_source_ids": [
+      "ohr-118",
+      "ohr-123",
+      "ohr-112",
+      "ohr-116",
+      "ohr-115"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 269.02310000150464,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "4eaeddcc-51c2-44e7-ada2-ca98e73b9250",
+    "domain": "news",
+    "evidence_source": "text",
+    "answer_form": "Yes/No",
+    "relevant_source_ids": [
+      "ohr-118"
+    ],
+    "hit_source_ids": [
+      "ohr-118",
+      "ohr-126",
+      "ohr-111",
+      "ohr-124",
+      "ohr-114"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 258.8825999991968,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "503a65d5-82ed-45ab-9fde-522dd429e0c9",
+    "domain": "news",
+    "evidence_source": "text",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-112"
+    ],
+    "hit_source_ids": [
+      "ohr-112",
+      "ohr-109",
+      "ohr-078",
+      "ohr-148",
+      "ohr-120"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 262.17329999781214,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "5041b3d0-8950-4262-a797-765abc854e3f",
+    "domain": "news",
+    "evidence_source": "text",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-112"
+    ],
+    "hit_source_ids": [
+      "ohr-111",
+      "ohr-118",
+      "ohr-059",
+      "ohr-114",
+      "ohr-079"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 278.5485999775119,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "505378ae-62b7-4142-8621-2ff765e8dd25",
+    "domain": "news",
+    "evidence_source": "text",
+    "answer_form": "Yes/No",
+    "relevant_source_ids": [
+      "ohr-112"
+    ],
+    "hit_source_ids": [
+      "ohr-112",
+      "ohr-114",
+      "ohr-111",
+      "ohr-112",
+      "ohr-114"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 284.6198000188451,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "50962d28-c556-4194-93e5-013e0cf5412c",
+    "domain": "news",
+    "evidence_source": "text",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-113"
+    ],
+    "hit_source_ids": [
+      "ohr-111",
+      "ohr-113",
+      "ohr-118",
+      "ohr-114",
+      "ohr-114"
+    ],
+    "first_relevant_rank": 2,
+    "latency_ms": 256.5364000038244,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "509dbfdf-944e-43df-8a12-d0df3988ba0f",
+    "domain": "news",
+    "evidence_source": "text",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-113"
+    ],
+    "hit_source_ids": [
+      "ohr-128",
+      "ohr-111",
+      "ohr-146",
+      "ohr-057",
+      "ohr-113"
+    ],
+    "first_relevant_rank": 5,
+    "latency_ms": 282.2216000058688,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "509e1a74-5b95-4ba0-919c-b2d20d4b830f",
+    "domain": "news",
+    "evidence_source": "text",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-113"
+    ],
+    "hit_source_ids": [
+      "ohr-111",
+      "ohr-113",
+      "ohr-109",
+      "ohr-078",
+      "ohr-146"
+    ],
+    "first_relevant_rank": 2,
+    "latency_ms": 269.2918000102509,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "52415f5f-f7d8-477c-8065-50f37ab15b93",
+    "domain": "news",
+    "evidence_source": "text",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-123"
+    ],
+    "hit_source_ids": [
+      "ohr-123",
+      "ohr-123",
+      "ohr-111",
+      "ohr-114",
+      "ohr-111"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 270.2823000145145,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "539ccf1a-e0d1-4c64-ba15-8c702e8d0cfa",
+    "domain": "news",
+    "evidence_source": "text",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-129"
+    ],
+    "hit_source_ids": [
+      "ohr-111",
+      "ohr-116",
+      "ohr-112",
+      "ohr-115",
+      "ohr-111"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 257.80600000871345,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "53f0c3c9-c20d-45bd-90d4-4b3d8aca5410",
+    "domain": "news",
+    "evidence_source": "text",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-116"
+    ],
+    "hit_source_ids": [
+      "ohr-126",
+      "ohr-111",
+      "ohr-116",
+      "ohr-114",
+      "ohr-112"
+    ],
+    "first_relevant_rank": 3,
+    "latency_ms": 318.1312999804504,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "53fad41f-b84b-459d-b090-9f10461c460a",
+    "domain": "news",
+    "evidence_source": "text",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-116"
+    ],
+    "hit_source_ids": [
+      "ohr-116",
+      "ohr-109",
+      "ohr-118",
+      "ohr-118",
+      "ohr-059"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 290.71179998572916,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "53fb2ed1-b953-4807-b009-61c3855a7d8d",
+    "domain": "news",
+    "evidence_source": "text",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-116"
+    ],
+    "hit_source_ids": [
+      "ohr-111",
+      "ohr-118",
+      "ohr-118",
+      "ohr-114",
+      "ohr-109"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 293.17839999566786,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "543c6c18-ef69-4442-ad2c-53ec1bd58871",
+    "domain": "news",
+    "evidence_source": "text",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-126"
+    ],
+    "hit_source_ids": [
+      "ohr-126",
+      "ohr-057",
+      "ohr-059",
+      "ohr-122",
+      "ohr-112"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 269.00210001622327,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "543faeba-fccf-4525-b603-6e5a2ec9f96a",
+    "domain": "news",
+    "evidence_source": "text",
+    "answer_form": "Yes/No",
+    "relevant_source_ids": [
+      "ohr-126"
+    ],
+    "hit_source_ids": [
+      "ohr-126",
+      "ohr-087",
+      "ohr-111",
+      "ohr-040",
+      "ohr-111"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 275.67679999629036,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "5447353b-c9dc-4fb4-b567-7aaf4f462933",
+    "domain": "news",
+    "evidence_source": "text",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-115"
+    ],
+    "hit_source_ids": [
+      "ohr-126",
+      "ohr-115",
+      "ohr-123",
+      "ohr-122",
+      "ohr-114"
+    ],
+    "first_relevant_rank": 2,
+    "latency_ms": 266.86740000150166,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "54496139-add6-4d20-93f3-f048d814a978",
+    "domain": "news",
+    "evidence_source": "text",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-115"
+    ],
+    "hit_source_ids": [
+      "ohr-115",
+      "ohr-115",
+      "ohr-117",
+      "ohr-109",
+      "ohr-111"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 275.12959999148734,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "544ee3e6-f41e-4fac-af15-cf44ff2099c5",
+    "domain": "news",
+    "evidence_source": "text",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-115"
+    ],
+    "hit_source_ids": [
+      "ohr-115",
+      "ohr-111",
+      "ohr-072",
+      "ohr-115",
+      "ohr-136"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 269.4333999825176,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "548c3ec4-2536-4ca8-966a-45e952c51809",
+    "domain": "news",
+    "evidence_source": "text",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-121"
+    ],
+    "hit_source_ids": [
+      "ohr-114",
+      "ohr-147",
+      "ohr-138",
+      "ohr-109",
+      "ohr-118"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 258.69020001846366,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "5496e9ed-0dbf-4617-bb55-6cb4148e3339",
+    "domain": "news",
+    "evidence_source": "text",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-121"
+    ],
+    "hit_source_ids": [
+      "ohr-121",
+      "ohr-114",
+      "ohr-112",
+      "ohr-111",
+      "ohr-115"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 274.55030000419356,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "549bd0c2-5684-47d0-b75e-36868cb8ad13",
+    "domain": "news",
+    "evidence_source": "text",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-121"
+    ],
+    "hit_source_ids": [
+      "ohr-121",
+      "ohr-127",
+      "ohr-118",
+      "ohr-078",
+      "ohr-136"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 260.47700000344776,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "549cab97-2e43-467a-85dc-12d65ddd1f48",
+    "domain": "news",
+    "evidence_source": "text",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-110"
+    ],
+    "hit_source_ids": [
+      "ohr-112",
+      "ohr-127",
+      "ohr-114",
+      "ohr-057",
+      "ohr-146"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 308.1880000245292,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "549cb47e-5209-408e-9f7a-78a660f65ad0",
+    "domain": "news",
+    "evidence_source": "text",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-110"
+    ],
+    "hit_source_ids": [
+      "ohr-128",
+      "ohr-110",
+      "ohr-126",
+      "ohr-111",
+      "ohr-118"
+    ],
+    "first_relevant_rank": 2,
+    "latency_ms": 269.1155000065919,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "54a428c3-53ec-4d88-9994-59c40995e98c",
+    "domain": "news",
+    "evidence_source": "text",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-110"
+    ],
+    "hit_source_ids": [
+      "ohr-078",
+      "ohr-110",
+      "ohr-077",
+      "ohr-079",
+      "ohr-128"
+    ],
+    "first_relevant_rank": 2,
+    "latency_ms": 295.92929998761974,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "54de1a57-37f5-4479-bbb1-590fd8987828",
+    "domain": "news",
+    "evidence_source": "text",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-111"
+    ],
+    "hit_source_ids": [
+      "ohr-111",
+      "ohr-026",
+      "ohr-110",
+      "ohr-112",
+      "ohr-025"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 271.05830001528375,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "565246eb-5037-4e12-8523-7c7fccbbeccf",
+    "domain": "academic",
+    "evidence_source": "formula",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-021"
+    ],
+    "hit_source_ids": [
+      "ohr-021",
+      "ohr-017",
+      "ohr-014",
+      "ohr-012",
+      "ohr-016"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 253.10820000595413,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "56547b4d-3175-48ff-8429-6fe796df4c08",
+    "domain": "academic",
+    "evidence_source": "formula",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-016"
+    ],
+    "hit_source_ids": [
+      "ohr-015",
+      "ohr-016",
+      "ohr-016",
+      "ohr-002",
+      "ohr-021"
+    ],
+    "first_relevant_rank": 2,
+    "latency_ms": 268.57089999248274,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "565af699-d3bb-43d7-9e12-425cb42fb357",
+    "domain": "academic",
+    "evidence_source": "table",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-016"
+    ],
+    "hit_source_ids": [
+      "ohr-017",
+      "ohr-013",
+      "ohr-002",
+      "ohr-014",
+      "ohr-011"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 262.09319999907166,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "566ff3ec-679b-49e8-80c3-2da9bc49b58e",
+    "domain": "academic",
+    "evidence_source": "table",
+    "answer_form": "Yes/No",
+    "relevant_source_ids": [
+      "ohr-016"
+    ],
+    "hit_source_ids": [
+      "ohr-016",
+      "ohr-005",
+      "ohr-016",
+      "ohr-015",
+      "ohr-021"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 269.1247000184376,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "567fec5e-04ea-481d-a006-8c1cbbd743b3",
+    "domain": "academic",
+    "evidence_source": "formula",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-020"
+    ],
+    "hit_source_ids": [
+      "ohr-020",
+      "ohr-012",
+      "ohr-014",
+      "ohr-013",
+      "ohr-019"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 323.01180000649765,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "568e6fb4-0221-4c1f-813d-361301ef1d5f",
+    "domain": "academic",
+    "evidence_source": "formula",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-020"
+    ],
+    "hit_source_ids": [
+      "ohr-020",
+      "ohr-017",
+      "ohr-012",
+      "ohr-015",
+      "ohr-013"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 281.8083000020124,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "569a6d1f-3331-418c-9405-5fa2d660600a",
+    "domain": "academic",
+    "evidence_source": "formula",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-022"
+    ],
+    "hit_source_ids": [
+      "ohr-022",
+      "ohr-012",
+      "ohr-022",
+      "ohr-017",
+      "ohr-019"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 267.98359997337684,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "56a66bc9-077d-475f-aedd-735f074ca5d2",
+    "domain": "academic",
+    "evidence_source": "formula",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-022"
+    ],
+    "hit_source_ids": [
+      "ohr-022",
+      "ohr-001",
+      "ohr-017",
+      "ohr-115",
+      "ohr-001"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 290.44000001158565,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "56c6544d-f60c-4881-85ac-7520cd4668fe",
+    "domain": "academic",
+    "evidence_source": "formula",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-014"
+    ],
+    "hit_source_ids": [
+      "ohr-014",
+      "ohr-011",
+      "ohr-019",
+      "ohr-057",
+      "ohr-078"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 406.24169999500737,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "56e16c2b-659b-4dcb-9bca-e27d331978eb",
+    "domain": "academic",
+    "evidence_source": "formula",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-017"
+    ],
+    "hit_source_ids": [
+      "ohr-016",
+      "ohr-021",
+      "ohr-016",
+      "ohr-017",
+      "ohr-015"
+    ],
+    "first_relevant_rank": 4,
+    "latency_ms": 313.49719999707304,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "570e3fe6-b5ed-49cc-8320-446942493187",
+    "domain": "academic",
+    "evidence_source": "table",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-019"
+    ],
+    "hit_source_ids": [
+      "ohr-019",
+      "ohr-013",
+      "ohr-014",
+      "ohr-011",
+      "ohr-001"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 297.7244999783579,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "5710c060-2ea2-4ca2-9fda-de0ea9b0a8ae",
+    "domain": "academic",
+    "evidence_source": "text",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-019"
+    ],
+    "hit_source_ids": [
+      "ohr-014",
+      "ohr-019",
+      "ohr-011",
+      "ohr-013",
+      "ohr-012"
+    ],
+    "first_relevant_rank": 2,
+    "latency_ms": 349.63019998394884,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "571aa4f6-40a2-4015-8a40-a3799a1ab357",
+    "domain": "academic",
+    "evidence_source": "text",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-015"
+    ],
+    "hit_source_ids": [
+      "ohr-016",
+      "ohr-015",
+      "ohr-003",
+      "ohr-003",
+      "ohr-002"
+    ],
+    "first_relevant_rank": 2,
+    "latency_ms": 276.99059998849407,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "57310e3c-3c2d-40f4-a3c1-969874ed4f14",
+    "domain": "academic",
+    "evidence_source": "table",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-018"
+    ],
+    "hit_source_ids": [
+      "ohr-013",
+      "ohr-012",
+      "ohr-011",
+      "ohr-019",
+      "ohr-021"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 257.9346999991685,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "57446b2d-ddb3-48ee-af8b-6cbeb759f3ec",
+    "domain": "academic",
+    "evidence_source": "text",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-011"
+    ],
+    "hit_source_ids": [
+      "ohr-015",
+      "ohr-016",
+      "ohr-011",
+      "ohr-016",
+      "ohr-014"
+    ],
+    "first_relevant_rank": 3,
+    "latency_ms": 281.68129999539815,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "575812c8-2347-4fc4-9e76-ca348fdf18e7",
+    "domain": "academic",
+    "evidence_source": "formula",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-011"
+    ],
+    "hit_source_ids": [
+      "ohr-011",
+      "ohr-014",
+      "ohr-057",
+      "ohr-111",
+      "ohr-013"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 271.10650000395253,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "575b4b67-ce92-4ea9-9fd4-1997b13a56f2",
+    "domain": "academic",
+    "evidence_source": "table",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-012"
+    ],
+    "hit_source_ids": [
+      "ohr-012",
+      "ohr-013",
+      "ohr-011",
+      "ohr-014",
+      "ohr-003"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 264.08799999626353,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "576882a9-9a30-42b6-866f-aaa146250ac8",
+    "domain": "academic",
+    "evidence_source": "formula",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-017"
+    ],
+    "hit_source_ids": [
+      "ohr-016",
+      "ohr-021",
+      "ohr-016",
+      "ohr-017",
+      "ohr-014"
+    ],
+    "first_relevant_rank": 4,
+    "latency_ms": 259.8800999985542,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "576e97f5-a76a-47e5-abc3-3f39d9ea8334",
+    "domain": "academic",
+    "evidence_source": "formula",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-017"
+    ],
+    "hit_source_ids": [
+      "ohr-078",
+      "ohr-017",
+      "ohr-077",
+      "ohr-021",
+      "ohr-078"
+    ],
+    "first_relevant_rank": 2,
+    "latency_ms": 370.86290001752786,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "5776da51-f8c0-4d19-afd8-e8ebe14880c0",
+    "domain": "academic",
+    "evidence_source": "formula",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-017"
+    ],
+    "hit_source_ids": [
+      "ohr-016",
+      "ohr-021",
+      "ohr-017",
+      "ohr-016",
+      "ohr-078"
+    ],
+    "first_relevant_rank": 3,
+    "latency_ms": 342.7467000146862,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "578e651a-0a99-4085-98f1-d55280869f58",
+    "domain": "academic",
+    "evidence_source": "table",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-016"
+    ],
+    "hit_source_ids": [
+      "ohr-016",
+      "ohr-015",
+      "ohr-002",
+      "ohr-021",
+      "ohr-003"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 317.0520999992732,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "5793ecb3-7916-447a-a403-15d59a72c0f4",
+    "domain": "academic",
+    "evidence_source": "table",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-016"
+    ],
+    "hit_source_ids": [
+      "ohr-016",
+      "ohr-017",
+      "ohr-077",
+      "ohr-016",
+      "ohr-015"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 348.5991999914404,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "579e9a46-fd76-4f63-9163-de1d8df7a267",
+    "domain": "academic",
+    "evidence_source": "table",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-016"
+    ],
+    "hit_source_ids": [
+      "ohr-016",
+      "ohr-014",
+      "ohr-015",
+      "ohr-016",
+      "ohr-078"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 313.38940002024174,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "57b0757b-412b-465b-9586-377856e9ae41",
+    "domain": "academic",
+    "evidence_source": "formula",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-021"
+    ],
+    "hit_source_ids": [
+      "ohr-021",
+      "ohr-017",
+      "ohr-013",
+      "ohr-012",
+      "ohr-118"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 357.0164999982808,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "57bd270b-be63-4c9d-b7aa-3d917a282c8a",
+    "domain": "academic",
+    "evidence_source": "table",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-018"
+    ],
+    "hit_source_ids": [
+      "ohr-012",
+      "ohr-013",
+      "ohr-011",
+      "ohr-019",
+      "ohr-018"
+    ],
+    "first_relevant_rank": 5,
+    "latency_ms": 289.74680000101216,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "57c22aee-6d7e-4c63-ad26-74be2a6ba43a",
+    "domain": "academic",
+    "evidence_source": "table",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-018"
+    ],
+    "hit_source_ids": [
+      "ohr-011",
+      "ohr-012",
+      "ohr-019",
+      "ohr-013",
+      "ohr-017"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 354.48909999104217,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "57d11a18-15d7-4a3a-8434-f31310d81218",
+    "domain": "academic",
+    "evidence_source": "formula",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-012"
+    ],
+    "hit_source_ids": [
+      "ohr-012",
+      "ohr-012",
+      "ohr-013",
+      "ohr-011",
+      "ohr-014"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 341.3554000144359,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "57d6ba6a-801c-481c-97a5-4ce125d4d82a",
+    "domain": "academic",
+    "evidence_source": "formula",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-012"
+    ],
+    "hit_source_ids": [
+      "ohr-012",
+      "ohr-012",
+      "ohr-013",
+      "ohr-018",
+      "ohr-069"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 356.5526000165846,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "57e663a4-be2e-4945-9717-b33e666fffc0",
+    "domain": "academic",
+    "evidence_source": "formula",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-012"
+    ],
+    "hit_source_ids": [
+      "ohr-012",
+      "ohr-012",
+      "ohr-013",
+      "ohr-018",
+      "ohr-011"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 329.3673000007402,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "57e861ef-a172-477a-a464-e4c6945f8d28",
+    "domain": "academic",
+    "evidence_source": "formula",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-015"
+    ],
+    "hit_source_ids": [
+      "ohr-012",
+      "ohr-013",
+      "ohr-011",
+      "ohr-015",
+      "ohr-014"
+    ],
+    "first_relevant_rank": 4,
+    "latency_ms": 323.5776000074111,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "57ef3906-2c22-42f8-a1c9-c177aa1fbae1",
+    "domain": "academic",
+    "evidence_source": "formula",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-015"
+    ],
+    "hit_source_ids": [
+      "ohr-014",
+      "ohr-011",
+      "ohr-015",
+      "ohr-057",
+      "ohr-016"
+    ],
+    "first_relevant_rank": 3,
+    "latency_ms": 311.0856999992393,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "57f72032-eed9-453f-8682-bd160661e635",
+    "domain": "academic",
+    "evidence_source": "formula",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-015"
+    ],
+    "hit_source_ids": [
+      "ohr-015",
+      "ohr-118",
+      "ohr-011",
+      "ohr-001",
+      "ohr-021"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 271.3742000050843,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "5807b2ec-7a9b-4ff9-8d74-719def6be95b",
+    "domain": "academic",
+    "evidence_source": "formula",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-020"
+    ],
+    "hit_source_ids": [
+      "ohr-020",
+      "ohr-012",
+      "ohr-015",
+      "ohr-016",
+      "ohr-019"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 286.64870001375675,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "580b4fce-43b0-4542-9f4e-64253563e294",
+    "domain": "academic",
+    "evidence_source": "formula",
+    "answer_form": "Yes/No",
+    "relevant_source_ids": [
+      "ohr-020"
+    ],
+    "hit_source_ids": [
+      "ohr-020",
+      "ohr-012",
+      "ohr-014",
+      "ohr-013",
+      "ohr-015"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 285.20459998981096,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "5812047f-4276-4448-8d3e-2b86d60bf186",
+    "domain": "academic",
+    "evidence_source": "formula",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-020"
+    ],
+    "hit_source_ids": [
+      "ohr-020",
+      "ohr-012",
+      "ohr-016",
+      "ohr-015",
+      "ohr-017"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 287.92560001602396,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "58121bee-f789-4518-bc99-f0b062877b09",
+    "domain": "academic",
+    "evidence_source": "formula",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-022"
+    ],
+    "hit_source_ids": [
+      "ohr-022",
+      "ohr-115",
+      "ohr-057",
+      "ohr-014",
+      "ohr-001"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 280.4652000195347,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "582a4042-8d62-40ae-b601-02146273633d",
+    "domain": "academic",
+    "evidence_source": "formula",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-022"
+    ],
+    "hit_source_ids": [
+      "ohr-012",
+      "ohr-022",
+      "ohr-011",
+      "ohr-014",
+      "ohr-015"
+    ],
+    "first_relevant_rank": 2,
+    "latency_ms": 307.2041999839712,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "6214c7da-0dc5-4357-875c-d320937c6786",
+    "domain": "academic",
+    "evidence_source": "formula",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-001"
+    ],
+    "hit_source_ids": [
+      "ohr-001",
+      "ohr-078",
+      "ohr-128",
+      "ohr-057",
+      "ohr-118"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 282.1556999988388,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "6224e485-39ff-4d02-911b-6c2825903f2e",
+    "domain": "academic",
+    "evidence_source": "formula",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-001"
+    ],
+    "hit_source_ids": [
+      "ohr-001",
+      "ohr-057",
+      "ohr-112",
+      "ohr-146",
+      "ohr-078"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 322.30849997722544,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "6228186d-c698-482e-a1f8-dc2773140fe9",
+    "domain": "academic",
+    "evidence_source": "text",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-008"
+    ],
+    "hit_source_ids": [
+      "ohr-008",
+      "ohr-078",
+      "ohr-077",
+      "ohr-115",
+      "ohr-114"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 299.4625999999698,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "623ae7d8-4cc3-4606-b187-9eb87d453d9e",
+    "domain": "academic",
+    "evidence_source": "text",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-007"
+    ],
+    "hit_source_ids": [
+      "ohr-007",
+      "ohr-008",
+      "ohr-077",
+      "ohr-079",
+      "ohr-003"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 277.69269997952506,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "623bc3cd-2d78-4b7a-a9ae-672615f8850e",
+    "domain": "academic",
+    "evidence_source": "formula",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-004"
+    ],
+    "hit_source_ids": [
+      "ohr-111",
+      "ohr-003",
+      "ohr-003",
+      "ohr-019",
+      "ohr-001"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 272.8752999973949,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "623fc5b9-976d-4953-a47f-1aaf5875de0f",
+    "domain": "academic",
+    "evidence_source": "table",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-004"
+    ],
+    "hit_source_ids": [
+      "ohr-001",
+      "ohr-005",
+      "ohr-014",
+      "ohr-017",
+      "ohr-003"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 273.3911999966949,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "6240c38c-01e0-4aaf-b376-7ceb0764a06c",
+    "domain": "academic",
+    "evidence_source": "table",
+    "answer_form": "Yes/No",
+    "relevant_source_ids": [
+      "ohr-004"
+    ],
+    "hit_source_ids": [
+      "ohr-005",
+      "ohr-001",
+      "ohr-003",
+      "ohr-057",
+      "ohr-004"
+    ],
+    "first_relevant_rank": 5,
+    "latency_ms": 271.85970000573434,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "6246ce0a-0e99-40ec-9c27-3f31551a9eb6",
+    "domain": "academic",
+    "evidence_source": "table",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-006"
+    ],
+    "hit_source_ids": [
+      "ohr-005",
+      "ohr-006",
+      "ohr-003",
+      "ohr-002",
+      "ohr-001"
+    ],
+    "first_relevant_rank": 2,
+    "latency_ms": 270.3238000103738,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "624aadae-ebbc-41f6-9edf-f24b3567c813",
+    "domain": "academic",
+    "evidence_source": "table",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-006"
+    ],
+    "hit_source_ids": [
+      "ohr-003",
+      "ohr-001",
+      "ohr-003",
+      "ohr-006",
+      "ohr-001"
+    ],
+    "first_relevant_rank": 4,
+    "latency_ms": 288.7557000212837,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "62565a95-5487-45c3-b762-6f4975fd3537",
+    "domain": "academic",
+    "evidence_source": "table",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-005"
+    ],
+    "hit_source_ids": [
+      "ohr-005",
+      "ohr-002",
+      "ohr-005",
+      "ohr-003",
+      "ohr-003"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 297.8435000113677,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "625862f8-b712-40ce-b3c5-3c5a82e02823",
+    "domain": "academic",
+    "evidence_source": "formula",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-005"
+    ],
+    "hit_source_ids": [
+      "ohr-003",
+      "ohr-005",
+      "ohr-001",
+      "ohr-006",
+      "ohr-057"
+    ],
+    "first_relevant_rank": 2,
+    "latency_ms": 282.90580000611953,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "625ccc68-5638-40b3-9bfc-b81fd5a674af",
+    "domain": "academic",
+    "evidence_source": "table",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-009"
+    ],
+    "hit_source_ids": [
+      "ohr-003",
+      "ohr-005",
+      "ohr-001",
+      "ohr-003",
+      "ohr-001"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 286.9039000070188,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "626a7f3e-c9ce-4799-9016-0550262894d1",
+    "domain": "academic",
+    "evidence_source": "formula",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-009"
+    ],
+    "hit_source_ids": [
+      "ohr-002",
+      "ohr-005",
+      "ohr-005",
+      "ohr-006",
+      "ohr-111"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 306.23720001312904,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "62740d4e-159c-4bfc-9ef0-c738599691d6",
+    "domain": "academic",
+    "evidence_source": "table",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-009"
+    ],
+    "hit_source_ids": [
+      "ohr-003",
+      "ohr-014",
+      "ohr-002",
+      "ohr-005",
+      "ohr-019"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 270.02949998131953,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "62830869-0fa7-4e05-b897-4df5bff773ce",
+    "domain": "academic",
+    "evidence_source": "formula",
+    "answer_form": "Free-form",
+    "relevant_source_ids": [
+      "ohr-002"
+    ],
+    "hit_source_ids": [
+      "ohr-002",
+      "ohr-002",
+      "ohr-001",
+      "ohr-017",
+      "ohr-019"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 282.3320999741554,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "62b22fd5-51c6-42e4-af48-744f7abc9f0b",
+    "domain": "academic",
+    "evidence_source": "table",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-010"
+    ],
+    "hit_source_ids": [
+      "ohr-003",
+      "ohr-014",
+      "ohr-001",
+      "ohr-012",
+      "ohr-019"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 277.37949998117983,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "62b7aabd-1be4-443d-a010-31fad1e06f00",
+    "domain": "academic",
+    "evidence_source": "table",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-010"
+    ],
+    "hit_source_ids": [
+      "ohr-003",
+      "ohr-001",
+      "ohr-012",
+      "ohr-016",
+      "ohr-001"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 288.97210001014173,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "62bd730c-1c28-4c71-81c5-212805554221",
+    "domain": "academic",
+    "evidence_source": "formula",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-010"
+    ],
+    "hit_source_ids": [
+      "ohr-002",
+      "ohr-003",
+      "ohr-003",
+      "ohr-005",
+      "ohr-002"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 274.87230001133867,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "62eb0802-e4c8-4737-afa7-08885a938325",
+    "domain": "academic",
+    "evidence_source": "formula",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-003"
+    ],
+    "hit_source_ids": [
+      "ohr-003",
+      "ohr-003",
+      "ohr-004",
+      "ohr-057",
+      "ohr-002"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 271.39379997970536,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "62edc378-ba8f-467e-99bc-bfa64fe97f7b",
+    "domain": "academic",
+    "evidence_source": "formula",
+    "answer_form": "Yes/No",
+    "relevant_source_ids": [
+      "ohr-003"
+    ],
+    "hit_source_ids": [
+      "ohr-003",
+      "ohr-001",
+      "ohr-006",
+      "ohr-005",
+      "ohr-002"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 261.02519998676144,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "62f0a848-71ae-4806-814c-ce90c6bf1faa",
+    "domain": "academic",
+    "evidence_source": "table",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-009"
+    ],
+    "hit_source_ids": [
+      "ohr-003",
+      "ohr-005",
+      "ohr-001",
+      "ohr-002",
+      "ohr-003"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 317.4742000119295,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "62f25291-2353-4455-90bc-cb66e0631450",
+    "domain": "academic",
+    "evidence_source": "formula",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-009"
+    ],
+    "hit_source_ids": [
+      "ohr-005",
+      "ohr-005",
+      "ohr-006",
+      "ohr-057",
+      "ohr-001"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 276.1766999901738,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "62f8d20a-c78a-466d-8a9b-fc00192edd37",
+    "domain": "academic",
+    "evidence_source": "table",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-009"
+    ],
+    "hit_source_ids": [
+      "ohr-078",
+      "ohr-003",
+      "ohr-078",
+      "ohr-077",
+      "ohr-079"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 289.5776999939699,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "62fe8d68-95f4-4a1f-a1d2-92ab36f4851f",
+    "domain": "academic",
+    "evidence_source": "table",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-010"
+    ],
+    "hit_source_ids": [
+      "ohr-003",
+      "ohr-002",
+      "ohr-005",
+      "ohr-006",
+      "ohr-014"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 383.46549999550916,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "6304b6a9-0104-436b-ad65-30012de7e815",
+    "domain": "academic",
+    "evidence_source": "table",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-010"
+    ],
+    "hit_source_ids": [
+      "ohr-001",
+      "ohr-012",
+      "ohr-016",
+      "ohr-150",
+      "ohr-005"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 287.51110000303015,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "630ac131-3f41-4b3a-a493-c8292e7d609a",
+    "domain": "academic",
+    "evidence_source": "table",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-010"
+    ],
+    "hit_source_ids": [
+      "ohr-078",
+      "ohr-079",
+      "ohr-079",
+      "ohr-077",
+      "ohr-078"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 314.2140999843832,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "6321fa69-7151-448f-9115-66e40ed58159",
+    "domain": "academic",
+    "evidence_source": "table",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-005"
+    ],
+    "hit_source_ids": [
+      "ohr-001",
+      "ohr-003",
+      "ohr-002",
+      "ohr-088",
+      "ohr-021"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 291.87300000921823,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "632927c5-7851-46ac-812d-3a1ae21c4499",
+    "domain": "academic",
+    "evidence_source": "table",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-005"
+    ],
+    "hit_source_ids": [
+      "ohr-005",
+      "ohr-002",
+      "ohr-003",
+      "ohr-006",
+      "ohr-005"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 279.5336999988649,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "632f7547-6f4c-4ed5-9ac1-442b00608459",
+    "domain": "academic",
+    "evidence_source": "table",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-005"
+    ],
+    "hit_source_ids": [
+      "ohr-005",
+      "ohr-020",
+      "ohr-005",
+      "ohr-001",
+      "ohr-002"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 287.63389997766353,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "63342f18-a92b-4b89-b86c-0a926ea3f40e",
+    "domain": "academic",
+    "evidence_source": "table",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-007"
+    ],
+    "hit_source_ids": [
+      "ohr-078",
+      "ohr-007",
+      "ohr-079",
+      "ohr-077",
+      "ohr-114"
+    ],
+    "first_relevant_rank": 2,
+    "latency_ms": 333.1181999819819,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "633cbf79-e96a-41af-b55e-3aa2208a393e",
+    "domain": "academic",
+    "evidence_source": "table",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-007"
+    ],
+    "hit_source_ids": [
+      "ohr-008",
+      "ohr-007",
+      "ohr-003",
+      "ohr-059",
+      "ohr-109"
+    ],
+    "first_relevant_rank": 2,
+    "latency_ms": 338.5464000166394,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "634ad5b9-fd72-4908-adb8-a483c65233ab",
+    "domain": "academic",
+    "evidence_source": "table",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-006"
+    ],
+    "hit_source_ids": [
+      "ohr-005",
+      "ohr-006",
+      "ohr-003",
+      "ohr-002",
+      "ohr-001"
+    ],
+    "first_relevant_rank": 2,
+    "latency_ms": 298.7618999904953,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "634c816e-93d8-4e8e-b437-109d00750c4d",
+    "domain": "academic",
+    "evidence_source": "table",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-006"
+    ],
+    "hit_source_ids": [
+      "ohr-003",
+      "ohr-006",
+      "ohr-077",
+      "ohr-001",
+      "ohr-079"
+    ],
+    "first_relevant_rank": 2,
+    "latency_ms": 292.6484000054188,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "635fb577-8d73-468a-8910-82d3ac27ccc7",
+    "domain": "academic",
+    "evidence_source": "table",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-006"
+    ],
+    "hit_source_ids": [
+      "ohr-078",
+      "ohr-077",
+      "ohr-003",
+      "ohr-150",
+      "ohr-079"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 288.6900000157766,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "636164d8-bb88-41b8-9be5-f8a138462e03",
+    "domain": "academic",
+    "evidence_source": "formula",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-004"
+    ],
+    "hit_source_ids": [
+      "ohr-014",
+      "ohr-005",
+      "ohr-001",
+      "ohr-019",
+      "ohr-003"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 320.97800000337884,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "63647b85-8f9d-4ea1-8648-38d213b6aee7",
+    "domain": "academic",
+    "evidence_source": "table",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-004"
+    ],
+    "hit_source_ids": [
+      "ohr-078",
+      "ohr-079",
+      "ohr-078",
+      "ohr-074",
+      "ohr-005"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 274.5786999876145,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "6364e890-ffe6-459c-8b8c-2f3f01586fcc",
+    "domain": "academic",
+    "evidence_source": "table",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-004"
+    ],
+    "hit_source_ids": [
+      "ohr-001",
+      "ohr-003",
+      "ohr-077",
+      "ohr-002",
+      "ohr-005"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 297.8006000048481,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "6368a611-1cd3-47c9-b2c6-e2e23bf497b2",
+    "domain": "academic",
+    "evidence_source": "formula",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-002"
+    ],
+    "hit_source_ids": [
+      "ohr-014",
+      "ohr-002",
+      "ohr-127",
+      "ohr-146",
+      "ohr-022"
+    ],
+    "first_relevant_rank": 2,
+    "latency_ms": 280.65040000365116,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "63694ce2-0959-4997-8e18-adf19e1a824f",
+    "domain": "academic",
+    "evidence_source": "formula",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-002"
+    ],
+    "hit_source_ids": [
+      "ohr-002",
+      "ohr-006",
+      "ohr-003",
+      "ohr-004",
+      "ohr-001"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 291.4849999942817,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "636c7dd5-2a23-4a88-b66a-e1d6e484a48e",
+    "domain": "academic",
+    "evidence_source": "formula",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-002"
+    ],
+    "hit_source_ids": [
+      "ohr-002",
+      "ohr-022",
+      "ohr-003",
+      "ohr-002",
+      "ohr-011"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 286.95489998790435,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "7ff5ad31-09fb-40c6-82c4-f9e84e7090a0",
+    "domain": "manual",
+    "evidence_source": "table",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-099"
+    ],
+    "hit_source_ids": [
+      "ohr-099",
+      "ohr-011",
+      "ohr-002",
+      "ohr-012",
+      "ohr-017"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 248.7484999874141,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "7ff5afe8-47c8-486d-bcc9-4ce3f8f285cc",
+    "domain": "manual",
+    "evidence_source": "table",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-099"
+    ],
+    "hit_source_ids": [
+      "ohr-099",
+      "ohr-003",
+      "ohr-001",
+      "ohr-002",
+      "ohr-008"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 262.5611000112258,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "7ff73899-0272-4367-b60b-eae444987bf7",
+    "domain": "manual",
+    "evidence_source": "table",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-099"
+    ],
+    "hit_source_ids": [
+      "ohr-099",
+      "ohr-011",
+      "ohr-125",
+      "ohr-125",
+      "ohr-012"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 268.241300014779,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "7ff9cbbd-631b-4360-a204-137bfe355690",
+    "domain": "manual",
+    "evidence_source": "formula",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-099"
+    ],
+    "hit_source_ids": [
+      "ohr-099",
+      "ohr-112",
+      "ohr-112",
+      "ohr-117",
+      "ohr-040"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 275.1169999828562,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "7ffbe1bc-bc99-4692-af34-c348ad0e038f",
+    "domain": "manual",
+    "evidence_source": "table",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-099"
+    ],
+    "hit_source_ids": [
+      "ohr-099",
+      "ohr-011",
+      "ohr-003",
+      "ohr-002",
+      "ohr-002"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 270.20179998362437,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "803f7110-8570-4b76-ae75-5d7bc6743c52",
+    "domain": "textbook",
+    "evidence_source": "table",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-137"
+    ],
+    "hit_source_ids": [
+      "ohr-147",
+      "ohr-129",
+      "ohr-109",
+      "ohr-078",
+      "ohr-117"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 406.93659998942167,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "810667bc-29d4-4027-a571-605793139579",
+    "domain": "administration",
+    "evidence_source": "table",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-038"
+    ],
+    "hit_source_ids": [
+      "ohr-041",
+      "ohr-040",
+      "ohr-042",
+      "ohr-038",
+      "ohr-078"
+    ],
+    "first_relevant_rank": 4,
+    "latency_ms": 276.1356999981217,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "81074432-b1a1-42b7-b727-47b72d1d61f3",
+    "domain": "administration",
+    "evidence_source": "table",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-041"
+    ],
+    "hit_source_ids": [
+      "ohr-038",
+      "ohr-042",
+      "ohr-041",
+      "ohr-040",
+      "ohr-126"
+    ],
+    "first_relevant_rank": 3,
+    "latency_ms": 295.8119999966584,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "8107845c-f4d7-4001-a1ba-442d99c69cc3",
+    "domain": "administration",
+    "evidence_source": "table",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-042"
+    ],
+    "hit_source_ids": [
+      "ohr-042",
+      "ohr-041",
+      "ohr-038",
+      "ohr-040",
+      "ohr-039"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 286.34510000119917,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "8107fa58-3243-43ed-b4a7-6efc4e91f5c6",
+    "domain": "administration",
+    "evidence_source": "table",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-043"
+    ],
+    "hit_source_ids": [
+      "ohr-039",
+      "ohr-041",
+      "ohr-042",
+      "ohr-110",
+      "ohr-039"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 270.53259999956936,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "8109e99e-9008-499e-b7f4-430d7987228a",
+    "domain": "administration",
+    "evidence_source": "table",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-044"
+    ],
+    "hit_source_ids": [
+      "ohr-039",
+      "ohr-042",
+      "ohr-038",
+      "ohr-041",
+      "ohr-040"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 277.833499974804,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "842dc997-eac4-4f57-9e85-55b435507002",
+    "domain": "manual",
+    "evidence_source": "table",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-108"
+    ],
+    "hit_source_ids": [
+      "ohr-108",
+      "ohr-108",
+      "ohr-107",
+      "ohr-057",
+      "ohr-115"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 272.6027999888174,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "843d6c40-d061-4554-8b75-e075af1249ea",
+    "domain": "textbook",
+    "evidence_source": "table",
+    "answer_form": "List",
+    "relevant_source_ids": [
+      "ohr-139"
+    ],
+    "hit_source_ids": [
+      "ohr-138",
+      "ohr-127",
+      "ohr-057",
+      "ohr-079",
+      "ohr-132"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 269.5944999868516,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "843e08e3-37b3-4967-a8ca-9f92e799b0d0",
+    "domain": "textbook",
+    "evidence_source": "table",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-149"
+    ],
+    "hit_source_ids": [
+      "ohr-149",
+      "ohr-146",
+      "ohr-145",
+      "ohr-147",
+      "ohr-001"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 260.95100000384264,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "84eb42d3-67c4-4071-ba8a-82eaad527daa",
+    "domain": "manual",
+    "evidence_source": "table",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-102"
+    ],
+    "hit_source_ids": [
+      "ohr-104",
+      "ohr-001",
+      "ohr-128",
+      "ohr-101",
+      "ohr-118"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 271.6620000137482,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "84eceaa2-bd5f-421c-852d-88d9ba047fe8",
+    "domain": "manual",
+    "evidence_source": "table",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-103"
+    ],
+    "hit_source_ids": [
+      "ohr-057",
+      "ohr-057",
+      "ohr-041",
+      "ohr-078",
+      "ohr-103"
+    ],
+    "first_relevant_rank": 5,
+    "latency_ms": 272.76019999408163,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "889ce881-fa7f-4bc5-9c14-aa1b2511544a",
+    "domain": "textbook",
+    "evidence_source": "multi",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-137"
+    ],
+    "hit_source_ids": [
+      "ohr-078",
+      "ohr-078",
+      "ohr-077",
+      "ohr-039",
+      "ohr-026"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 324.3213999958243,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "889d357a-f8f7-4ecb-b15c-a32215035bba",
+    "domain": "textbook",
+    "evidence_source": "table",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-137"
+    ],
+    "hit_source_ids": [
+      "ohr-078",
+      "ohr-077",
+      "ohr-146",
+      "ohr-144",
+      "ohr-078"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 264.158200006932,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "88ebd33c-3f50-4fbf-80e5-a69800d2ff48",
+    "domain": "administration",
+    "evidence_source": "text",
+    "answer_form": "List",
+    "relevant_source_ids": [
+      "ohr-035"
+    ],
+    "hit_source_ids": [
+      "ohr-036",
+      "ohr-078",
+      "ohr-079",
+      "ohr-148",
+      "ohr-078"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 290.0771000131499,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "88ec7fcc-e73d-4f97-9e2c-5a1a50ebd8b9",
+    "domain": "administration",
+    "evidence_source": "text",
+    "answer_form": "List",
+    "relevant_source_ids": [
+      "ohr-035"
+    ],
+    "hit_source_ids": [
+      "ohr-036",
+      "ohr-079",
+      "ohr-078",
+      "ohr-118",
+      "ohr-078"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 295.3459999989718,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "88ee2897-1462-4ebc-959f-45ff5c23091e",
+    "domain": "administration",
+    "evidence_source": "formula",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-036"
+    ],
+    "hit_source_ids": [
+      "ohr-036",
+      "ohr-078",
+      "ohr-078",
+      "ohr-079",
+      "ohr-077"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 304.26139998598956,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "88eed128-3189-478a-8091-e401b48d4b2f",
+    "domain": "administration",
+    "evidence_source": "text",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-036"
+    ],
+    "hit_source_ids": [
+      "ohr-036",
+      "ohr-140",
+      "ohr-057",
+      "ohr-148",
+      "ohr-145"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 297.1675000153482,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "8d7fa288-ae0d-46ea-85fa-2186599729a5",
+    "domain": "administration",
+    "evidence_source": "text",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-037"
+    ],
+    "hit_source_ids": [
+      "ohr-037",
+      "ohr-110",
+      "ohr-111",
+      "ohr-034",
+      "ohr-039"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 283.08140000444837,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "8d803782-bbda-4dd3-ab12-bca56c681145",
+    "domain": "administration",
+    "evidence_source": "text",
+    "answer_form": "Yes/No",
+    "relevant_source_ids": [
+      "ohr-037"
+    ],
+    "hit_source_ids": [
+      "ohr-037",
+      "ohr-059",
+      "ohr-040",
+      "ohr-039",
+      "ohr-042"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 297.6024999807123,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "8d82dc09-93ac-47a4-8fca-00e440cfd297",
+    "domain": "administration",
+    "evidence_source": "text",
+    "answer_form": "Yes/No",
+    "relevant_source_ids": [
+      "ohr-040"
+    ],
+    "hit_source_ids": [
+      "ohr-040",
+      "ohr-038",
+      "ohr-041",
+      "ohr-042",
+      "ohr-078"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 294.9204999895301,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "8d8985aa-6d5a-42c0-9d23-b62acfbbd48a",
+    "domain": "administration",
+    "evidence_source": "text",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-041"
+    ],
+    "hit_source_ids": [
+      "ohr-041",
+      "ohr-039",
+      "ohr-042",
+      "ohr-038",
+      "ohr-039"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 268.8792000117246,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "90c7aaa4-573d-44a5-8e43-f27d0ac37e20",
+    "domain": "textbook",
+    "evidence_source": "text",
+    "answer_form": "List",
+    "relevant_source_ids": [
+      "ohr-130"
+    ],
+    "hit_source_ids": [
+      "ohr-130",
+      "ohr-135",
+      "ohr-136",
+      "ohr-112",
+      "ohr-133"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 314.6714000031352,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "90c88d77-ac71-4a6d-8ace-5e9614414edd",
+    "domain": "textbook",
+    "evidence_source": "text",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-130"
+    ],
+    "hit_source_ids": [
+      "ohr-134",
+      "ohr-130",
+      "ohr-136",
+      "ohr-111",
+      "ohr-134"
+    ],
+    "first_relevant_rank": 2,
+    "latency_ms": 332.67619999242015,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "90caa2fc-30fe-49d6-ac6a-bb281d1712b7",
+    "domain": "textbook",
+    "evidence_source": "text",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-131"
+    ],
+    "hit_source_ids": [
+      "ohr-147",
+      "ohr-132",
+      "ohr-077",
+      "ohr-078",
+      "ohr-145"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 280.9075999830384,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "90d0d880-06fe-4557-ab4b-e88599ad8f5f",
+    "domain": "textbook",
+    "evidence_source": "text",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-132"
+    ],
+    "hit_source_ids": [
+      "ohr-135",
+      "ohr-111",
+      "ohr-130",
+      "ohr-133",
+      "ohr-136"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 336.2014000013005,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "90d0eab5-77ac-47d1-8c90-5495b3911a02",
+    "domain": "textbook",
+    "evidence_source": "text",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-132"
+    ],
+    "hit_source_ids": [
+      "ohr-118",
+      "ohr-132",
+      "ohr-133",
+      "ohr-135",
+      "ohr-136"
+    ],
+    "first_relevant_rank": 2,
+    "latency_ms": 285.0449999968987,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "90d8d45c-0faf-463b-92b6-e6b849a11577",
+    "domain": "textbook",
+    "evidence_source": "text",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-133"
+    ],
+    "hit_source_ids": [
+      "ohr-133",
+      "ohr-113",
+      "ohr-134",
+      "ohr-112",
+      "ohr-111"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 293.0343000043649,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "90dd248f-6bcb-4ecd-947d-ac4bbc9da09c",
+    "domain": "textbook",
+    "evidence_source": "text",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-134"
+    ],
+    "hit_source_ids": [
+      "ohr-134",
+      "ohr-136",
+      "ohr-112",
+      "ohr-116",
+      "ohr-133"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 273.0520000040997,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "90e9c1f1-a0f9-473e-ad0e-b005e596e960",
+    "domain": "textbook",
+    "evidence_source": "text",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-135"
+    ],
+    "hit_source_ids": [
+      "ohr-135",
+      "ohr-110",
+      "ohr-133",
+      "ohr-109",
+      "ohr-117"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 282.97030000248924,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "90eab93a-234e-4197-88c3-0c635b394f39",
+    "domain": "textbook",
+    "evidence_source": "text",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-135"
+    ],
+    "hit_source_ids": [
+      "ohr-136",
+      "ohr-134",
+      "ohr-133",
+      "ohr-114",
+      "ohr-119"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 279.8455999873113,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "90ebd333-ef2a-438e-9127-82f1cf855031",
+    "domain": "textbook",
+    "evidence_source": "text",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-136"
+    ],
+    "hit_source_ids": [
+      "ohr-136",
+      "ohr-125",
+      "ohr-114",
+      "ohr-134",
+      "ohr-109"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 274.05440001166426,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "9be5f070-b77c-4704-936c-a97558e903bc",
+    "domain": "manual",
+    "evidence_source": "text",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-106"
+    ],
+    "hit_source_ids": [
+      "ohr-107",
+      "ohr-106",
+      "ohr-147",
+      "ohr-078",
+      "ohr-001"
+    ],
+    "first_relevant_rank": 2,
+    "latency_ms": 267.75100000668317,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "9be8a1cc-5600-468e-9ab0-3f1f693086a8",
+    "domain": "manual",
+    "evidence_source": "text",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-107"
+    ],
+    "hit_source_ids": [
+      "ohr-107",
+      "ohr-110",
+      "ohr-067",
+      "ohr-014",
+      "ohr-039"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 295.6858000252396,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "9be8b64d-a5b2-4f73-9d60-7125a66ecb56",
+    "domain": "manual",
+    "evidence_source": "text",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-107"
+    ],
+    "hit_source_ids": [
+      "ohr-107",
+      "ohr-147",
+      "ohr-084",
+      "ohr-001",
+      "ohr-108"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 342.4746000091545,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "9c31f087-18bd-4e71-887e-959595e01b5e",
+    "domain": "textbook",
+    "evidence_source": "text",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-138"
+    ],
+    "hit_source_ids": [
+      "ohr-111",
+      "ohr-126",
+      "ohr-118",
+      "ohr-138",
+      "ohr-111"
+    ],
+    "first_relevant_rank": 4,
+    "latency_ms": 285.23219999624416,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "9c3655de-35cc-4576-83b3-2a56591aa19e",
+    "domain": "textbook",
+    "evidence_source": "text",
+    "answer_form": "List",
+    "relevant_source_ids": [
+      "ohr-139"
+    ],
+    "hit_source_ids": [
+      "ohr-138",
+      "ohr-057",
+      "ohr-139",
+      "ohr-079",
+      "ohr-114"
+    ],
+    "first_relevant_rank": 3,
+    "latency_ms": 290.9073999908287,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "9c369f6d-9121-4f59-9f24-0ae53301deb4",
+    "domain": "textbook",
+    "evidence_source": "text",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-139"
+    ],
+    "hit_source_ids": [
+      "ohr-139",
+      "ohr-142",
+      "ohr-126",
+      "ohr-079",
+      "ohr-140"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 305.1395999791566,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "9c3b667e-6fc6-4d3f-8c56-aa7aa194ab0a",
+    "domain": "textbook",
+    "evidence_source": "text",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-141"
+    ],
+    "hit_source_ids": [
+      "ohr-141",
+      "ohr-138",
+      "ohr-118",
+      "ohr-080",
+      "ohr-077"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 299.51519999303855,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "9c4572ee-9724-47b1-ad11-139728f8c26f",
+    "domain": "textbook",
+    "evidence_source": "text",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-142"
+    ],
+    "hit_source_ids": [
+      "ohr-142",
+      "ohr-002",
+      "ohr-039",
+      "ohr-016",
+      "ohr-129"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 270.1965000014752,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "9c45bcf2-f23e-42c1-8223-e96254e1de59",
+    "domain": "textbook",
+    "evidence_source": "text",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-142"
+    ],
+    "hit_source_ids": [
+      "ohr-142",
+      "ohr-078",
+      "ohr-079",
+      "ohr-078",
+      "ohr-109"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 296.07249997206964,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "9c462884-826e-4aac-8b57-6167e6ef624b",
+    "domain": "textbook",
+    "evidence_source": "text",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-142"
+    ],
+    "hit_source_ids": [
+      "ohr-142",
+      "ohr-001",
+      "ohr-003",
+      "ohr-001",
+      "ohr-003"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 260.6044000131078,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "9c494ae7-5839-445a-808a-c59437fbccc2",
+    "domain": "textbook",
+    "evidence_source": "text",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-142"
+    ],
+    "hit_source_ids": [
+      "ohr-142",
+      "ohr-057",
+      "ohr-118",
+      "ohr-079",
+      "ohr-069"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 265.7134000037331,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "9c546b13-f581-4c4c-bdb3-784510aac204",
+    "domain": "textbook",
+    "evidence_source": "text",
+    "answer_form": "List",
+    "relevant_source_ids": [
+      "ohr-143"
+    ],
+    "hit_source_ids": [
+      "ohr-143",
+      "ohr-078",
+      "ohr-078",
+      "ohr-079",
+      "ohr-145"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 285.4644999897573,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "9c55462c-d3da-4e15-a31c-892174a52520",
+    "domain": "textbook",
+    "evidence_source": "text",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-143"
+    ],
+    "hit_source_ids": [
+      "ohr-143",
+      "ohr-078",
+      "ohr-144",
+      "ohr-145",
+      "ohr-078"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 285.3535999893211,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "9c555ec5-6bb0-45fa-b28e-6ea0bc4e47b5",
+    "domain": "textbook",
+    "evidence_source": "text",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-144"
+    ],
+    "hit_source_ids": [
+      "ohr-144",
+      "ohr-146",
+      "ohr-143",
+      "ohr-111",
+      "ohr-147"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 317.4912999966182,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "9c5704f1-1cb2-48e4-bff4-579a643cc556",
+    "domain": "textbook",
+    "evidence_source": "text",
+    "answer_form": "List",
+    "relevant_source_ids": [
+      "ohr-144"
+    ],
+    "hit_source_ids": [
+      "ohr-143",
+      "ohr-077",
+      "ohr-147",
+      "ohr-144",
+      "ohr-079"
+    ],
+    "first_relevant_rank": 4,
+    "latency_ms": 273.2827999861911,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "9c5db72a-d5a7-4028-ac3d-c6a410f84581",
+    "domain": "textbook",
+    "evidence_source": "text",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-147"
+    ],
+    "hit_source_ids": [
+      "ohr-147",
+      "ohr-127",
+      "ohr-146",
+      "ohr-001",
+      "ohr-128"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 268.45869998214766,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "9c5e4f7d-7434-4af4-ac28-85ffbe4c0c35",
+    "domain": "textbook",
+    "evidence_source": "text",
+    "answer_form": "List",
+    "relevant_source_ids": [
+      "ohr-147"
+    ],
+    "hit_source_ids": [
+      "ohr-147",
+      "ohr-144",
+      "ohr-109",
+      "ohr-145",
+      "ohr-128"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 263.6101999960374,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "9c62e74b-f4c5-4930-95fd-05af54d20e4e",
+    "domain": "textbook",
+    "evidence_source": "text",
+    "answer_form": "List",
+    "relevant_source_ids": [
+      "ohr-148"
+    ],
+    "hit_source_ids": [
+      "ohr-148",
+      "ohr-078",
+      "ohr-057",
+      "ohr-145",
+      "ohr-111"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 272.5044999970123,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "9c63765b-74e0-4bbb-8a80-33a7a5fd89c8",
+    "domain": "textbook",
+    "evidence_source": "text",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-148"
+    ],
+    "hit_source_ids": [
+      "ohr-148",
+      "ohr-127",
+      "ohr-127",
+      "ohr-114",
+      "ohr-127"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 269.41760000772774,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "9c65836e-8e9a-4a56-a6aa-e560a18df6f5",
+    "domain": "textbook",
+    "evidence_source": "text",
+    "answer_form": "List",
+    "relevant_source_ids": [
+      "ohr-148"
+    ],
+    "hit_source_ids": [
+      "ohr-148",
+      "ohr-111",
+      "ohr-144",
+      "ohr-147",
+      "ohr-145"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 284.83580000465736,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "9c6725b2-7765-4a0a-95a6-ee8b3ced1be5",
+    "domain": "textbook",
+    "evidence_source": "text",
+    "answer_form": "List",
+    "relevant_source_ids": [
+      "ohr-149"
+    ],
+    "hit_source_ids": [
+      "ohr-149",
+      "ohr-148",
+      "ohr-109",
+      "ohr-138",
+      "ohr-144"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 271.64510000147857,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "9c6a4f19-6165-4ec6-b91d-55c727357c1d",
+    "domain": "textbook",
+    "evidence_source": "text",
+    "answer_form": "List",
+    "relevant_source_ids": [
+      "ohr-149"
+    ],
+    "hit_source_ids": [
+      "ohr-145",
+      "ohr-149",
+      "ohr-144",
+      "ohr-078",
+      "ohr-150"
+    ],
+    "first_relevant_rank": 2,
+    "latency_ms": 276.66400000452995,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "9c75bbf1-ba42-4985-adcc-b451a96f704b",
+    "domain": "textbook",
+    "evidence_source": "text",
+    "answer_form": "List",
+    "relevant_source_ids": [
+      "ohr-150"
+    ],
+    "hit_source_ids": [
+      "ohr-150",
+      "ohr-144",
+      "ohr-145",
+      "ohr-148",
+      "ohr-118"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 277.78309999848716,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "9c78a31d-b448-4bb3-a809-10d43ce2ebed",
+    "domain": "textbook",
+    "evidence_source": "text",
+    "answer_form": "List",
+    "relevant_source_ids": [
+      "ohr-150"
+    ],
+    "hit_source_ids": [
+      "ohr-150",
+      "ohr-079",
+      "ohr-074",
+      "ohr-080",
+      "ohr-069"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 275.1169999828562,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "9d3363db-968e-4249-895a-14046de2e202",
+    "domain": "administration",
+    "evidence_source": "text",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-029"
+    ],
+    "hit_source_ids": [
+      "ohr-078",
+      "ohr-077",
+      "ohr-031",
+      "ohr-029",
+      "ohr-079"
+    ],
+    "first_relevant_rank": 4,
+    "latency_ms": 317.44879999314435,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "9d36ac5f-6f5e-4d0b-90fe-25aa4aed444f",
+    "domain": "administration",
+    "evidence_source": "text",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-030"
+    ],
+    "hit_source_ids": [
+      "ohr-078",
+      "ohr-077",
+      "ohr-077",
+      "ohr-079",
+      "ohr-078"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 263.38220000616275,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "9fc8602d-4497-424e-8131-0b1f1b688283",
+    "domain": "manual",
+    "evidence_source": "table",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-101"
+    ],
+    "hit_source_ids": [
+      "ohr-101",
+      "ohr-107",
+      "ohr-111",
+      "ohr-132",
+      "ohr-069"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 270.39109999896027,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "9fca1904-4ced-44a0-b876-4f0327af8220",
+    "domain": "manual",
+    "evidence_source": "table",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-101"
+    ],
+    "hit_source_ids": [
+      "ohr-001",
+      "ohr-057",
+      "ohr-057",
+      "ohr-073",
+      "ohr-111"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 270.0786000059452,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "9fcaea47-17da-45dc-bbde-bfbe148f03be",
+    "domain": "manual",
+    "evidence_source": "text",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-102"
+    ],
+    "hit_source_ids": [
+      "ohr-001",
+      "ohr-102",
+      "ohr-002",
+      "ohr-078",
+      "ohr-119"
+    ],
+    "first_relevant_rank": 2,
+    "latency_ms": 263.6342999758199,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "9fcbc2e9-98f2-4434-a9a9-f410b1759e79",
+    "domain": "manual",
+    "evidence_source": "text",
+    "answer_form": "List",
+    "relevant_source_ids": [
+      "ohr-102"
+    ],
+    "hit_source_ids": [
+      "ohr-118",
+      "ohr-128",
+      "ohr-101",
+      "ohr-144",
+      "ohr-150"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 263.25739998719655,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "9fcfa1f8-5d80-41dd-badd-ad915bf5c161",
+    "domain": "manual",
+    "evidence_source": "text",
+    "answer_form": "List",
+    "relevant_source_ids": [
+      "ohr-105"
+    ],
+    "hit_source_ids": [
+      "ohr-078",
+      "ohr-107",
+      "ohr-079",
+      "ohr-078",
+      "ohr-118"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 274.65229999506846,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "a027b0a8-f738-4f88-a050-c7246358f99b",
+    "domain": "administration",
+    "evidence_source": "text",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-023"
+    ],
+    "hit_source_ids": [
+      "ohr-079",
+      "ohr-023",
+      "ohr-024",
+      "ohr-078",
+      "ohr-078"
+    ],
+    "first_relevant_rank": 2,
+    "latency_ms": 273.40999999432825,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "a031d320-45ab-4ba4-927d-fa4376210450",
+    "domain": "administration",
+    "evidence_source": "text",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-026"
+    ],
+    "hit_source_ids": [
+      "ohr-078",
+      "ohr-026",
+      "ohr-079",
+      "ohr-041",
+      "ohr-077"
+    ],
+    "first_relevant_rank": 2,
+    "latency_ms": 273.23590000742115,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "a58e553a-cdf2-42f7-a52e-b0974ec9a19f",
+    "domain": "textbook",
+    "evidence_source": "formula",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-137"
+    ],
+    "hit_source_ids": [
+      "ohr-078",
+      "ohr-078",
+      "ohr-077",
+      "ohr-079",
+      "ohr-077"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 282.5369999918621,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "a5903b26-031b-4872-b606-b1769a7ed7dd",
+    "domain": "textbook",
+    "evidence_source": "formula",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-137"
+    ],
+    "hit_source_ids": [
+      "ohr-078",
+      "ohr-039",
+      "ohr-111",
+      "ohr-038",
+      "ohr-116"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 295.60730000957847,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "a5e1c4f0-4068-4633-aa08-0ca2da4f44ae",
+    "domain": "administration",
+    "evidence_source": "formula",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-039"
+    ],
+    "hit_source_ids": [
+      "ohr-039",
+      "ohr-041",
+      "ohr-057",
+      "ohr-042",
+      "ohr-040"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 347.1220000064932,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "a5e3a719-6bf5-4dfd-94a8-762b2b12c92c",
+    "domain": "administration",
+    "evidence_source": "formula",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-039"
+    ],
+    "hit_source_ids": [
+      "ohr-039",
+      "ohr-041",
+      "ohr-126",
+      "ohr-042",
+      "ohr-121"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 308.02460000268184,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "a5e45540-12e6-4b90-9127-8f8bbb9f7d3f",
+    "domain": "administration",
+    "evidence_source": "formula",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-041"
+    ],
+    "hit_source_ids": [
+      "ohr-041",
+      "ohr-039",
+      "ohr-042",
+      "ohr-038",
+      "ohr-039"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 284.0128999960143,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "a5e561ab-e08e-471d-84be-92431f9a9087",
+    "domain": "administration",
+    "evidence_source": "formula",
+    "answer_form": "Yes/No",
+    "relevant_source_ids": [
+      "ohr-041"
+    ],
+    "hit_source_ids": [
+      "ohr-041",
+      "ohr-078",
+      "ohr-079",
+      "ohr-039",
+      "ohr-078"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 305.7861999841407,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "a5e7396d-3039-48d9-a9c8-8ee9e50903a1",
+    "domain": "administration",
+    "evidence_source": "formula",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-042"
+    ],
+    "hit_source_ids": [
+      "ohr-042",
+      "ohr-038",
+      "ohr-041",
+      "ohr-110",
+      "ohr-118"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 280.5798000190407,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "a5e9bd98-41b7-4684-82fc-08b15729aee1",
+    "domain": "administration",
+    "evidence_source": "formula",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-042"
+    ],
+    "hit_source_ids": [
+      "ohr-079",
+      "ohr-041",
+      "ohr-110",
+      "ohr-042",
+      "ohr-118"
+    ],
+    "first_relevant_rank": 4,
+    "latency_ms": 306.9979999854695,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "a5ee8e69-2b87-4dc6-90d6-d746e0065102",
+    "domain": "administration",
+    "evidence_source": "formula",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-043"
+    ],
+    "hit_source_ids": [
+      "ohr-078",
+      "ohr-041",
+      "ohr-040",
+      "ohr-077",
+      "ohr-039"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 287.56799999973737,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "a5ef30cd-4ac1-42c8-97f3-1293026fe7ce",
+    "domain": "administration",
+    "evidence_source": "formula",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-043"
+    ],
+    "hit_source_ids": [
+      "ohr-041",
+      "ohr-039",
+      "ohr-126",
+      "ohr-042",
+      "ohr-121"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 300.5725999828428,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "a5f1142d-7df7-49bb-b96c-9989dff531db",
+    "domain": "administration",
+    "evidence_source": "formula",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-044"
+    ],
+    "hit_source_ids": [
+      "ohr-039",
+      "ohr-041",
+      "ohr-042",
+      "ohr-038",
+      "ohr-039"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 299.67279999982566,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "a5f30a25-1847-4189-97fa-897a087fd579",
+    "domain": "administration",
+    "evidence_source": "formula",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-044"
+    ],
+    "hit_source_ids": [
+      "ohr-039",
+      "ohr-041",
+      "ohr-038",
+      "ohr-042",
+      "ohr-079"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 278.1773000024259,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "aa5a19bc-8bbd-42a4-87aa-0a67f8da80da",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-045"
+    ],
+    "hit_source_ids": [
+      "ohr-045",
+      "ohr-057",
+      "ohr-079",
+      "ohr-078",
+      "ohr-078"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 270.13950000400655,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "aa5bffa0-8fd0-4b07-91cf-5294bdd245dc",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-045"
+    ],
+    "hit_source_ids": [
+      "ohr-057",
+      "ohr-029",
+      "ohr-045",
+      "ohr-107",
+      "ohr-055"
+    ],
+    "first_relevant_rank": 3,
+    "latency_ms": 315.2865000010934,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "aa5fa3fb-e1d6-4db9-87d8-951386be921a",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-045"
+    ],
+    "hit_source_ids": [
+      "ohr-057",
+      "ohr-045",
+      "ohr-069",
+      "ohr-023",
+      "ohr-069"
+    ],
+    "first_relevant_rank": 2,
+    "latency_ms": 274.09729998908006,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "aa66b464-8420-48d9-b261-d0d2a1c2d9bf",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-047"
+    ],
+    "hit_source_ids": [
+      "ohr-078",
+      "ohr-109",
+      "ohr-078",
+      "ohr-023",
+      "ohr-077"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 271.203800017247,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "aa66baa3-a46d-4ad5-b715-9f58eba74a3a",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-047"
+    ],
+    "hit_source_ids": [
+      "ohr-047",
+      "ohr-056",
+      "ohr-114",
+      "ohr-114",
+      "ohr-023"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 269.1456000029575,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "aa6a9e7c-139b-4357-8e3a-d80fe90db4fb",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-048"
+    ],
+    "hit_source_ids": [
+      "ohr-057",
+      "ohr-078",
+      "ohr-048",
+      "ohr-078",
+      "ohr-109"
+    ],
+    "first_relevant_rank": 3,
+    "latency_ms": 299.2295000003651,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "aa6ce496-c678-4fb2-a3cd-3da4f9964ce4",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-048"
+    ],
+    "hit_source_ids": [
+      "ohr-114",
+      "ohr-144",
+      "ohr-046",
+      "ohr-114",
+      "ohr-114"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 277.06490000127815,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "aa708b5c-9d95-459b-9eec-8d2c4757c1a7",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-048"
+    ],
+    "hit_source_ids": [
+      "ohr-048",
+      "ohr-046",
+      "ohr-047",
+      "ohr-051",
+      "ohr-110"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 304.879900009837,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "aa741eb5-e680-4802-b8cc-5cecda992d44",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-048"
+    ],
+    "hit_source_ids": [
+      "ohr-078",
+      "ohr-109",
+      "ohr-048",
+      "ohr-059",
+      "ohr-046"
+    ],
+    "first_relevant_rank": 3,
+    "latency_ms": 299.7637999942526,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "aa7b6d64-844e-46df-9c34-198a766c7fca",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-049"
+    ],
+    "hit_source_ids": [
+      "ohr-057",
+      "ohr-049",
+      "ohr-109",
+      "ohr-111",
+      "ohr-128"
+    ],
+    "first_relevant_rank": 2,
+    "latency_ms": 292.000299989013,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "aa7ce24e-25f2-4d0d-ab1e-a8949994dde6",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-049"
+    ],
+    "hit_source_ids": [
+      "ohr-078",
+      "ohr-077",
+      "ohr-079",
+      "ohr-078",
+      "ohr-001"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 259.1376000200398,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "aa7fbb07-7aa3-4054-96da-4c64b4cb87f8",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-049"
+    ],
+    "hit_source_ids": [
+      "ohr-109",
+      "ohr-012",
+      "ohr-127",
+      "ohr-023",
+      "ohr-111"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 269.41949999309145,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "aa83440d-50d9-4834-80c8-4e0b9fd6fd19",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-049"
+    ],
+    "hit_source_ids": [
+      "ohr-114",
+      "ohr-114",
+      "ohr-120",
+      "ohr-117",
+      "ohr-112"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 306.1570000136271,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "aa8416e6-84c3-4f33-9b75-34705c76ded5",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-049"
+    ],
+    "hit_source_ids": [
+      "ohr-109",
+      "ohr-047",
+      "ohr-057",
+      "ohr-118",
+      "ohr-113"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 264.38470001448877,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "aa85c9bc-a493-4a50-a417-62275583031c",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-050"
+    ],
+    "hit_source_ids": [
+      "ohr-112",
+      "ohr-078",
+      "ohr-114",
+      "ohr-109",
+      "ohr-128"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 258.30149999819696,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "aa861df5-24bd-4011-8ba2-0e0688e2c431",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-050"
+    ],
+    "hit_source_ids": [
+      "ohr-109",
+      "ohr-078",
+      "ohr-078",
+      "ohr-079",
+      "ohr-128"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 273.33890000591055,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "aa87b4f8-d29e-4635-8ee8-7598042c13dd",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-050"
+    ],
+    "hit_source_ids": [
+      "ohr-077",
+      "ohr-078",
+      "ohr-079",
+      "ohr-111",
+      "ohr-138"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 268.0298000050243,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "aa8ba520-317b-4b67-8d2d-614dafb9b710",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-050"
+    ],
+    "hit_source_ids": [
+      "ohr-128",
+      "ohr-109",
+      "ohr-113",
+      "ohr-057",
+      "ohr-126"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 271.9933000043966,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "aa99ffaa-c047-46b8-9a9c-1c38a8af5dde",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-052"
+    ],
+    "hit_source_ids": [
+      "ohr-052",
+      "ohr-057",
+      "ohr-057",
+      "ohr-051",
+      "ohr-055"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 281.35740000288934,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "aa9a0dae-6163-40b2-ad27-e1b2e1360ee7",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-052"
+    ],
+    "hit_source_ids": [
+      "ohr-053",
+      "ohr-057",
+      "ohr-051",
+      "ohr-052",
+      "ohr-050"
+    ],
+    "first_relevant_rank": 4,
+    "latency_ms": 269.08080000430346,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "aa9a300a-2855-4296-b2fc-b4ffdf89623a",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-052"
+    ],
+    "hit_source_ids": [
+      "ohr-052",
+      "ohr-057",
+      "ohr-051",
+      "ohr-055",
+      "ohr-050"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 280.5387999978848,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "aa9bd994-663b-494b-b27b-e412b950f94b",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-052"
+    ],
+    "hit_source_ids": [
+      "ohr-052",
+      "ohr-057",
+      "ohr-055",
+      "ohr-056",
+      "ohr-053"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 263.76130001153797,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "aaa03d56-7778-492a-9173-f701c1855c0b",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-052"
+    ],
+    "hit_source_ids": [
+      "ohr-052",
+      "ohr-057",
+      "ohr-053",
+      "ohr-055",
+      "ohr-051"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 274.062500015134,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "aaa1923f-422a-4d51-9fb2-a51874af100c",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-054"
+    ],
+    "hit_source_ids": [
+      "ohr-057",
+      "ohr-057",
+      "ohr-078",
+      "ohr-069",
+      "ohr-109"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 334.9879999877885,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "aaa6eef9-bbb6-4a4c-940a-b78e69259d81",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-055"
+    ],
+    "hit_source_ids": [
+      "ohr-051",
+      "ohr-052",
+      "ohr-055",
+      "ohr-056",
+      "ohr-057"
+    ],
+    "first_relevant_rank": 3,
+    "latency_ms": 274.0594999922905,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "aaa91ed4-7be1-451a-bc12-55417d534839",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-055"
+    ],
+    "hit_source_ids": [
+      "ohr-059",
+      "ohr-118",
+      "ohr-048",
+      "ohr-056",
+      "ohr-001"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 262.8547999775037,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "aaabb8a7-b6bb-4b0e-b9a1-e2a9948ecb70",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-055"
+    ],
+    "hit_source_ids": [
+      "ohr-056",
+      "ohr-055",
+      "ohr-078",
+      "ohr-078",
+      "ohr-059"
+    ],
+    "first_relevant_rank": 2,
+    "latency_ms": 264.3627000215929,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "aaabf317-b4ac-48f1-a9cb-a55d1193f786",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-055"
+    ],
+    "hit_source_ids": [
+      "ohr-059",
+      "ohr-127",
+      "ohr-022",
+      "ohr-055",
+      "ohr-056"
+    ],
+    "first_relevant_rank": 4,
+    "latency_ms": 266.47860000957735,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "aaad904e-4257-49e6-a358-3699dce1baf8",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-055"
+    ],
+    "hit_source_ids": [
+      "ohr-056",
+      "ohr-051",
+      "ohr-055",
+      "ohr-052",
+      "ohr-054"
+    ],
+    "first_relevant_rank": 3,
+    "latency_ms": 263.57090001692995,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "aaada900-40c4-4870-9ea4-a7fda8044a5f",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-056"
+    ],
+    "hit_source_ids": [
+      "ohr-055",
+      "ohr-051",
+      "ohr-057",
+      "ohr-056",
+      "ohr-023"
+    ],
+    "first_relevant_rank": 4,
+    "latency_ms": 265.5566000030376,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "aaadca20-f5d9-447e-bf06-11c23c713e63",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-056"
+    ],
+    "hit_source_ids": [
+      "ohr-051",
+      "ohr-052",
+      "ohr-055",
+      "ohr-057",
+      "ohr-056"
+    ],
+    "first_relevant_rank": 5,
+    "latency_ms": 268.0599000013899,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "aaaf4f37-6fd3-440d-bec1-e1a7f4ad5354",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-056"
+    ],
+    "hit_source_ids": [
+      "ohr-055",
+      "ohr-051",
+      "ohr-056",
+      "ohr-059",
+      "ohr-057"
+    ],
+    "first_relevant_rank": 3,
+    "latency_ms": 270.6412999832537,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "aaafdf6c-3000-41f7-87ba-4a6ad9c682e7",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-056"
+    ],
+    "hit_source_ids": [
+      "ohr-056",
+      "ohr-055",
+      "ohr-078",
+      "ohr-078",
+      "ohr-077"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 282.55070000886917,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "ac3eb3b7-26ea-400d-976c-98033c99de5a",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-045"
+    ],
+    "hit_source_ids": [
+      "ohr-045",
+      "ohr-050",
+      "ohr-057",
+      "ohr-115",
+      "ohr-136"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 296.3164999964647,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "ac4551a7-8973-4d07-b1e4-56dcffa13b6f",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-045"
+    ],
+    "hit_source_ids": [
+      "ohr-045",
+      "ohr-050",
+      "ohr-018",
+      "ohr-057",
+      "ohr-107"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 281.27890001633205,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "ac457bb6-d02e-483b-bc3f-99a6f9b6a8b3",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-045"
+    ],
+    "hit_source_ids": [
+      "ohr-045",
+      "ohr-079",
+      "ohr-050",
+      "ohr-046",
+      "ohr-048"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 361.82210000697523,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "ac48f0c8-dbc2-415f-9194-87aabac6358e",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-046"
+    ],
+    "hit_source_ids": [
+      "ohr-059",
+      "ohr-057",
+      "ohr-057",
+      "ohr-055",
+      "ohr-109"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 274.71670001978055,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "ac4b1911-0987-4756-bad6-3c8bb7b10075",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-046"
+    ],
+    "hit_source_ids": [
+      "ohr-046",
+      "ohr-047",
+      "ohr-077",
+      "ohr-048",
+      "ohr-111"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 285.21529998397455,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "ac4ebce0-a02a-4b21-a2a7-d0fcc683ad33",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-046"
+    ],
+    "hit_source_ids": [
+      "ohr-077",
+      "ohr-111",
+      "ohr-078",
+      "ohr-118",
+      "ohr-046"
+    ],
+    "first_relevant_rank": 5,
+    "latency_ms": 277.65209999051876,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "ac4f81f5-c8e7-44e5-93eb-5a23f64bf06e",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-047"
+    ],
+    "hit_source_ids": [
+      "ohr-069",
+      "ohr-052",
+      "ohr-047",
+      "ohr-109",
+      "ohr-057"
+    ],
+    "first_relevant_rank": 3,
+    "latency_ms": 275.40050001698546,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "ac527166-9224-4274-b247-6a228ea70cf1",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-047"
+    ],
+    "hit_source_ids": [
+      "ohr-112",
+      "ohr-114",
+      "ohr-059",
+      "ohr-118",
+      "ohr-047"
+    ],
+    "first_relevant_rank": 5,
+    "latency_ms": 280.99010000005364,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "ac582ac4-14f4-4448-b6ff-9d8b07789c67",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-047"
+    ],
+    "hit_source_ids": [
+      "ohr-079",
+      "ohr-078",
+      "ohr-079",
+      "ohr-057",
+      "ohr-078"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 272.43739998084493,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "ac5bbd39-c1ca-4832-8c6f-3479c453a476",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-047"
+    ],
+    "hit_source_ids": [
+      "ohr-114",
+      "ohr-114",
+      "ohr-013",
+      "ohr-114",
+      "ohr-112"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 264.2352000111714,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "ac5ca307-ecae-4837-83ac-9147b6b177b1",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-047"
+    ],
+    "hit_source_ids": [
+      "ohr-047",
+      "ohr-055",
+      "ohr-056",
+      "ohr-047",
+      "ohr-054"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 301.7725999816321,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "ac5d38a9-1845-45cc-abde-9d7ecb925548",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-048"
+    ],
+    "hit_source_ids": [
+      "ohr-048",
+      "ohr-046",
+      "ohr-057",
+      "ohr-109",
+      "ohr-047"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 265.543899993645,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "ac5e23d2-a90c-49bc-8174-2e05adad5bbf",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-048"
+    ],
+    "hit_source_ids": [
+      "ohr-057",
+      "ohr-078",
+      "ohr-138",
+      "ohr-112",
+      "ohr-048"
+    ],
+    "first_relevant_rank": 5,
+    "latency_ms": 276.8807999964338,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "ac5ed5f8-b770-4cc6-bd89-61d2731a3a9c",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-048"
+    ],
+    "hit_source_ids": [
+      "ohr-057",
+      "ohr-056",
+      "ohr-109",
+      "ohr-055",
+      "ohr-111"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 312.1310000133235,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "ac5f7fa3-77ff-4a82-bed2-cd77d0d50ed8",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-048"
+    ],
+    "hit_source_ids": [
+      "ohr-048",
+      "ohr-078",
+      "ohr-057",
+      "ohr-077",
+      "ohr-078"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 270.9176999924239,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "ac5ff2f4-abf8-46a0-98fa-4a81675e86f3",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-048"
+    ],
+    "hit_source_ids": [
+      "ohr-048",
+      "ohr-059",
+      "ohr-063",
+      "ohr-080",
+      "ohr-079"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 281.606800010195,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "ac616942-41ea-4d74-bd50-7cfc1b16c0d1",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-049"
+    ],
+    "hit_source_ids": [
+      "ohr-112",
+      "ohr-057",
+      "ohr-111",
+      "ohr-078",
+      "ohr-114"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 282.4481000134256,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "ac6267d4-9ee7-4537-9503-46a1aa2261eb",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-049"
+    ],
+    "hit_source_ids": [
+      "ohr-078",
+      "ohr-078",
+      "ohr-077",
+      "ohr-079",
+      "ohr-047"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 277.69570000236854,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "ac63457b-c470-40c6-bad8-1464959b0d07",
+    "domain": "finance",
+    "evidence_source": "formula",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-050"
+    ],
+    "hit_source_ids": [
+      "ohr-046",
+      "ohr-057",
+      "ohr-047",
+      "ohr-052",
+      "ohr-051"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 272.54479998373426,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "ac637119-27b2-4b2f-b5db-3bed79fbac17",
+    "domain": "finance",
+    "evidence_source": "formula",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-050"
+    ],
+    "hit_source_ids": [
+      "ohr-112",
+      "ohr-109",
+      "ohr-078",
+      "ohr-111",
+      "ohr-114"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 273.92239999608137,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "ac640544-4e03-4540-aeac-f05e6901d7db",
+    "domain": "finance",
+    "evidence_source": "formula",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-050"
+    ],
+    "hit_source_ids": [
+      "ohr-059",
+      "ohr-057",
+      "ohr-047",
+      "ohr-057",
+      "ohr-046"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 300.90740000014193,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "ac642b4c-49b2-4ded-9c31-d9b25a2b745b",
+    "domain": "finance",
+    "evidence_source": "formula",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-050"
+    ],
+    "hit_source_ids": [
+      "ohr-109",
+      "ohr-077",
+      "ohr-078",
+      "ohr-048",
+      "ohr-112"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 278.20519998203963,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "ac64d21d-f0ba-4767-9707-9bbd29f19109",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-051"
+    ],
+    "hit_source_ids": [
+      "ohr-069",
+      "ohr-057",
+      "ohr-078",
+      "ohr-112",
+      "ohr-118"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 289.9829000234604,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "ac65486e-deaf-4f2c-88f4-3167d9c9dfe9",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-051"
+    ],
+    "hit_source_ids": [
+      "ohr-051",
+      "ohr-057",
+      "ohr-052",
+      "ohr-078",
+      "ohr-117"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 269.0547999809496,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "ac6689b4-e5a0-4282-8858-d2e3694f97c4",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-051"
+    ],
+    "hit_source_ids": [
+      "ohr-052",
+      "ohr-054",
+      "ohr-051",
+      "ohr-034",
+      "ohr-059"
+    ],
+    "first_relevant_rank": 3,
+    "latency_ms": 314.15979997836985,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "ac685d80-46fc-4fab-b958-563d7feae50c",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-051"
+    ],
+    "hit_source_ids": [
+      "ohr-078",
+      "ohr-051",
+      "ohr-078",
+      "ohr-057",
+      "ohr-057"
+    ],
+    "first_relevant_rank": 2,
+    "latency_ms": 272.4281999981031,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "ac697744-376f-43f4-8ce5-a06ce2d58c55",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-052"
+    ],
+    "hit_source_ids": [
+      "ohr-057",
+      "ohr-052",
+      "ohr-057",
+      "ohr-050",
+      "ohr-051"
+    ],
+    "first_relevant_rank": 2,
+    "latency_ms": 264.3911999766715,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "ac6cebe4-3c48-43e7-a1bd-544550cecc81",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-052"
+    ],
+    "hit_source_ids": [
+      "ohr-052",
+      "ohr-078",
+      "ohr-059",
+      "ohr-023",
+      "ohr-079"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 267.1474999806378,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "ac6f5306-330b-403c-a873-ac090d67e4e0",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-052"
+    ],
+    "hit_source_ids": [
+      "ohr-077",
+      "ohr-057",
+      "ohr-078",
+      "ohr-060",
+      "ohr-111"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 274.7805999824777,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "ac705f76-fe7a-495b-8afc-3e3aa6c19f8d",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-052"
+    ],
+    "hit_source_ids": [
+      "ohr-078",
+      "ohr-078",
+      "ohr-077",
+      "ohr-077",
+      "ohr-057"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 266.25960000092164,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "ac73189c-6fdc-4e00-a0d9-da583db4cb81",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-052"
+    ],
+    "hit_source_ids": [
+      "ohr-053",
+      "ohr-052",
+      "ohr-054",
+      "ohr-059",
+      "ohr-051"
+    ],
+    "first_relevant_rank": 2,
+    "latency_ms": 254.8118999984581,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "ac7548b0-846f-4ad7-b499-82b661993911",
+    "domain": "finance",
+    "evidence_source": "formula",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-053"
+    ],
+    "hit_source_ids": [
+      "ohr-053",
+      "ohr-063",
+      "ohr-054",
+      "ohr-079",
+      "ohr-111"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 265.1303999882657,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "ac769bc0-e061-4d88-b441-2a928eb76bca",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-053"
+    ],
+    "hit_source_ids": [
+      "ohr-078",
+      "ohr-079",
+      "ohr-055",
+      "ohr-052",
+      "ohr-053"
+    ],
+    "first_relevant_rank": 5,
+    "latency_ms": 267.97409998835064,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "ac791bae-9cfc-408b-9ce4-355961d944f6",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-054"
+    ],
+    "hit_source_ids": [
+      "ohr-054",
+      "ohr-053",
+      "ohr-056",
+      "ohr-059",
+      "ohr-114"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 277.5880999979563,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "ac797c15-3e47-419d-acca-22f8e6831daa",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-054"
+    ],
+    "hit_source_ids": [
+      "ohr-052",
+      "ohr-054",
+      "ohr-053",
+      "ohr-080",
+      "ohr-074"
+    ],
+    "first_relevant_rank": 2,
+    "latency_ms": 263.7566000048537,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "ac7b79d9-11d7-4984-8a50-d286cd8d6351",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-055"
+    ],
+    "hit_source_ids": [
+      "ohr-051",
+      "ohr-052",
+      "ohr-059",
+      "ohr-056",
+      "ohr-077"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 259.37790001626126,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "ac7c90cd-0717-47cd-9c6b-094ab5560ea9",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-055"
+    ],
+    "hit_source_ids": [
+      "ohr-112",
+      "ohr-109",
+      "ohr-111",
+      "ohr-109",
+      "ohr-118"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 307.3166999965906,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "ac7dd2ac-3eaf-4833-bc19-096a202ddcde",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-055"
+    ],
+    "hit_source_ids": [
+      "ohr-055",
+      "ohr-056",
+      "ohr-058",
+      "ohr-052",
+      "ohr-058"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 264.8783999902662,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "ac7e8492-cf96-4374-8345-bd4f1ae2be2b",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-056"
+    ],
+    "hit_source_ids": [
+      "ohr-055",
+      "ohr-056",
+      "ohr-057",
+      "ohr-078",
+      "ohr-059"
+    ],
+    "first_relevant_rank": 2,
+    "latency_ms": 285.4780999768991,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "ac83700d-16a8-4d65-87e9-6f900f686a8b",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-056"
+    ],
+    "hit_source_ids": [
+      "ohr-056",
+      "ohr-055",
+      "ohr-127",
+      "ohr-078",
+      "ohr-109"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 293.8500000163913,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "b3aebc89-d985-4b79-ab4d-7f2fffa279a8",
+    "domain": "law",
+    "evidence_source": "text",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-083",
+      "ohr-086"
+    ],
+    "hit_source_ids": [
+      "ohr-078",
+      "ohr-079",
+      "ohr-077",
+      "ohr-086",
+      "ohr-078"
+    ],
+    "first_relevant_rank": 4,
+    "latency_ms": 276.60300000570714,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "b51cd5b6-d563-45fe-a14c-f5d2fb723c13",
+    "domain": "academic",
+    "evidence_source": "text",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-012",
+      "ohr-013"
+    ],
+    "hit_source_ids": [
+      "ohr-011",
+      "ohr-013",
+      "ohr-019",
+      "ohr-018",
+      "ohr-014"
+    ],
+    "first_relevant_rank": 2,
+    "latency_ms": 276.17140000802465,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "b60a4f3c-8643-4ab2-9b8f-1ab3e4eb61a8",
+    "domain": "manual",
+    "evidence_source": "multi",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-101",
+      "ohr-102"
+    ],
+    "hit_source_ids": [
+      "ohr-107",
+      "ohr-132",
+      "ohr-119",
+      "ohr-145",
+      "ohr-079"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 268.79339999868535,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "b6e407be-7b08-4b67-b561-f8716ae2f60d",
+    "domain": "administration",
+    "evidence_source": "formula",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-039"
+    ],
+    "hit_source_ids": [
+      "ohr-041",
+      "ohr-039",
+      "ohr-038",
+      "ohr-042",
+      "ohr-040"
+    ],
+    "first_relevant_rank": 2,
+    "latency_ms": 289.233499992406,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "b74a227a-e5a2-4fa1-83d5-978d924e9d90",
+    "domain": "academic",
+    "evidence_source": "text",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-011",
+      "ohr-021"
+    ],
+    "hit_source_ids": [
+      "ohr-013",
+      "ohr-011",
+      "ohr-019",
+      "ohr-078",
+      "ohr-021"
+    ],
+    "first_relevant_rank": 2,
+    "latency_ms": 291.71379999024794,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "b75b396e-21ac-4108-b6b4-b49e41dd137a",
+    "domain": "law",
+    "evidence_source": "text",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-083",
+      "ohr-086"
+    ],
+    "hit_source_ids": [
+      "ohr-086",
+      "ohr-085",
+      "ohr-084",
+      "ohr-085",
+      "ohr-086"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 320.65830001374707,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "b75fc464-f72a-4149-bb6c-c9568d7232fb",
+    "domain": "manual",
+    "evidence_source": "text",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-090"
+    ],
+    "hit_source_ids": [
+      "ohr-078",
+      "ohr-078",
+      "ohr-079",
+      "ohr-077",
+      "ohr-024"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 307.3533999850042,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "b76cedff-dfeb-4c45-b152-d0219a0777e2",
+    "domain": "manual",
+    "evidence_source": "text",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-102",
+      "ohr-104"
+    ],
+    "hit_source_ids": [
+      "ohr-001",
+      "ohr-003",
+      "ohr-101",
+      "ohr-057",
+      "ohr-114"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 306.25789999612607,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "b76cfca2-5cf1-4f05-a927-2cd1c7639a9f",
+    "domain": "manual",
+    "evidence_source": "text",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-102",
+      "ohr-104"
+    ],
+    "hit_source_ids": [
+      "ohr-079",
+      "ohr-078",
+      "ohr-111",
+      "ohr-078",
+      "ohr-114"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 275.32449999125674,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "b79c2dce-62c8-49dd-b427-0a1a6432a56f",
+    "domain": "administration",
+    "evidence_source": "text",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-024",
+      "ohr-027"
+    ],
+    "hit_source_ids": [
+      "ohr-026",
+      "ohr-025",
+      "ohr-024",
+      "ohr-028",
+      "ohr-027"
+    ],
+    "first_relevant_rank": 3,
+    "latency_ms": 296.0789000208024,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "b79c51a3-00fd-4201-b1ba-d5d87f9bc925",
+    "domain": "administration",
+    "evidence_source": "text",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-031",
+      "ohr-032"
+    ],
+    "hit_source_ids": [
+      "ohr-078",
+      "ohr-078",
+      "ohr-031",
+      "ohr-079",
+      "ohr-079"
+    ],
+    "first_relevant_rank": 3,
+    "latency_ms": 309.0591999934986,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "b79c77f9-0b8d-4b81-b36f-6f21643e43db",
+    "domain": "administration",
+    "evidence_source": "text",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-033",
+      "ohr-034"
+    ],
+    "hit_source_ids": [
+      "ohr-079",
+      "ohr-034",
+      "ohr-033",
+      "ohr-080",
+      "ohr-079"
+    ],
+    "first_relevant_rank": 2,
+    "latency_ms": 303.73499999404885,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "b84eed2d-d8e8-4ae0-a25a-537b7c5c82e1",
+    "domain": "academic",
+    "evidence_source": "text",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-012",
+      "ohr-013"
+    ],
+    "hit_source_ids": [
+      "ohr-079",
+      "ohr-079",
+      "ohr-077",
+      "ohr-011",
+      "ohr-012"
+    ],
+    "first_relevant_rank": 5,
+    "latency_ms": 278.8914999982808,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "b84f3ace-0e4c-4637-b0d1-be6bb17a3c09",
+    "domain": "academic",
+    "evidence_source": "text",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-012",
+      "ohr-013"
+    ],
+    "hit_source_ids": [
+      "ohr-011",
+      "ohr-057",
+      "ohr-008",
+      "ohr-079",
+      "ohr-012"
+    ],
+    "first_relevant_rank": 5,
+    "latency_ms": 298.0466000153683,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "b858af32-f6db-41b4-a4a9-6fb506bda203",
+    "domain": "law",
+    "evidence_source": "text",
+    "answer_form": "Yes/No",
+    "relevant_source_ids": [
+      "ohr-078",
+      "ohr-080"
+    ],
+    "hit_source_ids": [
+      "ohr-078",
+      "ohr-077",
+      "ohr-079",
+      "ohr-078",
+      "ohr-080"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 278.282900020713,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "b858d4d8-e685-44a1-9086-18162ea79e43",
+    "domain": "law",
+    "evidence_source": "text",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-078",
+      "ohr-080"
+    ],
+    "hit_source_ids": [
+      "ohr-078",
+      "ohr-079",
+      "ohr-078",
+      "ohr-039",
+      "ohr-077"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 283.85659999912605,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "b86a685d-159f-40df-89ed-109eeae1a562",
+    "domain": "manual",
+    "evidence_source": "text",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-100",
+      "ohr-105"
+    ],
+    "hit_source_ids": [
+      "ohr-078",
+      "ohr-079",
+      "ohr-118",
+      "ohr-078",
+      "ohr-144"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 284.87829997902736,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "b8928cb2-7f9a-46a9-a138-a1e7e8e07d17",
+    "domain": "administration",
+    "evidence_source": "text",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-025",
+      "ohr-028"
+    ],
+    "hit_source_ids": [
+      "ohr-025",
+      "ohr-024",
+      "ohr-026",
+      "ohr-023",
+      "ohr-079"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 338.6547999980394,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "c41b983c-8826-440f-97a3-dd008bdb89ad",
+    "domain": "academic",
+    "evidence_source": "reading_order",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-005"
+    ],
+    "hit_source_ids": [
+      "ohr-109",
+      "ohr-011",
+      "ohr-005",
+      "ohr-003",
+      "ohr-118"
+    ],
+    "first_relevant_rank": 3,
+    "latency_ms": 278.58919999562204,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "ce15d847-f5c4-4a10-865d-a2f2c24c9196",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-045"
+    ],
+    "hit_source_ids": [
+      "ohr-057",
+      "ohr-045",
+      "ohr-059",
+      "ohr-134",
+      "ohr-055"
+    ],
+    "first_relevant_rank": 2,
+    "latency_ms": 271.98190000490285,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "ce15da37-286c-468a-8810-dd2003e2f67c",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-045"
+    ],
+    "hit_source_ids": [
+      "ohr-057",
+      "ohr-055",
+      "ohr-045",
+      "ohr-107",
+      "ohr-150"
+    ],
+    "first_relevant_rank": 3,
+    "latency_ms": 269.15320000262,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "ce1601f3-e44d-4730-a07e-3224748e5976",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-045"
+    ],
+    "hit_source_ids": [
+      "ohr-057",
+      "ohr-109",
+      "ohr-045",
+      "ohr-023",
+      "ohr-055"
+    ],
+    "first_relevant_rank": 3,
+    "latency_ms": 265.45700000133365,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "ce16c811-679a-472b-bd5c-5f9e70d64ec3",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-046"
+    ],
+    "hit_source_ids": [
+      "ohr-057",
+      "ohr-109",
+      "ohr-057",
+      "ohr-050",
+      "ohr-127"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 264.91600001463667,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "ce170193-65e6-41d9-9d27-46047929c6e3",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-046"
+    ],
+    "hit_source_ids": [
+      "ohr-057",
+      "ohr-114",
+      "ohr-118",
+      "ohr-109",
+      "ohr-114"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 267.7474000083748,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "ce180220-8e88-42b9-ae28-1d9904db8f74",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-046"
+    ],
+    "hit_source_ids": [
+      "ohr-046",
+      "ohr-109",
+      "ohr-057",
+      "ohr-111",
+      "ohr-118"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 274.43920000223443,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "ce18ceec-64da-46f3-9948-bfb71a4de39a",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-047"
+    ],
+    "hit_source_ids": [
+      "ohr-048",
+      "ohr-078",
+      "ohr-046",
+      "ohr-077",
+      "ohr-047"
+    ],
+    "first_relevant_rank": 5,
+    "latency_ms": 284.1959999932442,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "ce199ec3-0a66-418a-842d-81a28cebe78d",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-047"
+    ],
+    "hit_source_ids": [
+      "ohr-046",
+      "ohr-047",
+      "ohr-051",
+      "ohr-057",
+      "ohr-114"
+    ],
+    "first_relevant_rank": 2,
+    "latency_ms": 260.12550000450574,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "ce19efc8-d0df-492b-9deb-7793b58ece8a",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-047"
+    ],
+    "hit_source_ids": [
+      "ohr-109",
+      "ohr-078",
+      "ohr-078",
+      "ohr-057",
+      "ohr-112"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 256.6359000047669,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "ce1ad0e2-c35c-41fe-b084-c60858e1831a",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-048"
+    ],
+    "hit_source_ids": [
+      "ohr-057",
+      "ohr-078",
+      "ohr-048",
+      "ohr-078",
+      "ohr-109"
+    ],
+    "first_relevant_rank": 3,
+    "latency_ms": 273.2199000020046,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "ce1b72f7-edb0-4aa2-b043-ce6c93173e3f",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "Yes/No",
+    "relevant_source_ids": [
+      "ohr-048"
+    ],
+    "hit_source_ids": [
+      "ohr-046",
+      "ohr-052",
+      "ohr-059",
+      "ohr-051",
+      "ohr-047"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 338.4669999941252,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "ce1c20ea-2118-40f3-b514-e47c4e7dad8c",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-048"
+    ],
+    "hit_source_ids": [
+      "ohr-109",
+      "ohr-057",
+      "ohr-023",
+      "ohr-022",
+      "ohr-049"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 271.98999997926876,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "ce1c3c4b-ef02-4f2d-8421-23f51cefc2ae",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-048"
+    ],
+    "hit_source_ids": [
+      "ohr-048",
+      "ohr-046",
+      "ohr-047",
+      "ohr-077",
+      "ohr-109"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 294.53579999972135,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "ce1c4081-e345-49fa-88ec-fb32e7f2d0cf",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-049"
+    ],
+    "hit_source_ids": [
+      "ohr-049",
+      "ohr-050",
+      "ohr-046",
+      "ohr-050",
+      "ohr-057"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 285.26659999624826,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "ce1d7823-98e1-4e75-a7cd-1474798f7ade",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-049"
+    ],
+    "hit_source_ids": [
+      "ohr-078",
+      "ohr-077",
+      "ohr-079",
+      "ohr-078",
+      "ohr-001"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 272.91080000577495,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "ce1e80e9-6ac5-4aa6-b32f-e9e05fa25668",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-049"
+    ],
+    "hit_source_ids": [
+      "ohr-047",
+      "ohr-057",
+      "ohr-127",
+      "ohr-001",
+      "ohr-012"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 259.40509999054484,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "ce1f1434-9b3e-4c95-9233-738f7a5ad16c",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-049"
+    ],
+    "hit_source_ids": [
+      "ohr-114",
+      "ohr-114",
+      "ohr-111",
+      "ohr-111",
+      "ohr-120"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 268.184199987445,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "ce1f96bd-ad45-4fc3-989f-8c6f0f8d87e1",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-049"
+    ],
+    "hit_source_ids": [
+      "ohr-118",
+      "ohr-033",
+      "ohr-147",
+      "ohr-023",
+      "ohr-012"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 284.4108999997843,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "ce1fb7e3-5fe4-4e13-9efb-0c3ac0b276c1",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-050"
+    ],
+    "hit_source_ids": [
+      "ohr-109",
+      "ohr-128",
+      "ohr-057",
+      "ohr-111",
+      "ohr-112"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 283.22780001326464,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "ce204858-83f0-4e2e-9214-3f4cab4eb1e8",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-050"
+    ],
+    "hit_source_ids": [
+      "ohr-078",
+      "ohr-077",
+      "ohr-079",
+      "ohr-078",
+      "ohr-001"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 263.83070001611486,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "ce2143f3-d7f4-42a9-b9af-6d9bca68def6",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-050"
+    ],
+    "hit_source_ids": [
+      "ohr-078",
+      "ohr-077",
+      "ohr-147",
+      "ohr-144",
+      "ohr-118"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 286.20020000380464,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "ce220f3b-561a-4c52-9a1e-142ab589401e",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-050"
+    ],
+    "hit_source_ids": [
+      "ohr-065",
+      "ohr-065",
+      "ohr-006",
+      "ohr-001",
+      "ohr-002"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 310.94710002071224,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "ce23fef0-f9ac-41cd-a0f3-4f7d8992e530",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-050"
+    ],
+    "hit_source_ids": [
+      "ohr-109",
+      "ohr-128",
+      "ohr-111",
+      "ohr-012",
+      "ohr-115"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 270.81210000324063,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "ce240c68-6d52-4b08-b5c6-7718611b739b",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-051"
+    ],
+    "hit_source_ids": [
+      "ohr-051",
+      "ohr-052",
+      "ohr-046",
+      "ohr-056",
+      "ohr-055"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 267.8510000114329,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "ce257e30-b5ea-4bac-a876-9f62f98107a5",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-051"
+    ],
+    "hit_source_ids": [
+      "ohr-057",
+      "ohr-057",
+      "ohr-112",
+      "ohr-111",
+      "ohr-051"
+    ],
+    "first_relevant_rank": 5,
+    "latency_ms": 319.2587999801617,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "ce2651c3-fabb-41d1-ab60-521bfc2ff911",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-051"
+    ],
+    "hit_source_ids": [
+      "ohr-051",
+      "ohr-056",
+      "ohr-052",
+      "ohr-055",
+      "ohr-057"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 277.06180000677705,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "ce269fb5-c561-4b89-8d8b-6e7256872610",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-051"
+    ],
+    "hit_source_ids": [
+      "ohr-051",
+      "ohr-057",
+      "ohr-059",
+      "ohr-057",
+      "ohr-109"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 271.84140001190826,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "ce28c87d-4607-4d65-94a0-955d4aab4669",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-052"
+    ],
+    "hit_source_ids": [
+      "ohr-052",
+      "ohr-057",
+      "ohr-057",
+      "ohr-051",
+      "ohr-055"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 284.02099999948405,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "ce28d9c3-0c9d-4307-9dc5-5c552c587b17",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-052"
+    ],
+    "hit_source_ids": [
+      "ohr-052",
+      "ohr-055",
+      "ohr-056",
+      "ohr-057",
+      "ohr-114"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 285.3213000053074,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "ce28fb71-2859-497f-b983-884cb2b2de82",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-052"
+    ],
+    "hit_source_ids": [
+      "ohr-054",
+      "ohr-109",
+      "ohr-118",
+      "ohr-111",
+      "ohr-052"
+    ],
+    "first_relevant_rank": 5,
+    "latency_ms": 273.6381000140682,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "ce297659-660f-40c5-abd4-b5f836372321",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-053"
+    ],
+    "hit_source_ids": [
+      "ohr-057",
+      "ohr-053",
+      "ohr-052",
+      "ohr-109",
+      "ohr-057"
+    ],
+    "first_relevant_rank": 2,
+    "latency_ms": 283.1159000052139,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "ce2977cc-ce61-4d4f-af8b-511657c86719",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-053"
+    ],
+    "hit_source_ids": [
+      "ohr-053",
+      "ohr-059",
+      "ohr-054",
+      "ohr-046",
+      "ohr-057"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 262.9138999909628,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "ce29a0e9-a4d8-4095-8077-e9e0c18423f4",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-053"
+    ],
+    "hit_source_ids": [
+      "ohr-054",
+      "ohr-053",
+      "ohr-056",
+      "ohr-055",
+      "ohr-109"
+    ],
+    "first_relevant_rank": 2,
+    "latency_ms": 351.12300000037067,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "ce2ad7aa-645f-488f-96e0-78486d712ac3",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-053"
+    ],
+    "hit_source_ids": [
+      "ohr-054",
+      "ohr-109",
+      "ohr-111",
+      "ohr-053",
+      "ohr-118"
+    ],
+    "first_relevant_rank": 4,
+    "latency_ms": 294.6321000054013,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "ce2b2804-c8bd-49d4-8de9-43d8ff1c7a35",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-053"
+    ],
+    "hit_source_ids": [
+      "ohr-052",
+      "ohr-057",
+      "ohr-057",
+      "ohr-053",
+      "ohr-055"
+    ],
+    "first_relevant_rank": 4,
+    "latency_ms": 266.4812000002712,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "ce2b8fcf-3be8-44be-9d7b-7a313953a454",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-054"
+    ],
+    "hit_source_ids": [
+      "ohr-057",
+      "ohr-109",
+      "ohr-057",
+      "ohr-112",
+      "ohr-053"
+    ],
+    "first_relevant_rank": null,
+    "latency_ms": 261.78520001121797,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "ce2c91cf-9c55-4e02-a22a-504fe8ad55d5",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-054"
+    ],
+    "hit_source_ids": [
+      "ohr-054",
+      "ohr-053",
+      "ohr-056",
+      "ohr-059",
+      "ohr-055"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 268.0994999827817,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "ce2cee0c-0665-4c43-b847-6f956ffa71ac",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-054"
+    ],
+    "hit_source_ids": [
+      "ohr-054",
+      "ohr-053",
+      "ohr-056",
+      "ohr-109",
+      "ohr-055"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 281.78300001309253,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "ce2f0bb1-9ca4-4737-9d29-26b7b6118963",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-054"
+    ],
+    "hit_source_ids": [
+      "ohr-054",
+      "ohr-053",
+      "ohr-055",
+      "ohr-047",
+      "ohr-056"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 260.7199999911245,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "ce2f37f1-b857-429f-87ef-1c1f847339e7",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-055"
+    ],
+    "hit_source_ids": [
+      "ohr-057",
+      "ohr-055",
+      "ohr-051",
+      "ohr-057",
+      "ohr-056"
+    ],
+    "first_relevant_rank": 2,
+    "latency_ms": 282.9263999883551,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "ce2f62b3-c5ca-4d3e-9003-a4773aed7107",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-055"
+    ],
+    "hit_source_ids": [
+      "ohr-055",
+      "ohr-056",
+      "ohr-059",
+      "ohr-051",
+      "ohr-057"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 281.8566999922041,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "ce2f8542-585a-4a36-bc8f-aeea769b05f4",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-055"
+    ],
+    "hit_source_ids": [
+      "ohr-056",
+      "ohr-055",
+      "ohr-051",
+      "ohr-059",
+      "ohr-057"
+    ],
+    "first_relevant_rank": 2,
+    "latency_ms": 273.6261999816634,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "ce2fbdde-4434-4556-9076-9d5ddf4e6d87",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-056"
+    ],
+    "hit_source_ids": [
+      "ohr-078",
+      "ohr-055",
+      "ohr-056",
+      "ohr-060",
+      "ohr-057"
+    ],
+    "first_relevant_rank": 3,
+    "latency_ms": 267.7141999884043,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "ce2ff228-031e-4bfe-b423-9e948a73b28e",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-056"
+    ],
+    "hit_source_ids": [
+      "ohr-056",
+      "ohr-023",
+      "ohr-055",
+      "ohr-074",
+      "ohr-050"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 275.2565999981016,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "ce3041f1-b81d-4c86-9deb-fce8c6de095a",
+    "domain": "finance",
+    "evidence_source": "chart",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-056"
+    ],
+    "hit_source_ids": [
+      "ohr-079",
+      "ohr-055",
+      "ohr-078",
+      "ohr-056",
+      "ohr-077"
+    ],
+    "first_relevant_rank": 4,
+    "latency_ms": 328.51599997957237,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "ec84bee5-cb16-4d77-86f5-df2814f2f616",
+    "domain": "administration",
+    "evidence_source": "text",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-026"
+    ],
+    "hit_source_ids": [
+      "ohr-026",
+      "ohr-075",
+      "ohr-027",
+      "ohr-024",
+      "ohr-023"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 307.8712999995332,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "ecec20f8-2dfb-4147-8a13-2a0dfd56bf4b",
+    "domain": "textbook",
+    "evidence_source": "text",
+    "answer_form": "String",
+    "relevant_source_ids": [
+      "ohr-140"
+    ],
+    "hit_source_ids": [
+      "ohr-077",
+      "ohr-140",
+      "ohr-080",
+      "ohr-114",
+      "ohr-139"
+    ],
+    "first_relevant_rank": 2,
+    "latency_ms": 284.5536000095308,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "ececcf7f-3c97-48ca-b2f1-2def7200d1ab",
+    "domain": "textbook",
+    "evidence_source": "formula",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-149"
+    ],
+    "hit_source_ids": [
+      "ohr-145",
+      "ohr-146",
+      "ohr-149",
+      "ohr-150",
+      "ohr-147"
+    ],
+    "first_relevant_rank": 3,
+    "latency_ms": 264.5448000112083,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "eced7a72-f903-4b8c-8df5-abdd6dd497d2",
+    "domain": "textbook",
+    "evidence_source": "text",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-146"
+    ],
+    "hit_source_ids": [
+      "ohr-146",
+      "ohr-118",
+      "ohr-057",
+      "ohr-069",
+      "ohr-143"
+    ],
+    "first_relevant_rank": 1,
+    "latency_ms": 271.75079999142326,
+    "citation_valid": true
+  },
+  {
+    "qa_id": "ecee26b3-1a3b-4354-aff7-6887110eb69f",
+    "domain": "textbook",
+    "evidence_source": "text",
+    "answer_form": "Numeric",
+    "relevant_source_ids": [
+      "ohr-145"
+    ],
+    "hit_source_ids": [
+      "ohr-144",
+      "ohr-150",
+      "ohr-145",
+      "ohr-146",
+      "ohr-145"
+    ],
+    "first_relevant_rank": 3,
+    "latency_ms": 268.767100002151,
+    "citation_valid": true
+  }
+]

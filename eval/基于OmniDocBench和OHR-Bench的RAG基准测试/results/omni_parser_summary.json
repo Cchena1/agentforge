@@ -1,0 +1,84 @@
+{
+  "pages": 50,
+  "parsed": 0,
+  "failed": 50,
+  "quality_accepted": 0,
+  "quality_acceptance_rate": 0.0,
+  "mean_quality_score": 0.0,
+  "mean_char_trigram_f1": 0.0,
+  "median_char_trigram_f1": 0.0,
+  "median_duration_ms": 3553.03909999202,
+  "p95_duration_ms": 4984.692199999699,
+  "by_stratum": {
+    "chinese_newspaper_complex_layout": {
+      "pages": 5,
+      "parsed": 0,
+      "quality_accepted": 0,
+      "mean_trigram_f1": 0.0,
+      "mean_quality_score": 0.0
+    },
+    "chinese_ppt_color_background": {
+      "pages": 5,
+      "parsed": 0,
+      "quality_accepted": 0,
+      "mean_trigram_f1": 0.0,
+      "mean_quality_score": 0.0
+    },
+    "chinese_table_hard": {
+      "pages": 5,
+      "parsed": 0,
+      "quality_accepted": 0,
+      "mean_trigram_f1": 0.0,
+      "mean_quality_score": 0.0
+    },
+    "english_academic_double_column": {
+      "pages": 5,
+      "parsed": 0,
+      "quality_accepted": 0,
+      "mean_trigram_f1": 0.0,
+      "mean_quality_score": 0.0
+    },
+    "english_academic_equation_hard": {
+      "pages": 5,
+      "parsed": 0,
+      "quality_accepted": 0,
+      "mean_trigram_f1": 0.0,
+      "mean_quality_score": 0.0
+    },
+    "english_book_equation_hard": {
+      "pages": 5,
+      "parsed": 0,
+      "quality_accepted": 0,
+      "mean_trigram_f1": 0.0,
+      "mean_quality_score": 0.0
+    },
+    "english_exam_multicolumn": {
+      "pages": 5,
+      "parsed": 0,
+      "quality_accepted": 0,
+      "mean_trigram_f1": 0.0,
+      "mean_quality_score": 0.0
+    },
+    "english_newspaper_three_column": {
+      "pages": 5,
+      "parsed": 0,
+      "quality_accepted": 0,
+      "mean_trigram_f1": 0.0,
+      "mean_quality_score": 0.0
+    },
+    "english_table_hard": {
+      "pages": 5,
+      "parsed": 0,
+      "quality_accepted": 0,
+      "mean_trigram_f1": 0.0,
+      "mean_quality_score": 0.0
+    },
+    "mixed_language_notes": {
+      "pages": 5,
+      "parsed": 0,
+      "quality_accepted": 0,
+      "mean_trigram_f1": 0.0,
+      "mean_quality_score": 0.0
+    }
+  }
+}

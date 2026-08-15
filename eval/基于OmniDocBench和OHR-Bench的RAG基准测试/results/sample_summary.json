@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "selection_rule": "sorted deterministic stratified sample; no random seed",
+  "unique_pages": 200,
+  "benchmarks": {
+    "OmniDocBench": 50,
+    "OHR-Bench": 150
+  },
+  "omni_strata": {
+    "english_academic_double_column": 5,
+    "chinese_newspaper_complex_layout": 5,
+    "english_newspaper_three_column": 5,
+    "chinese_table_hard": 5,
+    "english_table_hard": 5,
+    "english_academic_equation_hard": 5,
+    "chinese_ppt_color_background": 5,
+    "mixed_language_notes": 5,
+    "english_exam_multicolumn": 5,
+    "english_book_equation_hard": 5
+  },
+  "ohr_domains": {
+    "academic": 22,
+    "administration": 22,
+    "finance": 22,
+    "law": 21,
+    "manual": 21,
+    "news": 21,
+    "textbook": 21
+  },
+  "ohr_qa_labeled_pages": 144,
+  "source_hashes": {
+    "OmniDocBench.json": "a45cd84b04ad8b793e775089640e6b681209abea33ead54c1828ddca35fae496",
+    "ohr_qas_v2.json": "2446db28741fa9f392067ee7aae7f3b05e0d85c584069a50ddd5b1b5bc783f58"
+  }
+}

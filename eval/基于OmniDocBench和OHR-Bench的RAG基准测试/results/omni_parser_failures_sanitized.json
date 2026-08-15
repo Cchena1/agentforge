@@ -1,0 +1,402 @@
+[
+  {
+    "sample_id": "omni-001",
+    "stratum": "english_academic_double_column",
+    "status": "failed",
+    "duration_ms": 179997.39950001822,
+    "error_type": "TimeoutError",
+    "failure_fingerprint": "cold_start_timeout_180s"
+  },
+  {
+    "sample_id": "omni-002",
+    "stratum": "english_academic_double_column",
+    "status": "failed",
+    "duration_ms": 57730.9191999957,
+    "error_type": "RuntimeError",
+    "failure_fingerprint": "docling_layout_model_gbk_decode_error"
+  },
+  {
+    "sample_id": "omni-003",
+    "stratum": "english_academic_double_column",
+    "status": "failed",
+    "duration_ms": 4026.516299985815,
+    "error_type": "RuntimeError",
+    "failure_fingerprint": "docling_layout_model_gbk_decode_error"
+  },
+  {
+    "sample_id": "omni-004",
+    "stratum": "english_academic_double_column",
+    "status": "failed",
+    "duration_ms": 3394.1521999950055,
+    "error_type": "RuntimeError",
+    "failure_fingerprint": "docling_layout_model_gbk_decode_error"
+  },
+  {
+    "sample_id": "omni-005",
+    "stratum": "english_academic_double_column",
+    "status": "failed",
+    "duration_ms": 3521.4072999951895,
+    "error_type": "RuntimeError",
+    "failure_fingerprint": "docling_layout_model_gbk_decode_error"
+  },
+  {
+    "sample_id": "omni-006",
+    "stratum": "chinese_newspaper_complex_layout",
+    "status": "failed",
+    "duration_ms": 3190.803600009531,
+    "error_type": "RuntimeError",
+    "failure_fingerprint": "docling_layout_model_gbk_decode_error"
+  },
+  {
+    "sample_id": "omni-007",
+    "stratum": "chinese_newspaper_complex_layout",
+    "status": "failed",
+    "duration_ms": 3179.552199988393,
+    "error_type": "RuntimeError",
+    "failure_fingerprint": "docling_layout_model_gbk_decode_error"
+  },
+  {
+    "sample_id": "omni-008",
+    "stratum": "chinese_newspaper_complex_layout",
+    "status": "failed",
+    "duration_ms": 3618.312699982198,
+    "error_type": "RuntimeError",
+    "failure_fingerprint": "docling_layout_model_gbk_decode_error"
+  },
+  {
+    "sample_id": "omni-009",
+    "stratum": "chinese_newspaper_complex_layout",
+    "status": "failed",
+    "duration_ms": 3160.9597000060603,
+    "error_type": "RuntimeError",
+    "failure_fingerprint": "docling_layout_model_gbk_decode_error"
+  },
+  {
+    "sample_id": "omni-010",
+    "stratum": "chinese_newspaper_complex_layout",
+    "status": "failed",
+    "duration_ms": 3581.8806999886874,
+    "error_type": "RuntimeError",
+    "failure_fingerprint": "docling_layout_model_gbk_decode_error"
+  },
+  {
+    "sample_id": "omni-011",
+    "stratum": "english_newspaper_three_column",
+    "status": "failed",
+    "duration_ms": 3206.160200003069,
+    "error_type": "RuntimeError",
+    "failure_fingerprint": "docling_layout_model_gbk_decode_error"
+  },
+  {
+    "sample_id": "omni-012",
+    "stratum": "english_newspaper_three_column",
+    "status": "failed",
+    "duration_ms": 3608.288600022206,
+    "error_type": "RuntimeError",
+    "failure_fingerprint": "docling_layout_model_gbk_decode_error"
+  },
+  {
+    "sample_id": "omni-013",
+    "stratum": "english_newspaper_three_column",
+    "status": "failed",
+    "duration_ms": 3313.1291000172496,
+    "error_type": "RuntimeError",
+    "failure_fingerprint": "docling_layout_model_gbk_decode_error"
+  },
+  {
+    "sample_id": "omni-014",
+    "stratum": "english_newspaper_three_column",
+    "status": "failed",
+    "duration_ms": 3632.619699987117,
+    "error_type": "RuntimeError",
+    "failure_fingerprint": "docling_layout_model_gbk_decode_error"
+  },
+  {
+    "sample_id": "omni-015",
+    "stratum": "english_newspaper_three_column",
+    "status": "failed",
+    "duration_ms": 3351.053899998078,
+    "error_type": "RuntimeError",
+    "failure_fingerprint": "docling_layout_model_gbk_decode_error"
+  },
+  {
+    "sample_id": "omni-016",
+    "stratum": "chinese_table_hard",
+    "status": "failed",
+    "duration_ms": 3440.692600008333,
+    "error_type": "RuntimeError",
+    "failure_fingerprint": "docling_layout_model_gbk_decode_error"
+  },
+  {
+    "sample_id": "omni-017",
+    "stratum": "chinese_table_hard",
+    "status": "failed",
+    "duration_ms": 3680.052899988368,
+    "error_type": "RuntimeError",
+    "failure_fingerprint": "docling_layout_model_gbk_decode_error"
+  },
+  {
+    "sample_id": "omni-018",
+    "stratum": "chinese_table_hard",
+    "status": "failed",
+    "duration_ms": 3347.7722000097856,
+    "error_type": "RuntimeError",
+    "failure_fingerprint": "docling_layout_model_gbk_decode_error"
+  },
+  {
+    "sample_id": "omni-019",
+    "stratum": "chinese_table_hard",
+    "status": "failed",
+    "duration_ms": 4010.059300024295,
+    "error_type": "RuntimeError",
+    "failure_fingerprint": "docling_layout_model_gbk_decode_error"
+  },
+  {
+    "sample_id": "omni-020",
+    "stratum": "chinese_table_hard",
+    "status": "failed",
+    "duration_ms": 3475.5096999870148,
+    "error_type": "RuntimeError",
+    "failure_fingerprint": "docling_layout_model_gbk_decode_error"
+  },
+  {
+    "sample_id": "omni-021",
+    "stratum": "english_table_hard",
+    "status": "failed",
+    "duration_ms": 3870.4023999744095,
+    "error_type": "RuntimeError",
+    "failure_fingerprint": "docling_layout_model_gbk_decode_error"
+  },
+  {
+    "sample_id": "omni-022",
+    "stratum": "english_table_hard",
+    "status": "failed",
+    "duration_ms": 3558.3843999775127,
+    "error_type": "RuntimeError",
+    "failure_fingerprint": "docling_layout_model_gbk_decode_error"
+  },
+  {
+    "sample_id": "omni-023",
+    "stratum": "english_table_hard",
+    "status": "failed",
+    "duration_ms": 3327.1186999918427,
+    "error_type": "RuntimeError",
+    "failure_fingerprint": "docling_layout_model_gbk_decode_error"
+  },
+  {
+    "sample_id": "omni-024",
+    "stratum": "english_table_hard",
+    "status": "failed",
+    "duration_ms": 3875.170600018464,
+    "error_type": "RuntimeError",
+    "failure_fingerprint": "docling_layout_model_gbk_decode_error"
+  },
+  {
+    "sample_id": "omni-025",
+    "stratum": "english_table_hard",
+    "status": "failed",
+    "duration_ms": 4083.7449000100605,
+    "error_type": "RuntimeError",
+    "failure_fingerprint": "docling_layout_model_gbk_decode_error"
+  },
+  {
+    "sample_id": "omni-026",
+    "stratum": "english_academic_equation_hard",
+    "status": "failed",
+    "duration_ms": 4277.367200003937,
+    "error_type": "RuntimeError",
+    "failure_fingerprint": "docling_layout_model_gbk_decode_error"
+  },
+  {
+    "sample_id": "omni-027",
+    "stratum": "english_academic_equation_hard",
+    "status": "failed",
+    "duration_ms": 3840.6928000040352,
+    "error_type": "RuntimeError",
+    "failure_fingerprint": "docling_layout_model_gbk_decode_error"
+  },
+  {
+    "sample_id": "omni-028",
+    "stratum": "english_academic_equation_hard",
+    "status": "failed",
+    "duration_ms": 4984.692199999699,
+    "error_type": "RuntimeError",
+    "failure_fingerprint": "docling_layout_model_gbk_decode_error"
+  },
+  {
+    "sample_id": "omni-029",
+    "stratum": "english_academic_equation_hard",
+    "status": "failed",
+    "duration_ms": 3871.259299980011,
+    "error_type": "RuntimeError",
+    "failure_fingerprint": "docling_layout_model_gbk_decode_error"
+  },
+  {
+    "sample_id": "omni-030",
+    "stratum": "english_academic_equation_hard",
+    "status": "failed",
+    "duration_ms": 3641.1641000013333,
+    "error_type": "RuntimeError",
+    "failure_fingerprint": "docling_layout_model_gbk_decode_error"
+  },
+  {
+    "sample_id": "omni-031",
+    "stratum": "chinese_ppt_color_background",
+    "status": "failed",
+    "duration_ms": 4265.0573999853805,
+    "error_type": "RuntimeError",
+    "failure_fingerprint": "docling_layout_model_gbk_decode_error"
+  },
+  {
+    "sample_id": "omni-032",
+    "stratum": "chinese_ppt_color_background",
+    "status": "failed",
+    "duration_ms": 3785.6807000061963,
+    "error_type": "RuntimeError",
+    "failure_fingerprint": "docling_layout_model_gbk_decode_error"
+  },
+  {
+    "sample_id": "omni-033",
+    "stratum": "chinese_ppt_color_background",
+    "status": "failed",
+    "duration_ms": 4293.428200006019,
+    "error_type": "RuntimeError",
+    "failure_fingerprint": "docling_layout_model_gbk_decode_error"
+  },
+  {
+    "sample_id": "omni-034",
+    "stratum": "chinese_ppt_color_background",
+    "status": "failed",
+    "duration_ms": 3494.0203000151087,
+    "error_type": "RuntimeError",
+    "failure_fingerprint": "docling_layout_model_gbk_decode_error"
+  },
+  {
+    "sample_id": "omni-035",
+    "stratum": "chinese_ppt_color_background",
+    "status": "failed",
+    "duration_ms": 3280.9447999752592,
+    "error_type": "RuntimeError",
+    "failure_fingerprint": "docling_layout_model_gbk_decode_error"
+  },
+  {
+    "sample_id": "omni-036",
+    "stratum": "mixed_language_notes",
+    "status": "failed",
+    "duration_ms": 3622.859900002368,
+    "error_type": "RuntimeError",
+    "failure_fingerprint": "docling_layout_model_gbk_decode_error"
+  },
+  {
+    "sample_id": "omni-037",
+    "stratum": "mixed_language_notes",
+    "status": "failed",
+    "duration_ms": 3265.2648000221234,
+    "error_type": "RuntimeError",
+    "failure_fingerprint": "docling_layout_model_gbk_decode_error"
+  },
+  {
+    "sample_id": "omni-038",
+    "stratum": "mixed_language_notes",
+    "status": "failed",
+    "duration_ms": 3733.8442000036594,
+    "error_type": "RuntimeError",
+    "failure_fingerprint": "docling_layout_model_gbk_decode_error"
+  },
+  {
+    "sample_id": "omni-039",
+    "stratum": "mixed_language_notes",
+    "status": "failed",
+    "duration_ms": 3265.9835000231396,
+    "error_type": "RuntimeError",
+    "failure_fingerprint": "docling_layout_model_gbk_decode_error"
+  },
+  {
+    "sample_id": "omni-040",
+    "stratum": "mixed_language_notes",
+    "status": "failed",
+    "duration_ms": 3107.2286999842618,
+    "error_type": "RuntimeError",
+    "failure_fingerprint": "docling_layout_model_gbk_decode_error"
+  },
+  {
+    "sample_id": "omni-041",
+    "stratum": "english_exam_multicolumn",
+    "status": "failed",
+    "duration_ms": 3547.6938000065275,
+    "error_type": "RuntimeError",
+    "failure_fingerprint": "docling_layout_model_gbk_decode_error"
+  },
+  {
+    "sample_id": "omni-042",
+    "stratum": "english_exam_multicolumn",
+    "status": "failed",
+    "duration_ms": 3096.795799996471,
+    "error_type": "RuntimeError",
+    "failure_fingerprint": "docling_layout_model_gbk_decode_error"
+  },
+  {
+    "sample_id": "omni-043",
+    "stratum": "english_exam_multicolumn",
+    "status": "failed",
+    "duration_ms": 3517.271899996558,
+    "error_type": "RuntimeError",
+    "failure_fingerprint": "docling_layout_model_gbk_decode_error"
+  },
+  {
+    "sample_id": "omni-044",
+    "stratum": "english_exam_multicolumn",
+    "status": "failed",
+    "duration_ms": 3155.3396999952383,
+    "error_type": "RuntimeError",
+    "failure_fingerprint": "docling_layout_model_gbk_decode_error"
+  },
+  {
+    "sample_id": "omni-045",
+    "stratum": "english_exam_multicolumn",
+    "status": "failed",
+    "duration_ms": 3653.329799999483,
+    "error_type": "RuntimeError",
+    "failure_fingerprint": "docling_layout_model_gbk_decode_error"
+  },
+  {
+    "sample_id": "omni-046",
+    "stratum": "english_book_equation_hard",
+    "status": "failed",
+    "duration_ms": 3097.806200006744,
+    "error_type": "RuntimeError",
+    "failure_fingerprint": "docling_layout_model_gbk_decode_error"
+  },
+  {
+    "sample_id": "omni-047",
+    "stratum": "english_book_equation_hard",
+    "status": "failed",
+    "duration_ms": 3076.3571999850683,
+    "error_type": "RuntimeError",
+    "failure_fingerprint": "docling_layout_model_gbk_decode_error"
+  },
+  {
+    "sample_id": "omni-048",
+    "stratum": "english_book_equation_hard",
+    "status": "failed",
+    "duration_ms": 3669.6220000158064,
+    "error_type": "RuntimeError",
+    "failure_fingerprint": "docling_layout_model_gbk_decode_error"
+  },
+  {
+    "sample_id": "omni-049",
+    "stratum": "english_book_equation_hard",
+    "status": "failed",
+    "duration_ms": 3024.8994000139646,
+    "error_type": "RuntimeError",
+    "failure_fingerprint": "docling_layout_model_gbk_decode_error"
+  },
+  {
+    "sample_id": "omni-050",
+    "stratum": "english_book_equation_hard",
+    "status": "failed",
+    "duration_ms": 3438.272900006268,
+    "error_type": "RuntimeError",
+    "failure_fingerprint": "docling_layout_model_gbk_decode_error"
+  }
+]

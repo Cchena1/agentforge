@@ -1,0 +1,10 @@
+{
+  "platform": "Windows-10-10.0.19045-SP0",
+  "python": "3.12.13",
+  "cpu_logical": 16,
+  "memory_gib": 15.36,
+  "docling": "2.118.1",
+  "torch": "2.13.0+cpu",
+  "cuda_available": false,
+  "embedding": "hash-blake2b-v1:384"
+}

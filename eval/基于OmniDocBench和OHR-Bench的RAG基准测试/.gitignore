@@ -1,0 +1,14 @@
+﻿# Defense in depth: benchmark runtime data belongs under <repository-root>/state/benchmark-200p/.
+data/
+raw/
+work/
+omni/
+*.sqlite3
+*.sqlite3-*
+OmniDocBench.json
+ohr_qas_v2.json
+ohr_window_*.json
+ohr_rows_*.json
+omni_manifest.json
+ohr_manifest.json
+omni_parser_results.json

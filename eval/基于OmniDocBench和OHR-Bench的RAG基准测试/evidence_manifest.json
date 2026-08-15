@@ -1,0 +1,112 @@
+{
+  "schema_version": 1,
+  "generated_on": "2026-08-15",
+  "hash_algorithm": "sha256",
+  "manifest_self_excluded": true,
+  "file_count": 17,
+  "total_bytes_excluding_manifest": 727408,
+  "files": [
+    {
+      "path": ".gitignore",
+      "bytes": 277,
+      "sha256": "dcf567678396e5c683de0fce7adc4778215374ec300335524c7a53be2a2750be",
+      "role": "defense-in-depth ignore rules"
+    },
+    {
+      "path": "DATA_SOURCES.md",
+      "bytes": 3970,
+      "sha256": "68e964582954e28d7ad78f2a92a08ac85218f5c064385dfcfa697a5b055f35f8",
+      "role": "official sources and reproducibility boundary"
+    },
+    {
+      "path": "EVIDENCE.md",
+      "bytes": 4223,
+      "sha256": "30cc0905b1157998c7827ab81d417bfc1c7ad5e26a7b1da651589fe00a5daecb",
+      "role": "evidence policy and adversarial review"
+    },
+    {
+      "path": "manifests/sample_inventory.json",
+      "bytes": 92374,
+      "sha256": "4e831d50f5a9c419c38f3a273523c814a2b258eb9fae9309c3b63a99aa02fd3a",
+      "role": "sanitized 200-page sample inventory"
+    },
+    {
+      "path": "README.md",
+      "bytes": 4734,
+      "sha256": "201de6f7e26a533dbef386fa87b0efffc78dcc2ad2601c83d1ea47144f10534c",
+      "role": "benchmark entry point"
+    },
+    {
+      "path": "report.md",
+      "bytes": 23952,
+      "sha256": "f5bced9c2850e3a4c9a1e951b0710ccfd344ea7ff59f3c1b4401a18f1912d728",
+      "role": "formal benchmark report"
+    },
+    {
+      "path": "results/environment.json",
+      "bytes": 235,
+      "sha256": "8d61ff01bcd6485da8e1b047b695ff6462d209f4345bc8187af5b44ac158dd2e",
+      "role": "runtime environment evidence"
+    },
+    {
+      "path": "results/ohr_retrieval_formatting_noise_moderate.json",
+      "bytes": 183747,
+      "sha256": "020830fa85b1c7d39220edf1fd3e60f919d0a3f40e148cded759b512a41e34fc",
+      "role": "formatting-noise per-query ranking evidence"
+    },
+    {
+      "path": "results/ohr_retrieval_gt_text.json",
+      "bytes": 183813,
+      "sha256": "d02301858b58d85facf2dd0833f0c63ac530d0b57f1d3984999d22b621b7a7cd",
+      "role": "ground-truth per-query ranking evidence"
+    },
+    {
+      "path": "results/ohr_retrieval_semantic_noise_MinerU_moderate.json",
+      "bytes": 184020,
+      "sha256": "777fab2b0343366a015215fec1574fb71a586253dc8313b03ac4b1ad302ce112",
+      "role": "semantic-noise per-query ranking evidence"
+    },
+    {
+      "path": "results/ohr_retrieval_summary.json",
+      "bytes": 4954,
+      "sha256": "55bb929cd6cd28cc0e7184dfd94f920f654bd2dcc63a0ae11148a5a83101c279",
+      "role": "retrieval aggregate evidence"
+    },
+    {
+      "path": "results/omni_parser_failures_sanitized.json",
+      "bytes": 12695,
+      "sha256": "f7f48bfd7e74e61e993118afbf7e1d17b8d5cc0fd656a44cdbf0cefc24be1afd",
+      "role": "sanitized per-page parser failures"
+    },
+    {
+      "path": "results/omni_parser_summary.json",
+      "bytes": 2093,
+      "sha256": "004b52d99d7d9ff3a7da4d03c3a87bbd175d679f37cd99a2c07e9a5ea1598e44",
+      "role": "parser aggregate evidence"
+    },
+    {
+      "path": "results/omni_unavailable.json",
+      "bytes": 394,
+      "sha256": "7be97c82f069efdf3fca2b494ffed9c36b5690c27e919a11de6f53c958c15f0d",
+      "role": "parser unavailability marker"
+    },
+    {
+      "path": "results/sample_summary.json",
+      "bytes": 1014,
+      "sha256": "5f694c8cdbfe51d036ed9a97b7b24b29f13ccf061973750a45bbc147119006db",
+      "role": "sample allocation and source hashes"
+    },
+    {
+      "path": "scripts/prepare_samples.py",
+      "bytes": 11565,
+      "sha256": "0eec14ba4d3d4c03bdfa7eeb868b020ebd8c964a3160d5a63aa71824962037ed",
+      "role": "deterministic sample preparation"
+    },
+    {
+      "path": "scripts/run_benchmark.py",
+      "bytes": 13348,
+      "sha256": "c0ffc725ea52c92ed122e8836500b65854c936ab935643749a4b870689b3333d",
+      "role": "benchmark runner"
+    }
+  ]
+}

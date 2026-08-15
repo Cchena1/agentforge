@@ -605,3 +605,14 @@ PowerShell: run.ps1 解析通过
 ## 许可证
 
 MIT
+
+## 外部 Benchmark 证据
+
+项目已完成固定总工作量为 200 页的复杂文档 RAG 工程评估。为控制仓库体积与第三方数据分发风险，Git 只保存来源、Hash、去文本化样本清单、汇总指标、逐查询排名和脱敏失败证据，不保存官方大型数据集、页面图片、临时 PDF 或 SQLite 索引。
+
+- [基于 OmniDocBench 和 OHR-Bench 的 RAG 基准测试](eval/基于OmniDocBench和OHR-Bench的RAG基准测试/README.md)
+- [完整 Benchmark 报告](eval/基于OmniDocBench和OHR-Bench的RAG基准测试/report.md)
+- [数据来源与复现边界](eval/基于OmniDocBench和OHR-Bench的RAG基准测试/DATA_SOURCES.md)
+- [证据说明与对抗式审阅](eval/基于OmniDocBench和OHR-Bench的RAG基准测试/EVIDENCE.md)
+
+本轮不进行压力测试；单次阶段耗时只用于故障定位，不用于声明吞吐量或 SLA。
