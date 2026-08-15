@@ -387,6 +387,7 @@ uv run python "eval\基于OmniDocBench和OHR-Bench的RAG基准测试\scripts\run
 | OHR 汇总 | `results/ohr_retrieval_summary.json` | 三种条件总体与领域指标 |
 | OHR 逐查询证据 | `results/ohr_retrieval_*.json` | 427 条 QA 的 ID、命中、排名、耗时和引用验证；不含问题、答案或正文 |
 | Benchmark 驱动 | `scripts/prepare_samples.py`、`scripts/run_benchmark.py` | 固定抽样与本地执行入口 |
+| 证据工具 | `scripts/generate_evidence_manifest.py`、`scripts/adversarial_audit.py` | 刷新 Hash 清单并复核体积、隐私、样本与指标一致性 |
 
 原始 Benchmark 数据与完整中间产物不作为 Git 证据提交；它们可由上述来源和脚本在获准环境中重新生成。
 

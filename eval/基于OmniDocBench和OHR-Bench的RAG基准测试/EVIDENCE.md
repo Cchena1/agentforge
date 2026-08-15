@@ -1,4 +1,4 @@
-﻿# Benchmark 证据说明与对抗式审阅
+# Benchmark 证据说明与对抗式审阅
 
 ## 1. 证据目标
 
@@ -83,4 +83,4 @@ flowchart TD
 - SHA-256；
 - 文件角色。
 
-修改任何证据或文档后都应重新生成该 Manifest。Manifest 不能证明执行过程没有被篡改，但可以证明评估者收到的文件集合与提交时登记的内容一致。
+修改任何证据或文档后都应运行 `scripts/generate_evidence_manifest.py` 重新生成该 Manifest，再运行 `scripts/adversarial_audit.py`。Manifest 不能证明执行过程没有被篡改，但可以证明评估者收到的文件集合与提交时登记的内容一致。

@@ -3,8 +3,8 @@
   "generated_on": "2026-08-15",
   "hash_algorithm": "sha256",
   "manifest_self_excluded": true,
-  "file_count": 17,
-  "total_bytes_excluding_manifest": 727408,
+  "file_count": 19,
+  "total_bytes_excluding_manifest": 736936,
   "files": [
     {
       "path": ".gitignore",
@@ -20,8 +20,8 @@
     },
     {
       "path": "EVIDENCE.md",
-      "bytes": 4223,
-      "sha256": "30cc0905b1157998c7827ab81d417bfc1c7ad5e26a7b1da651589fe00a5daecb",
+      "bytes": 4310,
+      "sha256": "654929296a20d70c5bb09a07a992ac1e9d5abbc8aaeaa13692c1776eb1e51f71",
       "role": "evidence policy and adversarial review"
     },
     {
@@ -32,14 +32,14 @@
     },
     {
       "path": "README.md",
-      "bytes": 4734,
-      "sha256": "201de6f7e26a533dbef386fa87b0efffc78dcc2ad2601c83d1ea47144f10534c",
+      "bytes": 5086,
+      "sha256": "5db86699416a86dad095be405a2502c1e6c31d81089b4271a2a1d235f786c141",
       "role": "benchmark entry point"
     },
     {
       "path": "report.md",
-      "bytes": 23952,
-      "sha256": "f5bced9c2850e3a4c9a1e951b0710ccfd344ea7ff59f3c1b4401a18f1912d728",
+      "bytes": 24116,
+      "sha256": "e307241dc37b727da912579aee67d093e233d8471fd4aaea03b2112a824caafd",
       "role": "formal benchmark report"
     },
     {
@@ -95,6 +95,18 @@
       "bytes": 1014,
       "sha256": "5f694c8cdbfe51d036ed9a97b7b24b29f13ccf061973750a45bbc147119006db",
       "role": "sample allocation and source hashes"
+    },
+    {
+      "path": "scripts/adversarial_audit.py",
+      "bytes": 6247,
+      "sha256": "4e9e2b76b5cb4942766a37c963cbf66bcd04b3171982a3b6c93f47f59bf62158",
+      "role": "adversarial evidence audit"
+    },
+    {
+      "path": "scripts/generate_evidence_manifest.py",
+      "bytes": 2678,
+      "sha256": "30c6edec352b15c913c2d74812732d22b6589592b2499db1d0c78a56594e372d",
+      "role": "evidence hash manifest generator"
     },
     {
       "path": "scripts/prepare_samples.py",

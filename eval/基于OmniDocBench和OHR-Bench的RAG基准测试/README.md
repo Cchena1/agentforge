@@ -1,4 +1,4 @@
-﻿# 基于 OmniDocBench 和 OHR-Bench 的 RAG 基准测试
+# 基于 OmniDocBench 和 OHR-Bench 的 RAG 基准测试
 
 本目录归档 AgentForge 于 **2026-08-15** 完成的 200 页复杂文档 RAG 工程基准测试。目录只保留可审阅、可校验、可复现所必需的轻量证据；官方大型数据集、页面图片、临时 PDF、SQLite 索引和含原文的完整 Manifest 均不进入 Git。
 
@@ -38,6 +38,8 @@
 │   ├── ohr_retrieval_summary.json
 │   └── ohr_retrieval_*.json
 └── scripts/
+    ├── adversarial_audit.py
+    ├── generate_evidence_manifest.py
     ├── prepare_samples.py
     └── run_benchmark.py
 ```
@@ -50,7 +52,7 @@
 - `evidence_manifest.json`：提交内证据文件的路径、大小和 SHA-256，可用于完整性核验。
 - `manifests/sample_inventory.json`：200 页固定样本的去文本化清单；保留样本身份、分层、定位和 Hash，不保留官方正文。
 - `results/`：环境、汇总指标、脱敏失败分类及逐查询排名证据；逐查询文件不包含问题、答案或页面正文。
-- `scripts/`：本次 Benchmark 驱动脚本；默认把下载数据和运行产物写入项目根目录下已忽略的 `state/benchmark-200p/`。
+- `scripts/`：固定抽样、Benchmark 执行、证据 Hash 生成和对抗式审阅脚本；运行数据写入项目根目录下已忽略的 `state/benchmark-200p/`。
 
 ## 数据最小化与上传边界
 
@@ -83,6 +85,10 @@ uv run python "eval\基于OmniDocBench和OHR-Bench的RAG基准测试\scripts\pre
 uv run python "eval\基于OmniDocBench和OHR-Bench的RAG基准测试\scripts\run_benchmark.py" environment
 uv run python "eval\基于OmniDocBench和OHR-Bench的RAG基准测试\scripts\run_benchmark.py" parser
 uv run python "eval\基于OmniDocBench和OHR-Bench的RAG基准测试\scripts\run_benchmark.py" retrieval
+
+# 刷新证据 Hash 并执行对抗式审阅
+uv run python "eval\基于OmniDocBench和OHR-Bench的RAG基准测试\scripts\generate_evidence_manifest.py"
+uv run python "eval\基于OmniDocBench和OHR-Bench的RAG基准测试\scripts\adversarial_audit.py"
 ```
 
 脚本将本地数据写入 `state/benchmark-200p/`。该目录被项目 `.gitignore` 忽略；复现者应先阅读 [DATA_SOURCES.md](DATA_SOURCES.md)，确认数据许可和下载范围。`parser` 与 `retrieval` 会执行实际工作，不属于压力测试。
