@@ -255,9 +255,10 @@ class SQLiteVectorStore:
         self._retrieval_diagnostics.set(diagnostics)
         if row_list and not any((vector_scores, lexical_scores, metadata_scores)):
             raise RuntimeError("all retrieval scoring branches failed")
-        vector_rank = _rank_scores(vector_scores)
-        lexical_rank = _rank_scores(lexical_scores)
-        metadata_rank = _rank_scores(metadata_scores)
+        candidate_limit = max(top_k * 4, 20)
+        vector_rank = _rank_scores(vector_scores, limit=candidate_limit)
+        lexical_rank = _rank_scores(lexical_scores, limit=candidate_limit, positive_only=True)
+        metadata_rank = _rank_scores(metadata_scores, limit=candidate_limit, positive_only=True)
         max_lexical = max([1.0, *lexical_scores.values()])
         max_metadata = max([1.0, *metadata_scores.values()])
 
@@ -341,8 +342,7 @@ def _vector_scores(rows: list[sqlite3.Row], query_vector: list[float]) -> dict[s
 
 def _lexical_scores(rows: list[sqlite3.Row], query: Counter[str]) -> dict[str, float]:
     return {
-        str(row["chunk_id"]): _lexical_score(query, _term_counts(str(row["text"])))
-        for row in rows
+        str(row["chunk_id"]): _lexical_score(query, _term_counts(str(row["text"]))) for row in rows
     }
 
 
@@ -362,8 +362,18 @@ def _metadata_scores(rows: list[sqlite3.Row], query: Counter[str]) -> dict[str, 
     return scores
 
 
-def _rank_scores(scores: dict[str, float]) -> dict[str, int]:
-    ranked = sorted(scores.items(), key=lambda item: item[1], reverse=True)
+def _rank_scores(
+    scores: dict[str, float],
+    *,
+    limit: int | None = None,
+    positive_only: bool = False,
+) -> dict[str, int]:
+    eligible = (
+        (chunk_id, score) for chunk_id, score in scores.items() if not positive_only or score > 0
+    )
+    ranked = sorted(eligible, key=lambda item: item[1], reverse=True)
+    if limit is not None:
+        ranked = ranked[:limit]
     return {chunk_id: rank for rank, (chunk_id, _) in enumerate(ranked, 1)}
 
 
@@ -416,10 +426,14 @@ def _citation_from_evidence(
                 "reading_order": int(metadata.get("reading_order", 0)),
             }
         else:
-            location = {"kind": "text", "locator": str(locator) if locator else None, "block_id": block_id}
-    citation_id = "cit_" + hashlib.sha256(
-        f"{source_id}:{chunk_id}:{quote}".encode()
-    ).hexdigest()[:24]
+            location = {
+                "kind": "text",
+                "locator": str(locator) if locator else None,
+                "block_id": block_id,
+            }
+    citation_id = (
+        "cit_" + hashlib.sha256(f"{source_id}:{chunk_id}:{quote}".encode()).hexdigest()[:24]
+    )
     return Citation(
         citation_id=citation_id,
         source_id=source_id,

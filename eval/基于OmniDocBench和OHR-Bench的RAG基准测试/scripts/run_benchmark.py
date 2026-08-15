@@ -94,8 +94,11 @@ async def run_parser() -> None:
                 "chunk_count": len(chunks),
                 "extracted_chars": len(extracted),
                 "ground_truth_chars": item["ground_truth_chars"],
-                "char_ratio": len(normalize(extracted)) / max(1, len(normalize(item["ground_truth_text"]))),
-                "char_trigram_f1": multiset_f1(ngrams(extracted), ngrams(item["ground_truth_text"])),
+                "char_ratio": len(normalize(extracted))
+                / max(1, len(normalize(item["ground_truth_text"]))),
+                "char_trigram_f1": multiset_f1(
+                    ngrams(extracted), ngrams(item["ground_truth_text"])
+                ),
             }
         # Third-party parser backends expose heterogeneous exception types; record all failures.
         except Exception as exc:  # noqa: BLE001
@@ -109,7 +112,10 @@ async def run_parser() -> None:
             }
         results.append(result)
         write_json(ROOT / "omni_parser_results.json", results)
-        print(f"Parser {index:02d}/50 {item['sample_id']} {result['status']} {result['duration_ms']/1000:.1f}s", flush=True)
+        print(
+            f"Parser {index:02d}/50 {item['sample_id']} {result['status']} {result['duration_ms'] / 1000:.1f}s",
+            flush=True,
+        )
 
     parsed = [item for item in results if item["status"] == "parsed"]
     by_stratum: dict[str, dict[str, Any]] = {}
@@ -120,18 +126,29 @@ async def run_parser() -> None:
             "pages": len(subset),
             "parsed": len(successful),
             "quality_accepted": sum(bool(item.get("quality_accepted")) for item in successful),
-            "mean_trigram_f1": statistics.fmean(item["char_trigram_f1"] for item in successful) if successful else 0.0,
-            "mean_quality_score": statistics.fmean(item["quality_score"] for item in successful) if successful else 0.0,
+            "mean_trigram_f1": statistics.fmean(item["char_trigram_f1"] for item in successful)
+            if successful
+            else 0.0,
+            "mean_quality_score": statistics.fmean(item["quality_score"] for item in successful)
+            if successful
+            else 0.0,
         }
     summary = {
         "pages": len(results),
         "parsed": len(parsed),
         "failed": len(results) - len(parsed),
         "quality_accepted": sum(bool(item["quality_accepted"]) for item in parsed),
-        "quality_acceptance_rate": sum(bool(item["quality_accepted"]) for item in parsed) / max(1, len(results)),
-        "mean_quality_score": statistics.fmean(item["quality_score"] for item in parsed) if parsed else 0.0,
-        "mean_char_trigram_f1": statistics.fmean(item["char_trigram_f1"] for item in parsed) if parsed else 0.0,
-        "median_char_trigram_f1": statistics.median(item["char_trigram_f1"] for item in parsed) if parsed else 0.0,
+        "quality_acceptance_rate": sum(bool(item["quality_accepted"]) for item in parsed)
+        / max(1, len(results)),
+        "mean_quality_score": statistics.fmean(item["quality_score"] for item in parsed)
+        if parsed
+        else 0.0,
+        "mean_char_trigram_f1": statistics.fmean(item["char_trigram_f1"] for item in parsed)
+        if parsed
+        else 0.0,
+        "median_char_trigram_f1": statistics.median(item["char_trigram_f1"] for item in parsed)
+        if parsed
+        else 0.0,
         "median_duration_ms": statistics.median(item["duration_ms"] for item in results),
         "p95_duration_ms": percentile([item["duration_ms"] for item in results], 0.95),
         "by_stratum": by_stratum,
@@ -140,7 +157,9 @@ async def run_parser() -> None:
     print(json.dumps(summary, ensure_ascii=False, indent=2), flush=True)
 
 
-def qa_page_map(qas: list[dict[str, Any]], selected_pairs: dict[tuple[str, int], str]) -> tuple[list[dict[str, Any]], dict[str, set[str]]]:
+def qa_page_map(
+    qas: list[dict[str, Any]], selected_pairs: dict[tuple[str, int], str]
+) -> tuple[list[dict[str, Any]], dict[str, set[str]]]:
     query_by_id: dict[str, dict[str, Any]] = {}
     relevant: dict[str, set[str]] = defaultdict(set)
     for qa in qas:
@@ -154,7 +173,9 @@ def qa_page_map(qas: list[dict[str, Any]], selected_pairs: dict[tuple[str, int],
     return list(query_by_id.values()), relevant
 
 
-async def run_retrieval_variant(variant: str, manifest: list[dict[str, Any]], qas: list[dict[str, Any]]) -> dict[str, Any]:
+async def run_retrieval_variant(
+    variant: str, manifest: list[dict[str, Any]], qas: list[dict[str, Any]]
+) -> dict[str, Any]:
     db_path = ROOT / f"ohr_{variant}.sqlite3"
     if db_path.exists():
         db_path.unlink()
@@ -164,19 +185,27 @@ async def run_retrieval_variant(variant: str, manifest: list[dict[str, Any]], qa
     documents: list[VectorDocument] = []
     selected_pairs: dict[tuple[str, int], str] = {}
     source_texts: dict[str, str] = {}
+    source_hashes: dict[str, str] = {}
     for item in manifest:
         source_id = item["sample_id"]
         selected_pairs[(item["doc_name"], int(item["page_idx"]))] = source_id
         text = item[variant] or ""
         source_texts[source_id] = text
+        source_hashes[source_id] = hashlib.sha256(text.encode("utf-8")).hexdigest()
         parsed = ParsedDocument(
             source_name=f"{item['doc_name']}#page={item['page_idx']}",
             parser=f"ohr-{variant}",
-            blocks=[ParsedBlock(text=text, page=int(item["page_idx"]) + 1, kind="paragraph", locator=f"page:{int(item['page_idx'])+1}:block:1")],
+            blocks=[
+                ParsedBlock(
+                    text=text,
+                    page=int(item["page_idx"]) + 1,
+                    kind="paragraph",
+                    locator=f"page:{int(item['page_idx']) + 1}:block:1",
+                )
+            ],
             provenance={"page_count": 1, "empty_pages": 0},
         )
         for chunk in chunker.chunk(parsed):
-            content_hash = hashlib.sha256(chunk.text.encode("utf-8")).hexdigest()
             vector = (await embedding.embed([chunk.text]))[0]
             documents.append(
                 VectorDocument(
@@ -187,9 +216,9 @@ async def run_retrieval_variant(variant: str, manifest: list[dict[str, Any]], qa
                     embedding=vector,
                     version_id=variant,
                     page=int(item["page_idx"]) + 1,
-                    locator=f"page:{int(item['page_idx'])+1}:block:1",
+                    locator=f"page:{int(item['page_idx']) + 1}:block:1",
                     metadata={
-                        "content_hash": content_hash,
+                        "content_sha256": source_hashes[source_id],
                         "parser": f"ohr-{variant}",
                         "document_schema_version": 1,
                         "reading_order": 1,
@@ -210,6 +239,7 @@ async def run_retrieval_variant(variant: str, manifest: list[dict[str, Any]], qa
             hit.citation.quote in hit.text
             and hit.citation.source_id in source_texts
             and hit.text in source_texts[hit.citation.source_id]
+            and hit.citation.content_sha256 == source_hashes[hit.citation.source_id]
             for hit in hits
         )
         records.append(
@@ -233,20 +263,35 @@ async def run_retrieval_variant(variant: str, manifest: list[dict[str, Any]], qa
         subset = [record for record in records if record["domain"] == domain]
         by_domain[domain] = {
             "queries": len(subset),
-            "recall_at_1": sum(record["first_relevant_rank"] == 1 for record in subset) / len(subset),
-            "recall_at_5": sum(record["first_relevant_rank"] is not None for record in subset) / len(subset),
-            "mrr_at_5": statistics.fmean(1 / record["first_relevant_rank"] if record["first_relevant_rank"] else 0 for record in subset),
+            "recall_at_1": sum(record["first_relevant_rank"] == 1 for record in subset)
+            / len(subset),
+            "recall_at_5": sum(record["first_relevant_rank"] is not None for record in subset)
+            / len(subset),
+            "mrr_at_5": statistics.fmean(
+                1 / record["first_relevant_rank"] if record["first_relevant_rank"] else 0
+                for record in subset
+            ),
         }
     return {
         "variant": variant,
         "pages": len(manifest),
         "chunks": len(documents),
         "queries": len(records),
-        "recall_at_1": sum(record["first_relevant_rank"] == 1 for record in records) / max(1, len(records)),
-        "recall_at_5": sum(record["first_relevant_rank"] is not None for record in records) / max(1, len(records)),
-        "mrr_at_5": statistics.fmean(1 / record["first_relevant_rank"] if record["first_relevant_rank"] else 0 for record in records) if records else 0.0,
-        "citation_validity": sum(record["citation_valid"] for record in records) / max(1, len(records)),
-        "median_latency_ms": statistics.median(record["latency_ms"] for record in records) if records else 0.0,
+        "recall_at_1": sum(record["first_relevant_rank"] == 1 for record in records)
+        / max(1, len(records)),
+        "recall_at_5": sum(record["first_relevant_rank"] is not None for record in records)
+        / max(1, len(records)),
+        "mrr_at_5": statistics.fmean(
+            1 / record["first_relevant_rank"] if record["first_relevant_rank"] else 0
+            for record in records
+        )
+        if records
+        else 0.0,
+        "citation_validity": sum(record["citation_valid"] for record in records)
+        / max(1, len(records)),
+        "median_latency_ms": statistics.median(record["latency_ms"] for record in records)
+        if records
+        else 0.0,
         "p95_latency_ms": percentile([record["latency_ms"] for record in records], 0.95),
         "by_domain": by_domain,
     }
@@ -274,6 +319,7 @@ if __name__ == "__main__":
     else:
         import docling
         import torch
+
         environment = {
             "platform": platform.platform(),
             "python": platform.python_version(),

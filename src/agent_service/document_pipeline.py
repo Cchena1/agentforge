@@ -4,8 +4,11 @@ import asyncio
 import hashlib
 import importlib.metadata
 import re
+import shutil
+import sys
 import time
 from collections import Counter
+from collections.abc import Callable
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any, Protocol
@@ -55,16 +58,35 @@ class CloudDocumentParser(Protocol):
     async def parse(self, request: ParseRequest) -> ParsedDocument: ...
 
 
+_NON_INDEXABLE_KINDS = {"running_header", "running_footer", "page_number"}
+_VISUAL_ASSET_TYPES = {"image", "table", "chart", "formula"}
+
+
 class ParseQualityEvaluator:
     """Deterministic quality gate; parser selection is never delegated to an LLM."""
 
-    def __init__(self, acceptance_score: float = 0.58) -> None:
+    def __init__(
+        self,
+        acceptance_score: float = 0.58,
+        *,
+        min_visual_text_chars_per_page: int = 160,
+        min_table_text_chars: int = 160,
+    ) -> None:
         if not 0 < acceptance_score <= 1:
             raise ValueError("acceptance_score must be in (0, 1]")
+        if min_visual_text_chars_per_page < 1 or min_table_text_chars < 1:
+            raise ValueError("content completeness thresholds must be positive")
         self.acceptance_score = acceptance_score
+        self.min_visual_text_chars_per_page = min_visual_text_chars_per_page
+        self.min_table_text_chars = min_table_text_chars
 
     def evaluate(self, document: ParsedDocument) -> ParseQualityReport:
-        texts = [block.text.strip() for block in document.blocks if block.text.strip()]
+        indexable_blocks = [
+            block
+            for block in document.blocks
+            if block.kind not in _NON_INDEXABLE_KINDS and block.text.strip()
+        ]
+        texts = [block.text.strip() for block in indexable_blocks]
         total_chars = sum(len(text) for text in texts)
         replacement_ratio = sum(text.count("\ufffd") for text in texts) / max(total_chars, 1)
         normalized = [" ".join(text.lower().split()) for text in texts]
@@ -74,6 +96,30 @@ class ParseQualityEvaluator:
         page_count = int(document.provenance.get("page_count", 0) or 0)
         empty_pages = int(document.provenance.get("empty_pages", 0) or 0)
         empty_page_ratio = empty_pages / max(page_count, 1)
+        characters_per_page = total_chars / max(page_count, 1)
+
+        visual_assets = [
+            asset for asset in document.assets if asset.asset_type in _VISUAL_ASSET_TYPES
+        ]
+        table_block_chars = sum(
+            len(block.text.strip()) for block in indexable_blocks if block.kind == "table"
+        )
+        table_asset_chars = sum(
+            len((asset.extracted_text or "").strip())
+            for asset in document.assets
+            if asset.asset_type == "table"
+        )
+        table_text_chars = max(table_block_chars, table_asset_chars)
+        has_table = table_block_chars > 0 or any(
+            asset.asset_type == "table" for asset in document.assets
+        )
+        is_pdf = Path(document.source_name).suffix.lower() == ".pdf"
+        sparse_visual_output = (
+            is_pdf
+            and bool(visual_assets)
+            and characters_per_page < self.min_visual_text_chars_per_page
+        )
+        sparse_table_output = is_pdf and has_table and table_text_chars < self.min_table_text_chars
 
         issues: list[str] = []
         if not texts:
@@ -82,8 +128,14 @@ class ParseQualityEvaluator:
             issues.append("HIGH_GARBLED_CHARACTER_RATIO")
         if duplicate_ratio > 0.35:
             issues.append("HIGH_DUPLICATE_BLOCK_RATIO")
+        if sparse_visual_output:
+            issues.append("LOW_TEXT_COVERAGE_WITH_VISUAL_ASSETS")
+        if sparse_table_output:
+            issues.append("SPARSE_TABLE_EXTRACTION")
+
         scanned_signal = any("SCANNED_PDF_SUSPECTED" in item for item in document.warnings)
-        needs_ocr = scanned_signal or (page_count > 0 and empty_page_ratio >= 0.5)
+        incomplete_pdf = sparse_visual_output or sparse_table_output
+        needs_ocr = scanned_signal or (page_count > 0 and empty_page_ratio >= 0.5) or incomplete_pdf
         if needs_ocr:
             issues.append("OCR_REQUIRED")
 
@@ -93,6 +145,10 @@ class ParseQualityEvaluator:
         score -= min(replacement_ratio * 5, 0.3)
         score -= min(duplicate_ratio * 0.5, 0.25)
         score -= min(empty_page_ratio * 0.5, 0.45)
+        if sparse_visual_output:
+            score -= 0.45
+        if sparse_table_output:
+            score -= 0.25
         score = max(0.0, min(score, 1.0))
         accepted = score >= self.acceptance_score and not needs_ocr
         return ParseQualityReport(
@@ -103,12 +159,17 @@ class ParseQualityEvaluator:
             metrics={
                 "blocks": len(texts),
                 "characters": total_chars,
+                "characters_per_page": characters_per_page,
                 "replacement_ratio": replacement_ratio,
                 "duplicate_ratio": duplicate_ratio,
                 "page_count": page_count,
                 "empty_pages": empty_pages,
                 "empty_page_ratio": empty_page_ratio,
                 "assets": len(document.assets),
+                "visual_assets": len(visual_assets),
+                "table_text_characters": table_text_chars,
+                "sparse_visual_output": sparse_visual_output,
+                "sparse_table_output": sparse_table_output,
             },
             issues=issues,
         )
@@ -154,9 +215,63 @@ class BuiltinParserBackend:
         )
 
 
+def _docling_runtime_policy(
+    *,
+    platform_name: str,
+    utf8_mode: bool,
+    torch_compile_enabled: bool,
+    msvc_available: bool,
+) -> bool:
+    """Return whether Docling torch compilation must be disabled for this runtime."""
+    if platform_name == "win32" and not utf8_mode:
+        raise RuntimeError(
+            "Docling on Windows requires UTF-8 mode; restart with `python -X utf8` "
+            "or set PYTHONUTF8=1 before process startup"
+        )
+    return platform_name == "win32" and torch_compile_enabled and not msvc_available
+
+
+def _prepare_docling_runtime() -> list[str]:
+    platform_name = sys.platform
+    utf8_mode = bool(sys.flags.utf8_mode)
+    if platform_name == "win32" and not utf8_mode:
+        _docling_runtime_policy(
+            platform_name=platform_name,
+            utf8_mode=utf8_mode,
+            torch_compile_enabled=False,
+            msvc_available=False,
+        )
+
+    from docling.datamodel.settings import settings as docling_settings
+
+    disable_compile = _docling_runtime_policy(
+        platform_name=platform_name,
+        utf8_mode=utf8_mode,
+        torch_compile_enabled=bool(docling_settings.inference.compile_torch_models),
+        msvc_available=shutil.which("cl") is not None,
+    )
+    if not disable_compile:
+        return []
+    docling_settings.inference.compile_torch_models = False
+    return ["DOCLING_TORCH_COMPILE_DISABLED_NO_MSVC"]
+
+
+def _docling_page_count(document: Any, blocks: list[ParsedBlock]) -> int:
+    pages = getattr(document, "pages", None)
+    if isinstance(pages, (dict, list, tuple)) and pages:
+        return len(pages)
+    return max((block.page or 0 for block in blocks), default=0)
+
+
 class DoclingParserBackend:
     name = "docling"
-    profile_id = f"docling-native-v2:docling={_package_version('docling')}"
+    profile_id = f"docling-native-v3:docling={_package_version('docling')}"
+
+    def __init__(self, converter_factory: Callable[[], Any] | None = None) -> None:
+        self._converter_factory = converter_factory
+        self._converter: Any | None = None
+        self._runtime_warnings: list[str] = []
+        self._operation_lock = asyncio.Lock()
 
     @property
     def capabilities(self) -> ParserCapabilities:
@@ -170,38 +285,55 @@ class DoclingParserBackend:
         )
 
     async def parse(self, request: ParseRequest) -> ParsedDocument:
-        try:
-            from docling.document_converter import DocumentConverter
-        except ImportError as exc:
-            raise RuntimeError("Docling is not installed; run `uv sync --extra documents`") from exc
+        async with self._operation_lock:
+            return await asyncio.to_thread(self._convert, request)
 
-        def convert() -> ParsedDocument:
-            result = DocumentConverter().convert(str(request.source_path))
-            document = result.document
-            blocks = _docling_blocks(document, request.source_path.suffix.lower())
-            warnings: list[str] = []
-            if not blocks:
-                warnings.append("DOCLING_EMPTY_STRUCTURE")
-                blocks = [
-                    ParsedBlock(item.text, item.page, item.kind, item.locator)
-                    for item in _text_blocks(document.export_to_markdown())
-                ]
-            assets = _docling_assets(document, blocks)
-            page_count = max((block.page or 0 for block in blocks), default=0)
-            return ParsedDocument(
-                request.source_path.name,
-                blocks,
-                "docling",
-                warnings,
-                assets=assets,
-                provenance={
-                    "page_count": page_count,
-                    "empty_pages": 0,
-                    "canonical_model": "docling-document",
-                },
-            )
+    def _convert(self, request: ParseRequest) -> ParsedDocument:
+        if self._converter is None:
+            factory = self._converter_factory
+            if factory is None:
+                self._runtime_warnings = _prepare_docling_runtime()
+                try:
+                    from docling.document_converter import DocumentConverter
+                except ImportError as exc:
+                    raise RuntimeError(
+                        "Docling is not installed; run `uv sync --extra documents`"
+                    ) from exc
+                factory = DocumentConverter
+            self._converter = factory()
 
-        return await asyncio.to_thread(convert)
+        result = self._converter.convert(str(request.source_path))
+        document = result.document
+        blocks = _docling_blocks(document, request.source_path.suffix.lower())
+        warnings = list(self._runtime_warnings)
+        if not blocks:
+            warnings.append("DOCLING_EMPTY_STRUCTURE")
+            blocks = [
+                ParsedBlock(item.text, item.page, item.kind, item.locator)
+                for item in _text_blocks(document.export_to_markdown())
+            ]
+        assets = _docling_assets(document, blocks)
+        page_count = _docling_page_count(document, blocks)
+        text_pages = {
+            block.page
+            for block in blocks
+            if block.page is not None
+            and block.kind not in _NON_INDEXABLE_KINDS
+            and block.text.strip()
+        }
+        empty_pages = max(page_count - len(text_pages), 0)
+        return ParsedDocument(
+            request.source_path.name,
+            blocks,
+            "docling",
+            warnings,
+            assets=assets,
+            provenance={
+                "page_count": page_count,
+                "empty_pages": empty_pages,
+                "canonical_model": "docling-document",
+            },
+        )
 
 
 class PaddleOCRParserBackend:
@@ -209,6 +341,11 @@ class PaddleOCRParserBackend:
 
     name = "paddleocr"
     profile_id = f"paddleocr-v1:paddleocr={_package_version('paddleocr')}"
+
+    def __init__(self, pipeline_factory: Callable[[], Any] | None = None) -> None:
+        self._pipeline_factory = pipeline_factory
+        self._pipeline: Any | None = None
+        self._operation_lock = asyncio.Lock()
 
     @property
     def capabilities(self) -> ParserCapabilities:
@@ -221,37 +358,43 @@ class PaddleOCRParserBackend:
         )
 
     async def parse(self, request: ParseRequest) -> ParsedDocument:
-        try:
-            from paddleocr import PPStructureV3  # type: ignore[import-not-found]
-        except ImportError as exc:
-            raise RuntimeError(
-                "PaddleOCR is not installed; install the reviewed OCR profile before enabling it"
-            ) from exc
+        async with self._operation_lock:
+            return await asyncio.to_thread(self._convert, request)
 
-        def convert() -> ParsedDocument:
-            pipeline = PPStructureV3()
-            results = list(pipeline.predict(input=str(request.source_path)))
-            blocks: list[ParsedBlock] = []
-            assets: list[DocumentAsset] = []
-            reading_order = 0
-            for page_number, result in enumerate(results, 1):
-                payload = getattr(result, "json", result)
-                payload = payload() if callable(payload) else payload
-                if not isinstance(payload, dict):
-                    payload = {"text": str(payload)}
-                page_blocks, page_assets = _paddle_payload(payload, page_number, reading_order)
-                reading_order += len(page_blocks)
-                blocks.extend(page_blocks)
-                assets.extend(page_assets)
-            return ParsedDocument(
-                request.source_path.name,
-                blocks,
-                "paddleocr",
-                assets=assets,
-                provenance={"page_count": len(results), "empty_pages": 0},
-            )
+    def _convert(self, request: ParseRequest) -> ParsedDocument:
+        if self._pipeline is None:
+            factory = self._pipeline_factory
+            if factory is None:
+                try:
+                    from paddleocr import PPStructureV3  # type: ignore[import-not-found]
+                except ImportError as exc:
+                    raise RuntimeError(
+                        "PaddleOCR is not installed; install the reviewed OCR profile before enabling it"
+                    ) from exc
+                factory = PPStructureV3
+            self._pipeline = factory()
 
-        return await asyncio.to_thread(convert)
+        results = list(self._pipeline.predict(input=str(request.source_path)))
+        blocks: list[ParsedBlock] = []
+        assets: list[DocumentAsset] = []
+        reading_order = 0
+        for page_number, result in enumerate(results, 1):
+            payload = getattr(result, "json", result)
+            payload = payload() if callable(payload) else payload
+            if not isinstance(payload, dict):
+                payload = {"text": str(payload)}
+            page_blocks, page_assets = _paddle_payload(payload, page_number, reading_order)
+            reading_order += len(page_blocks)
+            blocks.extend(page_blocks)
+            assets.extend(page_assets)
+        return ParsedDocument(
+            request.source_path.name,
+            blocks,
+            "paddleocr",
+            assets=assets,
+            provenance={"page_count": len(results), "empty_pages": 0},
+        )
+
 
 class QualityGatedDocumentParser:
     """Bounded parser registry that returns exactly one authoritative document."""
@@ -280,7 +423,7 @@ class QualityGatedDocumentParser:
     def profile_id(self) -> str:
         cloud_profile = self.cloud_backend.profile_id if self.cloud_backend else "disabled"
         return (
-            f"registry-v2:prefer_docling={self.prefer_docling}:ocr={self.enable_ocr_fallback}:"
+            f"registry-v3:prefer_docling={self.prefer_docling}:ocr={self.enable_ocr_fallback}:"
             f"max_attempts={self.max_attempts}:builtin={self.builtin.profile_id}:"
             f"docling={self.docling.profile_id}:paddle={self.ocr.profile_id}:cloud={cloud_profile}"
         )
@@ -301,7 +444,14 @@ class QualityGatedDocumentParser:
             backends.append(self.builtin)
             if self.cloud_backend is not None:
                 backends.append(self.cloud_backend)
-            return await self._attempt_sequence(request, backends[: self.max_attempts])
+            selected = backends[: self.max_attempts]
+            if (
+                self.cloud_backend is not None
+                and self.max_attempts >= 2
+                and len(backends) > self.max_attempts
+            ):
+                selected = [*backends[: self.max_attempts - 1], self.cloud_backend]
+            return await self._attempt_sequence(request, selected)
         return await self._attempt_sequence(request, [self.builtin], require_quality=False)
 
     async def _attempt_sequence(
@@ -334,8 +484,10 @@ class QualityGatedDocumentParser:
                 document.quality_report = report
                 if accepted:
                     return document
-                failures.append(f"{backend.name}: quality={report.score:.3f} ({attempt.failure_code})")
-            except (ImportError, RuntimeError, ValueError) as exc:
+                failures.append(
+                    f"{backend.name}: quality={report.score:.3f} ({attempt.failure_code})"
+                )
+            except (ImportError, RuntimeError, TimeoutError, ValueError) as exc:
                 attempts.append(
                     ParseAttempt(
                         parser=backend.name,
@@ -358,7 +510,9 @@ class ParentChildChunker:
 
     profile_id = "parent-child-token-v1"
 
-    def __init__(self, target_tokens: int = 500, max_tokens: int = 650, overlap_tokens: int = 60) -> None:
+    def __init__(
+        self, target_tokens: int = 500, max_tokens: int = 650, overlap_tokens: int = 60
+    ) -> None:
         if not (0 <= overlap_tokens < target_tokens <= max_tokens):
             raise ValueError("expected 0 <= overlap < target <= max")
         self.target_tokens = target_tokens
@@ -376,7 +530,9 @@ class ParentChildChunker:
                 continue
             if block.kind == "heading" and section_blocks:
                 chunks.extend(
-                    self._section_chunks(document.source_name, heading_path, section_blocks, len(chunks))
+                    self._section_chunks(
+                        document.source_name, heading_path, section_blocks, len(chunks)
+                    )
                 )
                 section_blocks = []
             if block.kind == "heading":
@@ -386,7 +542,9 @@ class ParentChildChunker:
             elif not block.heading_path:
                 block.heading_path = heading_path
             section_blocks.append(block)
-        chunks.extend(self._section_chunks(document.source_name, heading_path, section_blocks, len(chunks)))
+        chunks.extend(
+            self._section_chunks(document.source_name, heading_path, section_blocks, len(chunks))
+        )
         return chunks
 
     def _section_chunks(
@@ -410,7 +568,9 @@ class ParentChildChunker:
             if block.kind.startswith("table") and block_tokens > self.max_tokens:
                 if buffer:
                     output.extend(
-                        self._flush_child(source_name, parent_id, heading_path, buffer, start_index + len(output))
+                        self._flush_child(
+                            source_name, parent_id, heading_path, buffer, start_index + len(output)
+                        )
                     )
                     buffer = []
                     token_count = 0
@@ -427,14 +587,18 @@ class ParentChildChunker:
                 continue
             if buffer and token_count + block_tokens > self.target_tokens:
                 output.extend(
-                    self._flush_child(source_name, parent_id, heading_path, buffer, start_index + len(output))
+                    self._flush_child(
+                        source_name, parent_id, heading_path, buffer, start_index + len(output)
+                    )
                 )
                 buffer = _token_tail_overlap(buffer, self.overlap_tokens)
                 token_count = sum(_estimate_tokens(item.text) for item in buffer)
             if block_tokens > self.max_tokens and not block.kind.startswith("table"):
                 if buffer:
                     output.extend(
-                        self._flush_child(source_name, parent_id, heading_path, buffer, start_index + len(output))
+                        self._flush_child(
+                            source_name, parent_id, heading_path, buffer, start_index + len(output)
+                        )
                     )
                     buffer = []
                     token_count = 0
@@ -462,7 +626,9 @@ class ParentChildChunker:
             buffer.append(block)
             token_count += block_tokens
         output.extend(
-            self._flush_child(source_name, parent_id, heading_path, buffer, start_index + len(output))
+            self._flush_child(
+                source_name, parent_id, heading_path, buffer, start_index + len(output)
+            )
         )
         return output
 
@@ -481,9 +647,13 @@ class ParentChildChunker:
             return []
         prefix = " > ".join(heading_path)
         text = f"{prefix}\n\n{body}" if prefix and prefix not in body[: len(prefix) + 4] else body
-        digest = hashlib.sha256(f"{source_name}:{parent_id}:{index}:{text}".encode()).hexdigest()[:24]
+        digest = hashlib.sha256(f"{source_name}:{parent_id}:{index}:{text}".encode()).hexdigest()[
+            :24
+        ]
         page = blocks[0].page if all(block.page == blocks[0].page for block in blocks) else None
-        locator = blocks[0].locator if len(blocks) == 1 else f"section:{parent_id}:chunk:{index + 1}"
+        locator = (
+            blocks[0].locator if len(blocks) == 1 else f"section:{parent_id}:chunk:{index + 1}"
+        )
         return [
             Chunk(
                 digest,
@@ -662,7 +832,9 @@ def _paddle_payload(
         if kind in {"table", "image", "formula"}:
             assets.append(
                 DocumentAsset(
-                    asset_id=hashlib.sha256((block.locator or block.block_id).encode()).hexdigest()[:24],
+                    asset_id=hashlib.sha256((block.locator or block.block_id).encode()).hexdigest()[
+                        :24
+                    ],
                     asset_type="image" if kind == "image" else kind,
                     location=block.location,
                     extracted_text=text,

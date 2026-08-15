@@ -116,7 +116,7 @@ Results are updated in the root `README.md` after the target copy is verified.
 ```text
 ruff check src tests: all checks passed
 mypy src scripts: success, no issues found in 20 source files
-pytest -q -p no:cacheprovider: 56 passed, 1 Starlette/httpx deprecation warning
+pytest -q -p no:cacheprovider: 65 passed, 1 Starlette/httpx deprecation warning
 pressure/load testing: not performed by design
 ```
 
@@ -127,3 +127,59 @@ pressure/load testing: not performed by design
 - Representative Recall@5, Citation Precision, abstention-rate, and complex-document regression thresholds.
 - Remote Qdrant persistence/index tuning and any cloud parser provider.
 - `tests/test_rag.py::test_retrieval_degrades_when_one_scoring_branch_fails` proves that an isolated Vector scoring failure preserves Lexical/Metadata retrieval and emits a typed degradation warning.
+
+## 2026-08-15 minimal benchmark remediation
+
+This change intentionally keeps the existing 200-page result files immutable and fixes the next-run execution contract:
+
+1. Docling and PaddleOCR backend objects now reuse one initialized converter/pipeline per backend instance and serialize access through an async lock. This removes per-document model construction while preserving an asynchronous API boundary.
+2. A configured cloud parser remains reachable within the three-attempt budget; when all four PDF backends are configured, the final slot is reserved for the explicitly enabled cloud fallback instead of silently truncating it.
+3. Parser `TimeoutError` is recorded as a failed attempt and can continue through the bounded fallback sequence.
+4. SQLite RRF uses bounded branch candidate lists. Lexical and metadata branches exclude zero-score rows, preventing insertion-order rank credit for non-matches.
+5. The benchmark writes the canonical `content_sha256` field and validates it against the complete source-page text hash. Existing reports are historical evidence and are not retroactively changed.
+
+No new runtime dependency was added. Real Docling model loading, OCR, cloud fallback, semantic embedding, learned reranking, and benchmark quality gains remain unverified until the next controlled run.
+
+## 2026-08-15 ten-page failed-PDF smoke evidence
+
+A deterministic smoke set selected one previously failed OmniDocBench page from each of ten strata. With Python UTF-8 mode, a completed Docling model cache, `DOCLING_INFERENCE_COMPILE_TORCH_MODELS=false`, and one reused backend instance, all 10 pages parsed and passed the current structural quality gate. The mean character trigram F1 was only 0.4812, including false acceptances for hard tables and mixed-language notes. The evidence therefore validates parser lifecycle recovery but disproves the assumption that structural acceptance alone establishes extraction fidelity.
+
+Evidence: `eval/基于OmniDocBench和OHR-Bench的RAG基准测试/results/omni_failed_10_smoke_2026-08-15.json`.
+
+## 2026-08-15 minimal PDF content-completeness guard
+
+The same ten-page failed-PDF set was rerun after a bounded safety fix. Parsing remained successful for 10/10 pages, while the deterministic quality gate rejected four sparse visual/table outputs that the baseline had falsely accepted. The gate uses only production-observable signals: indexable characters after removing running artifacts, real page inventory, visual/table assets, and extracted table text. It does not use benchmark ground truth for routing.
+
+Additional protections:
+
+- Docling page and empty-page counts now use the document page inventory instead of only successfully extracted blocks.
+- Windows Docling fails fast before model loading when Python UTF-8 mode is absent.
+- When Docling torch compilation is enabled but MSVC `cl.exe` is unavailable, the backend disables compilation through Docling settings and emits a typed warning.
+- Sparse visual/table output routes to the existing bounded OCR fallback or manual review; no retry or attempt limit changed.
+
+Evidence: `eval/基于OmniDocBench和OHR-Bench的RAG基准测试/results/omni_failed_10_smoke_minimal_fix_2026-08-15.json`.
+
+Residual limitation: two low-F1 pages without a sufficiently strong visual/table sparsity signal remain accepted. Detecting those requires layout-coverage evidence or a challenger parser and is intentionally outside this minimal fix.
+
+
+## Minimal completeness gate verification (2026-08-15)
+
+The minimal fix closes a concrete false-acceptance path without replacing the parser or adding a dependency:
+
+- running headers, footers, and page numbers no longer count toward indexable text coverage;
+- a PDF with visual assets and fewer than 160 indexable characters per page is rejected with `LOW_TEXT_COVERAGE_WITH_VISUAL_ASSETS`;
+- a PDF with a table signal and fewer than 160 extracted table characters is rejected with `SPARSE_TABLE_EXTRACTION`;
+- rejected pages receive `OCR_REQUIRED` and follow the bounded OCR/manual-review route;
+- Docling page inventory, rather than only successfully extracted blocks, determines the page and empty-page counts;
+- Windows Docling startup fails fast without UTF-8 mode and disables optional Torch compilation when MSVC `cl.exe` is unavailable.
+
+Verification evidence:
+
+```text
+pytest: 65 passed, 1 upstream deprecation warning
+ruff: all checks passed for src, main.py, tests, scripts, and benchmark scripts
+mypy: success, no issues found in 20 source files
+pressure/load test: not performed
+```
+
+The frozen same-set regression is `eval/基于OmniDocBench和OHR-Bench的RAG基准测试/results/omni_failed_10_smoke_minimal_fix_2026-08-15.json`. All 10 pages still parsed, while the gate rejected `omni-031`, `omni-016`, `omni-021`, and `omni-036`. Mean character trigram F1 remained 0.4812, so this change is evidence of safer acceptance behavior, not improved extraction fidelity.

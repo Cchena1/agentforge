@@ -12,7 +12,7 @@ from agent_service.embeddings import HashEmbedding
 from agent_service.rag import RAGService
 from agent_service.rag_registry import SQLiteVersionRegistry
 from agent_service.schemas import DocumentIngestRequest
-from agent_service.vector_store import SQLiteVectorStore, VectorDocument
+from agent_service.vector_store import SQLiteVectorStore, VectorDocument, _rank_scores
 
 
 class FailingUpsertStore(SQLiteVectorStore):
@@ -804,9 +804,7 @@ async def test_acl_version_identity_uses_unambiguous_canonical_encoding(tmp_path
 
 
 @pytest.mark.asyncio
-async def test_retrieval_degrades_when_one_scoring_branch_fails(
-    tmp_path, monkeypatch
-) -> None:
+async def test_retrieval_degrades_when_one_scoring_branch_fails(tmp_path, monkeypatch) -> None:
     import agent_service.vector_store as vector_store_module
 
     rag = build_rag(tmp_path)
@@ -824,3 +822,11 @@ async def test_retrieval_degrades_when_one_scoring_branch_fails(
     assert response.hits
     assert response.degraded_retrieval is True
     assert "degraded_retrieval:vector:ValueError" in response.warnings
+
+
+def test_rrf_rank_filters_zero_score_candidates_and_respects_limit() -> None:
+    scores = {"strong": 3.0, "weak": 1.0, "zero-a": 0.0, "zero-b": 0.0}
+
+    ranks = _rank_scores(scores, limit=1, positive_only=True)
+
+    assert ranks == {"strong": 1}

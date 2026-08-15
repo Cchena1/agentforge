@@ -3,8 +3,8 @@
   "generated_on": "2026-08-15",
   "hash_algorithm": "sha256",
   "manifest_self_excluded": true,
-  "file_count": 19,
-  "total_bytes_excluding_manifest": 736936,
+  "file_count": 22,
+  "total_bytes_excluding_manifest": 785666,
   "files": [
     {
       "path": ".gitignore",
@@ -32,14 +32,14 @@
     },
     {
       "path": "README.md",
-      "bytes": 5086,
-      "sha256": "5db86699416a86dad095be405a2502c1e6c31d81089b4271a2a1d235f786c141",
+      "bytes": 8234,
+      "sha256": "851ac03fe5dba2a6d5d360d931ce2a8a154b7fe6448515b994b65f8562b72750",
       "role": "benchmark entry point"
     },
     {
       "path": "report.md",
-      "bytes": 24116,
-      "sha256": "e307241dc37b727da912579aee67d093e233d8471fd4aaea03b2112a824caafd",
+      "bytes": 34249,
+      "sha256": "4255ea5014fa0786092f5bedd3c1722c60d1c50e61e578d7a401fcdc9b4db593",
       "role": "formal benchmark report"
     },
     {
@@ -73,6 +73,18 @@
       "role": "retrieval aggregate evidence"
     },
     {
+      "path": "results/omni_failed_10_smoke_2026-08-15.json",
+      "bytes": 7946,
+      "sha256": "6f69732aa843e9536b93ac6c270fa1da9f921a17ec07b9204673de128f455421",
+      "role": "ten-page failed-PDF smoke evidence"
+    },
+    {
+      "path": "results/omni_failed_10_smoke_minimal_fix_2026-08-15.json",
+      "bytes": 8707,
+      "sha256": "1c62b500a9c29282625ef434028a6977f31e6f032af442542f636bad59658688",
+      "role": "ten-page minimal-fix regression evidence"
+    },
+    {
       "path": "results/omni_parser_failures_sanitized.json",
       "bytes": 12695,
       "sha256": "f7f48bfd7e74e61e993118afbf7e1d17b8d5cc0fd656a44cdbf0cefc24be1afd",
@@ -98,14 +110,14 @@
     },
     {
       "path": "scripts/adversarial_audit.py",
-      "bytes": 6247,
-      "sha256": "4e9e2b76b5cb4942766a37c963cbf66bcd04b3171982a3b6c93f47f59bf62158",
+      "bytes": 13935,
+      "sha256": "6bbdba132edb860401c7a587348aa7d0906bf50354acaffe2de0a43ea4483c60",
       "role": "adversarial evidence audit"
     },
     {
       "path": "scripts/generate_evidence_manifest.py",
-      "bytes": 2678,
-      "sha256": "30c6edec352b15c913c2d74812732d22b6589592b2499db1d0c78a56594e372d",
+      "bytes": 3026,
+      "sha256": "33c3f60e1c58355aabc492ff5f049d088ae792a7944409eefb79879ca99ee4d4",
       "role": "evidence hash manifest generator"
     },
     {
@@ -116,9 +128,15 @@
     },
     {
       "path": "scripts/run_benchmark.py",
-      "bytes": 13348,
-      "sha256": "c0ffc725ea52c92ed122e8836500b65854c936ab935643749a4b870689b3333d",
+      "bytes": 14323,
+      "sha256": "bfa7a37038959a30d1cee70a4dab5990529ee94ed82a46c6784bdd1405d8e45c",
       "role": "benchmark runner"
+    },
+    {
+      "path": "scripts/run_failed_pdf_smoke.py",
+      "bytes": 9785,
+      "sha256": "86942126b3ec9e3b1f24068dfef13f6527e1d8d3ec531312fd28d9ceb3fe6f9f",
+      "role": "failed-PDF smoke regression runner"
     }
   ]
 }

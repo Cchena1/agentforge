@@ -439,3 +439,148 @@ Benchmark 完成后，对当前仓库执行了完整工程校验：
 4. [OHR-Bench — Hugging Face Dataset](https://huggingface.co/datasets/opendatalab/OHR-Bench)
 5. [OHR-Bench Paper — arXiv:2412.02592](https://arxiv.org/abs/2412.02592)
 6. [Docling — Official GitHub Repository](https://github.com/docling-project/docling)
+
+---
+
+## 15. 失败 PDF 的 10 页小型复测（2026-08-15）
+
+### 15.1 结论先行
+
+从上一轮 50 个失败的 OmniDocBench 页面中，按 10 个 Stratum 各选取 1 页，共复测 10 页。修正 Windows UTF-8 运行模式、补齐 Docling 模型缓存，并使用 Docling 官方配置关闭 `torch.compile` 后，**10 页均完成解析且通过当前结构质量门控**。
+
+但该结果不能解释为复杂 PDF 解析质量已经达标：平均字符 Trigram F1 只有 **0.4812**，其中 6/10 页面低于 0.5，`english_table_hard` 和 `mixed_language_notes` 接近完全漏提取。这表明当前 `ParseQualityEvaluator` 更擅长判断“输出结构是否存在”，不能充分判断“提取内容是否忠实于原页”。
+
+```mermaid
+flowchart LR
+    A["上一轮 50 页全部失败"] --> B["每个 Stratum 选 1 页，共 10 页"]
+    B --> C["Python -X utf8"]
+    C --> D["模型缓存 Preflight"]
+    D --> E["关闭 torch.compile"]
+    E --> F["复用单个 Docling Backend"]
+    F --> G["10/10 可解析"]
+    G --> H["内容 F1 均值 0.4812"]
+    H --> I["结构门控仍需内容完整性指标"]
+```
+
+### 15.2 确定性选样
+
+选择规则为：在上一轮失败清单中，对每个 Stratum 按 `sample_id` 排序并选取首个样本。这样可以覆盖全部 10 类复杂版面，同时避免人为挑选容易成功的页面。
+
+| Sample | Stratum | 上轮失败 | 本轮解析 | Quality Score | Trigram F1 | 字符比例 | 耗时 |
+|---|---|---|---|---:|---:|---:|---:|
+| omni-006 | chinese_newspaper_complex_layout | GBK decode | 成功 | 0.994 | 0.876 | 1.167 | 165.7 s |
+| omni-031 | chinese_ppt_color_background | GBK decode | 成功 | 1.000 | 0.285 | 0.181 | 28.9 s |
+| omni-016 | chinese_table_hard | GBK decode | 成功 | 1.000 | 0.220 | 0.128 | 24.3 s |
+| omni-001 | english_academic_double_column | Cold-start timeout | 成功 | 1.000 | 0.978 | 0.973 | 23.7 s |
+| omni-026 | english_academic_equation_hard | GBK decode | 成功 | 1.000 | 0.487 | 0.394 | 19.2 s |
+| omni-046 | english_book_equation_hard | GBK decode | 成功 | 1.000 | 0.224 | 0.161 | 18.7 s |
+| omni-041 | english_exam_multicolumn | GBK decode | 成功 | 1.000 | 0.797 | 0.768 | 25.1 s |
+| omni-011 | english_newspaper_three_column | GBK decode | 成功 | 0.905 | 0.924 | 1.093 | 42.6 s |
+| omni-021 | english_table_hard | GBK decode | 成功 | 1.000 | 0.021 | 0.013 | 55.8 s |
+| omni-036 | mixed_language_notes | GBK decode | 成功 | 1.000 | 0.000 | 0.017 | 10.0 s |
+
+汇总结果：
+
+| 指标 | 结果 |
+|---|---:|
+| 复测页数 | 10 |
+| 上轮失败页数 | 10 |
+| 本轮完成解析 | 10 |
+| 当前质量门控接受 | 10 |
+| PDF Hash 与 Manifest 一致 | 10/10 |
+| 平均 Quality Score | 0.9900 |
+| 平均字符 Trigram F1 | 0.4812 |
+| 中位单页耗时 | 24.7 s |
+| P95 单页耗时 | 165.7 s |
+
+本轮只记录单请求阶段耗时用于定位 Cold Start，不属于并发、吞吐或负载压测。
+
+### 15.3 根因链路
+
+复测前的逐步诊断发现三个独立环境问题：
+
+1. Windows 默认 GBK 编码导致 Docling Layout Model 配置读取失败；使用 `python -X utf8` 后越过该故障。
+2. UTF-8 修正后暴露出模型 Artifact 不完整；在正式计时前执行一次联网模型缓存 Preflight。
+3. 模型补齐后，Docling 默认 `torch.compile` 在 CPU Windows 环境尝试调用不存在的 MSVC `cl.exe`；使用官方环境配置 `DOCLING_INFERENCE_COMPILE_TORCH_MODELS=false` 后正常推理。
+
+这三个问题说明，Parser “代码可导入”不等于“运行环境可用”。生产启动前需要增加 Parser Artifact、编码模式和推理后端 Preflight，而不是把首次真实请求当成初始化流程。
+
+### 15.4 对抗性审阅
+
+- **正向证据**：10 个页面均来自原失败清单；10 个 PDF Hash 均与原 Manifest 一致；共享 Backend 的 Warm Run 从 165.7 秒下降到多数 10–56 秒区间。
+- **反向证据**：当前质量门控对 `english_table_hard` 给出 1.000，但其 Trigram F1 仅 0.021；对 `mixed_language_notes` 给出 1.000，但其 F1 为 0。这是明确的 False Acceptance。
+- **边界**：样本量只有 10 页；没有重跑全部 50 页；没有测试 PaddleOCR、Cloud Fallback、GPU 或并发吞吐；不能据此宣称 OmniDocBench 总体通过。
+- **下一最小修复**：在不依赖 Ground Truth 的线上质量门控中增加文本覆盖、OCR 字符密度、图像面积与文本面积比、表格单元格覆盖和异常短输出检测；Ground Truth F1 只用于离线 Benchmark，不进入生产路由。
+
+机器可读结果见 [`results/omni_failed_10_smoke_2026-08-15.json`](results/omni_failed_10_smoke_2026-08-15.json)，可复用脚本见 [`scripts/run_failed_pdf_smoke.py`](scripts/run_failed_pdf_smoke.py)。
+
+---
+
+## 16. 最小内容完整性门控修复后的同集复测（2026-08-15）
+
+### 16.1 修复边界
+
+本轮没有新增 Parser、OCR 依赖或模型，也没有扩大 Benchmark 页数。最小修复只处理上一轮证据已经证明的 False Acceptance：带视觉或表格 Asset 的 PDF 只提取出极少文本，却仍获得接近 1.0 的结构质量分数。
+
+线上门控不使用 Ground Truth，而是使用可在生产环境确定性获得的信号：
+
+1. 排除 `running_header`、`running_footer` 和 `page_number` 后的可索引字符数。
+2. 文档真实 Page Inventory、空页数和平均每页字符数。
+3. Image、Table、Chart、Formula Asset 数量。
+4. Table Block 与 Table Asset 中的有效文本字符数。
+
+默认阈值为：带视觉 Asset 的 PDF 平均每页少于 160 个可索引字符，或存在表格但表格文本少于 160 字符时，不允许直接进入索引。
+
+```mermaid
+flowchart LR
+    A["Docling ParsedDocument"] --> B["排除页眉 / 页脚 / 页码"]
+    B --> C["计算 chars/page 与 table chars"]
+    C --> D{"视觉或表格证据是否稀疏"}
+    D -->|否| E["继续原质量门控"]
+    D -->|是| F["LOW_TEXT_COVERAGE / SPARSE_TABLE"]
+    F --> G["OCR_REQUIRED"]
+    G --> H["PaddleOCR Fallback 或 needs_review"]
+```
+
+### 16.2 同一 10 页修复前后结果
+
+| 指标 | 修复前 | 修复后 | 解释 |
+|---|---:|---:|---|
+| Parser 完成解析 | 10/10 | 10/10 | Parser 生命周期修复未回退 |
+| 质量门控接受 | 10/10 | 6/10 | 4 个高风险页面不再静默入库 |
+| 内容门控拒绝 | 0 | 4 | 进入 OCR Fallback 或人工复核 |
+| 平均字符 Trigram F1 | 0.4812 | 0.4812 | 本轮未改变 Parser 输出，只改变是否信任 |
+| PDF Hash 一致 | 10/10 | 10/10 | 前后使用完全相同页面 |
+| 并发或压力测试 | 未执行 | 未执行 | 仅单 Backend 串行功能回归 |
+
+被新增门控拒绝的页面：
+
+| Sample | Stratum | Trigram F1 | 修复后 Issue |
+|---|---|---:|---|
+| omni-031 | chinese_ppt_color_background | 0.285 | `LOW_TEXT_COVERAGE_WITH_VISUAL_ASSETS`、`SPARSE_TABLE_EXTRACTION`、`OCR_REQUIRED` |
+| omni-016 | chinese_table_hard | 0.220 | `LOW_TEXT_COVERAGE_WITH_VISUAL_ASSETS`、`SPARSE_TABLE_EXTRACTION`、`OCR_REQUIRED` |
+| omni-021 | english_table_hard | 0.021 | `LOW_TEXT_COVERAGE_WITH_VISUAL_ASSETS`、`SPARSE_TABLE_EXTRACTION`、`OCR_REQUIRED` |
+| omni-036 | mixed_language_notes | 0.000 | `LOW_TEXT_COVERAGE_WITH_VISUAL_ASSETS`、`OCR_REQUIRED` |
+
+### 16.3 对抗性审阅
+
+- **已解决**：`omni-021` 和 `omni-036` 这类近空输出不再因结构存在而获得接受；页眉、页脚和页码不能再虚增字符覆盖。
+- **没有伪造提升**：Parser 原始输出和平均 F1 没有改变。本轮只修复“是否信任并索引”的决策，不宣称解析能力提高。
+- **仍然漏检**：`omni-046` 的 F1 为 0.224，但没有可用视觉 Asset 信号且输出 481 字符，仍被接受；`omni-026` 的 F1 为 0.487，也仍被接受。仅凭线上可观测信号继续提高召回需要更强的 Layout Coverage 或第二 Parser 对照，超出本次最小修复范围。
+- **阈值风险**：短 Caption 或以图片为主要证据的合法页面可能被保守拒绝。但对于 Evidence-first RAG，无法提取图片主要内容时进入 OCR 或人工复核优于静默索引不完整内容。
+- **运行保护**：Windows 未启用 UTF-8 时 Docling 在加载模型前快速失败并给出启动命令；缺少 MSVC `cl.exe` 时通过 Docling Settings 关闭 `torch.compile`，避免把首次请求变成编译器故障诊断。
+
+修复后机器可读证据见 [`results/omni_failed_10_smoke_minimal_fix_2026-08-15.json`](results/omni_failed_10_smoke_minimal_fix_2026-08-15.json)。旧结果保持不变，作为修复前 Baseline。
+
+
+### 16.4 本轮工程验证
+
+| 检查 | 命令范围 | 结果 |
+|---|---|---:|
+| Unit/Integration Tests | `pytest -q --basetemp <writable-path> -p no:cacheprovider` | **65 passed，1 条上游弃用警告** |
+| Ruff | `ruff check src main.py tests scripts eval/<benchmark>/scripts` | **All checks passed** |
+| Mypy | `mypy src scripts` | **20 个 Python 文件，0 issues** |
+| 10 页证据审计 | 同样本、同 Hash、同 Trigram F1、固定拒绝集合与汇总指标重算 | **通过** |
+| 压力/吞吐测试 | 不在本轮范围内 | **未执行** |
+
+本轮没有把 `quality_acceptance_rate=0.6` 描述为 Parser 成功率下降。Parser 成功率仍为 1.0；接受率下降来自安全门控主动拒绝内容证据不完整的页面。`omni-046`（F1 约 0.224）仍被接受，说明无 Asset 信号的短文本页面仍存在残余 False Acceptance 风险，需要后续引入跨解析器一致性或更强的 OCR/Layout 信号，而不是继续盲目提高单一长度阈值。

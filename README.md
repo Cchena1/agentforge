@@ -4,7 +4,7 @@
 
 AgentForge 将早期单文件 Demo 重构为模块化、可验证、可降级的 Agent 工程基线。项目重点不是展示一段 Prompt，而是解决真实 Agent 系统中更容易失控的部分：数据契约、状态所有权、异步并发、工具依赖、失败恢复、上下文隔离、RAG 生命周期、租户权限、引用溯源和兼容迁移。
 
-> **最近一次验收：2026 年 8 月 14 日。** Ruff 检查通过；mypy 对 20 个 Python 文件检查通过（19 个服务源文件 + 1 个离线评估脚本）；pytest 共 56 项测试通过。RAG 测试覆盖版本生命周期、迁移、故障注入、Tenant/ACL 隔离、兼容性和并发语义。按照项目范围约定，**未进行压力测试、吞吐量测试或持续负载测试**。
+> **最近一次验收：2026 年 8 月 15 日。** Ruff 全仓检查通过；mypy 对 20 个 Python 文件检查通过；pytest 共 65 项测试通过并保留 1 条 Starlette/httpx 弃用警告。真实 Docling 10 页同集复测保持 10/10 解析成功，内容完整性门控仅接受 6/10，并将 4 个高风险页面确定性路由到 OCR/人工复核。按照项目范围约定，**未进行压力测试、吞吐量测试或持续负载测试**。
 
 ## 项目价值
 
@@ -265,6 +265,23 @@ stateDiagram-v2
 
 Parser 路由完全由代码和确定性质量指标控制，不允许 LLM 自行决定。单文档最多 3 次 Attempt；PaddleOCR 与 Cloud Fallback 默认关闭。每次 Attempt 记录 Parser、耗时、状态、质量分数、Warning 和 Failure Code；最终不合格时进入 `needs_review`，不会激活低质量索引。
 
+最小内容完整性门控还会执行以下检查：
+
+- 页眉、页脚和页码不计入可索引字符覆盖率。
+- PDF 含图片、表格、Chart 或 Formula Asset，但平均每页可索引字符少于 160 时，标记 `LOW_TEXT_COVERAGE_WITH_VISUAL_ASSETS`。
+- PDF 存在表格结构，但表格提取文本少于 160 字符时，标记 `SPARSE_TABLE_EXTRACTION`。
+- 上述问题不会被高结构分数掩盖：输出被拒绝并进入 OCR Fallback；未启用可用 Fallback 时进入人工复核。
+- Docling 使用文档 Page Inventory 计算真实页数和空页，不再只根据已成功提取的 Block 推断页数。
+
+Windows 使用真实 Docling Backend 时必须在进程启动前启用 UTF-8：
+
+```powershell
+uv run python -X utf8 -m uvicorn main:app --reload --host 127.0.0.1 --port 8000
+```
+
+若 Docling 请求 `torch.compile` 但系统找不到 MSVC `cl.exe`，Backend 会通过 Docling 官方 Settings 关闭 Torch 编译，并记录 `DOCLING_TORCH_COMPILE_DISABLED_NO_MSVC` Warning。该保护只影响编译优化，不改变 Parser 路由和最大 Attempt 数。
+
+
 ### Canonical Model 与 Token-aware Parent-Child Chunking
 
 - `ParsedDocument` 保存 Blocks、Assets、Relationships、Provenance、Attempts 和 Quality Report；Canonical/index metadata 显式携带 `document_schema_version=1`，并参与 Pipeline Profile 和不可变 Version ID 计算，后续不兼容版本必须重建后原子切换，禁止猜测式原地转换。
@@ -521,7 +538,7 @@ node --check server.js
 ```text
 Ruff:  all checks passed
 mypy:  success, no issues in 20 source files
-pytest: 56 passed, 1 warning
+pytest: 65 passed, 1 warning
 RAG evaluator: 2 schema-valid example queries; no quality claim
 Node:  public/app.js 与 server.js syntax check 通过
 PowerShell: run.ps1 解析通过
@@ -573,10 +590,10 @@ PowerShell: run.ps1 解析通过
 
 ### Result
 
-将原始 Demo 重构为模块化 AgentForge 服务；核心服务拆分为 19 个类型检查源文件，并对 1 个离线评估脚本执行同级检查；建立 56 项自动化测试，覆盖正常路径、失败恢复、并发语义、RAG 迁移和 Tenant/ACL 隔离；最近一次验收中 Ruff、mypy strict、pytest 和 JavaScript syntax check 均通过。项目不虚构压力测试和生产检索质量数据，明确记录当前证据边界。
+将原始 Demo 重构为模块化 AgentForge 服务；核心服务拆分为 19 个类型检查源文件，并对 1 个离线评估脚本执行同级检查；建立 65 项自动化测试，覆盖正常路径、失败恢复、并发语义、RAG 迁移和 Tenant/ACL 隔离；最近一次验收中 Ruff、mypy strict、pytest 和 JavaScript syntax check 均通过。项目不虚构压力测试和生产检索质量数据，明确记录当前证据边界。
 
 ## 评估范围与已知限制
-> 文档 RAG 验证边界：当前 56 项自动化测试覆盖路由、Attempt 上限、结构切片、异步 Job、版本一致性、ACL 与 Citation Schema；当前环境尚未安装 Docling/PaddleOCR 可选运行时，因此未声明真实复杂 PDF/DOCX/OCR 的 Recall@5 或 Citation Precision 指标。未进行任何压力测试。
+> 文档 RAG 验证边界：当前 65 项自动化测试覆盖路由、Attempt 上限、结构切片、异步 Job、版本一致性、ACL、Citation Schema 与内容完整性门控。真实 Docling 10 页回归的解析成功率为 1.0，质量门控接受率为 0.6，平均字符 Trigram F1 为 0.4812；该小样本只证明 False Acceptance 得到收紧，不代表生产级 Recall 或复杂文档解析质量。PaddleOCR Fallback、真实复杂 DOCX 和 Cloud Fallback 尚未完成实文档验证。未进行任何压力测试。
 
 
 1. **未进行压力测试。** 当前并发测试只验证并发语义和时间重叠，不声明吞吐量、饱和点、p95/p99 Latency 或长时间稳定性。
