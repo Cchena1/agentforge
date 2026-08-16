@@ -1,0 +1,40 @@
+﻿rule_files:
+  - alert_rules.yml
+
+evaluation_interval: 1m
+
+tests:
+  - interval: 1m
+    input_series:
+      - series: 'agentforge_rag_operations_total{operation="retrieve",outcome="success",degraded="true"}'
+        values: '0 0 1 2 3 3 3'
+    alert_rule_test:
+      - eval_time: 5m
+        alertname: AgentForgeDegradedRetrieval
+        exp_alerts:
+          - exp_labels:
+              severity: warning
+              operation: retrieve
+              outcome: success
+              degraded: "true"
+            exp_annotations:
+              summary: RAG retrieval is repeatedly degraded
+              description: At least three retrievals used a degraded branch in fifteen minutes.
+      - eval_time: 20m
+        alertname: AgentForgeDegradedRetrieval
+        exp_alerts: []
+
+  - interval: 1m
+    input_series:
+      - series: 'agentforge_ingestion_transitions_total{status="failed"}'
+        values: '0 0 1 1 1'
+    alert_rule_test:
+      - eval_time: 3m
+        alertname: AgentForgeIngestionFailure
+        exp_alerts:
+          - exp_labels:
+              severity: warning
+              status: failed
+            exp_annotations:
+              summary: RAG ingestion needs intervention
+              description: An ingestion job failed or entered needs_review.

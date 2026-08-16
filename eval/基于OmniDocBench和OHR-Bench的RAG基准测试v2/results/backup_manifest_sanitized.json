@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "backup_id": "afb_20260815T183616Z_86964bda",
+  "app_version": "0.3.0",
+  "vector_backend": "sqlite",
+  "files": [
+    {
+      "relative_path": "data/memory.sqlite3",
+      "sha256": "46d1668c4c14591dd991d49a2fdea16eec6e6fd149bd54dba7dd2407d327cecc",
+      "size_bytes": 36864,
+      "kind": "sqlite"
+    },
+    {
+      "relative_path": "data/rag.sqlite3",
+      "sha256": "f75a4e615dd7e7caddad8530cb2566e5513c2443f295e1833dd0002a1b29a673",
+      "size_bytes": 4161536,
+      "kind": "sqlite"
+    },
+    {
+      "relative_path": "data/rag_ingestion_jobs.sqlite3",
+      "sha256": "2416d8de87d3ecec73fc41fa2ccc7b36db3c90a9044894d965dc525970c99694",
+      "size_bytes": 16384,
+      "kind": "sqlite"
+    },
+    {
+      "relative_path": "data/rag_registry.sqlite3",
+      "sha256": "26042f55ca6bf949ef183b697dd6154a292ffb3d8db4b04d5514bdc2c663fe65",
+      "size_bytes": 339968,
+      "kind": "sqlite"
+    }
+  ]
+}

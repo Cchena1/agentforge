@@ -232,7 +232,7 @@ The current baseline:
 6. deduplicates results;
 7. returns structured citations and `index_versions`.
 
-The default reranker is not a learned cross-encoder. Sparse vectors, query rewriting, HyDE, corrective retrieval, graph retrieval, late interaction, and learned reranking remain optional profiles until a labeled dataset proves a gain.
+The default reranker is not a learned cross-encoder. Sparse vectors, LLM-based query rewriting, HyDE, graph retrieval, late interaction, and learned reranking remain optional profiles until a labeled dataset proves a gain.
 
 Generated answers must not cite arbitrary free-form identifiers. Citation integrity requires retrieval-produced source/chunk identities. Claim-level citation verification is a planned hardening phase, not yet complete.
 
@@ -295,7 +295,8 @@ Architectural rationale and rejected alternatives are recorded in `docs/adr-006-
 - `document_models.py` owns parser-neutral blocks, assets, attempts, quality reports, locations, and parent-child chunks.
 - `document_pipeline.py` owns parser adapters, deterministic quality routing, repeating page-artifact classification, and token-aware chunking.
 - `ingestion_jobs.py` owns durable asynchronous job state and restart recovery.
-- `rag.py` owns content identity, immutable candidate versions, embedding/index stages, active-version validation, and bounded corrective retrieval.
+- `query_planning.py` owns deterministic query normalization, explicit decomposition, and protected-anchor drift checks.
+- `rag.py` owns content identity, immutable candidate versions, embedding/index stages, active-version validation, evidence gating, bounded query execution, and cross-query RRF.
 - `vector_store.py` owns authorization-filtered Vector/Lexical/Metadata scoring, RRF fusion, deterministic reranking, and code-generated citations.
 
 ### Dependency graph
@@ -317,13 +318,34 @@ flowchart LR
 
 The parser returns exactly one authoritative `ParsedDocument`; downstream modules never merge competing parser bodies. Job state, index state, and active-version state remain separately owned.
 
+### Query planning and retrieval correction
+
+```mermaid
+flowchart LR
+    Q["Original query"] --> P["Typed deterministic QueryPlan"]
+    P --> O["Original search"]
+    P --> S["Explicit subqueries"]
+    O --> E["Evidence gate"]
+    E -->|"low confidence"| N["Normalized fallback"]
+    E -->|"sufficient"| F["Cross-query RRF"]
+    S --> T["TaskGroup + Semaphore + timeout"]
+    N --> T
+    T --> F
+    F --> V["Citation verification"]
+```
+
+The original query is authoritative and is never replaced. Only explicit `?`, `;`, or newline boundaries outside quoted phrases create subqueries. Versions, numbers/units, quoted phrases, acronyms, identifiers, and negation are protected anchors. Normalized fallback runs only when the original evidence gate is not satisfied. For explicit compound questions, the original query and subqueries run concurrently; ordinary questions run the original first and trigger normalized fallback only when the evidence gate fails. All branches use bounded fan-out and per-branch timeout, and failures retain any verified evidence. End-to-end `latency_ms` is wall-clock latency, not the sum of parallel branch durations.
+
+
 ### Bounded failure policy
 
 | Boundary | Maximum | Terminal behavior |
 |---|---:|---|
 | Parser attempts | 3/document | `needs_review` |
 | OCR route | disabled by default | no silent OCR claim |
-| Corrective retrieval | 2 additional queries | return verified evidence only |
+| Query plan | 1 original + at most 2 additional queries | preserve original intent and protected anchors |
+| Query branch | configured timeout, default 10 s | keep verified branches and mark degraded retrieval |
+| Query concurrency | configured, default 2 | bounded `TaskGroup` execution; no unbounded fan-out |
 | Structured model repair | 1 repair after initial response | reject invalid output |
 | Agent steps | configured, default 8 | handoff/degraded response |
 | Repeated tool signature | configured, default 2 | stop loop |
@@ -331,3 +353,31 @@ The parser returns exactly one authoritative `ParsedDocument`; downstream module
 ### Verification boundary
 
 The local suite validates routing, attempt bounds, table/header chunking, strict location schemas, asynchronous job completion, deprecation headers, immutable activation, and tenant/ACL filtering. It does not validate Docling/PaddleOCR extraction quality on a representative production corpus and does not perform load testing.
+
+## Operations observability and recovery ownership
+
+```mermaid
+stateDiagram-v2
+    [*] --> Running
+    Running --> Alerting: SLI / exporter / backup freshness violation
+    Alerting --> Quiescing: operator follows runbook
+    Quiescing --> BackingUp: service releases state lock
+    BackingUp --> Verifying: atomic backup directory published
+    Verifying --> RestoreDrill: hashes and SQLite integrity pass
+    Verifying --> Rejected: any validation fails
+    RestoreDrill --> Validating: isolated service starts
+    Validating --> Promoted: state counts and retrieval signatures match
+    Validating --> Rejected: mismatch or startup failure
+    Promoted --> Running
+    Rejected --> Alerting
+```
+
+State ownership is explicit:
+
+- `Observability` owns the per-process Prometheus registry, TracerProvider and exporters.
+- `Services` owns the state-directory lock while the application is live.
+- `BackupManager` owns manifest creation, verification and isolated restore; it never activates an index version through the RAG service.
+- Deployment owns Prometheus retention, Alertmanager receivers, off-host backup copies, RTO/RPO and promotion of a restored directory.
+- Metric labels are bounded operational dimensions; tenant, query, source, user and trace identifiers remain in neither labels nor content-free span attributes.
+
+The default SQLite path has an executable closure. The Qdrant path deliberately fails closed until collection snapshots are bound to the application manifest. See `docs/adr-010-observability-backup-recovery.md` and `docs/operations.md`.

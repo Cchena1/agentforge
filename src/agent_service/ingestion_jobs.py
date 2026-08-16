@@ -11,6 +11,7 @@ from pathlib import Path
 import aiosqlite
 
 from .document_pipeline import DocumentNeedsReviewError
+from .observability import Observability
 from .rag import RAGService
 from .schemas import (
     DocumentIngestRequest,
@@ -32,7 +33,8 @@ _TERMINAL = {
 class IngestionJobManager:
     """Durable local job registry with bounded task ownership and restart recovery."""
 
-    def __init__(self, db_path: Path, rag: RAGService, max_parallel: int = 2) -> None:
+    def __init__(self, db_path: Path, rag: RAGService, max_parallel: int = 2,
+                 observability: Observability | None = None) -> None:
         if max_parallel < 1:
             raise ValueError("max_parallel must be positive")
         self.db_path = db_path
@@ -41,6 +43,7 @@ class IngestionJobManager:
         self._tasks: dict[str, asyncio.Task[None]] = {}
         self._initialized = False
         self._init_lock = asyncio.Lock()
+        self.observability = observability
 
     async def initialize(self) -> None:
         if self._initialized:
@@ -190,6 +193,8 @@ class IngestionJobManager:
 
     async def _complete(self, job_id: str, result: DocumentIngestResponse) -> None:
         now = datetime.now(UTC).isoformat()
+        if self.observability is not None:
+            self.observability.record_ingestion_transition(IngestionJobStatus.COMPLETED.value)
         async with aiosqlite.connect(self.db_path) as db:
             await db.execute(
                 """
@@ -223,6 +228,8 @@ class IngestionJobManager:
         error: str | None = None,
     ) -> None:
         now = datetime.now(UTC).isoformat()
+        if self.observability is not None:
+            self.observability.record_ingestion_transition(status.value)
         async with aiosqlite.connect(self.db_path) as db:
             await db.execute(
                 """

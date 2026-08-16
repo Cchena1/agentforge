@@ -1,0 +1,76 @@
+﻿groups:
+  - name: agentforge-service
+    rules:
+      - alert: AgentForgeTargetDown
+        expr: up{job="agentforge"} == 0
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: AgentForge metrics target is unavailable
+          description: Prometheus has been unable to scrape AgentForge for two minutes.
+
+      - alert: AgentForgeHighHttp5xxRatio
+        expr: |
+          sum(rate(agentforge_http_requests_total{status=~"5.."}[5m]))
+          /
+          clamp_min(sum(rate(agentforge_http_requests_total[5m])), 0.001)
+          > 0.05
+          and
+          sum(rate(agentforge_http_requests_total[5m])) > 0.05
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: AgentForge HTTP 5xx ratio is elevated
+          description: More than 5 percent of requests failed for ten minutes.
+
+      - alert: AgentForgeDegradedRetrieval
+        expr: increase(agentforge_rag_operations_total{operation="retrieve",degraded="true"}[15m]) >= 3
+        labels:
+          severity: warning
+        annotations:
+          summary: RAG retrieval is repeatedly degraded
+          description: At least three retrievals used a degraded branch in fifteen minutes.
+
+      - alert: AgentForgeIngestionFailure
+        expr: increase(agentforge_ingestion_transitions_total{status=~"failed|needs_review"}[15m]) > 0
+        labels:
+          severity: warning
+        annotations:
+          summary: RAG ingestion needs intervention
+          description: An ingestion job failed or entered needs_review.
+
+      - alert: AgentForgeBackupNeverSucceeded
+        expr: absent(agentforge_backup_last_success_unixtime)
+        for: 30m
+        labels:
+          severity: warning
+        annotations:
+          summary: No verified backup has been observed
+          description: Run the offline backup command and restart the service to load backup status.
+
+      - alert: AgentForgeBackupStale
+        expr: time() - agentforge_backup_last_success_unixtime > 86400
+        for: 30m
+        labels:
+          severity: warning
+        annotations:
+          summary: The last verified AgentForge backup is stale
+          description: No successful verified backup has been recorded for more than 24 hours.
+
+      - alert: AgentForgeRestoreVerificationFailed
+        expr: increase(agentforge_restore_verifications_total{outcome="failure"}[1h]) > 0
+        labels:
+          severity: critical
+        annotations:
+          summary: AgentForge restore verification failed
+          description: Do not promote the restored state; inspect hashes and SQLite integrity output.
+
+      - alert: AgentForgeTraceExportFailure
+        expr: increase(agentforge_trace_export_failures_total[15m]) > 0
+        labels:
+          severity: warning
+        annotations:
+          summary: AgentForge trace export failed
+          description: Local JSONL or OTLP trace export reported a failure.

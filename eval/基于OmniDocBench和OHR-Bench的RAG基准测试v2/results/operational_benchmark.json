@@ -1,0 +1,148 @@
+{
+  "schema_version": 1,
+  "benchmark_name": "OmniDocBench + OHR-Bench RAG Benchmark v2 - Observability and Disaster Recovery",
+  "started_at": "2026-08-15T18:35:44.849353+00:00",
+  "completed_at": "2026-08-15T18:36:26.006258+00:00",
+  "test_node": {
+    "node_id": "local-node-1",
+    "physical_nodes_used": 1,
+    "additional_test_machine_permitted": true,
+    "python": "3.12.13",
+    "platform": "Windows-10-10.0.19045-SP0"
+  },
+  "page_budget": {
+    "total_unique_pdf_pages": 200,
+    "OmniDocBench": 50,
+    "OHR-Bench": 150,
+    "within_budget": true
+  },
+  "scope": {
+    "mode": "sequential functional and recovery correctness; no pressure test",
+    "input_layer": "canonical ground-truth text derived from the fixed 200 PDF pages",
+    "pdf_parser_quality_retested": false
+  },
+  "ingestion": {
+    "pages_ingested": 200,
+    "chunks_created": 582,
+    "idempotent_responses": 0,
+    "parser_counts": {
+      "builtin-text": 200
+    }
+  },
+  "baseline_retrieval": {
+    "queries": 200,
+    "pages_with_hits": 200,
+    "degraded_queries": 0,
+    "single_query_latency_ms": {
+      "min": 33.56850001728162,
+      "max": 127.31830001575872,
+      "mean": 41.09218900077394
+    }
+  },
+  "restored_retrieval": {
+    "queries": 200,
+    "pages_with_hits": 200,
+    "degraded_queries": 0,
+    "single_query_latency_ms": {
+      "min": 33.61720000975765,
+      "max": 137.4272000102792,
+      "mean": 41.5555600009975
+    }
+  },
+  "state_counts": {
+    "source": {
+      "vector_chunks": 582,
+      "active_versions": 200
+    },
+    "restored": {
+      "vector_chunks": 582,
+      "active_versions": 200
+    },
+    "exact_match": true
+  },
+  "metrics": {
+    "required_family_presence": {
+      "agentforge_rag_operations_total": true,
+      "agentforge_rag_operation_duration_seconds": true,
+      "agentforge_ingestion_transitions_total": true,
+      "agentforge_backup_last_success_unixtime": true,
+      "agentforge_restore_verifications_total": true,
+      "agentforge_trace_export_failures_total": true
+    },
+    "all_required_present": true,
+    "backup_success_status_loaded": true,
+    "restore_success_status_loaded": true,
+    "snapshot_sha256": "d7b14bba27f116a77ecff122ff80763c89b3e0ce8ca74a4d43df2c87de15382d"
+  },
+  "trace": {
+    "span_count": 400,
+    "span_names": {
+      "rag.ingest": 200,
+      "rag.retrieve": 200
+    },
+    "unique_trace_ids": 400,
+    "forbidden_content_attribute_occurrences": 0,
+    "trace_file_sha256": "2c6515ac67bebda323778365a048a846a5d0c7288d10e1a457631bb38070495d"
+  },
+  "backup": {
+    "backup_id": "afb_20260815T183616Z_86964bda",
+    "files_verified": 4,
+    "valid": true,
+    "errors": [],
+    "manifest_files": [
+      {
+        "relative_path": "data/memory.sqlite3",
+        "sha256": "46d1668c4c14591dd991d49a2fdea16eec6e6fd149bd54dba7dd2407d327cecc",
+        "size_bytes": 36864,
+        "kind": "sqlite"
+      },
+      {
+        "relative_path": "data/rag.sqlite3",
+        "sha256": "f75a4e615dd7e7caddad8530cb2566e5513c2443f295e1833dd0002a1b29a673",
+        "size_bytes": 4161536,
+        "kind": "sqlite"
+      },
+      {
+        "relative_path": "data/rag_ingestion_jobs.sqlite3",
+        "sha256": "2416d8de87d3ecec73fc41fa2ccc7b36db3c90a9044894d965dc525970c99694",
+        "size_bytes": 16384,
+        "kind": "sqlite"
+      },
+      {
+        "relative_path": "data/rag_registry.sqlite3",
+        "sha256": "26042f55ca6bf949ef183b697dd6154a292ffb3d8db4b04d5514bdc2c663fe65",
+        "size_bytes": 339968,
+        "kind": "sqlite"
+      }
+    ]
+  },
+  "restore": {
+    "signature_mismatch_count": 0,
+    "signature_mismatch_samples": [],
+    "exact_retrieval_signature_match": true
+  },
+  "stage_timings": {
+    "prepare_derived_canonical_text_seconds": 0.33323879999807104,
+    "source_initialize_seconds": 0.16296700001112185,
+    "sequential_ingestion_seconds": 21.729315800010227,
+    "sequential_baseline_retrieval_seconds": 8.836102600005688,
+    "backup_seconds": 0.31813629998941906,
+    "backup_verification_seconds": 0.1113416000152938,
+    "restore_seconds": 0.22974680000334047,
+    "restored_initialize_seconds": 0.0778615000017453,
+    "sequential_restored_retrieval_seconds": 8.937490700016497
+  },
+  "acceptance": {
+    "page_budget_exactly_200": true,
+    "all_pages_ingested": true,
+    "all_baseline_pages_retrievable": true,
+    "all_restored_pages_retrievable": true,
+    "metrics_complete": true,
+    "backup_metric_loaded": true,
+    "restore_metric_loaded": true,
+    "trace_content_safe": true,
+    "backup_verified": true,
+    "state_counts_exact": true,
+    "retrieval_signatures_exact": true
+  }
+}

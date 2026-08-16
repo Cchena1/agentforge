@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "test_date": "2026-08-15",
+  "mode": "sequential offline CLI recovery drill; no pressure test",
+  "backup_id": "afb_20260815T183754Z_e3b765a3",
+  "backup": {
+    "succeeded": true,
+    "files_verified": 4,
+    "errors": []
+  },
+  "verify": {
+    "succeeded": true,
+    "valid": true,
+    "files_verified": 4,
+    "errors": []
+  },
+  "restore": {
+    "succeeded": true,
+    "isolated_target": true,
+    "verified": true
+  },
+  "paths_redacted": true,
+  "payload_data_committed": false
+}

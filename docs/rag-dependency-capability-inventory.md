@@ -1,6 +1,6 @@
 # RAG Dependency Capability Inventory
 
-**Review date:** 2026-08-13
+**Review date:** 2026-08-15
 **Decision scope:** correctness-first RAG engineering milestone
 
 ## Decision summary
@@ -33,6 +33,9 @@ Adding retrieval libraries before a labeled evaluation corpus exists would incre
 | Atomic visibility switch | One active pointer per `(tenant_id, source_id)`; vector writes complete before activation |
 | Same-source conflict control | Per-`(tenant_id, source_id)` `asyncio.Lock`; no global serialization |
 | Evaluation contract | Pydantic models and JSONL, using existing tooling |
+| Query planning | Pydantic typed plans plus deterministic regex/token primitives; no new runtime package or model call |
+| Query concurrency | `asyncio.TaskGroup`, `Semaphore`, and `timeout`; bounded to two additional queries by default |
+| Cross-query fusion | Small in-process RRF keyed by verified Chunk ID; reuses existing retrieval scores and citation contracts |
 
 ## Deferred candidate dependencies
 
@@ -92,3 +95,36 @@ The comparative research snapshot is stored in `docs/research-snapshot.json`, an
 - Tenacity: bounded transient model retry; not used to hide deterministic parser quality failures.
 
 No new runtime dependency was added in this milestone. PaddleOCR remains an explicit candidate rather than an undeclared installation requirement.
+
+## Query transformation pattern review (2026-08-15)
+
+| Project/paper | Maintenance or provenance signal | License / reuse decision | Applied pattern |
+|---|---|---|---|
+| LangChain / LangGraph | Maintained upstream ecosystem already present in this project | MIT; pattern-level reuse | History-aware routing: do not pay rewrite cost when no contextualization is needed |
+| LlamaIndex `SubQuestionQueryEngine` | Maintained upstream implementation | MIT; pattern-level reuse | Bounded explicit subqueries and asynchronous execution |
+| CRAG | Primary research paper | Research concept | Evidence-quality gate before corrective retrieval |
+| Rewrite-Retrieve-Read | Primary research paper | Research concept | Retriever-oriented rewrite objective |
+| HyDE / Query2doc | Primary research papers | Deferred profile | Rejected from default path until labeled quality gain offsets latency, cost, and drift |
+| NirDiamant/RAG_Techniques | Popular reference repository | Non-commercial terms conflict with MIT/commercial portfolio use | Concepts may be reviewed; source code must not be copied |
+
+No dependency was added. Existing Pydantic, asyncio, LangGraph context, and vector-store contracts cover the selected minimum implementation.
+
+## Observability and recovery dependency review (2026-08-15)
+
+| Dependency/tool | License posture | Maintenance/admission evidence | Capability used | Decision |
+|---|---|---|---|---|
+| `prometheus-client` 0.26.0 | Apache-2.0 | Mature official Python client; locked by `uv.lock` | Custom registry, Counter/Gauge/Histogram, exposition | Added to base runtime |
+| OpenTelemetry API/SDK/exporter 1.44.0 | Apache-2.0 | Official maintained SDK/exporter family; locked by `uv.lock` | TraceProvider, FastAPI instrumentation, local/OTLP export | Added to base runtime |
+| `opentelemetry-instrumentation-fastapi` 0.65b0 | Apache-2.0 | Official contrib instrumentation; beta version is pinned and tested | HTTP server spans and trace context | Added; pinned, upgrade requires regression |
+| Prometheus `promtool` 3.13.1 | Apache-2.0 | Official release binary, used only from Git ignored `state/tools` | Config/rule validation and rule unit tests | Test tool, not committed |
+| Alertmanager `amtool` 0.32.1 | Apache-2.0 | Official release binary, used only from Git ignored `state/tools` | Alertmanager config validation | Test tool, not committed |
+| Python `sqlite3` | PSF / SQLite public-domain component | Standard library, already present | Online Backup API and integrity checks | Reused; no new package |
+| Qdrant snapshots | Apache-2.0 server/client ecosystem | Existing optional vector dependency | Future remote-vector disaster recovery | Runtime integration deferred; current CLI fail-closed |
+
+Security and cost boundaries:
+
+- No SaaS exporter is enabled by default.
+- OTLP endpoint is explicit configuration; API secrets are not emitted.
+- Prometheus labels exclude user-controlled identifiers and text.
+- Trace files are bounded by size and backup count.
+- Official tool archives remain under `state/` and are excluded from Git; benchmark evidence remains small.

@@ -33,14 +33,19 @@ class Settings(BaseSettings):
     )
 
     app_name: str = "AgentForge"
-    debug: bool = Field(
-        default=False, validation_alias=AliasChoices("AI_AGENT_DEBUG", "DEBUG")
-    )
+    debug: bool = Field(default=False, validation_alias=AliasChoices("AI_AGENT_DEBUG", "DEBUG"))
     host: str = "0.0.0.0"
     port: int = Field(default=8000, ge=1, le=65535)
     workspace_root: Path = Field(default_factory=Path.cwd)
     state_dir: Path = Field(default=Path("state"))
     cors_origins: str = "http://localhost:3000,http://127.0.0.1:3000"
+    environment: str = Field(default="local", min_length=1, max_length=64)
+    metrics_enabled: bool = True
+    trace_jsonl_enabled: bool = True
+    trace_jsonl_max_bytes: int = Field(default=20 * 1024 * 1024, ge=1_048_576, le=1_073_741_824)
+    trace_jsonl_backup_count: int = Field(default=5, ge=1, le=20)
+    otel_exporter_otlp_endpoint: str | None = None
+    backup_freshness_seconds: int = Field(default=86_400, ge=300, le=2_592_000)
 
     model: str = "gpt-4o-mini"
     base_url: str = "https://api.openai.com/v1"
@@ -56,6 +61,11 @@ class Settings(BaseSettings):
     short_term_message_limit: int = Field(default=24, ge=4, le=200)
     short_term_char_budget: int = Field(default=24000, ge=2000)
     rag_top_k: int = Field(default=6, ge=1, le=30)
+    rag_corrective_max_rounds: int = Field(default=2, ge=0, le=2)
+    rag_query_max_parallel: int = Field(default=2, ge=1, le=4)
+    rag_query_timeout_seconds: float = Field(default=10.0, gt=0, le=60)
+    rag_query_min_relevance_score: float = Field(default=0.2, ge=0, le=1)
+    rag_query_rrf_k: int = Field(default=60, ge=1, le=1000)
     rag_ocr_enabled: bool = False
     rag_cloud_fallback_enabled: bool = False
     rag_parser_max_attempts: int = Field(default=3, ge=1, le=3)
@@ -68,6 +78,7 @@ class Settings(BaseSettings):
     vector_backend: Literal["sqlite", "qdrant"] = "sqlite"
     qdrant_url: str = "http://localhost:6333"
     qdrant_collection: str = "agent_documents"
+    qdrant_api_key: SecretStr = Field(default=SecretStr(""))
 
     @field_validator("workspace_root", mode="after")
     @classmethod
@@ -82,9 +93,7 @@ class Settings(BaseSettings):
             < self.rag_chunk_target_tokens
             <= self.rag_chunk_max_tokens
         ):
-            raise ValueError(
-                "RAG chunk budgets must satisfy overlap < target <= max tokens"
-            )
+            raise ValueError("RAG chunk budgets must satisfy overlap < target <= max tokens")
         if self.rag_cloud_fallback_enabled:
             raise ValueError(
                 "Cloud document fallback has no configured provider in v0.3; keep it disabled"
@@ -115,7 +124,9 @@ class Settings(BaseSettings):
             raw = json.loads(self.fallback_routes_json or "[]")
             routes.extend(ModelRoute.model_validate(item) for item in raw)
         except (json.JSONDecodeError, TypeError, ValueError) as exc:
-            raise ValueError("AI_AGENT_FALLBACK_ROUTES_JSON must be a JSON array of model routes") from exc
+            raise ValueError(
+                "AI_AGENT_FALLBACK_ROUTES_JSON must be a JSON array of model routes"
+            ) from exc
         return routes
 
 

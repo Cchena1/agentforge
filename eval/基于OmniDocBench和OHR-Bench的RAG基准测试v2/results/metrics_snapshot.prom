@@ -1,0 +1,197 @@
+# HELP python_info Python platform information
+# TYPE python_info gauge
+python_info{implementation="CPython",major="3",minor="12",patchlevel="13",version="3.12.13"} 1.0
+# HELP python_gc_objects_collected_total Objects collected during gc
+# TYPE python_gc_objects_collected_total counter
+python_gc_objects_collected_total{generation="0"} 1440.0
+python_gc_objects_collected_total{generation="1"} 82.0
+python_gc_objects_collected_total{generation="2"} 10.0
+# HELP python_gc_objects_uncollectable_total Uncollectable objects found during GC
+# TYPE python_gc_objects_uncollectable_total counter
+python_gc_objects_uncollectable_total{generation="0"} 0.0
+python_gc_objects_uncollectable_total{generation="1"} 0.0
+python_gc_objects_uncollectable_total{generation="2"} 0.0
+# HELP python_gc_collections_total Number of times this generation was collected
+# TYPE python_gc_collections_total counter
+python_gc_collections_total{generation="0"} 397.0
+python_gc_collections_total{generation="1"} 36.0
+python_gc_collections_total{generation="2"} 3.0
+# HELP agentforge_http_requests_total HTTP requests by stable route template and status.
+# TYPE agentforge_http_requests_total counter
+# HELP agentforge_http_request_duration_seconds HTTP request duration by stable route template.
+# TYPE agentforge_http_request_duration_seconds histogram
+# HELP agentforge_rag_operations_total RAG operations by outcome and degradation state.
+# TYPE agentforge_rag_operations_total counter
+agentforge_rag_operations_total{degraded="false",operation="ingest",outcome="success"} 200.0
+agentforge_rag_operations_total{degraded="false",operation="retrieve",outcome="success"} 200.0
+# HELP agentforge_rag_operations_created RAG operations by outcome and degradation state.
+# TYPE agentforge_rag_operations_created gauge
+agentforge_rag_operations_created{degraded="false",operation="ingest",outcome="success"} 1.7868189457848022e+09
+agentforge_rag_operations_created{degraded="false",operation="retrieve",outcome="success"} 1.7868189674540875e+09
+# HELP agentforge_rag_operation_duration_seconds RAG operation duration.
+# TYPE agentforge_rag_operation_duration_seconds histogram
+agentforge_rag_operation_duration_seconds_bucket{le="0.005",operation="ingest"} 0.0
+agentforge_rag_operation_duration_seconds_bucket{le="0.01",operation="ingest"} 0.0
+agentforge_rag_operation_duration_seconds_bucket{le="0.025",operation="ingest"} 0.0
+agentforge_rag_operation_duration_seconds_bucket{le="0.05",operation="ingest"} 0.0
+agentforge_rag_operation_duration_seconds_bucket{le="0.075",operation="ingest"} 0.0
+agentforge_rag_operation_duration_seconds_bucket{le="0.1",operation="ingest"} 88.0
+agentforge_rag_operation_duration_seconds_bucket{le="0.25",operation="ingest"} 197.0
+agentforge_rag_operation_duration_seconds_bucket{le="0.5",operation="ingest"} 200.0
+agentforge_rag_operation_duration_seconds_bucket{le="0.75",operation="ingest"} 200.0
+agentforge_rag_operation_duration_seconds_bucket{le="1.0",operation="ingest"} 200.0
+agentforge_rag_operation_duration_seconds_bucket{le="2.5",operation="ingest"} 200.0
+agentforge_rag_operation_duration_seconds_bucket{le="5.0",operation="ingest"} 200.0
+agentforge_rag_operation_duration_seconds_bucket{le="7.5",operation="ingest"} 200.0
+agentforge_rag_operation_duration_seconds_bucket{le="10.0",operation="ingest"} 200.0
+agentforge_rag_operation_duration_seconds_bucket{le="+Inf",operation="ingest"} 200.0
+agentforge_rag_operation_duration_seconds_count{operation="ingest"} 200.0
+agentforge_rag_operation_duration_seconds_sum{operation="ingest"} 21.707162299979245
+agentforge_rag_operation_duration_seconds_bucket{le="0.005",operation="retrieve"} 0.0
+agentforge_rag_operation_duration_seconds_bucket{le="0.01",operation="retrieve"} 0.0
+agentforge_rag_operation_duration_seconds_bucket{le="0.025",operation="retrieve"} 0.0
+agentforge_rag_operation_duration_seconds_bucket{le="0.05",operation="retrieve"} 173.0
+agentforge_rag_operation_duration_seconds_bucket{le="0.075",operation="retrieve"} 193.0
+agentforge_rag_operation_duration_seconds_bucket{le="0.1",operation="retrieve"} 197.0
+agentforge_rag_operation_duration_seconds_bucket{le="0.25",operation="retrieve"} 200.0
+agentforge_rag_operation_duration_seconds_bucket{le="0.5",operation="retrieve"} 200.0
+agentforge_rag_operation_duration_seconds_bucket{le="0.75",operation="retrieve"} 200.0
+agentforge_rag_operation_duration_seconds_bucket{le="1.0",operation="retrieve"} 200.0
+agentforge_rag_operation_duration_seconds_bucket{le="2.5",operation="retrieve"} 200.0
+agentforge_rag_operation_duration_seconds_bucket{le="5.0",operation="retrieve"} 200.0
+agentforge_rag_operation_duration_seconds_bucket{le="7.5",operation="retrieve"} 200.0
+agentforge_rag_operation_duration_seconds_bucket{le="10.0",operation="retrieve"} 200.0
+agentforge_rag_operation_duration_seconds_bucket{le="+Inf",operation="retrieve"} 200.0
+agentforge_rag_operation_duration_seconds_count{operation="retrieve"} 200.0
+agentforge_rag_operation_duration_seconds_sum{operation="retrieve"} 8.77770690008765
+# HELP agentforge_rag_operation_duration_seconds_created RAG operation duration.
+# TYPE agentforge_rag_operation_duration_seconds_created gauge
+agentforge_rag_operation_duration_seconds_created{operation="ingest"} 1.7868189457848022e+09
+agentforge_rag_operation_duration_seconds_created{operation="retrieve"} 1.7868189674540875e+09
+# HELP agentforge_ingestion_transitions_total Durable ingestion job state transitions.
+# TYPE agentforge_ingestion_transitions_total counter
+# HELP agentforge_parser_fallbacks_total Parser fallback transitions.
+# TYPE agentforge_parser_fallbacks_total counter
+agentforge_parser_fallbacks_total 0.0
+# HELP agentforge_parser_fallbacks_created Parser fallback transitions.
+# TYPE agentforge_parser_fallbacks_created gauge
+agentforge_parser_fallbacks_created 1.786818945489075e+09
+# HELP agentforge_backup_last_success_unixtime Unix time of the last verified local backup.
+# TYPE agentforge_backup_last_success_unixtime gauge
+agentforge_backup_last_success_unixtime 0.0
+# HELP agentforge_restore_verifications_total Restore verification outcomes loaded from durable operations status.
+# TYPE agentforge_restore_verifications_total counter
+# HELP agentforge_trace_export_failures_total Local or OTLP trace export failures.
+# TYPE agentforge_trace_export_failures_total counter
+
+# HELP python_info Python platform information
+# TYPE python_info gauge
+python_info{implementation="CPython",major="3",minor="12",patchlevel="13",version="3.12.13"} 1.0
+# HELP python_gc_objects_collected_total Objects collected during gc
+# TYPE python_gc_objects_collected_total counter
+python_gc_objects_collected_total{generation="0"} 1440.0
+python_gc_objects_collected_total{generation="1"} 82.0
+python_gc_objects_collected_total{generation="2"} 10.0
+# HELP python_gc_objects_uncollectable_total Uncollectable objects found during GC
+# TYPE python_gc_objects_uncollectable_total counter
+python_gc_objects_uncollectable_total{generation="0"} 0.0
+python_gc_objects_uncollectable_total{generation="1"} 0.0
+python_gc_objects_uncollectable_total{generation="2"} 0.0
+# HELP python_gc_collections_total Number of times this generation was collected
+# TYPE python_gc_collections_total counter
+python_gc_collections_total{generation="0"} 397.0
+python_gc_collections_total{generation="1"} 36.0
+python_gc_collections_total{generation="2"} 3.0
+# HELP agentforge_http_requests_total HTTP requests by stable route template and status.
+# TYPE agentforge_http_requests_total counter
+# HELP agentforge_http_request_duration_seconds HTTP request duration by stable route template.
+# TYPE agentforge_http_request_duration_seconds histogram
+# HELP agentforge_rag_operations_total RAG operations by outcome and degradation state.
+# TYPE agentforge_rag_operations_total counter
+# HELP agentforge_rag_operation_duration_seconds RAG operation duration.
+# TYPE agentforge_rag_operation_duration_seconds histogram
+# HELP agentforge_ingestion_transitions_total Durable ingestion job state transitions.
+# TYPE agentforge_ingestion_transitions_total counter
+# HELP agentforge_parser_fallbacks_total Parser fallback transitions.
+# TYPE agentforge_parser_fallbacks_total counter
+agentforge_parser_fallbacks_total 0.0
+# HELP agentforge_parser_fallbacks_created Parser fallback transitions.
+# TYPE agentforge_parser_fallbacks_created gauge
+agentforge_parser_fallbacks_created 1.7868189766792352e+09
+# HELP agentforge_backup_last_success_unixtime Unix time of the last verified local backup.
+# TYPE agentforge_backup_last_success_unixtime gauge
+agentforge_backup_last_success_unixtime 1.7868189765622437e+09
+# HELP agentforge_restore_verifications_total Restore verification outcomes loaded from durable operations status.
+# TYPE agentforge_restore_verifications_total counter
+# HELP agentforge_trace_export_failures_total Local or OTLP trace export failures.
+# TYPE agentforge_trace_export_failures_total counter
+
+# HELP python_info Python platform information
+# TYPE python_info gauge
+python_info{implementation="CPython",major="3",minor="12",patchlevel="13",version="3.12.13"} 1.0
+# HELP python_gc_objects_collected_total Objects collected during gc
+# TYPE python_gc_objects_collected_total counter
+python_gc_objects_collected_total{generation="0"} 1506.0
+python_gc_objects_collected_total{generation="1"} 82.0
+python_gc_objects_collected_total{generation="2"} 10.0
+# HELP python_gc_objects_uncollectable_total Uncollectable objects found during GC
+# TYPE python_gc_objects_uncollectable_total counter
+python_gc_objects_uncollectable_total{generation="0"} 0.0
+python_gc_objects_uncollectable_total{generation="1"} 0.0
+python_gc_objects_uncollectable_total{generation="2"} 0.0
+# HELP python_gc_collections_total Number of times this generation was collected
+# TYPE python_gc_collections_total counter
+python_gc_collections_total{generation="0"} 400.0
+python_gc_collections_total{generation="1"} 36.0
+python_gc_collections_total{generation="2"} 3.0
+# HELP agentforge_http_requests_total HTTP requests by stable route template and status.
+# TYPE agentforge_http_requests_total counter
+# HELP agentforge_http_request_duration_seconds HTTP request duration by stable route template.
+# TYPE agentforge_http_request_duration_seconds histogram
+# HELP agentforge_rag_operations_total RAG operations by outcome and degradation state.
+# TYPE agentforge_rag_operations_total counter
+agentforge_rag_operations_total{degraded="false",operation="retrieve",outcome="success"} 200.0
+# HELP agentforge_rag_operations_created RAG operations by outcome and degradation state.
+# TYPE agentforge_rag_operations_created gauge
+agentforge_rag_operations_created{degraded="false",operation="retrieve",outcome="success"} 1.7868189770716283e+09
+# HELP agentforge_rag_operation_duration_seconds RAG operation duration.
+# TYPE agentforge_rag_operation_duration_seconds histogram
+agentforge_rag_operation_duration_seconds_bucket{le="0.005",operation="retrieve"} 0.0
+agentforge_rag_operation_duration_seconds_bucket{le="0.01",operation="retrieve"} 0.0
+agentforge_rag_operation_duration_seconds_bucket{le="0.025",operation="retrieve"} 0.0
+agentforge_rag_operation_duration_seconds_bucket{le="0.05",operation="retrieve"} 169.0
+agentforge_rag_operation_duration_seconds_bucket{le="0.075",operation="retrieve"} 194.0
+agentforge_rag_operation_duration_seconds_bucket{le="0.1",operation="retrieve"} 199.0
+agentforge_rag_operation_duration_seconds_bucket{le="0.25",operation="retrieve"} 200.0
+agentforge_rag_operation_duration_seconds_bucket{le="0.5",operation="retrieve"} 200.0
+agentforge_rag_operation_duration_seconds_bucket{le="0.75",operation="retrieve"} 200.0
+agentforge_rag_operation_duration_seconds_bucket{le="1.0",operation="retrieve"} 200.0
+agentforge_rag_operation_duration_seconds_bucket{le="2.5",operation="retrieve"} 200.0
+agentforge_rag_operation_duration_seconds_bucket{le="5.0",operation="retrieve"} 200.0
+agentforge_rag_operation_duration_seconds_bucket{le="7.5",operation="retrieve"} 200.0
+agentforge_rag_operation_duration_seconds_bucket{le="10.0",operation="retrieve"} 200.0
+agentforge_rag_operation_duration_seconds_bucket{le="+Inf",operation="retrieve"} 200.0
+agentforge_rag_operation_duration_seconds_count{operation="retrieve"} 200.0
+agentforge_rag_operation_duration_seconds_sum{operation="retrieve"} 8.876803299936
+# HELP agentforge_rag_operation_duration_seconds_created RAG operation duration.
+# TYPE agentforge_rag_operation_duration_seconds_created gauge
+agentforge_rag_operation_duration_seconds_created{operation="retrieve"} 1.7868189770716283e+09
+# HELP agentforge_ingestion_transitions_total Durable ingestion job state transitions.
+# TYPE agentforge_ingestion_transitions_total counter
+# HELP agentforge_parser_fallbacks_total Parser fallback transitions.
+# TYPE agentforge_parser_fallbacks_total counter
+agentforge_parser_fallbacks_total 0.0
+# HELP agentforge_parser_fallbacks_created Parser fallback transitions.
+# TYPE agentforge_parser_fallbacks_created gauge
+agentforge_parser_fallbacks_created 1.7868189769276407e+09
+# HELP agentforge_backup_last_success_unixtime Unix time of the last verified local backup.
+# TYPE agentforge_backup_last_success_unixtime gauge
+agentforge_backup_last_success_unixtime 0.0
+# HELP agentforge_restore_verifications_total Restore verification outcomes loaded from durable operations status.
+# TYPE agentforge_restore_verifications_total counter
+agentforge_restore_verifications_total{outcome="success"} 1.0
+# HELP agentforge_restore_verifications_created Restore verification outcomes loaded from durable operations status.
+# TYPE agentforge_restore_verifications_created gauge
+agentforge_restore_verifications_created{outcome="success"} 1.786818976928641e+09
+# HELP agentforge_trace_export_failures_total Local or OTLP trace export failures.
+# TYPE agentforge_trace_export_failures_total counter

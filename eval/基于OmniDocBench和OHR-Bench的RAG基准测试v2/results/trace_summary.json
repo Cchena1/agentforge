@@ -1,0 +1,10 @@
+{
+  "span_count": 400,
+  "span_names": {
+    "rag.ingest": 200,
+    "rag.retrieve": 200
+  },
+  "unique_trace_ids": 400,
+  "forbidden_content_attribute_occurrences": 0,
+  "trace_file_sha256": "2c6515ac67bebda323778365a048a846a5d0c7288d10e1a457631bb38070495d"
+}

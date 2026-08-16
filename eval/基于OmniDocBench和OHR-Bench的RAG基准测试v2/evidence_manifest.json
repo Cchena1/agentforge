@@ -1,0 +1,91 @@
+{
+  "schema_version": 1,
+  "generated_date": "2026-08-16",
+  "page_budget": {
+    "total": 200,
+    "OmniDocBench": 50,
+    "OHR-Bench": 150
+  },
+  "tracked_evidence": [
+    {
+      "path": "README.md",
+      "size_bytes": 3032,
+      "sha256": "759b17824455420b01fe8e1302d4823bcb6d3e46253b9e17b8979890da99b948"
+    },
+    {
+      "path": "results/operational_benchmark.json",
+      "size_bytes": 4745,
+      "sha256": "11be173ae53da2bf5bb64adc1cee52f498b795fbecdf97e140533f60e368d97e"
+    },
+    {
+      "path": "results/metrics_snapshot.prom",
+      "size_bytes": 14024,
+      "sha256": "cf05c53ab13258c032828116a3bb217e8ec100928329518f2e2caa1aabdab9b1"
+    },
+    {
+      "path": "results/trace_summary.json",
+      "size_bytes": 268,
+      "sha256": "7b58cd363fc8d5e8b65fac3b809bc24c0dd3cb7de855e194da4ab0775bf65c3a"
+    },
+    {
+      "path": "results/backup_manifest_sanitized.json",
+      "size_bytes": 967,
+      "sha256": "5d87083e9606662ce5e7755169ef47ab24ddf2873fb1751aea31a17055f02dde"
+    },
+    {
+      "path": "results/alert_validation.json",
+      "size_bytes": 1579,
+      "sha256": "2363db822ac0d20e13873af5d33c74d416e6f2850f3e6b8272cd991fc8e2e157"
+    },
+    {
+      "path": "results/cli_recovery_validation.json",
+      "size_bytes": 537,
+      "sha256": "39646394d6e5aa7bfb814cf5a66d440bce1803874ffb0aaf1da02c98208a7fb9"
+    },
+    {
+      "path": "scripts/run_operational_benchmark.py",
+      "size_bytes": 15937,
+      "sha256": "fc6c8e94849b3e0ee9c46f3375df7ab44e234ff16db1516507268bdbaaa42307"
+    },
+    {
+      "path": "scripts/validate_alerts.py",
+      "size_bytes": 1774,
+      "sha256": "f88483afc82c50661c60ffc1e1c53863f7bafc000615c9d1fc092b52e80faf6f"
+    },
+    {
+      "path": "report.md",
+      "size_bytes": 7448,
+      "sha256": "8d206235b76dd21f7783457fca16e9b8a8b273147e9a2e66eed700d5c12d2a16"
+    },
+    {
+      "path": "DATA_SOURCES.md",
+      "size_bytes": 789,
+      "sha256": "b0e567eb709de3f922cf63f5cc5ae1029c6755cf52dc2f4f87a91b84c946f845"
+    },
+    {
+      "path": "EVIDENCE.md",
+      "size_bytes": 1844,
+      "sha256": "856d4d6be61b1323f64f779911a968e4dacc24b30ce1049ce03b41a359889030"
+    }
+  ],
+  "git_ignored_source_manifests": [
+    {
+      "path": "state/benchmark-200p/omni_manifest.json",
+      "size_bytes": 338654,
+      "sha256": "f9d5a426fb236c9a01276ffb3d24509205bdfba1a1018bb9f21c05ce6e738fae",
+      "git_ignored": true
+    },
+    {
+      "path": "state/benchmark-200p/ohr_manifest.json",
+      "size_bytes": 2038854,
+      "sha256": "3c969c3c5a67d91c5ab1ebd553b564fe739f9761c91298e1dc8ccd1873edbbbe",
+      "git_ignored": true
+    },
+    {
+      "path": "state/benchmark-200p/sample_summary.json",
+      "size_bytes": 1014,
+      "sha256": "5f694c8cdbfe51d036ed9a97b7b24b29f13ccf061973750a45bbc147119006db",
+      "git_ignored": true
+    }
+  ]
+}

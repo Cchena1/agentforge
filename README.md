@@ -32,6 +32,7 @@ AgentForge 将早期单文件 Demo 重构为模块化、可验证、可降级的
    - [RAG 工程方案](docs/rag-engineering-plan.md)
    - [RAG 版本迁移](docs/rag-versioning-migration.md)
    - [RAG 授权边界 ADR](docs/adr-007-rag-authorization-boundary.md)
+   - [Query Planning 与检索编排 ADR](docs/adr-009-query-orchestration.md)
    - [RAG 实现证据](docs/rag-implementation-evidence.md)
 
 仓库可以在没有外部模型访问权限的情况下完成基础评估。若 `AI_AGENT_API_KEY` 为空，系统不会伪造在线模型结果，而是进入显式标记的本地 Fallback，并通过 `degraded` 和 `warnings` 返回降级信息。
@@ -307,6 +308,34 @@ flowchart LR
 
 `POST /rag/ingestions` 返回 `202`、`job_id` 与 `Location`；查询和取消分别使用 `GET /rag/ingestions/{job_id}` 与 `POST /rag/ingestions/{job_id}/cancel`。Job 状态存入独立 SQLite，非终态 Job 在进程重启后恢复为 `queued`。文件级并发由有界 `Semaphore` 控制，同一 `(tenant_id, source_id)` 仍串行构建；Candidate 未验证前不可见，失败不会移动 Active Pointer。旧 `POST /documents/ingest` 在 0.x 迁移窗口保留并返回 `Deprecation: true`，计划仅在 v1.0 或更晚 Breaking Release 删除。
 
+### Query Planning、语义鸿沟与漂移控制
+
+当前默认路径采用**零额外 LLM 调用**的有界 Query Planning：
+
+1. Original Query 始终执行并保留，Rewrite 不能覆盖原证据；
+2. 只对引号外的问号、分号或换行明确分隔的复合问题做最多两个 Sub-query；
+3. 仅当 Original Evidence Gate 不充分时，执行去标点/大小写归一化的 Lexical Fallback；
+4. 版本、数值/单位、引号短语、缩写、标识符和否定词作为 Protected Anchors，丢失约束的 Variant 在执行前被拒绝；
+5. 明确复合问题的 Original 与 Sub-query 使用 `asyncio.TaskGroup` 同批并行；普通问题先执行 Original，仅在证据不足时执行 Normalized Fallback；所有分支受 `Semaphore`、每分支 Timeout 和总 Query 数限制；
+6. 多 Query 结果按 Chunk ID 做跨查询 RRF，随后再次校验 Citation；单分支失败时保留其他已验证证据。
+
+```mermaid
+flowchart TD
+    Q["Original Query"] --> P["Pydantic QueryPlan"]
+    P --> O["Original Search"]
+    P --> D["Explicit Subqueries"]
+    O --> G["Evidence Gate"]
+    G -->|"证据不足"| N["Normalized Fallback"]
+    G -->|"证据充分"| F["Cross-query RRF"]
+    D --> A["TaskGroup + Semaphore + Timeout"]
+    N --> A
+    A --> F
+    F --> C["Citation Verification"]
+```
+
+对话中的指代消解由 Agent 在既有 Function Calling 回合内完成：`search_knowledge.query` 明确要求结合受信 Memory 生成 Standalone Query，同时保留实体、版本、日期、数值、单位、引号短语和否定条件，禁止补入用户或受信上下文中不存在的事实。直接调用 `/documents/search` 仍是无会话状态接口，不会自动读取 Chat Memory。HyDE、Query2doc 和独立 LLM Rewrite 暂不进入默认链路，避免在缺少标注 A/B 证据时增加响应延迟、Token 成本和 Query Drift。
+
+
 ### 并行混合检索与 Citation Contract
 
 ```mermaid
@@ -471,6 +500,11 @@ AI_AGENT_FALLBACK_ROUTES_JSON=[{"name":"backup","model":"backup-model","base_url
 | `AI_AGENT_RAG_CHUNK_TARGET_TOKENS` | `500` | Child 目标 Token |
 | `AI_AGENT_RAG_CHUNK_MAX_TOKENS` | `650` | Child 最大 Token |
 | `AI_AGENT_RAG_CHUNK_OVERLAP_TOKENS` | `60` | 连续正文 Overlap |
+| `AI_AGENT_RAG_CORRECTIVE_MAX_ROUNDS` | `2` | Original Query 之外最多执行的附加 Query 数；0 表示关闭 |
+| `AI_AGENT_RAG_QUERY_MAX_PARALLEL` | `2` | 附加 Query 的并发上限 |
+| `AI_AGENT_RAG_QUERY_TIMEOUT_SECONDS` | `10` | 单 Query 分支端到端 Timeout |
+| `AI_AGENT_RAG_QUERY_MIN_RELEVANCE_SCORE` | `0.2` | Evidence Gate 的确定性最低 Rerank Score；Lexical 命中可直接通过 |
+| `AI_AGENT_RAG_QUERY_RRF_K` | `60` | 跨 Query Reciprocal Rank Fusion 常数 |
 
 Pydantic 在启动前验证 `overlap < target <= max`。
 ## API 契约
@@ -537,8 +571,8 @@ node --check server.js
 
 ```text
 Ruff:  all checks passed
-mypy:  success, no issues in 20 source files
-pytest: 65 passed, 1 warning
+mypy:  success, no issues in 23 source files
+pytest: 77 passed, 1 warning
 RAG evaluator: 2 schema-valid example queries; no quality claim
 Node:  public/app.js 与 server.js syntax check 通过
 PowerShell: run.ps1 解析通过
@@ -590,7 +624,7 @@ PowerShell: run.ps1 解析通过
 
 ### Result
 
-将原始 Demo 重构为模块化 AgentForge 服务；核心服务拆分为 19 个类型检查源文件，并对 1 个离线评估脚本执行同级检查；建立 65 项自动化测试，覆盖正常路径、失败恢复、并发语义、RAG 迁移和 Tenant/ACL 隔离；最近一次验收中 Ruff、mypy strict、pytest 和 JavaScript syntax check 均通过。项目不虚构压力测试和生产检索质量数据，明确记录当前证据边界。
+将原始 Demo 重构为模块化 AgentForge 服务；核心服务拆分为 23 个类型检查源文件；建立 77 项自动化测试，覆盖正常路径、失败恢复、并发语义、RAG 迁移和 Tenant/ACL 隔离；最近一次验收中 Ruff、mypy strict、pytest 和 JavaScript syntax check 均通过。项目不虚构压力测试和生产检索质量数据，明确记录当前证据边界。
 
 ## 评估范围与已知限制
 > 文档 RAG 验证边界：当前 65 项自动化测试覆盖路由、Attempt 上限、结构切片、异步 Job、版本一致性、ACL、Citation Schema 与内容完整性门控。真实 Docling 10 页回归的解析成功率为 1.0，质量门控接受率为 0.6，平均字符 Trigram F1 为 0.4812；该小样本只证明 False Acceptance 得到收紧，不代表生产级 Recall 或复杂文档解析质量。PaddleOCR Fallback、真实复杂 DOCX 和 Cloud Fallback 尚未完成实文档验证。未进行任何压力测试。
@@ -604,7 +638,7 @@ PowerShell: run.ps1 解析通过
 6. Multi-Agent 当前为 library-level 组件，尚未提供公开编排 API、Cost Budget、授权模型和冲突仲裁策略。
 7. Long-term Memory 尚需补充生产级 Retention、Deletion、Export、Consent 和 PII 策略。
 8. SQLite exact search 适合本地评估和小规模语料；更大语料应在真实 Workload 验证后迁移到 Qdrant 或其他索引型 Vector Store。
-9. Ingestion 尚不是 Durable Background Job System；同 Source Lock 为进程内锁，多进程写入需要单写者部署或未来的 Distributed Lease。
+9. Ingestion Job 已持久化，但执行 Worker 仍为单进程内模型；多进程写入需要单写者部署或 Distributed Lease。
 10. Vector upsert 成功但 Active Pointer 切换前若进程崩溃，可能留下不可见 Orphan Chunk；GC 和 Retention policy 尚待实现。
 11. Tenant/ACL 过滤已经实现，但 Authentication 属于外部边界；生产调用方必须由可信身份系统提供 Tenant/Principal。
 12. 示例 Golden Query JSONL 只验证 evaluator 数据契约，不构成代表性 Benchmark，也不支持检索质量结论。
@@ -631,5 +665,38 @@ MIT
 - [完整 Benchmark 报告](eval/基于OmniDocBench和OHR-Bench的RAG基准测试/report.md)
 - [数据来源与复现边界](eval/基于OmniDocBench和OHR-Bench的RAG基准测试/DATA_SOURCES.md)
 - [证据说明与对抗式审阅](eval/基于OmniDocBench和OHR-Bench的RAG基准测试/EVIDENCE.md)
+- [可观测性与灾备 Benchmark 报告](eval/基于OmniDocBench和OHR-Bench的RAG基准测试v2/report.md)
+- [可观测性与灾备证据说明](eval/基于OmniDocBench和OHR-Bench的RAG基准测试v2/EVIDENCE.md)
 
 本轮不进行压力测试；单次阶段耗时只用于故障定位，不用于声明吞吐量或 SLA。
+
+## 可观测性、告警与灾备闭环
+
+```mermaid
+flowchart LR
+    A["AgentForge API / RAG"] --> B["/metrics"]
+    A --> C["OpenTelemetry Spans"]
+    B --> D["Prometheus Rules"]
+    D --> E["Alertmanager"]
+    C --> F["轮转 JSONL / 可选 OTLP"]
+    E --> G["Runbook 处置"]
+    G --> H["Offline Backup + Verify"]
+    H --> I["Isolated Restore"]
+    I --> J["恢复后检索一致性验证"]
+```
+
+- `GET /metrics`：Prometheus exposition；只使用稳定、低基数标签。
+- `GET /ready`：Readiness 与 state-lock 状态。
+- `X-Trace-ID`：关联 HTTP 请求与 OpenTelemetry Trace。
+- 本地 Trace 默认写入 `state/telemetry/traces.jsonl`，20 MiB 轮转、保留 5 份；可选 OTLP/HTTP。
+- 告警配置：`deploy/observability/`，包含 8 条规则和 `promtool` rule tests。
+- SQLite Backup/Restore 必须停服执行，使用跨进程 state lock、SQLite Backup API、SHA-256、`integrity_check` 和隔离恢复。
+
+```powershell
+# 服务停止后
+uv run python -m agent_service.operations backup --state-dir .\state --output-dir E:\agentforge-backups
+uv run python -m agent_service.operations verify --backup-dir E:\agentforge-backups\afb_...
+uv run python -m agent_service.operations restore --backup-dir E:\agentforge-backups\afb_... --target-state-dir .\state-restored
+```
+
+完整运行手册见 `docs/operations.md`，架构决策见 `docs/adr-010-observability-backup-recovery.md`。2026-08-15 的固定 200 页顺序功能与恢复 benchmark 见 `eval/基于OmniDocBench和OHR-Bench的RAG基准测试v2/report.md`；该测试不包含压力测试，也不重新评价 PDF Parser 质量。

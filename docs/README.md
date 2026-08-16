@@ -26,6 +26,9 @@ The top-level legacy demo files are compatibility artifacts, not the architectur
 | `docs/adr-006-rag-correctness-first.md` | First-principles and adversarial RAG decision |
 | `docs/adr-007-rag-authorization-boundary.md` | Tenant/ACL identity, trust boundary, pre-scoring enforcement, and migration decision |
 | `docs/adr-008-document-parser-routing.md` | Quality-gated Docling/PaddleOCR/pypdf parser routing and license boundaries |
+| `docs/adr-009-query-orchestration.md` | Bounded query planning, drift protection, async decomposition, fusion, latency, and cost decision |
+| `docs/adr-010-observability-backup-recovery.md` | Metrics, OpenTelemetry Trace, alerting, verified backup and isolated restore decision |
+| `docs/operations.md` | Operator runbook for health, metrics, traces, alert response, backup and restore |
 | `docs/rag-versioning-migration.md` | Persistent-format compatibility, migration, and rollback |
 | `docs/rag-evaluation-contract.md` | Versioned golden-query schema and metric rules |
 | `docs/rag-implementation-evidence.md` | Claim-to-test evidence and known limits |
@@ -50,9 +53,13 @@ The top-level legacy demo files are compatibility artifacts, not the architectur
 | `document_pipeline.py` | Parser registry, deterministic quality gate, fallbacks, and parent-child chunking |
 | `ingestion_jobs.py` | Durable asynchronous ingestion job state and restart recovery |
 | `embeddings.py` | Embedding profiles and validation |
-| `rag.py` | Versioned ingestion, retrieval, and citations |
+| `query_planning.py` | Typed deterministic query plans, protected anchors, and explicit decomposition |
+| `rag.py` | Versioned ingestion, evidence gating, bounded query orchestration, fusion, and citations |
 | `rag_registry.py` | Durable lifecycle and active-version pointers |
 | `vector_store.py` | SQLite and Qdrant adapters |
+| `observability.py` | Bounded-cardinality Prometheus metrics and OpenTelemetry exporters |
+| `backup.py` | State lock, verified SQLite backup manifest and isolated restore |
+| `operations.py` | Backup/verify/restore CLI |
 
 ## Verification path for external reviewers
 

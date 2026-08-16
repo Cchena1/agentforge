@@ -21,7 +21,15 @@ class ReadFileArgs(ToolArgs):
 
 
 class SearchKnowledgeArgs(ToolArgs):
-    query: str = Field(min_length=2, max_length=10_000, description="Standalone retrieval query with key entities and constraints.")
+    query: str = Field(
+        min_length=2,
+        max_length=10_000,
+        description=(
+            "Standalone evidence query. Resolve conversational references, but preserve exact "
+            "entities, versions, dates, numbers, units, quoted phrases, and negation. Never add "
+            "facts that are absent from the user request or trusted memory context."
+        ),
+    )
     top_k: int = Field(default=6, ge=1, le=20)
     source_ids: list[str] | None = Field(default=None, max_length=100)
 
@@ -56,6 +64,8 @@ def build_registry(workspace_root: Path, rag: RAGService) -> ToolRegistry:
             "summary": f"Retrieved {len(response.hits)} evidence chunks in {response.latency_ms:.1f} ms",
             "hits": [hit.model_dump(mode="json") for hit in response.hits],
             "latency_ms": response.latency_ms,
+            "warnings": response.warnings,
+            "degraded_retrieval": response.degraded_retrieval,
         }
 
     async def escalate(args: EscalateToHumanArgs) -> dict[str, Any]:

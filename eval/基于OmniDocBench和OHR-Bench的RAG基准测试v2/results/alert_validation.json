@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "all_passed": true,
+  "checks": {
+    "prometheus_config": {
+      "command": [
+        "state\\tools\\prometheus-3.13.1.windows-amd64\\promtool.exe",
+        "check",
+        "config",
+        "prometheus.yml"
+      ],
+      "returncode": 0,
+      "stdout": "Checking prometheus.yml\n  SUCCESS: 1 rule files found\n SUCCESS: prometheus.yml is valid prometheus config file syntax\n\nChecking alert_rules.yml\n  SUCCESS: 8 rules found",
+      "stderr": "",
+      "passed": true
+    },
+    "alert_rules": {
+      "command": [
+        "state\\tools\\prometheus-3.13.1.windows-amd64\\promtool.exe",
+        "check",
+        "rules",
+        "alert_rules.yml"
+      ],
+      "returncode": 0,
+      "stdout": "Checking alert_rules.yml\n  SUCCESS: 8 rules found",
+      "stderr": "",
+      "passed": true
+    },
+    "alert_rule_tests": {
+      "command": [
+        "state\\tools\\prometheus-3.13.1.windows-amd64\\promtool.exe",
+        "test",
+        "rules",
+        "rule_tests.yml"
+      ],
+      "returncode": 0,
+      "stdout": "SUCCESS",
+      "stderr": "",
+      "passed": true
+    },
+    "alertmanager_config": {
+      "command": [
+        "state\\tools\\alertmanager-0.32.1.windows-amd64\\amtool.exe",
+        "check-config",
+        "alertmanager.example.yml"
+      ],
+      "returncode": 0,
+      "stdout": "Checking 'alertmanager.example.yml'  SUCCESS\nFound:\n - global config\n - route\n - 0 inhibit rules\n - 1 receivers\n - 0 templates",
+      "stderr": "",
+      "passed": true
+    }
+  }
+}
