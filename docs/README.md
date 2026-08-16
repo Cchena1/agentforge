@@ -28,6 +28,7 @@ The top-level legacy demo files are compatibility artifacts, not the architectur
 | `docs/adr-008-document-parser-routing.md` | Quality-gated Docling/PaddleOCR/pypdf parser routing and license boundaries |
 | `docs/adr-009-query-orchestration.md` | Bounded query planning, drift protection, async decomposition, fusion, latency, and cost decision |
 | `docs/adr-010-observability-backup-recovery.md` | Metrics, OpenTelemetry Trace, alerting, verified backup and isolated restore decision |
+| `docs/adr-011-deepseek-harness-runtime-guardrails.md` | Tool middleware, context budget, artifact spill, capability isolation, and migration decision |
 | `docs/operations.md` | Operator runbook for health, metrics, traces, alert response, backup and restore |
 | `docs/rag-versioning-migration.md` | Persistent-format compatibility, migration, and rollback |
 | `docs/rag-evaluation-contract.md` | Versioned golden-query schema and metric rules |
@@ -43,6 +44,7 @@ The top-level legacy demo files are compatibility artifacts, not the architectur
 | `app.py` | FastAPI composition and lifecycle |
 | `settings.py` | Environment configuration and route definitions |
 | `schemas.py` | Strict Pydantic contracts |
+| `context_runtime.py` | Complete-turn context budgeting and content-addressed tool-result spill |
 | `graph.py` | LangGraph state machine and loop limits |
 | `llm.py` | Async model gateway, retries, fallbacks, and structured repair |
 | `tools/` | Function-calling registry and dependency-aware async executor |

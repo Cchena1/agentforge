@@ -58,6 +58,11 @@ class Settings(BaseSettings):
     max_repeated_tool_calls: int = Field(default=2, ge=1, le=8)
     tool_timeout_seconds: float = Field(default=30.0, gt=0, le=600)
     max_parallel_tools: int = Field(default=8, ge=1, le=64)
+    tool_write_approval_mode: Literal["deny", "allow"] = "allow"
+    tool_result_inline_token_limit: int = Field(default=2500, ge=128, le=100_000)
+    tool_result_preview_chars: int = Field(default=4000, ge=256, le=100_000)
+    context_token_budget: int = Field(default=64_000, ge=1024, le=2_000_000)
+    reserved_output_tokens: int = Field(default=4096, ge=0, le=200_000)
     short_term_message_limit: int = Field(default=24, ge=4, le=200)
     short_term_char_budget: int = Field(default=24000, ge=2000)
     rag_top_k: int = Field(default=6, ge=1, le=30)
@@ -97,6 +102,10 @@ class Settings(BaseSettings):
         if self.rag_cloud_fallback_enabled:
             raise ValueError(
                 "Cloud document fallback has no configured provider in v0.3; keep it disabled"
+            )
+        if self.reserved_output_tokens >= self.context_token_budget:
+            raise ValueError(
+                "reserved_output_tokens must be smaller than context_token_budget"
             )
         return self
 

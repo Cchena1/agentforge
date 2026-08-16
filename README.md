@@ -373,6 +373,35 @@ Vector、Lexical、Metadata 三个本地评分分支使用 `asyncio.TaskGroup` �
 | Citation | source、chunk、page/locator、quote、score、active version snapshot | `src/agent_service/schemas.py`；`docs/rag-evaluation-contract.md` |
 | 类型与依赖 | 完整类型注解、mypy strict、Ruff、`uv.lock`，重型集成放入 optional extra | `pyproject.toml`；`uv.lock` |
 
+## DeepSeek Harness 低风险运行时增强
+
+本轮没有引入 DeepSeek Harness 运行时依赖，也没有复制其代码；仅借鉴官方仓库中已经公开的 Tool Execution Pipeline、Capability 隔离和有界上下文模式，并按本项目现有 LangGraph、Pydantic、Prometheus 与 asyncio 边界做最小实现。
+
+```mermaid
+flowchart LR
+    A["模型生成 Tool Call"] --> B["Pydantic 参数校验"]
+    B --> C["Capability Policy"]
+    C -->|写操作| D["Approval Gate"]
+    C -->|读操作| E["Runtime Guard"]
+    D --> E
+    E --> F["Semaphore + Resource Lock + Timeout"]
+    F --> G["结构化 ToolResult"]
+    G --> H{"超过模型内联预算?"}
+    H -->|否| I["直接进入下一轮上下文"]
+    H -->|是| J["Content-addressed Artifact + 有界 Preview"]
+```
+
+工程边界：
+
+- **权限由代码执行，不由 Prompt 承诺**：`ToolExecutionScope` 约束工具 allowlist 和写权限；Policy、Approval、Guard 任一异常均 fail-closed。
+- **公开行为采用迁移窗口**：v0.3.x 默认 `AI_AGENT_TOOL_WRITE_APPROVAL_MODE=allow` 保持现有写工具行为并输出迁移告警；安全部署应显式设置为 `deny`。后续 Major Version 才能把默认值改为 `deny`。
+- **遥测不能阻断业务**：Tool Runtime Event 只包含阶段、结果、side-effect 分类和错误码，不包含参数或工具正文；Event Sink 故障 fail-open。
+- **上下文按完整 Turn 裁剪**：保留 leading system messages 和最新完整 user/assistant/tool 单元，避免只留下 Tool Call 或 Tool Result 的半条链路。
+- **大结果只向模型发送 Preview**：完整结果以 SHA-256 内容寻址写入 `state/artifacts/tool-results/`，Artifact 使用 `schema_version=1` 的 JSON Envelope；当前不属于 SQLite Backup 集合，按可再生成的临时运行产物处理。
+- **Subagent 不得权限升级**：Child 的工具集合、写权限、网络权限、继续派生权限和最大深度都不得超过 Parent。
+
+详细决策、威胁模型和迁移条件见 [ADR-011](docs/adr-011-deepseek-harness-runtime-guardrails.md)。
+
 ## 项目结构
 
 ```text
@@ -380,6 +409,7 @@ Vector、Lexical、Metadata 三个本地评分分支使用 `asyncio.TaskGroup` �
 |-- main.py                          # 正式 FastAPI 入口
 |-- src/agent_service/
 |   |-- app.py                       # API 组合与生命周期
+|   |-- context_runtime.py           # Context Budget 与 Tool Result Artifact
 |   |-- graph.py                     # LangGraph 控制流与循环止损
 |   |-- llm.py                       # Async 模型网关、Retry、Fallback、JSON repair
 |   |-- schemas.py                   # 严格 Pydantic 数据契约
@@ -482,6 +512,11 @@ uv sync --all-groups --extra documents
 | `AI_AGENT_MAX_AGENT_STEPS` | `8` | Agent 最大 Graph step |
 | `AI_AGENT_MAX_REPEATED_TOOL_CALLS` | `2` | 同一 Tool call signature 最大重复次数 |
 | `AI_AGENT_MAX_PARALLEL_TOOLS` | `8` | Tool 并发上限 |
+| `AI_AGENT_TOOL_WRITE_APPROVAL_MODE` | `allow` | v0.3.x 兼容模式；生产建议显式设为 `deny`，写工具审批失败时 fail-closed |
+| `AI_AGENT_TOOL_RESULT_INLINE_TOKEN_LIMIT` | `2500` | Tool Result 超过近似 Token 上限时写入 Artifact |
+| `AI_AGENT_TOOL_RESULT_PREVIEW_CHARS` | `4000` | Spill 后发送给模型的最大 Preview 字符数 |
+| `AI_AGENT_CONTEXT_TOKEN_BUDGET` | `64000` | 单次模型输入的近似总 Token 预算 |
+| `AI_AGENT_RESERVED_OUTPUT_TOKENS` | `4096` | 为模型输出预留的 Token 预算 |
 
 备用模型 Route 示例：
 
@@ -571,8 +606,8 @@ node --check server.js
 
 ```text
 Ruff:  all checks passed
-mypy:  success, no issues in 23 source files
-pytest: 77 passed, 1 warning
+mypy:  success, no issues in 25 source files
+pytest: 87 passed, 1 warning
 RAG evaluator: 2 schema-valid example queries; no quality claim
 Node:  public/app.js 与 server.js syntax check 通过
 PowerShell: run.ps1 解析通过

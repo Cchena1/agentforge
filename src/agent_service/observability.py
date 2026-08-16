@@ -152,6 +152,12 @@ class Observability:
             ("status",),
             registry=self.registry,
         )
+        self.tool_runtime_events = Counter(
+            "agentforge_tool_runtime_events_total",
+            "Tool policy, approval, guard and execution outcomes.",
+            ("phase", "outcome", "side_effects"),
+            registry=self.registry,
+        )
         self.parser_fallbacks = Counter(
             "agentforge_parser_fallbacks_total",
             "Parser fallback transitions.",
@@ -240,6 +246,20 @@ class Observability:
         self.ingestion_transitions.labels(status=status).inc()
         if status == "fallback":
             self.parser_fallbacks.inc()
+
+    def record_tool_runtime_event(
+        self,
+        phase: str,
+        outcome: str,
+        side_effects: str,
+    ) -> None:
+        if not self.metrics_enabled:
+            return
+        self.tool_runtime_events.labels(
+            phase=phase,
+            outcome=outcome,
+            side_effects=side_effects,
+        ).inc()
 
     def render_metrics(self) -> tuple[bytes, str]:
         return generate_latest(self.registry), CONTENT_TYPE_LATEST

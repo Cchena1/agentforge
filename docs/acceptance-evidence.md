@@ -15,8 +15,10 @@ This document maps engineering claims to implementation and tests. The latest ve
 | Function calling | `src/agent_service/tools/` | tool-description and strict-schema tests |
 | Async independent tools | `src/agent_service/tools/base.py` | `test_independent_tools_run_concurrently_without_load_testing` |
 | Tool dependency/conflict control | tool DAG, `$ref`, resource locks | dependency, cycle, and shared-lock tests |
+| Tool runtime policy | `ToolExecutionScope`, policy, approval, and guard gates | allowlist, write denial, and policy-failure tests |
+| Bounded model context | complete-turn trimming and versioned content-addressed spill | context integrity, artifact hash/schema, and graph integration tests |
 | Layered memory | `src/agent_service/memory.py` | short-term isolation/compaction and long-term namespace tests |
-| Multi-agent isolation | `src/agent_service/multi_agent.py` | isolated context and compressed-result test |
+| Multi-agent isolation | `src/agent_service/multi_agent.py` | isolated context, compressed result, capability non-escalation, and spawn-denial tests |
 | Loop loss prevention | `src/agent_service/graph.py` | repeated-call/max-step termination test |
 | RAG parsing and citations | `documents.py`, `rag.py` | semantic chunks, citations, table rows, scan detection |
 | Versioned/idempotent ingestion | `rag.py`, `rag_registry.py` | idempotence and active-version tests |
@@ -123,6 +125,9 @@ No retrieval-quality improvement is claimed without a representative labeled cor
 6. The Starlette/httpx TestClient deprecation warning remains open.
 7. Quality thresholds must be set only after a representative versioned dataset is reviewed.
 8. Chat-tool RAG is intentionally public-tenant only until authenticated request context is propagated into the graph/tool runtime.
+9. Tool-result artifacts are ephemeral: no read API, TTL, quota, backup, or restore contract is provided.
+10. Context token accounting is approximate; the newest complete turn may remain over budget and emits a warning instead of being split.
+11. Multi-agent capability enforcement requires each worker to pass `context.tool_scope()` into the executor.
 
 ## 9. Evidence index
 
@@ -130,6 +135,7 @@ No retrieval-quality improvement is claimed without a representative labeled cor
 - `docs/architecture.md`
 - `docs/adr-006-rag-correctness-first.md`
 - `docs/adr-007-rag-authorization-boundary.md`
+- `docs/adr-011-deepseek-harness-runtime-guardrails.md`
 - `docs/rag-engineering-plan.md`
 - `docs/rag-versioning-migration.md`
 - `docs/rag-evaluation-contract.md`

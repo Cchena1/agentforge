@@ -171,3 +171,188 @@ async def test_shared_resource_lock_prevents_conflicting_mutation() -> None:
         )
     )
     assert max_active == 1
+
+@pytest.mark.asyncio
+async def test_capability_policy_and_write_approval_fail_closed() -> None:
+    from agent_service.tools.base import (
+        CapabilityToolPolicy,
+        StaticToolApprover,
+        ToolExecutionEvent,
+        ToolExecutionScope,
+    )
+
+    registry = ToolRegistry()
+    called = False
+    events: list[ToolExecutionEvent] = []
+
+    async def handler(args: Args) -> dict[str, object]:
+        nonlocal called
+        called = True
+        return {"summary": str(args.value)}
+
+    async def capture(event: ToolExecutionEvent) -> None:
+        events.append(event)
+
+    registry.register(
+        ToolDefinition(
+            name="write",
+            summary="test",
+            when_to_use="test",
+            when_not_to_use="never",
+            args_model=Args,
+            handler=handler,
+            output_contract="test",
+            side_effects="write",
+        )
+    )
+    executor = AsyncToolExecutor(
+        registry,
+        timeout_seconds=2,
+        max_parallel=1,
+        policy=CapabilityToolPolicy(require_write_approval=True),
+        approver=StaticToolApprover(allow_write=False),
+        event_sink=capture,
+    )
+    results = await executor.execute_plan(
+        ExecutionPlan(
+            calls=[PlannedToolCall(call_id="a", tool_name="write", arguments={"value": 1})]
+        ),
+        scope=ToolExecutionScope(
+            actor_id="restricted-agent",
+            allowed_tools=frozenset({"write"}),
+            allow_write=True,
+        ),
+    )
+
+    assert called is False
+    assert results[0].status is ToolStatus.ERROR
+    assert results[0].error is not None
+    assert results[0].error.code == "TOOL_APPROVAL_DENIED"
+    assert [(event.phase, event.outcome) for event in events] == [
+        ("policy", "allowed"),
+        ("approval", "denied"),
+    ]
+
+
+@pytest.mark.asyncio
+async def test_capability_allowlist_is_enforced_before_handler() -> None:
+    from agent_service.tools.base import CapabilityToolPolicy, ToolExecutionScope
+
+    registry = ToolRegistry()
+    called = False
+
+    async def handler(args: Args) -> dict[str, object]:
+        nonlocal called
+        called = True
+        return {"summary": str(args.value)}
+
+    registry.register(
+        ToolDefinition(
+            name="read",
+            summary="test",
+            when_to_use="test",
+            when_not_to_use="never",
+            args_model=Args,
+            handler=handler,
+            output_contract="test",
+            side_effects="read",
+        )
+    )
+    executor = AsyncToolExecutor(
+        registry,
+        timeout_seconds=2,
+        max_parallel=1,
+        policy=CapabilityToolPolicy(),
+    )
+    results = await executor.execute_plan(
+        ExecutionPlan(
+            calls=[PlannedToolCall(call_id="a", tool_name="read", arguments={"value": 1})]
+        ),
+        scope=ToolExecutionScope(
+            actor_id="restricted-agent",
+            allowed_tools=frozenset(),
+            allow_write=False,
+        ),
+    )
+
+    assert called is False
+    assert results[0].error is not None
+    assert results[0].error.code == "TOOL_CAPABILITY_DENIED"
+
+
+@pytest.mark.asyncio
+async def test_policy_exception_fails_closed_before_handler() -> None:
+    from agent_service.tools.base import ToolPolicyDecision
+
+    registry = ToolRegistry()
+    called = False
+
+    async def handler(args: Args) -> dict[str, object]:
+        nonlocal called
+        called = True
+        return {"summary": str(args.value)}
+
+    class BrokenPolicy:
+        async def evaluate(self, context: object) -> ToolPolicyDecision:
+            _ = context
+            raise RuntimeError("policy backend unavailable")
+
+    registry.register(
+        ToolDefinition(
+            name="read",
+            summary="test",
+            when_to_use="test",
+            when_not_to_use="never",
+            args_model=Args,
+            handler=handler,
+            output_contract="test",
+        )
+    )
+    executor = AsyncToolExecutor(
+        registry, timeout_seconds=2, max_parallel=1, policy=BrokenPolicy()
+    )
+
+    results = await executor.execute_plan(
+        ExecutionPlan(
+            calls=[PlannedToolCall(call_id="a", tool_name="read", arguments={"value": 1})]
+        )
+    )
+
+    assert called is False
+    assert results[0].error is not None
+    assert results[0].error.code == "TOOL_POLICY_FAILURE"
+
+
+@pytest.mark.asyncio
+async def test_event_sink_failure_does_not_break_tool_execution() -> None:
+    registry = ToolRegistry()
+
+    async def handler(args: Args) -> dict[str, object]:
+        return {"summary": str(args.value)}
+
+    async def broken_sink(event: object) -> None:
+        _ = event
+        raise RuntimeError("telemetry unavailable")
+
+    registry.register(
+        ToolDefinition(
+            name="read",
+            summary="test",
+            when_to_use="test",
+            when_not_to_use="never",
+            args_model=Args,
+            handler=handler,
+            output_contract="test",
+        )
+    )
+    executor = AsyncToolExecutor(
+        registry, timeout_seconds=2, max_parallel=1, event_sink=broken_sink
+    )
+
+    results = await executor.execute_plan(
+        ExecutionPlan(
+            calls=[PlannedToolCall(call_id="a", tool_name="read", arguments={"value": 1})]
+        )
+    )
+
+    assert results[0].status is ToolStatus.SUCCESS

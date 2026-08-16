@@ -31,10 +31,16 @@ def test_metrics_trace_header_and_local_trace_evidence(tmp_path: Path) -> None:
         assert health.status_code == 200
         assert len(health.headers["X-Trace-ID"]) == 32
         assert client.get("/ready").json()["status"] == "ready"
+        app.state.services.observability.record_tool_runtime_event(
+            "policy", "denied", "write"
+        )
         metrics = client.get("/metrics")
         assert metrics.status_code == 200
         assert "agentforge_http_requests_total" in metrics.text
         assert 'route="/health"' in metrics.text
+        assert "agentforge_tool_runtime_events_total" in metrics.text
+        assert 'phase="policy"' in metrics.text
+        assert 'outcome="denied"' in metrics.text
         with pytest.raises(BackupError, match="state directory is in use"):
             BackupManager(config.resolved_state_dir).create(tmp_path / "backups")
 

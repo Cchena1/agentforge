@@ -381,3 +381,31 @@ State ownership is explicit:
 - Metric labels are bounded operational dimensions; tenant, query, source, user and trace identifiers remain in neither labels nor content-free span attributes.
 
 The default SQLite path has an executable closure. The Qdrant path deliberately fails closed until collection snapshots are bound to the application manifest. See `docs/adr-010-observability-backup-recovery.md` and `docs/operations.md`.
+
+
+## Runtime guardrails and bounded model context
+
+```mermaid
+flowchart TD
+    M["Model Tool Call"] --> V["Strict Pydantic Validation"]
+    V --> P["Capability Policy"]
+    P --> A["Optional Write Approval"]
+    A --> G["Runtime Guard"]
+    G --> X["Async DAG Executor"]
+    X --> R["Full ToolResult in Graph State"]
+    R --> B{"Inline budget exceeded?"}
+    B -->|No| C["Model Context"]
+    B -->|Yes| S["Versioned Content-addressed Artifact"]
+    S --> C
+```
+
+State ownership is separated:
+
+- `AsyncToolExecutor` owns execution ordering, resource locks, timeout, gate sequencing and normalized `ToolResult`.
+- `ToolExecutionScope` owns runtime capabilities for one agent invocation; it is immutable and passed explicitly.
+- `ContextBudgetManager` owns model-input selection but never mutates durable conversation memory.
+- `ToolResultSpillStore` owns ephemeral content-addressed artifacts under the state directory; it does not own durable backup policy.
+- `AgentGraph` owns warnings and the distinction between full internal state and bounded model-visible context.
+- `Observability` owns bounded-cardinality counters; telemetry failures cannot change Tool execution outcomes.
+
+The artifact envelope is schema-versioned from its first release. It is deliberately excluded from the current SQLite backup contract because no artifact restore/read API exists yet. If artifacts become user-visible evidence or inputs to later turns, a retention, authorization, backup and migration ADR is required first.

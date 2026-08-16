@@ -13,6 +13,7 @@ from openai import AsyncOpenAI
 from opentelemetry.instrumentation.fastapi import FastAPIInstrumentor
 
 from .backup import StateDirectoryLock
+from .context_runtime import ContextBudgetManager, ToolResultSpillStore
 from .document_pipeline import (
     DocumentNeedsReviewError,
     ParentChildChunker,
@@ -41,7 +42,13 @@ from .schemas import (
     ToolCallRecord,
 )
 from .settings import Settings, settings
-from .tools import AsyncToolExecutor, build_registry
+from .tools import (
+    AsyncToolExecutor,
+    CapabilityToolPolicy,
+    StaticToolApprover,
+    ToolExecutionEvent,
+    build_registry,
+)
 from .vector_store import QdrantVectorStore, SQLiteVectorStore, VectorStore
 
 logger = logging.getLogger(__name__)
@@ -123,10 +130,38 @@ class Services:
             )
             self.gateway = ModelGateway(config)
             self.registry = build_registry(config.workspace_root, self.rag)
+
+            async def record_tool_event(event: ToolExecutionEvent) -> None:
+                self.observability.record_tool_runtime_event(
+                    event.phase,
+                    event.outcome,
+                    event.side_effects,
+                )
+
+            if config.tool_write_approval_mode == "allow":
+                logger.warning(
+                    "Write-tool compatibility approval is enabled; migrate to "
+                    "AI_AGENT_TOOL_WRITE_APPROVAL_MODE=deny before the secure-default release"
+                )
+
             self.executor = AsyncToolExecutor(
                 self.registry,
                 timeout_seconds=config.tool_timeout_seconds,
                 max_parallel=config.max_parallel_tools,
+                policy=CapabilityToolPolicy(require_write_approval=True),
+                approver=StaticToolApprover(
+                    allow_write=config.tool_write_approval_mode == "allow"
+                ),
+                event_sink=record_tool_event,
+            )
+            self.context_budget = ContextBudgetManager(
+                max_input_tokens=config.context_token_budget,
+                reserved_output_tokens=config.reserved_output_tokens,
+            )
+            self.tool_result_spill = ToolResultSpillStore(
+                config.resolved_state_dir / "artifacts" / "tool-results",
+                inline_token_limit=config.tool_result_inline_token_limit,
+                preview_chars=config.tool_result_preview_chars,
             )
             self.graph = AgentGraph(
                 self.gateway,
@@ -134,6 +169,8 @@ class Services:
                 self.executor,
                 max_steps=config.max_agent_steps,
                 max_repeated_calls=config.max_repeated_tool_calls,
+                context_budget=self.context_budget,
+                tool_result_spill=self.tool_result_spill,
             )
 
         except Exception:

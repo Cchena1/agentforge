@@ -1,11 +1,13 @@
 from __future__ import annotations
 
+import asyncio
 import hashlib
 import json
 from typing import Any, Literal, TypedDict, cast
 
 from langgraph.graph import END, START, StateGraph
 
+from .context_runtime import ContextBudgetManager, ToolResultSpillStore
 from .llm import AllModelRoutesFailed, ModelGateway
 from .schemas import (
     ChatMessage,
@@ -52,12 +54,16 @@ class AgentGraph:
         *,
         max_steps: int,
         max_repeated_calls: int,
+        context_budget: ContextBudgetManager | None = None,
+        tool_result_spill: ToolResultSpillStore | None = None,
     ) -> None:
         self.gateway = gateway
         self.registry = registry
         self.executor = executor
         self.max_steps = max_steps
         self.max_repeated_calls = max_repeated_calls
+        self.context_budget = context_budget
+        self.tool_result_spill = tool_result_spill
         builder = StateGraph(AgentState)
         builder.add_node("model", self._model_node)
         builder.add_node("tools", self._tools_node)
@@ -115,8 +121,17 @@ class AgentGraph:
                 "final_reply": _offline_tool_answer(state["tool_results"]),
                 "degraded": True,
             }
+        model_messages = state["messages"]
+        context_warnings = list(state["warnings"])
+        if self.context_budget is not None:
+            fitted = self.context_budget.fit(model_messages)
+            model_messages = fitted.messages
+            if fitted.trimmed_units and "CONTEXT_TRIMMED" not in context_warnings:
+                context_warnings.append("CONTEXT_TRIMMED")
+            if fitted.over_budget and "CONTEXT_OVER_BUDGET" not in context_warnings:
+                context_warnings.append("CONTEXT_OVER_BUDGET")
         try:
-            turn = await self.gateway.complete_with_tools(state["messages"], self.registry.schemas())
+            turn = await self.gateway.complete_with_tools(model_messages, self.registry.schemas())
         except AllModelRoutesFailed as exc:
             return {
                 "steps": steps,
@@ -124,7 +139,7 @@ class AgentGraph:
                 "final_reply": "模型服务及备用路由均不可用，已停止自动执行并请求人工处理。",
                 "degraded": True,
                 "handoff_required": True,
-                "warnings": [*state["warnings"], *exc.failures],
+                "warnings": [*context_warnings, *exc.failures],
             }
 
         pending = [call.model_dump(mode="json") for call in turn.tool_calls]
@@ -140,7 +155,7 @@ class AgentGraph:
                     "final_reply": f"检测到工具 {call.name} 被重复调用，已触发止损并停止。",
                     "degraded": True,
                     "handoff_required": True,
-                    "warnings": [*state["warnings"], "REPEATED_TOOL_CALL_STOP"],
+                    "warnings": [*context_warnings, "REPEATED_TOOL_CALL_STOP"],
                 }
         messages = list(state["messages"])
         if pending:
@@ -167,6 +182,7 @@ class AgentGraph:
             "repeated": repeated,
             "final_reply": "" if pending else turn.content,
             "degraded": state["degraded"] or turn.degraded,
+            "warnings": context_warnings,
         }
 
     def _route_after_model(self, state: AgentState) -> Literal["tools", "end"]:
@@ -188,13 +204,28 @@ class AgentGraph:
         messages = list(state["messages"])
         citations = [Citation.model_validate(item) for item in state["citations"]]
         handoff_required = state["handoff_required"]
-        for result in results:
+        warnings = list(state["warnings"])
+        if self.tool_result_spill is None:
+            rendered_results = [
+                json.dumps(result.model_dump(mode="json"), ensure_ascii=False)
+                for result in results
+            ]
+            any_spilled = False
+        else:
+            rendered = await asyncio.gather(
+                *(self.tool_result_spill.render(result) for result in results)
+            )
+            rendered_results = [item.content for item in rendered]
+            any_spilled = any(item.spilled for item in rendered)
+        if any_spilled and "TOOL_RESULT_SPILLED" not in warnings:
+            warnings.append("TOOL_RESULT_SPILLED")
+        for result, rendered_content in zip(results, rendered_results, strict=True):
             messages.append(
                 {
                     "role": "tool",
                     "tool_call_id": result.call_id,
                     "name": result.tool_name,
-                    "content": json.dumps(result.model_dump(mode="json"), ensure_ascii=False),
+                    "content": rendered_content,
                 }
             )
             if result.tool_name == "search_knowledge" and result.status is ToolStatus.SUCCESS:
@@ -224,6 +255,7 @@ class AgentGraph:
             "tool_records": [*state["tool_records"], *records],
             "citations": [citation.model_dump(mode="json") for citation in citations],
             "handoff_required": handoff_required,
+            "warnings": warnings,
         }
 
 

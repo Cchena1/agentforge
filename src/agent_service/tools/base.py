@@ -1,11 +1,11 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
 import asyncio
 import time
 from collections import defaultdict
 from collections.abc import Awaitable, Callable
 from dataclasses import dataclass, field
-from typing import Any, Generic, Literal, TypeVar
+from typing import Any, Generic, Literal, Protocol, TypeVar
 
 from pydantic import BaseModel, ValidationError
 
@@ -94,7 +94,11 @@ class ToolRegistry:
             raise KeyError(f"unknown tool: {name}") from exc
 
     def schemas(self, names: set[str] | None = None) -> list[dict[str, Any]]:
-        values = self._tools.values() if names is None else (self._tools[name] for name in names if name in self._tools)
+        values = (
+            self._tools.values()
+            if names is None
+            else (self._tools[name] for name in names if name in self._tools)
+        )
         return [tool.openai_schema() for tool in values]
 
     @property
@@ -102,17 +106,158 @@ class ToolRegistry:
         return set(self._tools)
 
 
-class AsyncToolExecutor:
-    """Executes a validated dependency DAG; independent calls run concurrently."""
+@dataclass(slots=True, frozen=True)
+class ToolExecutionScope:
+    """Runtime-enforced capabilities for one root agent or delegated worker."""
 
-    def __init__(self, registry: ToolRegistry, *, timeout_seconds: float, max_parallel: int) -> None:
+    actor_id: str = "root-agent"
+    allowed_tools: frozenset[str] | None = None
+    allow_write: bool = True
+
+
+@dataclass(slots=True, frozen=True)
+class ToolInvocationContext:
+    call: PlannedToolCall
+    tool: ToolDefinition[Any]
+    arguments: BaseModel
+    resource_keys: tuple[str, ...]
+    scope: ToolExecutionScope
+
+
+@dataclass(slots=True, frozen=True)
+class ToolPolicyDecision:
+    allowed: bool
+    requires_approval: bool = False
+    code: str = ""
+    reason: str = ""
+
+
+@dataclass(slots=True, frozen=True)
+class ToolGateDecision:
+    allowed: bool
+    code: str = ""
+    reason: str = ""
+
+
+@dataclass(slots=True, frozen=True)
+class ToolExecutionEvent:
+    phase: Literal["policy", "approval", "guard", "execution"]
+    outcome: Literal["allowed", "denied", "started", "success", "error", "timeout"]
+    call_id: str
+    tool_name: str
+    side_effects: Literal["none", "read", "write"]
+    code: str = ""
+    latency_ms: float = 0.0
+
+
+class ToolPolicy(Protocol):
+    async def evaluate(self, context: ToolInvocationContext) -> ToolPolicyDecision: ...
+
+
+class ToolApprover(Protocol):
+    async def approve(self, context: ToolInvocationContext) -> ToolGateDecision: ...
+
+
+class ToolGuard(Protocol):
+    async def check(self, context: ToolInvocationContext) -> ToolGateDecision: ...
+
+
+ToolEventSink = Callable[[ToolExecutionEvent], Awaitable[None]]
+
+
+class AllowAllToolPolicy:
+    """Compatibility policy used when callers do not opt into runtime restrictions."""
+
+    async def evaluate(self, context: ToolInvocationContext) -> ToolPolicyDecision:
+        _ = context
+        return ToolPolicyDecision(allowed=True)
+
+
+class CapabilityToolPolicy:
+    """Enforces tool allowlists and turns write operations into explicit approvals."""
+
+    def __init__(self, *, require_write_approval: bool = True) -> None:
+        self.require_write_approval = require_write_approval
+
+    async def evaluate(self, context: ToolInvocationContext) -> ToolPolicyDecision:
+        allowed_tools = context.scope.allowed_tools
+        if allowed_tools is not None and context.tool.name not in allowed_tools:
+            return ToolPolicyDecision(
+                allowed=False,
+                code="TOOL_CAPABILITY_DENIED",
+                reason=f"tool {context.tool.name!r} is outside the execution scope",
+            )
+        if context.tool.side_effects == "write" and not context.scope.allow_write:
+            return ToolPolicyDecision(
+                allowed=False,
+                code="TOOL_WRITE_DENIED",
+                reason="write side effects are disabled for this execution scope",
+            )
+        return ToolPolicyDecision(
+            allowed=True,
+            requires_approval=(
+                self.require_write_approval and context.tool.side_effects == "write"
+            ),
+        )
+
+
+class StaticToolApprover:
+    """Fail-closed write approval until an interactive approver is configured."""
+
+    def __init__(self, *, allow_write: bool = False) -> None:
+        self.allow_write = allow_write
+
+    async def approve(self, context: ToolInvocationContext) -> ToolGateDecision:
+        if context.tool.side_effects != "write" or self.allow_write:
+            return ToolGateDecision(allowed=True)
+        return ToolGateDecision(
+            allowed=False,
+            code="TOOL_APPROVAL_DENIED",
+            reason="write tool requires explicit approval",
+        )
+
+
+class AllowAllToolGuard:
+    async def check(self, context: ToolInvocationContext) -> ToolGateDecision:
+        _ = context
+        return ToolGateDecision(allowed=True)
+
+
+async def _discard_tool_event(event: ToolExecutionEvent) -> None:
+    _ = event
+
+
+class AsyncToolExecutor:
+    """Executes a validated dependency DAG through policy, approval and guard gates."""
+
+    def __init__(
+        self,
+        registry: ToolRegistry,
+        *,
+        timeout_seconds: float,
+        max_parallel: int,
+        policy: ToolPolicy | None = None,
+        approver: ToolApprover | None = None,
+        guard: ToolGuard | None = None,
+        event_sink: ToolEventSink | None = None,
+    ) -> None:
         self.registry = registry
         self.timeout_seconds = timeout_seconds
+        self.policy = policy or AllowAllToolPolicy()
+        self.approver = approver or StaticToolApprover(allow_write=True)
+        self.guard = guard or AllowAllToolGuard()
+        self.event_sink = event_sink or _discard_tool_event
         self._semaphore = asyncio.Semaphore(max_parallel)
         self._resource_locks: defaultdict[str, asyncio.Lock] = defaultdict(asyncio.Lock)
 
-    async def execute_plan(self, plan: ExecutionPlan) -> list[ToolResult]:
+    async def execute_plan(
+        self,
+        plan: ExecutionPlan,
+        *,
+        scope: ToolExecutionScope | None = None,
+    ) -> list[ToolResult]:
         _validate_dag(plan)
+        active_scope = scope or ToolExecutionScope()
         calls = {call.call_id: call for call in plan.calls}
         pending = set(calls)
         results: dict[str, ToolResult] = {}
@@ -124,13 +269,20 @@ class AsyncToolExecutor:
             ]
             if not ready:
                 raise ValueError("tool dependency graph contains a cycle or unresolved dependency")
-            batch_results = await asyncio.gather(*(self._execute_one(call, results) for call in ready))
+            batch_results = await asyncio.gather(
+                *(self._execute_one(call, results, active_scope) for call in ready)
+            )
             for result in batch_results:
                 results[result.call_id] = result
                 pending.remove(result.call_id)
         return [results[call.call_id] for call in plan.calls]
 
-    async def _execute_one(self, call: PlannedToolCall, prior: dict[str, ToolResult]) -> ToolResult:
+    async def _execute_one(
+        self,
+        call: PlannedToolCall,
+        prior: dict[str, ToolResult],
+        scope: ToolExecutionScope,
+    ) -> ToolResult:
         started = time.perf_counter()
         try:
             tool = self.registry.get(call.tool_name)
@@ -155,11 +307,26 @@ class AsyncToolExecutor:
         try:
             resolved_arguments = _resolve_references(call.arguments, prior)
             args = tool.args_model.model_validate(resolved_arguments, strict=True)
+            resource_keys = tuple(sorted(tool.resource_keys(args)))
         except (ValidationError, KeyError, TypeError, ValueError) as exc:
             return _error_result(call, started, "INVALID_ARGUMENTS", str(exc), False)
 
-        resource_keys = sorted(tool.resource_keys(args))
+        context = ToolInvocationContext(
+            call=call,
+            tool=tool,
+            arguments=args,
+            resource_keys=resource_keys,
+            scope=scope,
+        )
+        policy_failure = await self._apply_policy(context, started)
+        if policy_failure is not None:
+            return policy_failure
+        guard_failure = await self._apply_guard(context, started)
+        if guard_failure is not None:
+            return guard_failure
+
         locks = [self._resource_locks[key] for key in resource_keys]
+        await self._emit(context, "execution", "started", started=started)
         try:
             async with self._semaphore:
                 for lock in locks:
@@ -167,10 +334,12 @@ class AsyncToolExecutor:
                 try:
                     async with asyncio.timeout(self.timeout_seconds):
                         data = await tool.handler(args)
+                    if not isinstance(data, dict):
+                        raise TypeError("tool handler must return a JSON object")
                 finally:
                     for lock in reversed(locks):
                         lock.release()
-            return ToolResult(
+            result = ToolResult(
                 call_id=call.call_id,
                 tool_name=call.tool_name,
                 status=ToolStatus.SUCCESS,
@@ -178,10 +347,156 @@ class AsyncToolExecutor:
                 summary=str(data.get("summary", ""))[:2000],
                 latency_ms=(time.perf_counter() - started) * 1000,
             )
+            await self._emit(context, "execution", "success", started=started)
+            return result
         except TimeoutError:
-            return _error_result(call, started, "TOOL_TIMEOUT", "tool execution timed out", True, ToolStatus.TIMEOUT)
-        except Exception as exc:  # noqa: BLE001 - tool boundary must normalize third-party failures
+            await self._emit(
+                context,
+                "execution",
+                "timeout",
+                code="TOOL_TIMEOUT",
+                started=started,
+            )
+            return _error_result(
+                call,
+                started,
+                "TOOL_TIMEOUT",
+                "tool execution timed out",
+                True,
+                ToolStatus.TIMEOUT,
+            )
+        except Exception as exc:  # noqa: BLE001 - normalize third-party failures
+            await self._emit(
+                context,
+                "execution",
+                "error",
+                code="TOOL_FAILURE",
+                started=started,
+            )
             return _error_result(call, started, "TOOL_FAILURE", str(exc), False)
+
+    async def _apply_policy(
+        self,
+        context: ToolInvocationContext,
+        started: float,
+    ) -> ToolResult | None:
+        try:
+            decision = await self.policy.evaluate(context)
+        except Exception as exc:  # noqa: BLE001 - policy boundary must fail closed
+            await self._emit(
+                context,
+                "policy",
+                "denied",
+                code="TOOL_POLICY_FAILURE",
+                started=started,
+            )
+            return _error_result(
+                context.call,
+                started,
+                "TOOL_POLICY_FAILURE",
+                f"tool policy failed closed: {type(exc).__name__}",
+                False,
+            )
+        if not decision.allowed:
+            code = decision.code or "TOOL_POLICY_DENIED"
+            await self._emit(context, "policy", "denied", code=code, started=started)
+            return _error_result(
+                context.call,
+                started,
+                code,
+                decision.reason or "tool policy denied execution",
+                False,
+            )
+        await self._emit(context, "policy", "allowed", started=started)
+        if not decision.requires_approval:
+            return None
+        try:
+            approval = await self.approver.approve(context)
+        except Exception as exc:  # noqa: BLE001 - approval boundary must fail closed
+            await self._emit(
+                context,
+                "approval",
+                "denied",
+                code="TOOL_APPROVAL_FAILURE",
+                started=started,
+            )
+            return _error_result(
+                context.call,
+                started,
+                "TOOL_APPROVAL_FAILURE",
+                f"tool approval failed closed: {type(exc).__name__}",
+                False,
+            )
+        if not approval.allowed:
+            code = approval.code or "TOOL_APPROVAL_DENIED"
+            await self._emit(context, "approval", "denied", code=code, started=started)
+            return _error_result(
+                context.call,
+                started,
+                code,
+                approval.reason or "tool approval denied execution",
+                False,
+            )
+        await self._emit(context, "approval", "allowed", started=started)
+        return None
+
+    async def _apply_guard(
+        self,
+        context: ToolInvocationContext,
+        started: float,
+    ) -> ToolResult | None:
+        try:
+            decision = await self.guard.check(context)
+        except Exception as exc:  # noqa: BLE001 - guard boundary must fail closed
+            await self._emit(
+                context,
+                "guard",
+                "denied",
+                code="TOOL_GUARD_FAILURE",
+                started=started,
+            )
+            return _error_result(
+                context.call,
+                started,
+                "TOOL_GUARD_FAILURE",
+                f"tool guard failed closed: {type(exc).__name__}",
+                False,
+            )
+        if not decision.allowed:
+            code = decision.code or "TOOL_GUARD_DENIED"
+            await self._emit(context, "guard", "denied", code=code, started=started)
+            return _error_result(
+                context.call,
+                started,
+                code,
+                decision.reason or "tool guard denied execution",
+                False,
+            )
+        await self._emit(context, "guard", "allowed", started=started)
+        return None
+
+    async def _emit(
+        self,
+        context: ToolInvocationContext,
+        phase: Literal["policy", "approval", "guard", "execution"],
+        outcome: Literal["allowed", "denied", "started", "success", "error", "timeout"],
+        *,
+        code: str = "",
+        started: float,
+    ) -> None:
+        event = ToolExecutionEvent(
+            phase=phase,
+            outcome=outcome,
+            call_id=context.call.call_id,
+            tool_name=context.tool.name,
+            side_effects=context.tool.side_effects,
+            code=code,
+            latency_ms=(time.perf_counter() - started) * 1000,
+        )
+        try:
+            await self.event_sink(event)
+        except Exception:  # noqa: BLE001 - telemetry must not break tool execution
+            return
 
 
 def _error_result(

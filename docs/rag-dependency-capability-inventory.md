@@ -128,3 +128,16 @@ Security and cost boundaries:
 - Prometheus labels exclude user-controlled identifiers and text.
 - Trace files are bounded by size and backup count.
 - Official tool archives remain under `state/` and are excluded from Git; benchmark evidence remains small.
+
+
+## DeepSeek Harness pattern review (2026-08-16)
+
+| Candidate | License / status | Reused capability | Decision |
+|---|---|---|---|
+| DeepSeek Harness | MIT; official repository labels it Developer Preview | Tool pre-execution policy, approval/guard stages, capability-filtered Subagent, bounded context pattern | Pattern adopted; package not added and code not copied |
+| Existing Pydantic | Already pinned in project | Strict argument and runtime contract validation | Reused; no dependency change |
+| Existing asyncio / LangGraph | Already pinned in project | Tool DAG concurrency, bounded loops and state ownership | Reused; no dependency change |
+| Existing Prometheus client | Already pinned in project | Bounded-cardinality Tool runtime metrics | Reused; no dependency change |
+| Model-specific tokenizer | Not present | More accurate context accounting | Rejected for now; add only after model-family and error-budget requirements are defined |
+
+Review conclusion: the improvement is architectural reuse, not a new runtime dependency. This avoids duplicate orchestration stacks and keeps the current `uv.lock` unchanged.
