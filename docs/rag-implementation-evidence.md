@@ -1,6 +1,6 @@
 # RAG Correctness Milestone: Implementation Evidence
 
-**Evidence date:** 2026-08-14
+**Evidence date:** 2026-08-16
 **Scope:** functional, contract, migration, tenant/ACL isolation, concurrency, and static verification
 **Explicit exclusion:** no pressure, throughput, saturation, p95/p99, or sustained-load testing
 
@@ -19,6 +19,11 @@
 11. Composite `(tenant_id, source_id)` identity with tenant-wide or principal-intersection ACL semantics.
 12. SQLite authorization filtering before vector decoding and Qdrant authorization filtering inside the vector query.
 13. Additive migration of legacy SQLite/Qdrant records to public-tenant semantics.
+14. Additive SQLite FTS5 side index with BM25 scoring, backfill, transactional update, and delete behavior.
+15. Embedding-profile-aware fusion that prevents non-semantic HashEmbedding ranks from outvoting lexical evidence.
+16. Source/page-first candidate diversification before duplicate-page fill.
+17. Fused-score evidence gating with bounded corrective retrieval.
+18. Third 200-page OHR-Bench run with a 150-page longitudinal cohort and 50-page disjoint holdout.
 
 ## Claim-to-test evidence
 
@@ -48,6 +53,9 @@
 | Public HTTP contracts expose additive tenant/ACL fields | API tenant/ACL and same-source/multi-tenant tests in `tests/test_api.py` |
 | Existing API fields remain while version evidence is added | `test_document_ingest_adds_version_fields_without_removing_legacy_fields` |
 | Evaluation input rejects malformed records | `tests/test_rag_evaluation.py` |
+| Misleading Hash rank cannot outvote BM25 evidence | `test_hash_baseline_does_not_outvote_bm25_relevance` |
+| FTS backfill, update, and delete stay consistent | `test_fts_index_backfills_updates_and_deletes_with_chunks` |
+| Top-K covers distinct pages before duplicate chunks | `test_retrieval_diversifies_pages_before_filling_duplicate_chunks` |
 
 ## Evaluation assets
 
@@ -55,7 +63,7 @@
 - `scripts/evaluate_rag.py`: validates query records and optionally computes source Recall@k, MRR, nDCG, and empty-result rate from ranked result JSONL.
 - `docs/rag-evaluation-contract.md`: dataset, metric, release-gate, and non-goal definitions.
 
-No retrieval-quality improvement is claimed because a representative labeled corpus has not yet been created.
+Retrieval-quality claims are now limited to the frozen external Benchmark evidence in `eval/基于OmniDocBench和OHR-Bench的RAG基准测试v3/`. They do not establish production-corpus quality or answer-level citation precision.
 
 ## Latest local verification
 
@@ -93,7 +101,7 @@ Results are updated in the root `README.md` after the target copy is verified.
 - Token-aware Parent-Child chunking with page artifact exclusion and table row-group splitting with repeated headers.
 - Durable asynchronous ingestion jobs with create/get/cancel APIs, restart recovery, bounded parallelism, and stage events.
 - Additive deprecation of the blocking ingestion API.
-- Parallel local Vector/Lexical/Metadata scoring with RRF fusion and deterministic rerank.
+- Parallel local Vector/FTS5-BM25/Metadata scoring with embedding-profile-aware fusion and deterministic source/page diversification.
 - Code-generated citations containing exact evidence quotes, structured locations, content hashes, parser identity, and active-version checks.
 - Cross-field Pydantic settings validation and strict citation location validation.
 
@@ -114,9 +122,10 @@ Results are updated in the root `README.md` after the target copy is verified.
 ### Latest local verification
 
 ```text
-ruff check src tests: all checks passed
-mypy src scripts: success, no issues found in 20 source files
-pytest -q -p no:cacheprovider: 65 passed, 1 Starlette/httpx deprecation warning
+ruff check src main.py tests scripts benchmark-scripts: all checks passed
+mypy src scripts: success, no issues found in 25 source files
+pytest -q -p no:cacheprovider: 90 passed, 1 Starlette/httpx deprecation warning
+benchmark adversarial audit: pass, 200 unique pages and 559 queries per variant
 pressure/load testing: not performed by design
 ```
 
@@ -124,7 +133,7 @@ pressure/load testing: not performed by design
 
 - Real Docling PDF/DOCX extraction in this environment.
 - PaddleOCR installation, page-level selective OCR, and real Chinese scan quality.
-- Representative Recall@5, Citation Precision, abstention-rate, and complex-document regression thresholds.
+- Production-corpus Recall@5, answer-level Citation Precision, abstention-rate, and complex-document regression thresholds beyond the frozen external fixtures.
 - Remote Qdrant persistence/index tuning and any cloud parser provider.
 - `tests/test_rag.py::test_retrieval_degrades_when_one_scoring_branch_fails` proves that an isolated Vector scoring failure preserves Lexical/Metadata retrieval and emits a typed degradation warning.
 
@@ -183,3 +192,27 @@ pressure/load test: not performed
 ```
 
 The frozen same-set regression is `eval/基于OmniDocBench和OHR-Bench的RAG基准测试/results/omni_failed_10_smoke_minimal_fix_2026-08-15.json`. All 10 pages still parsed, while the gate rejected `omni-031`, `omni-016`, `omni-021`, and `omni-036`. Mean character trigram F1 remained 0.4812, so this change is evidence of safer acceptance behavior, not improved extraction fidelity.
+
+## 2026-08-16 BM25 retrieval repair and third 200-page Benchmark
+
+The minimum repair reused SQLite FTS5/BM25 rather than adding a retrieval dependency. On the original 150-page/427-query cohort, Recall@5 changed as follows:
+
+| Variant | Before | After | Delta |
+|---|---:|---:|---:|
+| Ground Truth | 73.30% | 94.38% | +21.08 pp |
+| Formatting Noise | 70.26% | 94.38% | +24.12 pp |
+| Semantic/OCR Noise | 57.38% | 86.42% | +29.04 pp |
+
+A disjoint 50-page/132-query holdout reached Recall@5 of 99.24%, 99.24%, and 96.97% for the same variants. The aggregate 200-page/559-query result was 95.53%, 95.53%, and 88.91%. Hit-level Citation Validity was 100%, which means schema/source/quote consistency only; it is not claim-level semantic support.
+
+Verification:
+
+```text
+pytest: 90 passed, 1 upstream Starlette/httpx deprecation warning
+ruff: all checks passed
+mypy strict: success, 25 source files
+benchmark adversarial audit: pass, 200 unique pages, 559 queries per variant
+pressure/load test: not performed
+```
+
+Residual limitations are Finance semantic/OCR retrieval, dense-first Qdrant operation, non-learned reranking, and the absence of answer-level citation entailment evaluation.

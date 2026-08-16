@@ -100,7 +100,7 @@ The root `README.md` records the latest verified counts after final target-repos
 - `docs/rag-evaluation-contract.md`: schema and release-gate rules.
 - `docs/rag-implementation-evidence.md`: detailed RAG claim-to-test mapping.
 
-No retrieval-quality improvement is claimed without a representative labeled corpus.
+Retrieval-quality improvement is claimed only for the frozen external 200-page Benchmark comparison. It does not establish production-corpus quality or answer-level citation precision.
 
 ## 7. Not verified
 
@@ -108,7 +108,7 @@ No retrieval-quality improvement is claimed without a representative labeled cor
 - provider-backed embedding quality;
 - OCR and complex-table quality on representative documents;
 - remote Qdrant persistence and index tuning;
-- learned reranking, sparse-vector, corrective-RAG, or graph-RAG gains;
+- learned reranking, remote sparse-vector, LLM rewrite, or graph-RAG gains beyond the implemented bounded corrective retrieval;
 - authentication middleware and trusted identity-to-authorization-context mapping;
 - multi-process/multi-host ingestion writers;
 - durable ingestion job restart/cancellation/progress behavior;
@@ -142,3 +142,22 @@ No retrieval-quality improvement is claimed without a representative labeled cor
 - `docs/rag-implementation-evidence.md`
 - `docs/rag-dependency-capability-inventory.md`
 - `tests/`
+
+## 8. 2026-08-16 retrieval-quality acceptance
+
+The third 200-page Benchmark is frozen under `eval/基于OmniDocBench和OHR-Bench的RAG基准测试v3/`.
+
+| Gate | Result |
+|---|---:|
+| Unique pages | 200 |
+| Queries per text variant | 559 |
+| Ground Truth Recall@5 | 95.53% |
+| Formatting Noise Recall@5 | 95.53% |
+| Semantic/OCR Noise Recall@5 | 88.91% |
+| Hit-level Citation Validity | 100% |
+| Pytest | 90 passed |
+| Ruff | passed |
+| Strict mypy | 25 source files passed |
+| Pressure/load test | not performed |
+
+Citation Validity is restricted to retrieval-hit schema, source/version identity, and quote membership. It is not answer-level semantic citation precision.

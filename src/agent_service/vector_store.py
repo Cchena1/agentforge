@@ -96,6 +96,14 @@ class SQLiteVectorStore:
                         created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
                     );
                     CREATE INDEX IF NOT EXISTS idx_chunks_source ON document_chunks(source_id);
+                    CREATE VIRTUAL TABLE IF NOT EXISTS document_chunks_fts USING fts5(
+                        chunk_id UNINDEXED,
+                        text,
+                        source_name,
+                        locator,
+                        metadata_text,
+                        tokenize='unicode61 remove_diacritics 2'
+                    );
                     """
                 )
                 cursor = await db.execute("PRAGMA table_info(document_chunks)")
@@ -116,6 +124,37 @@ class SQLiteVectorStore:
                 await db.execute(
                     "CREATE INDEX IF NOT EXISTS idx_chunks_tenant ON document_chunks(tenant_id)"
                 )
+                chunk_cursor = await db.execute("SELECT COUNT(*) FROM document_chunks")
+                chunk_count_row = await chunk_cursor.fetchone()
+                fts_cursor = await db.execute("SELECT COUNT(*) FROM document_chunks_fts")
+                fts_count_row = await fts_cursor.fetchone()
+                if chunk_count_row is None or fts_count_row is None:
+                    raise RuntimeError("failed to inspect SQLite retrieval index state")
+                chunk_count = int(chunk_count_row[0])
+                fts_count = int(fts_count_row[0])
+                if chunk_count != fts_count:
+                    await db.execute("DELETE FROM document_chunks_fts")
+                    cursor = await db.execute(
+                        "SELECT chunk_id, text, source_name, locator, metadata_json FROM document_chunks"
+                    )
+                    existing_rows = await cursor.fetchall()
+                    await db.executemany(
+                        """
+                        INSERT INTO document_chunks_fts(
+                            chunk_id, text, source_name, locator, metadata_text
+                        ) VALUES (?, ?, ?, ?, ?)
+                        """,
+                        [
+                            (
+                                str(row[0]),
+                                str(row[1]),
+                                str(row[2]),
+                                str(row[3] or ""),
+                                _metadata_search_text(_decode_metadata(row[4])),
+                            )
+                            for row in existing_rows
+                        ],
+                    )
                 await db.commit()
             self._initialized = True
 
@@ -139,6 +178,10 @@ class SQLiteVectorStore:
         ]
         async with aiosqlite.connect(self.db_path) as db:
             await db.executemany(
+                "DELETE FROM document_chunks_fts WHERE chunk_id = ?",
+                [(doc.chunk_id,) for doc in documents],
+            )
+            await db.executemany(
                 """
                 INSERT INTO document_chunks
                     (chunk_id, source_id, source_name, version_id, tenant_id, acl_json,
@@ -158,11 +201,37 @@ class SQLiteVectorStore:
                 """,
                 rows,
             )
+            await db.executemany(
+                """
+                INSERT INTO document_chunks_fts(
+                    chunk_id, text, source_name, locator, metadata_text
+                ) VALUES (?, ?, ?, ?, ?)
+                """,
+                [
+                    (
+                        doc.chunk_id,
+                        doc.text,
+                        doc.source_name,
+                        doc.locator or "",
+                        _metadata_search_text(doc.metadata or {}),
+                    )
+                    for doc in documents
+                ],
+            )
             await db.commit()
 
     async def delete_source(self, source_id: str, tenant_id: str = "public") -> None:
         await self.initialize()
         async with aiosqlite.connect(self.db_path) as db:
+            await db.execute(
+                """
+                DELETE FROM document_chunks_fts
+                WHERE chunk_id IN (
+                    SELECT chunk_id FROM document_chunks WHERE source_id = ? AND tenant_id = ?
+                )
+                """,
+                (source_id, tenant_id),
+            )
             await db.execute(
                 "DELETE FROM document_chunks WHERE source_id = ? AND tenant_id = ?",
                 (source_id, tenant_id),
@@ -228,6 +297,7 @@ class SQLiteVectorStore:
         query_vector = (await self.embedding_provider.embed([query]))[0]
         query_terms = _term_counts(query)
         row_list = list(rows)
+        candidate_limit = max(top_k * 4, 20)
         async with asyncio.TaskGroup() as task_group:
             vector_task = task_group.create_task(
                 asyncio.to_thread(
@@ -235,8 +305,14 @@ class SQLiteVectorStore:
                 )
             )
             lexical_task = task_group.create_task(
-                asyncio.to_thread(
-                    _safe_score_branch, "lexical", _lexical_scores, row_list, query_terms
+                _fts_scores_with_fallback(
+                    self.db_path,
+                    query,
+                    conditions,
+                    params,
+                    candidate_limit,
+                    row_list,
+                    query_terms,
                 )
             )
             metadata_task = task_group.create_task(
@@ -255,12 +331,15 @@ class SQLiteVectorStore:
         self._retrieval_diagnostics.set(diagnostics)
         if row_list and not any((vector_scores, lexical_scores, metadata_scores)):
             raise RuntimeError("all retrieval scoring branches failed")
-        candidate_limit = max(top_k * 4, 20)
         vector_rank = _rank_scores(vector_scores, limit=candidate_limit)
         lexical_rank = _rank_scores(lexical_scores, limit=candidate_limit, positive_only=True)
         metadata_rank = _rank_scores(metadata_scores, limit=candidate_limit, positive_only=True)
-        max_lexical = max([1.0, *lexical_scores.values()])
+        max_lexical = max([1e-12, *lexical_scores.values()])
         max_metadata = max([1.0, *metadata_scores.values()])
+        weights = _fusion_weights(self.embedding_provider.profile_id)
+        rank_branches = [lexical_rank, metadata_rank]
+        if weights.vector > 0:
+            rank_branches.insert(0, vector_rank)
 
         hits: list[RetrievalHit] = []
         for row in row_list:
@@ -270,16 +349,16 @@ class SQLiteVectorStore:
             metadata_score = metadata_scores.get(chunk_id, 0.0)
             fused = sum(
                 1 / (60 + ranks[chunk_id])
-                for ranks in (vector_rank, lexical_rank, metadata_rank)
+                for ranks in rank_branches
                 if chunk_id in ranks
             )
             normalized_lexical = lexical_score / max_lexical
             normalized_metadata = metadata_score / max_metadata
             rerank = (
-                0.50 * vector_score
-                + 0.25 * normalized_lexical
-                + 0.10 * normalized_metadata
-                + 0.15 * fused * 60
+                weights.vector * vector_score
+                + weights.lexical * normalized_lexical
+                + weights.metadata * normalized_metadata
+                + weights.rrf * fused * 60
             )
             metadata = _decode_metadata(row["metadata_json"])
             hits.append(
@@ -303,12 +382,26 @@ class SQLiteVectorStore:
                 )
             )
         hits.sort(key=lambda hit: hit.rerank_score, reverse=True)
-        return _mmr_deduplicate(hits, top_k), (time.perf_counter() - started) * 1000
+        return _diversify_hits(hits, top_k), (time.perf_counter() - started) * 1000
 
     def consume_diagnostics(self) -> list[str]:
         diagnostics = list(self._retrieval_diagnostics.get())
         self._retrieval_diagnostics.set(())
         return diagnostics
+
+
+@dataclass(slots=True, frozen=True)
+class _FusionWeights:
+    vector: float
+    lexical: float
+    metadata: float
+    rrf: float
+
+
+def _fusion_weights(profile_id: str) -> _FusionWeights:
+    if profile_id.startswith("hash-"):
+        return _FusionWeights(vector=0.0, lexical=0.65, metadata=0.10, rrf=0.25)
+    return _FusionWeights(vector=0.45, lexical=0.35, metadata=0.05, rrf=0.15)
 
 
 def _term_counts(text: str) -> Counter[str]:
@@ -344,6 +437,57 @@ def _lexical_scores(rows: list[sqlite3.Row], query: Counter[str]) -> dict[str, f
     return {
         str(row["chunk_id"]): _lexical_score(query, _term_counts(str(row["text"]))) for row in rows
     }
+
+
+async def _fts_scores_with_fallback(
+    db_path: Path,
+    query: str,
+    conditions: list[str],
+    params: list[Any],
+    candidate_limit: int,
+    rows: list[sqlite3.Row],
+    query_terms: Counter[str],
+) -> tuple[dict[str, float], str | None]:
+    fts_query = _fts_match_query(query)
+    if not fts_query:
+        return {}, None
+    try:
+        sql = """
+            SELECT document_chunks.chunk_id,
+                   bm25(document_chunks_fts, 0.0, 1.0, 0.25, 0.15, 0.35) AS bm25_score
+            FROM document_chunks_fts
+            JOIN document_chunks
+              ON document_chunks.chunk_id = document_chunks_fts.chunk_id
+            WHERE document_chunks_fts MATCH ?
+        """
+        if conditions:
+            sql += " AND " + " AND ".join(conditions)
+        sql += " ORDER BY bm25_score LIMIT ?"
+        async with aiosqlite.connect(db_path) as db:
+            cursor = await db.execute(sql, [fts_query, *params, candidate_limit])
+            matches = await cursor.fetchall()
+        scores = {str(row[0]): max(0.0, -float(row[1])) for row in matches}
+        return scores, None
+    except Exception as exc:  # noqa: BLE001 - retain bounded lexical fallback
+        scores, _ = await asyncio.to_thread(
+            _safe_score_branch, "lexical_overlap", _lexical_scores, rows, query_terms
+        )
+        return scores, f"degraded_retrieval:fts5:{type(exc).__name__}"
+
+
+def _fts_match_query(query: str) -> str:
+    terms = list(dict.fromkeys(_term_counts(query)))[:32]
+    return " OR ".join(f'"{term.replace(chr(34), chr(34) * 2)}"' for term in terms)
+
+
+def _metadata_search_text(metadata: dict[str, Any]) -> str:
+    return " ".join(
+        [
+            " ".join(str(item) for item in metadata.get("heading_path", [])),
+            str(metadata.get("block_type", "")),
+            str(metadata.get("caption", "")),
+        ]
+    ).strip()
 
 
 def _metadata_scores(rows: list[sqlite3.Row], query: Counter[str]) -> dict[str, float]:
@@ -449,10 +593,25 @@ def _citation_from_evidence(
     )
 
 
-def _mmr_deduplicate(hits: list[RetrievalHit], top_k: int) -> list[RetrievalHit]:
+def _diversify_hits(hits: list[RetrievalHit], top_k: int) -> list[RetrievalHit]:
     selected: list[RetrievalHit] = []
+    deferred: list[RetrievalHit] = []
+    seen_groups: set[tuple[str, int | None]] = set()
     seen_prefixes: set[str] = set()
     for hit in hits:
+        prefix = " ".join(hit.text.lower().split()[:24])
+        if prefix in seen_prefixes:
+            continue
+        group = (hit.citation.source_id, hit.citation.page)
+        if group in seen_groups:
+            deferred.append(hit)
+            continue
+        selected.append(hit)
+        seen_groups.add(group)
+        seen_prefixes.add(prefix)
+        if len(selected) >= top_k:
+            return selected
+    for hit in deferred:
         prefix = " ".join(hit.text.lower().split()[:24])
         if prefix in seen_prefixes:
             continue
@@ -655,7 +814,7 @@ class QdrantVectorStore:
                 )
             )
         hits.sort(key=lambda hit: hit.rerank_score, reverse=True)
-        return _mmr_deduplicate(hits, top_k), (time.perf_counter() - started) * 1000
+        return _diversify_hits(hits, top_k), (time.perf_counter() - started) * 1000
 
     def consume_diagnostics(self) -> list[str]:
         diagnostics = list(self._retrieval_diagnostics.get())

@@ -830,3 +830,108 @@ def test_rrf_rank_filters_zero_score_candidates_and_respects_limit() -> None:
     ranks = _rank_scores(scores, limit=1, positive_only=True)
 
     assert ranks == {"strong": 1}
+
+class MisleadingHashEmbedding:
+    dimension = 2
+    profile_id = "hash-adversarial-v1:2"
+
+    async def embed(self, texts):
+        return [[1.0, 0.0] for _ in texts]
+
+
+@pytest.mark.asyncio
+async def test_hash_baseline_does_not_outvote_bm25_relevance(tmp_path) -> None:
+    embeddings = MisleadingHashEmbedding()
+    store = SQLiteVectorStore(tmp_path / "rag.sqlite3", embeddings)
+    await store.upsert(
+        [
+            VectorDocument(
+                chunk_id="relevant",
+                source_id="finance",
+                source_name="finance.pdf",
+                text="Quarterly net interest income increased by twelve percent.",
+                embedding=[0.0, 1.0],
+                page=1,
+            ),
+            VectorDocument(
+                chunk_id="misleading-vector",
+                source_id="manual",
+                source_name="manual.pdf",
+                text="Disconnect the safety valve before maintenance.",
+                embedding=[1.0, 0.0],
+                page=1,
+            ),
+        ]
+    )
+
+    hits, _ = await store.search("net interest income", top_k=1)
+
+    assert hits[0].citation.chunk_id == "relevant"
+    assert hits[0].lexical_score == pytest.approx(1.0)
+
+
+@pytest.mark.asyncio
+async def test_fts_index_backfills_updates_and_deletes_with_chunks(tmp_path) -> None:
+    db_path = tmp_path / "rag.sqlite3"
+    embeddings = HashEmbedding()
+    vector = (await embeddings.embed(["legacy covenant evidence"]))[0]
+    with sqlite3.connect(db_path) as db:
+        db.execute(
+            """
+            CREATE TABLE document_chunks (
+                chunk_id TEXT PRIMARY KEY, source_id TEXT NOT NULL, source_name TEXT NOT NULL,
+                text TEXT NOT NULL, embedding_json TEXT NOT NULL, page INTEGER, locator TEXT,
+                metadata_json TEXT NOT NULL DEFAULT '{}', created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+            )
+            """
+        )
+        db.execute(
+            "INSERT INTO document_chunks(chunk_id, source_id, source_name, text, embedding_json) VALUES (?, ?, ?, ?, ?)",
+            ("legacy:1", "legacy", "legacy.pdf", "legacy covenant evidence", json.dumps(vector)),
+        )
+        db.commit()
+
+    store = SQLiteVectorStore(db_path, embeddings)
+    await store.initialize()
+    legacy_hits, _ = await store.search("covenant", top_k=1)
+    assert legacy_hits[0].lexical_score == pytest.approx(1.0)
+
+    updated_vector = (await embeddings.embed(["replacement liquidity evidence"]))[0]
+    await store.upsert(
+        [
+            VectorDocument(
+                chunk_id="legacy:1", source_id="legacy", source_name="legacy.pdf",
+                text="replacement liquidity evidence", embedding=updated_vector, page=1,
+            )
+        ]
+    )
+    old_hits, _ = await store.search("covenant", top_k=1)
+    new_hits, _ = await store.search("liquidity", top_k=1)
+    assert old_hits[0].lexical_score == 0.0
+    assert new_hits[0].lexical_score == pytest.approx(1.0)
+
+    await store.delete_source("legacy")
+    with sqlite3.connect(db_path) as db:
+        assert db.execute("SELECT COUNT(*) FROM document_chunks_fts").fetchone()[0] == 0
+
+
+@pytest.mark.asyncio
+async def test_retrieval_diversifies_pages_before_filling_duplicate_chunks(tmp_path) -> None:
+    embeddings = HashEmbedding()
+    store = SQLiteVectorStore(tmp_path / "rag.sqlite3", embeddings)
+    documents = []
+    for index, (source_id, page) in enumerate(
+        [("page-a", 1), ("page-a", 1), ("page-a", 1), ("page-b", 2), ("page-c", 3)]
+    ):
+        text = f"shared retrieval evidence section {index}"
+        documents.append(
+            VectorDocument(
+                chunk_id=f"chunk-{index}", source_id=source_id, source_name=f"{source_id}.pdf",
+                text=text, embedding=(await embeddings.embed([text]))[0], page=page,
+            )
+        )
+    await store.upsert(documents)
+
+    hits, _ = await store.search("shared retrieval evidence", top_k=3)
+
+    assert len({(hit.citation.source_id, hit.citation.page) for hit in hits}) == 3

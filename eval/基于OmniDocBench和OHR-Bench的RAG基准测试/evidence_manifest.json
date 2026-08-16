@@ -4,7 +4,7 @@
   "hash_algorithm": "sha256",
   "manifest_self_excluded": true,
   "file_count": 22,
-  "total_bytes_excluding_manifest": 785666,
+  "total_bytes_excluding_manifest": 785763,
   "files": [
     {
       "path": ".gitignore",
@@ -110,8 +110,8 @@
     },
     {
       "path": "scripts/adversarial_audit.py",
-      "bytes": 13935,
-      "sha256": "6bbdba132edb860401c7a587348aa7d0906bf50354acaffe2de0a43ea4483c60",
+      "bytes": 14032,
+      "sha256": "217a51aa908d9ec94c7994dd7330e0b5f96f38eb36d88c5487140365b4f7dbc2",
       "role": "adversarial evidence audit"
     },
     {

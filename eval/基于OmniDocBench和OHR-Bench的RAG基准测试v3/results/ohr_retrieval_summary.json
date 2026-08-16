@@ -1,0 +1,170 @@
+[
+  {
+    "variant": "gt_text",
+    "pages": 200,
+    "chunks": 318,
+    "queries": 559,
+    "recall_at_1": 0.8085867620751341,
+    "recall_at_5": 0.9552772808586762,
+    "mrr_at_5": 0.8735539654144305,
+    "citation_validity": 1.0,
+    "median_latency_ms": 203.54479999514297,
+    "p95_latency_ms": 235.35960000299383,
+    "by_domain": {
+      "academic": {
+        "queries": 115,
+        "recall_at_1": 0.8347826086956521,
+        "recall_at_5": 1.0,
+        "mrr_at_5": 0.9101449275362319
+      },
+      "administration": {
+        "queries": 43,
+        "recall_at_1": 0.7674418604651163,
+        "recall_at_5": 0.9534883720930233,
+        "mrr_at_5": 0.8546511627906976
+      },
+      "finance": {
+        "queries": 153,
+        "recall_at_1": 0.5555555555555556,
+        "recall_at_5": 0.8627450980392157,
+        "mrr_at_5": 0.6875816993464052
+      },
+      "law": {
+        "queries": 49,
+        "recall_at_1": 0.9591836734693877,
+        "recall_at_5": 1.0,
+        "mrr_at_5": 0.9795918367346939
+      },
+      "manual": {
+        "queries": 71,
+        "recall_at_1": 1.0,
+        "recall_at_5": 1.0,
+        "mrr_at_5": 1.0
+      },
+      "news": {
+        "queries": 69,
+        "recall_at_1": 0.9130434782608695,
+        "recall_at_5": 0.9855072463768116,
+        "mrr_at_5": 0.9449275362318841
+      },
+      "textbook": {
+        "queries": 59,
+        "recall_at_1": 0.9661016949152542,
+        "recall_at_5": 0.9830508474576272,
+        "mrr_at_5": 0.9745762711864406
+      }
+    }
+  },
+  {
+    "variant": "formatting_noise_moderate",
+    "pages": 200,
+    "chunks": 362,
+    "queries": 559,
+    "recall_at_1": 0.8121645796064401,
+    "recall_at_5": 0.9552772808586762,
+    "mrr_at_5": 0.8767740011926058,
+    "citation_validity": 1.0,
+    "median_latency_ms": 222.84879999642726,
+    "p95_latency_ms": 257.2931000031531,
+    "by_domain": {
+      "academic": {
+        "queries": 115,
+        "recall_at_1": 0.8608695652173913,
+        "recall_at_5": 1.0,
+        "mrr_at_5": 0.9260869565217391
+      },
+      "administration": {
+        "queries": 43,
+        "recall_at_1": 0.7209302325581395,
+        "recall_at_5": 0.9767441860465116,
+        "mrr_at_5": 0.8391472868217055
+      },
+      "finance": {
+        "queries": 153,
+        "recall_at_1": 0.5686274509803921,
+        "recall_at_5": 0.8562091503267973,
+        "mrr_at_5": 0.6949891067538126
+      },
+      "law": {
+        "queries": 49,
+        "recall_at_1": 0.9387755102040817,
+        "recall_at_5": 1.0,
+        "mrr_at_5": 0.9693877551020408
+      },
+      "manual": {
+        "queries": 71,
+        "recall_at_1": 0.9859154929577465,
+        "recall_at_5": 1.0,
+        "mrr_at_5": 0.9929577464788732
+      },
+      "news": {
+        "queries": 69,
+        "recall_at_1": 0.9420289855072463,
+        "recall_at_5": 0.9855072463768116,
+        "mrr_at_5": 0.9594202898550726
+      },
+      "textbook": {
+        "queries": 59,
+        "recall_at_1": 0.9491525423728814,
+        "recall_at_5": 0.9830508474576272,
+        "mrr_at_5": 0.9661016949152542
+      }
+    }
+  },
+  {
+    "variant": "semantic_noise_MinerU_moderate",
+    "pages": 200,
+    "chunks": 286,
+    "queries": 559,
+    "recall_at_1": 0.6511627906976745,
+    "recall_at_5": 0.889087656529517,
+    "mrr_at_5": 0.7454979129397734,
+    "citation_validity": 1.0,
+    "median_latency_ms": 188.24789999780478,
+    "p95_latency_ms": 214.67519999714568,
+    "by_domain": {
+      "academic": {
+        "queries": 115,
+        "recall_at_1": 0.6956521739130435,
+        "recall_at_5": 0.9391304347826087,
+        "mrr_at_5": 0.792608695652174
+      },
+      "administration": {
+        "queries": 43,
+        "recall_at_1": 0.5813953488372093,
+        "recall_at_5": 0.9069767441860465,
+        "mrr_at_5": 0.7131782945736435
+      },
+      "finance": {
+        "queries": 153,
+        "recall_at_1": 0.42483660130718953,
+        "recall_at_5": 0.7843137254901961,
+        "mrr_at_5": 0.5600217864923748
+      },
+      "law": {
+        "queries": 49,
+        "recall_at_1": 0.7755102040816326,
+        "recall_at_5": 0.8775510204081632,
+        "mrr_at_5": 0.8180272108843538
+      },
+      "manual": {
+        "queries": 71,
+        "recall_at_1": 0.8309859154929577,
+        "recall_at_5": 0.9436619718309859,
+        "mrr_at_5": 0.8779342723004695
+      },
+      "news": {
+        "queries": 69,
+        "recall_at_1": 0.7971014492753623,
+        "recall_at_5": 0.9710144927536232,
+        "mrr_at_5": 0.870048309178744
+      },
+      "textbook": {
+        "queries": 59,
+        "recall_at_1": 0.711864406779661,
+        "recall_at_5": 0.8983050847457628,
+        "mrr_at_5": 0.7929378531073445
+      }
+    }
+  }
+]

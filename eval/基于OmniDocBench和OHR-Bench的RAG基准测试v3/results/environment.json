@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "benchmark_date": "2026-08-16",
+  "repository_head_before_benchmark_commit": "763d046739487ea2659b0e9508e9086412262b0c",
+  "python": "3.14.6",
+  "platform": "Windows-10-10.0.19045-SP0",
+  "sqlite": "3.50.4",
+  "retrieval_backend": "SQLite FTS5/BM25 plus exact dense candidate retrieval and deterministic fusion",
+  "embedding_profile": "HashEmbedding baseline; dense rank excluded from fusion for the non-semantic profile",
+  "allocation": {
+    "OHR-Bench_longitudinal": 150,
+    "OHR-Bench_unseen_holdout": 50,
+    "total_unique_pages": 200
+  },
+  "load_or_stress_test": false,
+  "latency_scope": "Single-query stage timings recorded for diagnosis only; not a concurrency, throughput, or capacity claim."
+}

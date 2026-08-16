@@ -166,7 +166,7 @@ Each embedding provider exposes an immutable profile containing provider/model a
 
 ### 10.4 Vector stores
 
-SQLite exact cosine search is the zero-service evaluation backend. Qdrant is the optional indexed backend for HNSW and metadata filtering. Both implement the same typed adapter and active-version visibility contract.
+SQLite exact cosine plus FTS5/BM25 is the zero-service Local-first evaluation backend. Qdrant is the optional indexed backend for HNSW and metadata filtering. Both implement the same typed adapter and active-version visibility contract, but the current Qdrant adapter remains dense-first and does not yet provide the SQLite sparse-retrieval behavior.
 
 No remote-Qdrant scale or production index-tuning claim is made.
 
@@ -227,12 +227,12 @@ The current baseline:
 1. obtains the tenant-scoped active-version snapshot;
 2. removes active versions whose non-empty ACL has no intersection with caller principals;
 3. applies tenant, ACL, source, version, and legacy-visibility filters in the storage adapter before candidate scoring;
-4. generates vector and lexical scores;
-5. applies reciprocal-rank-style fusion and a lightweight deterministic rerank score;
-6. deduplicates results;
+4. generates vector, FTS5/BM25 lexical, and metadata scores;
+5. applies embedding-profile-aware fusion, excluding non-semantic Hash dense ranks;
+6. diversifies results across sources/pages before filling duplicate-page chunks;
 7. returns structured citations and `index_versions`.
 
-The default reranker is not a learned cross-encoder. Sparse vectors, LLM-based query rewriting, HyDE, graph retrieval, late interaction, and learned reranking remain optional profiles until a labeled dataset proves a gain.
+The default reranker is not a learned cross-encoder. The 2026-08-16 200-page OHR-Bench run validates the SQLite FTS5/BM25 profile on the frozen fixture; sparse Qdrant retrieval, LLM-based query rewriting, HyDE, graph retrieval, late interaction, and learned reranking remain optional profiles until a labeled deployment corpus proves a gain.
 
 Generated answers must not cite arbitrary free-form identifiers. Citation integrity requires retrieval-produced source/chunk identities. Claim-level citation verification is a planned hardening phase, not yet complete.
 
@@ -297,7 +297,7 @@ Architectural rationale and rejected alternatives are recorded in `docs/adr-006-
 - `ingestion_jobs.py` owns durable asynchronous job state and restart recovery.
 - `query_planning.py` owns deterministic query normalization, explicit decomposition, and protected-anchor drift checks.
 - `rag.py` owns content identity, immutable candidate versions, embedding/index stages, active-version validation, evidence gating, bounded query execution, and cross-query RRF.
-- `vector_store.py` owns authorization-filtered Vector/Lexical/Metadata scoring, RRF fusion, deterministic reranking, and code-generated citations.
+- `vector_store.py` owns authorization-filtered Vector/FTS5-BM25/Metadata scoring, embedding-profile-aware fusion, source/page diversification, FTS fallback warnings, and code-generated citations.
 
 ### Dependency graph
 

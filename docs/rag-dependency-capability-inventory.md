@@ -1,19 +1,20 @@
 # RAG Dependency Capability Inventory
 
-**Review date:** 2026-08-15
+**Review date:** 2026-08-16
 **Decision scope:** correctness-first RAG engineering milestone
 
 ## Decision summary
 
-This milestone adds no runtime dependency. The existing dependency set already provides the capabilities needed to implement durable version visibility, asynchronous persistence, strict contracts, optional layout-aware parsing, and optional indexed vector search.
+This milestone adds no runtime dependency. Python's bundled SQLite build already provides FTS5 and BM25, while the existing dependency set provides durable version visibility, asynchronous persistence, strict contracts, optional layout-aware parsing, and optional indexed vector search.
 
-Adding retrieval libraries before a labeled evaluation corpus exists would increase operational and security surface without proving a user-visible quality gain. Hybrid retrieval, learned reranking, and advanced query transformation therefore remain profile-gated follow-up decisions.
+The labeled OHR-Bench cohort showed that the former raw-overlap/Hash-dense fusion was the dominant local recall defect. Reusing SQLite FTS5 closed that gap without adding a package, model artifact, service, license, or supply-chain surface. Learned reranking, advanced query transformation, and remote sparse retrieval remain profile-gated follow-up decisions.
 
 ## Existing dependency capabilities used
 
 | Dependency | Existing capability used | Ownership boundary | Decision |
 |---|---|---|---|
-| `aiosqlite` | Async SQLite access, WAL mode, explicit transactions, additive schema migration | Version registry and local vector persistence | Reuse; no replacement needed |
+| Python `sqlite3` / SQLite FTS5 | Built-in Unicode full-text index and BM25 scoring | Local lexical side index and deterministic retrieval | Reuse; no new license or package |
+| `aiosqlite` | Async SQLite access, WAL mode, explicit transactions, additive schema migration | Version registry and local vector/FTS persistence | Reuse; no replacement needed |
 | `pydantic` v2 | Strict request/response and evaluation-record validation | Public/API and offline evaluation contracts | Reuse; unknown fields and wrong types fail early |
 | `pypdf` | Text-layer PDF extraction and scanned-PDF suspicion signal | Built-in parser path | Reuse for lightweight baseline |
 | `docling` optional extra | OCR, layout-aware parsing, and complex document conversion | Parser adapter only | Keep optional because installation is heavy and OCR quality was not verified in this milestone |
@@ -36,6 +37,9 @@ Adding retrieval libraries before a labeled evaluation corpus exists would incre
 | Query planning | Pydantic typed plans plus deterministic regex/token primitives; no new runtime package or model call |
 | Query concurrency | `asyncio.TaskGroup`, `Semaphore`, and `timeout`; bounded to two additional queries by default |
 | Cross-query fusion | Small in-process RRF keyed by verified Chunk ID; reuses existing retrieval scores and citation contracts |
+| Local sparse retrieval | SQLite FTS5 virtual table with built-in BM25, transactionally updated beside canonical chunks and backfilled for older databases |
+| Embedding-profile-aware fusion | Non-semantic HashEmbedding rank is excluded; semantic providers retain dense/lexical/metadata fusion |
+| Candidate diversification | Deterministic source/page-first selection prevents same-page chunks from exhausting Top-K |
 
 ## Deferred candidate dependencies
 
@@ -43,7 +47,7 @@ These are candidates, not approved dependencies:
 
 | Need | Candidate pattern | Admission gate |
 |---|---|---|
-| Sparse retrieval | Qdrant sparse vectors or a maintained BM25 implementation | A labeled corpus shows source Recall@k gain over the current lexical/vector baseline |
+| Remote sparse retrieval | Qdrant sparse vectors or a maintained BM25 service | Qdrant becomes a production target and the same labeled corpus proves parity/gain over SQLite FTS5 |
 | Learned reranking | Cross-encoder or API reranker behind a typed adapter | nDCG/MRR gain justifies latency, cost, model license, and deployment burden |
 | Evaluation framework | Ragas or another maintained evaluator | Native contracts become insufficient for a specific measured metric; judge-model variance is documented |
 | Advanced PDF/table parsing | Full Docling production profile | Representative scanned and table-heavy documents pass quality review |
@@ -141,3 +145,18 @@ Security and cost boundaries:
 | Model-specific tokenizer | Not present | More accurate context accounting | Rejected for now; add only after model-family and error-budget requirements are defined |
 
 Review conclusion: the improvement is architectural reuse, not a new runtime dependency. This avoids duplicate orchestration stacks and keeps the current `uv.lock` unchanged.
+
+## 2026-08-16 FTS5/BM25 admission review
+
+| Review item | Finding |
+|---|---|
+| Capability gap | Raw whitespace overlap and non-semantic Hash dense ranking reduced OHR-Bench Recall@5 |
+| Existing capability | The project Python runtime ships SQLite 3.53.1 with FTS5/BM25 enabled |
+| License | SQLite is already part of the runtime; no new package or model license enters the project |
+| Maintenance/security | Uses the runtime SQLite implementation rather than a separately vendored search library |
+| Persistence impact | Additive `document_chunks_fts` virtual table; canonical chunk rows remain the source of truth |
+| Migration | Initialization backfills when canonical/FTS row counts differ; application writes update both in one transaction |
+| Fallback | FTS technical failure falls back to the legacy overlap scorer and records `degraded_retrieval` |
+| Evidence | Third 200-page Benchmark: Recall@5 95.53% clean, 95.53% formatting noise, 88.91% semantic/OCR noise |
+
+Official design references used during the review: SQLite FTS5/BM25 documentation and Qdrant Hybrid Queries documentation. The latter is a future adapter reference, not evidence that the current Qdrant path is hybrid.

@@ -2,7 +2,7 @@
 
 ## Project position
 
-AgentForge is a portfolio-oriented, asynchronous agent engineering project. It demonstrates engineering delivery rather than a single prompt demo: strict contracts, failure handling, async orchestration, layered memory, versioned RAG, migration discipline, and reproducible evidence.
+AgentForge is an asynchronous Agent service for enterprise engineering pain points: uncertain model output, conflicting multi-Tool execution, long-session context growth, and evidence distortion in complex documents. It covers model calls, Tool Orchestration, layered Memory, document RAG, observability, and failure recovery through strict contracts, explicit state ownership, and reproducible evidence.
 
 ## Source-of-truth order
 
@@ -12,7 +12,7 @@ AgentForge is a portfolio-oriented, asynchronous agent engineering project. It d
 4. ADRs and engineering plans - decisions, rejected alternatives, and staged work.
 5. Resume material - concise claims that must remain consistent with implementation evidence.
 
-The top-level legacy demo files are compatibility artifacts, not the architectural source of truth.
+The deprecated top-level Demo compatibility stack and duplicate frontend were removed after the migration window. `main.py` and `src/agent_service/` are the only supported backend path.
 
 ## Document index
 
@@ -29,6 +29,7 @@ The top-level legacy demo files are compatibility artifacts, not the architectur
 | `docs/adr-009-query-orchestration.md` | Bounded query planning, drift protection, async decomposition, fusion, latency, and cost decision |
 | `docs/adr-010-observability-backup-recovery.md` | Metrics, OpenTelemetry Trace, alerting, verified backup and isolated restore decision |
 | `docs/adr-011-deepseek-harness-runtime-guardrails.md` | Tool middleware, context budget, artifact spill, capability isolation, and migration decision |
+| `docs/adr-012-bm25-retrieval-repair.md` | SQLite FTS5/BM25 repair, provider-aware fusion, diversity, fallback, and validation decision |
 | `docs/operations.md` | Operator runbook for health, metrics, traces, alert response, backup and restore |
 | `docs/rag-versioning-migration.md` | Persistent-format compatibility, migration, and rollback |
 | `docs/rag-evaluation-contract.md` | Versioned golden-query schema and metric rules |
@@ -36,6 +37,7 @@ The top-level legacy demo files are compatibility artifacts, not the architectur
 | `docs/acceptance-evidence.md` | Whole-project acceptance matrix |
 | `docs/resume-project-description.md` | English STAR resume and interview material |
 | `docs/research-snapshot.json` | Machine-readable research snapshot |
+| `eval/基于OmniDocBench和OHR-Bench的RAG基准测试v3/report.md` | Third 200-page retrieval-repair Benchmark and adversarial evidence |
 
 ## Code ownership map
 
@@ -58,7 +60,7 @@ The top-level legacy demo files are compatibility artifacts, not the architectur
 | `query_planning.py` | Typed deterministic query plans, protected anchors, and explicit decomposition |
 | `rag.py` | Versioned ingestion, evidence gating, bounded query orchestration, fusion, and citations |
 | `rag_registry.py` | Durable lifecycle and active-version pointers |
-| `vector_store.py` | SQLite and Qdrant adapters |
+| `vector_store.py` | SQLite exact dense + FTS5/BM25 and Qdrant adapters |
 | `observability.py` | Bounded-cardinality Prometheus metrics and OpenTelemetry exporters |
 | `backup.py` | State lock, verified SQLite backup manifest and isolated restore |
 | `operations.py` | Backup/verify/restore CLI |

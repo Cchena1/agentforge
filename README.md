@@ -2,9 +2,9 @@
 
 > 面向工程落地与外部评估的异步 Agent 服务：基于 **LangGraph、asyncio、FastAPI、Pydantic v2、分层 Memory、Function Calling 与 Retrieval-Augmented Generation（RAG）** 构建。
 
-AgentForge 将早期单文件 Demo 重构为模块化、可验证、可降级的 Agent 工程基线。项目重点不是展示一段 Prompt，而是解决真实 Agent 系统中更容易失控的部分：数据契约、状态所有权、异步并发、工具依赖、失败恢复、上下文隔离、RAG 生命周期、租户权限、引用溯源和兼容迁移。
+AgentForge 面向企业 Agent 研发中的模型输出不确定、多 Tool 协作冲突、长会话上下文膨胀和复杂文档证据失真等问题，设计异步 Agent 服务，覆盖模型调用、Tool Orchestration、分层 Memory、文档 RAG、可观测性与失败恢复。项目重点不是展示一段 Prompt，而是以可验证的数据契约、状态所有权和失败边界支撑工程交付。
 
-> **最近一次验收：2026 年 8 月 15 日。** Ruff 全仓检查通过；mypy 对 20 个 Python 文件检查通过；pytest 共 65 项测试通过并保留 1 条 Starlette/httpx 弃用警告。真实 Docling 10 页同集复测保持 10/10 解析成功，内容完整性门控仅接受 6/10，并将 4 个高风险页面确定性路由到 OCR/人工复核。按照项目范围约定，**未进行压力测试、吞吐量测试或持续负载测试**。
+> **最近一次验收：2026 年 8 月 16 日。** Ruff 全仓检查通过；strict mypy 对 25 个 Python 文件检查通过；pytest 共 90 项测试通过并保留 1 条 Starlette/httpx 上游弃用警告。第三次 200 页 OHR-Bench Retrieval 评估中，Ground Truth、Formatting Noise、Semantic/OCR Noise 的 Recall@5 分别为 95.53%、95.53% 和 88.91%；按照项目范围约定，**未进行压力测试、吞吐量测试或持续负载测试**。
 
 ## 项目价值
 
@@ -33,13 +33,14 @@ AgentForge 将早期单文件 Demo 重构为模块化、可验证、可降级的
    - [RAG 版本迁移](docs/rag-versioning-migration.md)
    - [RAG 授权边界 ADR](docs/adr-007-rag-authorization-boundary.md)
    - [Query Planning 与检索编排 ADR](docs/adr-009-query-orchestration.md)
+   - [BM25 混合检索最小修复 ADR](docs/adr-012-bm25-retrieval-repair.md)
    - [RAG 实现证据](docs/rag-implementation-evidence.md)
 
 仓库可以在没有外部模型访问权限的情况下完成基础评估。若 `AI_AGENT_API_KEY` 为空，系统不会伪造在线模型结果，而是进入显式标记的本地 Fallback，并通过 `degraded` 和 `warnings` 返回降级信息。
 
 ## 总体架构
 
-`main.py` 是唯一受支持的后端入口，正式实现位于 `src/agent_service/`。顶层的 `app.py`、`agent_core.py`、`llm_client.py` 和 `config.py` 属于早期 Demo 兼容文件，处于分阶段弃用窗口，不是当前架构事实来源。
+`main.py` 是唯一受支持的后端入口，正式实现位于 `src/agent_service/`。早期 Demo 兼容后端、重复前端与迁移占位报告已在弃用窗口结束后删除；当前仓库不再保留第二套运行时实现。
 
 ```mermaid
 flowchart TB
@@ -342,18 +343,18 @@ flowchart TD
 flowchart TD
     Q["Query"] --> N["Normalization"]
     N --> V["Vector Score"]
-    N --> K["Lexical Score"]
+    N --> K["SQLite FTS5 / BM25"]
     N --> M["Metadata / Structure Score"]
-    V --> RRF["RRF Fusion"]
+    V --> RRF["Profile-aware Fusion"]
     K --> RRF
     M --> RRF
-    RRF --> RR["Deterministic Rerank"] --> EV["Evidence Validator"]
+    RRF --> RR["Source/Page Diversification"] --> EV["Evidence Validator"]
     EV -->|充分| C["Context Builder"] --> LLM["Generation"] --> CV["Citation Validator"] --> A["Grounded Answer"]
     EV -->|不足且未达上限| CR["Corrective Retrieval"] --> N
     EV -->|达到上限| AB["Abstain / Manual Review"]
 ```
 
-Vector、Lexical、Metadata 三个本地评分分支使用 `asyncio.TaskGroup` 并行计算，Fusion 等待依赖完成，Corrective Retrieval 最多 2 轮。任一独立评分分支失败时，其余分支继续工作，响应通过 `degraded_retrieval` 和具体 Warning 暴露降级；全部分支失败才终止请求。Citation 由代码从证据构造，`quote` 必须是原 Chunk 的精确子串，并校验 `source_id`、`chunk_id`、`content_sha256`、Parser、结构位置与 Active Version。文档和 Tool 输出均视为不可信数据，不能改变系统指令、工具策略或 Tenant/Principal 授权上下文。
+Vector、Lexical、Metadata 三个本地评分分支使用 `asyncio.TaskGroup` 并行计算，Fusion 等待依赖完成，Corrective Retrieval 最多 2 轮。SQLite Local-first 路径使用 FTS5/BM25 作为词法主召回；当 Embedding Profile 为非语义 Hash baseline 时，Dense Rank 不参与 Fusion 或 RRF，避免测试向量压过真实词法证据。候选先覆盖不同 Source/Page，再填充同页 Chunk。任一独立评分分支失败时，其余分支继续工作，响应通过 `degraded_retrieval` 和具体 Warning 暴露降级；全部分支失败才终止请求。Citation 由代码从证据构造，`quote` 必须是原 Chunk 的精确子串，并校验 `source_id`、`chunk_id`、`content_sha256`、Parser、结构位置与 Active Version。文档和 Tool 输出均视为不可信数据，不能改变系统指令、工具策略或 Tenant/Principal 授权上下文。
 ## 能力—证据矩阵
 
 | 评估项 | 已实现方案 | 主要代码或测试证据 |
@@ -369,7 +370,7 @@ Vector、Lexical、Metadata 三个本地评分分支使用 `asyncio.TaskGroup` �
 | 文档解析 | TXT/Markdown/CSV/TSV/PDF；表格语义 Block；扫描 PDF 检测和 Docling Fallback | `src/agent_service/documents.py`；`tests/test_rag.py` |
 | RAG 生命周期 | 不可变版本、幂等写入、Candidate 隔离、原子激活、失败保留旧版本 | `src/agent_service/rag.py`；`src/agent_service/rag_registry.py` |
 | Tenant / ACL | `(tenant_id, source_id)` 复合身份；评分前 ACL 过滤；未授权版本隐藏 | `tests/test_rag.py`；`tests/test_qdrant.py`；`tests/test_api.py` |
-| Vector Store | SQLite exact search 基线；Qdrant HNSW 与 metadata filtering adapter | `src/agent_service/vector_store.py` |
+| Vector Store | SQLite exact dense + FTS5/BM25 Local-first 基线；Qdrant HNSW 与 metadata filtering adapter | `src/agent_service/vector_store.py` |
 | Citation | source、chunk、page/locator、quote、score、active version snapshot | `src/agent_service/schemas.py`；`docs/rag-evaluation-contract.md` |
 | 类型与依赖 | 完整类型注解、mypy strict、Ruff、`uv.lock`，重型集成放入 optional extra | `pyproject.toml`；`uv.lock` |
 
@@ -659,24 +660,24 @@ PowerShell: run.ps1 解析通过
 
 ### Result
 
-将原始 Demo 重构为模块化 AgentForge 服务；核心服务拆分为 23 个类型检查源文件；建立 77 项自动化测试，覆盖正常路径、失败恢复、并发语义、RAG 迁移和 Tenant/ACL 隔离；最近一次验收中 Ruff、mypy strict、pytest 和 JavaScript syntax check 均通过。项目不虚构压力测试和生产检索质量数据，明确记录当前证据边界。
+将企业 Agent 的模型、Tool、Memory 与 RAG 能力收敛为模块化 AgentForge 服务；25 个 Python 文件通过 strict mypy，90 项自动化测试覆盖正常路径、失败恢复、并发语义、RAG 迁移、FTS5 一致性和 Tenant/ACL 隔离；最近一次验收中 Ruff、mypy strict、pytest 和 JavaScript syntax check 均通过。项目保留三轮 200 页 Benchmark 证据，但不虚构压力测试、吞吐量或生产 SLA。
 
 ## 评估范围与已知限制
-> 文档 RAG 验证边界：当前 65 项自动化测试覆盖路由、Attempt 上限、结构切片、异步 Job、版本一致性、ACL、Citation Schema 与内容完整性门控。真实 Docling 10 页回归的解析成功率为 1.0，质量门控接受率为 0.6，平均字符 Trigram F1 为 0.4812；该小样本只证明 False Acceptance 得到收紧，不代表生产级 Recall 或复杂文档解析质量。PaddleOCR Fallback、真实复杂 DOCX 和 Cloud Fallback 尚未完成实文档验证。未进行任何压力测试。
+> 文档 RAG 验证边界：当前 90 项自动化测试覆盖路由、Attempt 上限、结构切片、异步 Job、版本一致性、ACL、FTS5 Backfill/更新/删除、候选多样化、Citation Schema 与内容完整性门控。第三次 200 页 Retrieval Benchmark 的 Recall@5 为 95.53% / 95.53% / 88.91%；真实 Docling 10 页回归仍仅证明内容完整性门控降低 False Acceptance，不能外推为生产 OCR 或复杂 PDF 解析质量。PaddleOCR Fallback、真实复杂 DOCX、Cloud Fallback 与答案级 Citation 仍未完成实文档闭环。未进行任何压力测试。
 
 
 1. **未进行压力测试。** 当前并发测试只验证并发语义和时间重叠，不声明吞吐量、饱和点、p95/p99 Latency 或长时间稳定性。
 2. 验收未使用生产模型凭据，因此未覆盖真实 Provider 的 Function Calling 差异、Rate Limit 和跨 Provider Fallback。
 3. Docling 是可选依赖；默认测试验证扫描 PDF 检测和 Fallback 信号，不声明 OCR 或复杂表格抽取质量。
 4. Qdrant adapter 使用内存模式完成功能测试，未验证远程服务持久化和生产索引调优。
-5. 默认 Reranker 是轻量 vector/lexical fusion，不是 Cross-Encoder；在没有领域标注集前不声明 Recall@K、MRR、nDCG 或 Citation accuracy 提升。
+5. 默认 Reranker 仍是确定性 Fusion 与 Source/Page 多样化，不是 Cross-Encoder；当前只声明已冻结 200 页 Fixture 上的 Recall@K/MRR，不能外推到未知生产语料。
 6. Multi-Agent 当前为 library-level 组件，尚未提供公开编排 API、Cost Budget、授权模型和冲突仲裁策略。
 7. Long-term Memory 尚需补充生产级 Retention、Deletion、Export、Consent 和 PII 策略。
-8. SQLite exact search 适合本地评估和小规模语料；更大语料应在真实 Workload 验证后迁移到 Qdrant 或其他索引型 Vector Store。
+8. SQLite exact dense + FTS5/BM25 适合本地评估和小规模语料；更大语料应在真实 Workload 验证后迁移到带 Sparse/Hybrid 能力的 Qdrant 或其他索引型 Vector Store。
 9. Ingestion Job 已持久化，但执行 Worker 仍为单进程内模型；多进程写入需要单写者部署或 Distributed Lease。
 10. Vector upsert 成功但 Active Pointer 切换前若进程崩溃，可能留下不可见 Orphan Chunk；GC 和 Retention policy 尚待实现。
 11. Tenant/ACL 过滤已经实现，但 Authentication 属于外部边界；生产调用方必须由可信身份系统提供 Tenant/Principal。
-12. 示例 Golden Query JSONL 只验证 evaluator 数据契约，不构成代表性 Benchmark，也不支持检索质量结论。
+12. 示例 Golden Query JSONL 只验证 evaluator 数据契约；检索质量结论仅来自版本化的 200 页外部 Benchmark，且不等同于答案级 Citation Precision。
 
 ## 兼容与迁移策略
 
@@ -694,7 +695,7 @@ MIT
 
 ## 外部 Benchmark 证据
 
-项目已完成固定总工作量为 200 页的复杂文档 RAG 工程评估。为控制仓库体积与第三方数据分发风险，Git 只保存来源、Hash、去文本化样本清单、汇总指标、逐查询排名和脱敏失败证据，不保存官方大型数据集、页面图片、临时 PDF 或 SQLite 索引。
+项目已完成三轮固定总工作量为 200 页的 RAG 工程评估：首轮定位 Parser/Retrieval 缺陷，第二轮验证 Metrics、Trace、告警与备份恢复闭环，第三轮针对召回率最小修复执行 150 页纵向对照与 50 页 Unseen Holdout。为控制仓库体积与第三方数据分发风险，Git 只保存来源、Hash、去文本化样本清单、汇总指标、逐查询排名和脱敏失败证据，不保存官方大型数据集、页面图片、临时 PDF 或 SQLite 索引。
 
 - [基于 OmniDocBench 和 OHR-Bench 的 RAG 基准测试](eval/基于OmniDocBench和OHR-Bench的RAG基准测试/README.md)
 - [完整 Benchmark 报告](eval/基于OmniDocBench和OHR-Bench的RAG基准测试/report.md)
@@ -702,6 +703,9 @@ MIT
 - [证据说明与对抗式审阅](eval/基于OmniDocBench和OHR-Bench的RAG基准测试/EVIDENCE.md)
 - [可观测性与灾备 Benchmark 报告](eval/基于OmniDocBench和OHR-Bench的RAG基准测试v2/report.md)
 - [可观测性与灾备证据说明](eval/基于OmniDocBench和OHR-Bench的RAG基准测试v2/EVIDENCE.md)
+- [第三次 200 页召回修复 Benchmark](eval/基于OmniDocBench和OHR-Bench的RAG基准测试v3/README.md)
+- [第三次 Benchmark 完整报告](eval/基于OmniDocBench和OHR-Bench的RAG基准测试v3/report.md)
+- [第三次 Benchmark 证据与对抗式审阅](eval/基于OmniDocBench和OHR-Bench的RAG基准测试v3/EVIDENCE.md)
 
 本轮不进行压力测试；单次阶段耗时只用于故障定位，不用于声明吞吐量或 SLA。
 

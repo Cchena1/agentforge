@@ -1,0 +1,75 @@
+{
+  "schema_version": 1,
+  "files": [
+    {
+      "path": "DATA_SOURCES.md",
+      "bytes": 2282,
+      "sha256": "d12a0d8885732f24cede5a6d7d212d7adbc6d64c3bfbbab1f51efeea3676b468"
+    },
+    {
+      "path": "EVIDENCE.md",
+      "bytes": 2988,
+      "sha256": "e338cf3b24acb5d3278d0b88a74d984944e01ad9cbeb49bad1e85b6152cda371"
+    },
+    {
+      "path": "manifests/sample_inventory.json",
+      "bytes": 122838,
+      "sha256": "191f2fc5add9d185e95bab71ba4be2d2b2e2d480eb207d5566894143ba60b95c"
+    },
+    {
+      "path": "README.md",
+      "bytes": 2485,
+      "sha256": "dc82486aecc1c099590ebcfae4e2d1c8c54b75fd56ba0ae3e9b42a4f9f469b89"
+    },
+    {
+      "path": "report.md",
+      "bytes": 9328,
+      "sha256": "b32360d930fd39a4957a65e94fb5684b735eb745210ee859768ffcdf9746921c"
+    },
+    {
+      "path": "results/adversarial_gate.json",
+      "bytes": 1455,
+      "sha256": "a6bf17b063ac9463b31dc748ddce7c961bfbf1337218973ea57dbc6a9129e2e9"
+    },
+    {
+      "path": "results/cohort_summary.json",
+      "bytes": 15075,
+      "sha256": "3ac351bb453f2db21f1b36c378e8e3719e3563944c6a50938ad7a2b51448f9d3"
+    },
+    {
+      "path": "results/environment.json",
+      "bytes": 753,
+      "sha256": "a4c2760ac6268d15424bbc2b960c7e2962fd5f24c86b07bf6808b83afb2fbe74"
+    },
+    {
+      "path": "results/ohr_retrieval_formatting_noise_moderate.json",
+      "bytes": 246504,
+      "sha256": "accc3cf9784cbcf24cf14cce113799e7ab27828a17f783a76d938eea4a934c78"
+    },
+    {
+      "path": "results/ohr_retrieval_gt_text.json",
+      "bytes": 246495,
+      "sha256": "696c83e928351ce77e82097da03a9b82bfcfb3d8674a4ec1254601cdf3bcbc2b"
+    },
+    {
+      "path": "results/ohr_retrieval_semantic_noise_MinerU_moderate.json",
+      "bytes": 246601,
+      "sha256": "4e1ccc91695984bb7747a183b0b70118a2c23b7b0122ec0cea89806e32343ad0"
+    },
+    {
+      "path": "results/ohr_retrieval_summary.json",
+      "bytes": 4836,
+      "sha256": "68a1b88fcc0479612dd76691d666c72308ff847cc55684968a2290864ed4af1d"
+    },
+    {
+      "path": "scripts/adversarial_audit.py",
+      "bytes": 2913,
+      "sha256": "a731441518d753f3b3005aa92e3ed72ab6972a316bfe3e186070bc81fedc14ec"
+    },
+    {
+      "path": "scripts/generate_evidence_manifest.py",
+      "bytes": 853,
+      "sha256": "b425404e36dd67433206c39f4419100c74f80418ebaf4476428a1c3fab36cea0"
+    }
+  ]
+}

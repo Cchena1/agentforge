@@ -277,7 +277,10 @@ for key, expected in expected_fixed_summary.items():
     elif actual != expected:
         errors.append(f"minimal-fix summary {key}: expected={expected}, actual={actual}")
 
-scan_paths = [*files, PROJECT_ROOT / "README.md", PROJECT_ROOT / "report.md"]
+scan_paths = [*files, PROJECT_ROOT / "README.md"]
+legacy_root_report = PROJECT_ROOT / "report.md"
+if legacy_root_report.exists():
+    scan_paths.append(legacy_root_report)
 secret_patterns = [
     re.compile(r"(?i)(api[_-]?key|access[_-]?token|secret)\s*[:=]\s*['\"][^'\"]{8,}"),
     re.compile(r"gh[pousr]_[A-Za-z0-9_]{20,}"),

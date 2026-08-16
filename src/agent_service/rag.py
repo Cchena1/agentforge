@@ -320,7 +320,7 @@ def _normalize_quote(value: str) -> str:
 
 
 def _evidence_sufficient(hits: list[RetrievalHit], minimum_score: float) -> bool:
-    return any(hit.lexical_score > 0 or hit.rerank_score >= minimum_score for hit in hits)
+    return bool(hits) and max(hit.rerank_score for hit in hits) >= minimum_score
 
 
 def _fuse_query_results(results: list[_QuerySearchResult], rrf_k: int) -> list[RetrievalHit]:

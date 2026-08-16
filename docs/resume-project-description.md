@@ -9,10 +9,10 @@ Built an asynchronous, schema-first agent service with LangGraph, strict Pydanti
 ### AgentForge - Production-Oriented Async Agent Service
 
 **Situation**
-A single-file agent demo could call a model but lacked production controls: malformed JSON could enter business logic, tool calls had no dependency/conflict model, memory ownership was unclear, agent loops were unbounded, and document replacement could erase searchable knowledge when ingestion failed.
+Enterprise Agent development faces recurring production risks: malformed model output can enter business logic, parallel tool calls can conflict, long sessions can exhaust context budgets, agent loops can run unbounded, and complex-document ingestion can silently distort or replace searchable evidence.
 
 **Task**
-Redesign the demo into an evaluation-ready Agent engineering project while preserving the public 0.x API, maintaining reproducible local operation, and producing executable evidence instead of unsupported performance claims.
+Build an evaluation-ready asynchronous Agent service around those enterprise failure modes while preserving the public 0.x API, maintaining reproducible local operation, and producing executable evidence instead of unsupported performance claims.
 
 **Action**
 
@@ -28,20 +28,20 @@ Redesign the demo into an evaluation-ready Agent engineering project while prese
 
 **Result**
 
-- Converted the demo into a typed, modular service with reproducible `uv.lock` dependency management and external-evaluator documentation.
-- Verified the current milestone with **56 passing tests**, **Ruff passing**, and **strict mypy passing across 20 Python files**.
+- Delivered a typed, modular Agent service with reproducible `uv.lock` dependency management and external-evaluator documentation.
+- Verified the current milestone with **90 passing tests**, **the documented Ruff gate passing (`src`, `main.py`, `tests`, and `scripts`)**, and **strict mypy passing across 25 Python files**.
 - Preserved existing API fields while adding `version_id`, `content_sha256`, `idempotent`, and retrieval `index_versions` during a documented migration window.
 - Demonstrated failure-safe RAG behavior: readers continue using the previous complete version until a replacement is fully stored and activated.
 - Produced implementation, migration, ADR, dependency, and acceptance evidence suitable for code review and interview discussion.
 
 ## One-page resume bullets
 
-- Engineered an async Agent service with **FastAPI, LangGraph, asyncio, Pydantic v2, AsyncOpenAI, aiosqlite, SQLite/Qdrant, and uv**, replacing a single-file demo with typed module boundaries and explicit state ownership.
+- Engineered an async Agent service with **FastAPI, LangGraph, asyncio, Pydantic v2, AsyncOpenAI, aiosqlite, SQLite/Qdrant, and uv**, using typed module boundaries and explicit state ownership across model, tool, memory, RAG, and observability layers.
 - Built **schema-first function calling** and structured-output repair; rejected missing/wrong/extra fields before business logic and implemented classified retry, route fallback, controlled degradation, and human handoff.
 - Implemented a **dependency-aware parallel tool DAG** with semaphores, `$ref` data flow, cycle detection, failure propagation, timeouts, and resource locks to prevent conflicting mutations.
 - Designed **layered memory and multi-agent isolation** using bounded session context, rolling summaries, user-namespaced vector memory, isolated worker context, and compressed citation-bearing results.
-- Delivered **failure-safe versioned RAG** with content hashing, pipeline-profile identity, idempotent ingestion, active-pointer switching, SQLite/Qdrant version filters, legacy-data migration, and source-level concurrency control.
-- Established executable evidence with **56 pytest cases, Ruff, strict mypy for 20 Python files, migration/failure-injection tests, and a JSONL retrieval evaluator**, without claiming unperformed pressure testing.
+- Delivered and evaluated **failure-safe document RAG** through three controlled **200-page** benchmark rounds; the 427-query retrieval baseline reached **73.30% Recall@5** on clean evidence, **70.26%** under formatting noise, and **57.38%** under semantic/OCR noise, while citation-schema validity remained **100%**.
+- Closed the local operational loop with **200/200 pages ingested**, **582 chunks**, **200/200 searchable after isolated restore**, **0 retrieval-signature mismatches**, **400 trace spans with 0 content-bearing attributes**, **4/4 validated SQLite backups**, **8 alert rules**, and **11/11 machine-checkable acceptance checks**; verified the codebase with **90 tests**, the documented Ruff gate, and strict mypy across **25 Python files**.
 
 ## 60-second interview introduction
 
@@ -98,6 +98,9 @@ No pressure testing was performed. The golden file is only a schema example. Ten
 - `tests/test_llm.py`
 - `tests/test_memory.py`
 - `tests/test_multi_agent.py`
+- `eval/基于OmniDocBench和OHR-Bench的RAG基准测试/report.md`
+- `eval/基于OmniDocBench和OHR-Bench的RAG基准测试v2/report.md`
+- `eval/基于OmniDocBench和OHR-Bench的RAG基准测试v3/report.md`
 
 ## Claims to avoid
 
@@ -109,14 +112,41 @@ Do not claim:
 - built-in authentication or trusted identity proof inside the current service;
 - distributed or exactly-once ingestion;
 - remote Qdrant production readiness;
-- complete claim-level citation verification.
+- complete claim-level citation verification;
+- enterprise-grade disaster recovery, production OCR accuracy, or retrieval-quality improvement based solely on the current three benchmark rounds.
 
 These boundaries make the resume narrative credible and provide clear follow-up engineering topics.
 
-## Document RAG engineering extension
+## Quantified RAG resume entry - STAR format
 
-- Designed and implemented a quality-gated Docling/PaddleOCR/pypdf parser registry around a parser-neutral Canonical Document Model, preserving PDF/DOCX provenance, asset relationships, parser attempts, and deterministic quality reports.
-- Migrated blocking document ingestion toward a durable asynchronous job API with restart recovery, bounded concurrency, idempotent immutable versions, and atomic active-index activation.
-- Replaced character-only splitting with token-aware Parent-Child chunking, table row-group splitting, repeating header/footer exclusion, and structure-aware citation locations.
-- Added parallel Vector/Lexical/Metadata retrieval, RRF fusion, bounded corrective retrieval, exact-substring evidence quotes, and Pydantic-enforced citation contracts.
-- Expanded the regression suite to 56 tests while explicitly excluding pressure-test and unverified OCR-quality claims.
+**Situation**
+
+Complex PDF/DOCX ingestion introduced failure modes that a naive vector-search pipeline could not control: multi-column reading order, OCR-dependent pages, tables and images, stale document versions, weak evidence provenance, and retrieval degradation caused by parser noise.
+
+**Task**
+
+Build a local-first, failure-safe RAG subsystem and evaluate it under a fixed **200-page** budget without using pressure-test results or unsupported production claims.
+
+**Action**
+
+- Built a quality-gated Docling/PaddleOCR/pypdf parser registry around a parser-neutral Canonical Document Model, preserving page/block provenance, assets, parser attempts, quality findings, and structured PDF/DOCX citation locations.
+- Replaced character-only splitting with token-aware Parent-Child chunking, table row-group splitting, repeated header/footer exclusion, and context reconstruction from child hits to parent sections.
+- Implemented asynchronous ingestion with bounded concurrency, immutable content/pipeline versions, idempotent writes, atomic active-version switching, restart recovery, and source-level isolation.
+- Ran Vector, Lexical, and Metadata retrieval branches in parallel, then applied RRF fusion, bounded corrective retrieval, exact-source quote validation, and strict Pydantic citation contracts.
+- Created a three-round reproducible Benchmark suite using OmniDocBench and OHR-Bench; the third round allocated 150 pages to a longitudinal OHR cohort and 50 pages to a disjoint holdout, while retaining compact manifests, sanitized failures, machine-readable results, and reports instead of committing large official datasets.
+
+**Result**
+
+- Established a **427-query** offline retrieval baseline: **Recall@5 = 73.30%** on clean ground truth, **70.26%** with formatting noise, and **57.38%** with semantic/OCR extraction noise. The measured **15.93 percentage-point** degradation converted a vague “RAG quality” problem into a specific parser/retrieval robustness backlog rather than an unsupported quality claim.
+- Maintained **100% hit-level citation-schema validity** across all three retrieval conditions, with **0 unsupported citations at the retrieval-hit layer**; the benchmark explicitly did not treat this as answer-level claim-to-citation verification.
+- Re-ran **10 previously failed complex PDF pages** after the minimal parser fix: **10/10 parsed**, while the tightened content-quality gate accepted **6/10** and quarantined **4/10** OCR-required or low-coverage pages, preventing silent indexing of technically parsed but unusable content.
+- In the operational benchmark, ingested **200/200 pages** into **582 chunks** and **200 active versions**; after backup and isolated restore, **200/200 pages remained searchable**, database counts matched, and retrieval-signature mismatch was **0**.
+- Collected **400 trace spans** with **0 query/document content attributes**, validated **4/4 SQLite backup files** by size/hash/integrity, checked **8 Prometheus alert rules**, and passed **11/11 machine-checkable acceptance criteria**.
+- Verified the current repository with **90 passing tests**, the documented Ruff gate, and strict mypy across **25 Python files**. The benchmark does **not** claim pressure-tested capacity, enterprise disaster-recovery certification, or production OCR accuracy.
+
+## 2026-08-16 retrieval repair evidence
+
+- Replaced the local raw-overlap path with SQLite FTS5/BM25 and prevented the non-semantic HashEmbedding baseline from contributing dense rank credit.
+- On the same 150-page/427-query cohort, improved Recall@5 from **73.30% to 94.38%** on clean text, **70.26% to 94.38%** under formatting noise, and **57.38% to 86.42%** under semantic/OCR noise.
+- Added a disjoint 50-page/132-query holdout; the aggregate third-round result across 200 pages and 559 queries per variant reached **95.53% / 95.53% / 88.91% Recall@5**.
+- Kept the claim boundary explicit: no pressure testing, no remote-Qdrant hybrid validation, and no answer-level citation-precision claim.

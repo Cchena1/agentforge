@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "date": "2026-08-16",
+  "decision": "pass",
+  "proceed_to_benchmark": true,
+  "checks": [
+    {
+      "name": "misleading_hash_does_not_outvote_bm25",
+      "status": "passed",
+      "evidence": "tests/test_rag.py"
+    },
+    {
+      "name": "fts_backfill_update_delete_consistency",
+      "status": "passed",
+      "evidence": "tests/test_rag.py"
+    },
+    {
+      "name": "page_diversification_before_duplicate_fill",
+      "status": "passed",
+      "evidence": "tests/test_rag.py"
+    },
+    {
+      "name": "tenant_acl_prefilter_regression",
+      "status": "passed",
+      "evidence": "full pytest suite"
+    },
+    {
+      "name": "pytest",
+      "status": "passed",
+      "result": "90 passed, 1 dependency deprecation warning"
+    },
+    {
+      "name": "ruff",
+      "status": "passed",
+      "result": "All checks passed"
+    },
+    {
+      "name": "mypy_strict",
+      "status": "passed",
+      "result": "Success: no issues found in 25 source files"
+    }
+  ],
+  "residual_risks": [
+    "Semantic/OCR-noise retrieval remains weaker than clean and formatting-noise retrieval.",
+    "The remote Qdrant adapter remains dense-first; this patch does not add a sparse BM25 index to Qdrant.",
+    "SQLite unicode61 tokenization is not a full Chinese word segmenter.",
+    "Citation Validity validates hit/schema/source consistency, not claim-level semantic support."
+  ]
+}
