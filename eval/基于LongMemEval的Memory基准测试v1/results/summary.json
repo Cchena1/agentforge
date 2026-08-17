@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "total_cases": 70,
+  "official_cases": 50,
+  "internal_cases": 20,
+  "overall_pass_rate": 0.37142857142857144,
+  "longmemeval_recall_at_5": 0.2633333333333333,
+  "median_retrieval_latency_ms": 51.070000000436266,
+  "by_category": {
+    "abstention": {
+      "cases": 10,
+      "passed": 0,
+      "pass_rate": 0.0
+    },
+    "delete": {
+      "cases": 2,
+      "passed": 0,
+      "pass_rate": 0.0
+    },
+    "information_extraction": {
+      "cases": 10,
+      "passed": 4,
+      "pass_rate": 0.4
+    },
+    "knowledge_update": {
+      "cases": 10,
+      "passed": 2,
+      "pass_rate": 0.2
+    },
+    "multi_session": {
+      "cases": 10,
+      "passed": 1,
+      "pass_rate": 0.1
+    },
+    "rolling_summary": {
+      "cases": 5,
+      "passed": 5,
+      "pass_rate": 1.0
+    },
+    "spill": {
+      "cases": 5,
+      "passed": 5,
+      "pass_rate": 1.0
+    },
+    "temporal_reasoning": {
+      "cases": 10,
+      "passed": 1,
+      "pass_rate": 0.1
+    },
+    "tenant_isolation": {
+      "cases": 5,
+      "passed": 5,
+      "pass_rate": 1.0
+    },
+    "update": {
+      "cases": 3,
+      "passed": 3,
+      "pass_rate": 1.0
+    }
+  },
+  "pressure_test": false
+}

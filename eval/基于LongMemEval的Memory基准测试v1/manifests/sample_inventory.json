@@ -1,0 +1,252 @@
+[
+  {
+    "question_id": "e47becba",
+    "category": "information_extraction",
+    "question_sha256": "2ca9a0d5f1876fa9e2cca5d2f38a6d2b5082703ddfb8ab0a5b33dfa1f8216684"
+  },
+  {
+    "question_id": "118b2229",
+    "category": "information_extraction",
+    "question_sha256": "092f4e554cd2fc97f90d1dce7badab62d9779c64d596789beef74fd878e2d64c"
+  },
+  {
+    "question_id": "51a45a95",
+    "category": "information_extraction",
+    "question_sha256": "117c159b9968f5a32a76d74a797f1de8c5eac4d9523c5f3419323cdf706814a2"
+  },
+  {
+    "question_id": "58bf7951",
+    "category": "information_extraction",
+    "question_sha256": "b69fa6f8753ca762bb5239946932b1f188d71e29c5dbe3c1c7f269fee18c3b07"
+  },
+  {
+    "question_id": "1e043500",
+    "category": "information_extraction",
+    "question_sha256": "2ece5e6c4459d05cd57fb7ea2e8c657e12c0b23cbe0d2ed69e8b729c47ed0f89"
+  },
+  {
+    "question_id": "c5e8278d",
+    "category": "information_extraction",
+    "question_sha256": "938b36b7813370cf642050396286be81451ba636f4dfcf47f963d73f426fad0b"
+  },
+  {
+    "question_id": "6ade9755",
+    "category": "information_extraction",
+    "question_sha256": "e0c973f2ed14ddb920d1d783afde8365e8ea81c8542826aaf6ae7306a27399ce"
+  },
+  {
+    "question_id": "6f9b354f",
+    "category": "information_extraction",
+    "question_sha256": "a0b84e138e048af90c3026f791f730a2a286b2bd9601bc0026f22fb14b395ab2"
+  },
+  {
+    "question_id": "58ef2f1c",
+    "category": "information_extraction",
+    "question_sha256": "0b8d989b7d40ac64667cbc9a319ce1be37ebf6e0649af0418358a396154ab8e9"
+  },
+  {
+    "question_id": "f8c5f88b",
+    "category": "information_extraction",
+    "question_sha256": "c34d2960a7144cf659a89bc05e665a2817fdaefce7fa7cb07dc4179881bb0f76"
+  },
+  {
+    "question_id": "0a995998",
+    "category": "multi_session",
+    "question_sha256": "d13ea932a731f3d8ffdae7439c7a6afaea64451af077aae344edab3e20f1f932"
+  },
+  {
+    "question_id": "6d550036",
+    "category": "multi_session",
+    "question_sha256": "41e549b7457aa21fc550ff42a20a09e5fcdda793771ca86d0d7a8f198391e0f5"
+  },
+  {
+    "question_id": "gpt4_59c863d7",
+    "category": "multi_session",
+    "question_sha256": "9b77e32ef7de9ec435a6956ec92f3158dd6a840b2da210a297011ecfbe2838af"
+  },
+  {
+    "question_id": "b5ef892d",
+    "category": "multi_session",
+    "question_sha256": "80ca7a2810363d60deaf2ac7af570c41022322dc8eae93269ce2f84a944bb7a9"
+  },
+  {
+    "question_id": "e831120c",
+    "category": "multi_session",
+    "question_sha256": "27df5ae99aca0e2d9cb33573e17b137955bea18396d8309d617e6177fe1e3480"
+  },
+  {
+    "question_id": "3a704032",
+    "category": "multi_session",
+    "question_sha256": "6f7591228466b98de694baca627b4acfa942256477579a20f5b955cd24c2a9b5"
+  },
+  {
+    "question_id": "gpt4_d84a3211",
+    "category": "multi_session",
+    "question_sha256": "ef5bae34acd95aab80596a28edc65167e804fea295de6bea3027194962198694"
+  },
+  {
+    "question_id": "aae3761f",
+    "category": "multi_session",
+    "question_sha256": "f97a2da7f7c9629fe76cb466a450b13c03761741ac0c385bffc5df23e39cda2c"
+  },
+  {
+    "question_id": "gpt4_f2262a51",
+    "category": "multi_session",
+    "question_sha256": "b4189d8d586b2108e1ef7047e026c56b0472ec8fd6db5ef637edfe9dbe7518e1"
+  },
+  {
+    "question_id": "dd2973ad",
+    "category": "multi_session",
+    "question_sha256": "d4c2b1b7916c558a96eb527b308f60d55e33f181c76cb1c34aaa4ae47073cc7d"
+  },
+  {
+    "question_id": "6a1eabeb",
+    "category": "knowledge_update",
+    "question_sha256": "622c6948a46d36e6473b40e31197ab88aa469f1ee4623e72e2221d0dd7db8afd"
+  },
+  {
+    "question_id": "6aeb4375",
+    "category": "knowledge_update",
+    "question_sha256": "d7642046a689225d027d511f0ab809e017eee742995e0a74a1091a8641d663c2"
+  },
+  {
+    "question_id": "830ce83f",
+    "category": "knowledge_update",
+    "question_sha256": "14124e9fd0617eb377bba5c0e0d61c9165e8073372ebae20d5c4a2d9fdf2f897"
+  },
+  {
+    "question_id": "852ce960",
+    "category": "knowledge_update",
+    "question_sha256": "f79f765757fbcb128caa9abb59b657dc125df3843bb135bc4b55d0e512fe4496"
+  },
+  {
+    "question_id": "945e3d21",
+    "category": "knowledge_update",
+    "question_sha256": "07f2b625b3c438a7499fe105d47ee575d8ff4c55b00d44c8aecda10db1765990"
+  },
+  {
+    "question_id": "d7c942c3",
+    "category": "knowledge_update",
+    "question_sha256": "aaeeb12df71d5f1253865347217f8250eb170aefd36c484da72ae4ba351287d7"
+  },
+  {
+    "question_id": "71315a70",
+    "category": "knowledge_update",
+    "question_sha256": "7d80c90003295fb2be505e9ab649a63f705e5770eab5a3cc2f195e8cdf21121f"
+  },
+  {
+    "question_id": "89941a93",
+    "category": "knowledge_update",
+    "question_sha256": "b1fa5c21afdb58604d92f4a9d891c9e339c0b79ba4418f669512b51da60495b7"
+  },
+  {
+    "question_id": "ce6d2d27",
+    "category": "knowledge_update",
+    "question_sha256": "dd800b95703718b81c1b3c644f812733af84a6b11d4e064f32bbdeead1cdebdf"
+  },
+  {
+    "question_id": "9ea5eabc",
+    "category": "knowledge_update",
+    "question_sha256": "0a11ea5f4918940e051cf67e38a6b6fea35075e553e4639fc185afcf39538325"
+  },
+  {
+    "question_id": "gpt4_59149c77",
+    "category": "temporal_reasoning",
+    "question_sha256": "d96c4fa5201ee0cec69905940d46fc4de458193f32d3a0181cd11538a1a4b3cd"
+  },
+  {
+    "question_id": "gpt4_f49edff3",
+    "category": "temporal_reasoning",
+    "question_sha256": "f79fe8919b7e64a3e71da4e5435dc7484ca89f9da66307983ab4de85f85982e5"
+  },
+  {
+    "question_id": "71017276",
+    "category": "temporal_reasoning",
+    "question_sha256": "b53c603e2be836579318360ade7ee6cf621b6f7579c37d9fa9954747be285085"
+  },
+  {
+    "question_id": "b46e15ed",
+    "category": "temporal_reasoning",
+    "question_sha256": "c8fa8af47af1023e404a0b758c7dbfcff0f301ceefa288ff60ebbf2ddbfbf346"
+  },
+  {
+    "question_id": "gpt4_fa19884c",
+    "category": "temporal_reasoning",
+    "question_sha256": "687be02b7f9f5de0a44bb85d4b95d1d127e4ecd381cfecebd812779b246a8138"
+  },
+  {
+    "question_id": "0bc8ad92",
+    "category": "temporal_reasoning",
+    "question_sha256": "d4280d059a3365597e514017c1f2456cb69dd19b23331f0bdf7f3de5c1d494a1"
+  },
+  {
+    "question_id": "af082822",
+    "category": "temporal_reasoning",
+    "question_sha256": "3436863a2deacd8b2b3cf70d541b2ede5a14551d42ce3a2dd1687e59c0987684"
+  },
+  {
+    "question_id": "gpt4_4929293a",
+    "category": "temporal_reasoning",
+    "question_sha256": "1365b69274248689eb44fbffc7ac29772294456e71adc6bb68ecfc0a03fea2d8"
+  },
+  {
+    "question_id": "gpt4_b5700ca9",
+    "category": "temporal_reasoning",
+    "question_sha256": "1548f5e04e257196243858c8cc50ccafdafa45a4b56b9194f251aea40aad294e"
+  },
+  {
+    "question_id": "9a707b81",
+    "category": "temporal_reasoning",
+    "question_sha256": "f94134e6f763716f606f043358687b984ce255015de0f17e75b5a09968702028"
+  },
+  {
+    "question_id": "0862e8bf_abs",
+    "category": "abstention",
+    "question_sha256": "dcd19c76f1cffae791831472ab636ddf348618b7017a632f092d9472b5eac55b"
+  },
+  {
+    "question_id": "15745da0_abs",
+    "category": "abstention",
+    "question_sha256": "0488b2b0cdd06b4822a335bd8bcf022b873fef9855c56f806b87ded8916e6463"
+  },
+  {
+    "question_id": "bc8a6e93_abs",
+    "category": "abstention",
+    "question_sha256": "5a6007ee203eb5a96f39df617539f47d4013fbb573ab2847eefda1a3f2180e1e"
+  },
+  {
+    "question_id": "19b5f2b3_abs",
+    "category": "abstention",
+    "question_sha256": "421e0669625e5f754c33786a13a1f2909d7f7dc40dc6f90023e540e8f1a3e8d6"
+  },
+  {
+    "question_id": "29f2956b_abs",
+    "category": "abstention",
+    "question_sha256": "8c7dd59060e9becf065afc6aa33434eea1febd3492ce19a087aae41a93b423b0"
+  },
+  {
+    "question_id": "f4f1d8a4_abs",
+    "category": "abstention",
+    "question_sha256": "b7626656088d6596538daf0887a9117ae5a8f4d93380160f47cea59b70f4feb4"
+  },
+  {
+    "question_id": "88432d0a_abs",
+    "category": "abstention",
+    "question_sha256": "f82355bc6f7ebb2ee2095b58ac46d22b357a036db4f24a6de7e27e4ce96b1da5"
+  },
+  {
+    "question_id": "80ec1f4f_abs",
+    "category": "abstention",
+    "question_sha256": "51d99f88c8c600b5e8cd240a7335b6da0c00d9bfb5da7fc5d729e5ff12f20da3"
+  },
+  {
+    "question_id": "eeda8a6d_abs",
+    "category": "abstention",
+    "question_sha256": "cf878c77d6584184c22ef24f0881ee564fc56120cdf36e4114e8bbcaa18b95e6"
+  },
+  {
+    "question_id": "60bf93ed_abs",
+    "category": "abstention",
+    "question_sha256": "ddbce0baa047851c8d4f7ffce82d36d1b9888b82ac7a76a8b820fc912b2ae8df"
+  }
+]

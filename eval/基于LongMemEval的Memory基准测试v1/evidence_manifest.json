@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "files": [
+    {
+      "path": "DATA_SOURCES.md",
+      "bytes": 1253,
+      "sha256": "0f070d77307adefdc183ec5f8b5c0582241177a1b945a331777d2771f2e49a91"
+    },
+    {
+      "path": "EVIDENCE.md",
+      "bytes": 1419,
+      "sha256": "8c0ae1dc571493ee7b8c80e96313453cb51575682a0affc34021255786fac3aa"
+    },
+    {
+      "path": "manifests/sample_inventory.json",
+      "bytes": 8623,
+      "sha256": "bab97275e2c9330d632e6d6951ddbbbc3f903cd90197f91f5681aa5f9cdb111f"
+    },
+    {
+      "path": "README.md",
+      "bytes": 969,
+      "sha256": "b7c99b31d10e159867a2cf57d3ef1496a73c7860d29e35d9d8980d546df42b4b"
+    },
+    {
+      "path": "report.md",
+      "bytes": 4814,
+      "sha256": "e3367417835c4f2a48d442824f33337ca0afa69426c58d07122a271290db07a4"
+    },
+    {
+      "path": "results/cases.json",
+      "bytes": 27350,
+      "sha256": "817a056922946a50de24236a0d89fef65b02af334bc1f800f814a9851c680b15"
+    },
+    {
+      "path": "results/summary.json",
+      "bytes": 1252,
+      "sha256": "018a4c786f1cac3371844418d1d88c416da8cdf6f85e760514f0e7da2f78de3c"
+    },
+    {
+      "path": "scripts/adversarial_audit.py",
+      "bytes": 1540,
+      "sha256": "404beb4c5500e3b7dde65d8a98c5b76a9eedf0c25a868db5d4ec5a94bbe21027"
+    },
+    {
+      "path": "scripts/run_benchmark.py",
+      "bytes": 9939,
+      "sha256": "aa865f6bdf6de7b71c0092bb4f28c3afbcb2f42d76702e9077fcb1fb6eb4421b"
+    }
+  ]
+}
