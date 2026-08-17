@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "model_requested": "deepseek-chat",
+  "model_observed": "provider-recorded-in-gateway",
+  "total_cases": 60,
+  "by_source": {
+    "AgentForge": {
+      "cases": 15,
+      "passed": 15,
+      "pass_rate": 1.0
+    },
+    "BFCL": {
+      "cases": 30,
+      "passed": 22,
+      "pass_rate": 0.7333333333333333
+    },
+    "ToolSandbox projection": {
+      "cases": 15,
+      "passed": 11,
+      "pass_rate": 0.7333333333333333
+    }
+  },
+  "overall_pass_rate": 0.8,
+  "median_model_latency_ms": 1026.3267999998789,
+  "pressure_test": false
+}

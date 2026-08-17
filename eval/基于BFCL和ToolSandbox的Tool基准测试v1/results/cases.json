@@ -1,0 +1,1275 @@
+[
+  {
+    "source": "BFCL",
+    "category": "simple_python",
+    "case_id": "simple_python_0",
+    "input_sha256": "167fa4687fad0439d209928c655411b262235c1f045f75348a9f3c3aab8cba1d",
+    "predicted": [
+      {
+        "call_id": "call_00_OlnQ0QtxT2rJmLnAdwaw4920",
+        "name": "calculate_triangle_area",
+        "arguments": {
+          "base": 10,
+          "height": 5,
+          "unit": "units"
+        }
+      }
+    ],
+    "expected_count": 1,
+    "selection_ok": true,
+    "arguments_ok": true,
+    "passed": true,
+    "latency_ms": 3791.2488999991183,
+    "response_kind": "tool"
+  },
+  {
+    "source": "BFCL",
+    "category": "simple_python",
+    "case_id": "simple_python_1",
+    "input_sha256": "7a7282448f61f64d27e4b361fb63be5f4b3b9272e2a0fb2e8fd43f0462a81431",
+    "predicted": [
+      {
+        "call_id": "call_00_RdfsXfhSLXQ98EDO63jc1898",
+        "name": "math__factorial",
+        "arguments": {
+          "number": 5
+        }
+      }
+    ],
+    "expected_count": 1,
+    "selection_ok": true,
+    "arguments_ok": true,
+    "passed": true,
+    "latency_ms": 718.168200000946,
+    "response_kind": "tool"
+  },
+  {
+    "source": "BFCL",
+    "category": "simple_python",
+    "case_id": "simple_python_2",
+    "input_sha256": "709b7be5f05760ed07046055493e309676b44589ad382f105f4833e2d0c36fbe",
+    "predicted": [
+      {
+        "call_id": "call_00_BqE2mvcOCnUsi5F5Q7mf5588",
+        "name": "math__hypot",
+        "arguments": {
+          "x": 4,
+          "y": 5
+        }
+      }
+    ],
+    "expected_count": 1,
+    "selection_ok": true,
+    "arguments_ok": true,
+    "passed": true,
+    "latency_ms": 1209.5425999996223,
+    "response_kind": "tool"
+  },
+  {
+    "source": "BFCL",
+    "category": "simple_python",
+    "case_id": "simple_python_3",
+    "input_sha256": "23c6caeec4e6655d292f53db6c6c3f3aa8d256a2be6fbd766199506d7f186d11",
+    "predicted": [
+      {
+        "call_id": "call_00_r0fpfyirGNtvFQvziYs16293",
+        "name": "algebra__quadratic_roots",
+        "arguments": {
+          "a": 1,
+          "b": -3,
+          "c": 2
+        }
+      }
+    ],
+    "expected_count": 1,
+    "selection_ok": true,
+    "arguments_ok": true,
+    "passed": true,
+    "latency_ms": 1887.181000000055,
+    "response_kind": "tool"
+  },
+  {
+    "source": "BFCL",
+    "category": "simple_python",
+    "case_id": "simple_python_4",
+    "input_sha256": "4d7b7e300a5c7aeeaf5d92e8a4f0913cc3f4d4fe43135cd5db7bc7a8f2ba9211",
+    "predicted": [
+      {
+        "call_id": "call_00_aqTYGnDxuIxlaRgra7Up4165",
+        "name": "solve_quadratic_equation",
+        "arguments": {
+          "a": 2,
+          "b": 6,
+          "c": 5
+        }
+      }
+    ],
+    "expected_count": 1,
+    "selection_ok": true,
+    "arguments_ok": true,
+    "passed": true,
+    "latency_ms": 935.8207000004768,
+    "response_kind": "tool"
+  },
+  {
+    "source": "BFCL",
+    "category": "simple_python",
+    "case_id": "simple_python_5",
+    "input_sha256": "a9d2de2a459674de73ff3edd4dc9d03075170b2a587032291b104041c0a24e63",
+    "predicted": [
+      {
+        "call_id": "call_00_s9ZtiKYPRbgnXKFKrrxI9783",
+        "name": "solve_quadratic",
+        "arguments": {
+          "a": 3,
+          "b": -11,
+          "c": -4,
+          "root_type": "all"
+        }
+      }
+    ],
+    "expected_count": 1,
+    "selection_ok": true,
+    "arguments_ok": true,
+    "passed": true,
+    "latency_ms": 907.5224999996863,
+    "response_kind": "tool"
+  },
+  {
+    "source": "BFCL",
+    "category": "simple_python",
+    "case_id": "simple_python_6",
+    "input_sha256": "792b703d4f8ee55dedf40c5c40eaa6337dbef759c80cf7cfcc9fa00f869e802a",
+    "predicted": [
+      {
+        "call_id": "call_00_vwMWWZyZbGSID81wPi6X7385",
+        "name": "solve_quadratic",
+        "arguments": {
+          "a": 2,
+          "b": 5,
+          "c": 3
+        }
+      }
+    ],
+    "expected_count": 1,
+    "selection_ok": true,
+    "arguments_ok": true,
+    "passed": true,
+    "latency_ms": 829.911799999536,
+    "response_kind": "tool"
+  },
+  {
+    "source": "BFCL",
+    "category": "simple_python",
+    "case_id": "simple_python_7",
+    "input_sha256": "34e119a094a773208c266a4df72e736aeb7a44fdf7eb75798e958ac3be88397d",
+    "predicted": [
+      {
+        "call_id": "call_00_6DgKibUAo933AD8ijCrD0083",
+        "name": "calculate_circumference",
+        "arguments": {
+          "radius": 4,
+          "unit": "inches"
+        }
+      }
+    ],
+    "expected_count": 1,
+    "selection_ok": true,
+    "arguments_ok": true,
+    "passed": true,
+    "latency_ms": 763.3516000005329,
+    "response_kind": "tool"
+  },
+  {
+    "source": "BFCL",
+    "category": "multiple",
+    "case_id": "multiple_0",
+    "input_sha256": "edc08c4de59b5a6fed1ad78b1a560d57f5c1e42aabe1cbdbdc6c7b2b0b27d7e5",
+    "predicted": [
+      {
+        "call_id": "call_00_iUW1m3Xnihbyh3hbOJqL5488",
+        "name": "triangle_properties__get",
+        "arguments": {
+          "side1": 5,
+          "side2": 4,
+          "side3": 3
+        }
+      }
+    ],
+    "expected_count": 1,
+    "selection_ok": true,
+    "arguments_ok": true,
+    "passed": true,
+    "latency_ms": 1264.4617000005383,
+    "response_kind": "tool"
+  },
+  {
+    "source": "BFCL",
+    "category": "multiple",
+    "case_id": "multiple_1",
+    "input_sha256": "f9d6f4ac156015fd5a1e639e955c93a9266a3ecdf1ee5c884ad7517094cbb6da",
+    "predicted": [
+      {
+        "call_id": "call_00_XLT0MlHer6dbKcZo2hzI3174",
+        "name": "math__triangle_area_heron",
+        "arguments": {
+          "side1": 3,
+          "side2": 4,
+          "side3": 5
+        }
+      }
+    ],
+    "expected_count": 1,
+    "selection_ok": true,
+    "arguments_ok": true,
+    "passed": true,
+    "latency_ms": 921.9361999985267,
+    "response_kind": "tool"
+  },
+  {
+    "source": "BFCL",
+    "category": "multiple",
+    "case_id": "multiple_2",
+    "input_sha256": "5b2a14fce67c5fa78661d6db17e0b46a045d710bb0f076c066fa9ea96ff37303",
+    "predicted": [
+      {
+        "call_id": "call_00_9sAdIQfDBD13WWGUQxxK4295",
+        "name": "country_info__capital",
+        "arguments": {
+          "country": "Brazil"
+        }
+      }
+    ],
+    "expected_count": 1,
+    "selection_ok": true,
+    "arguments_ok": true,
+    "passed": true,
+    "latency_ms": 765.5717999987246,
+    "response_kind": "tool"
+  },
+  {
+    "source": "BFCL",
+    "category": "multiple",
+    "case_id": "multiple_3",
+    "input_sha256": "16bbe4b39e2a6246433febe85b5fb23900282a35fdf90ffe1941651176b31a31",
+    "predicted": [
+      {
+        "call_id": "call_00_sPhsKHqYO6rbRtZ3Fekn8491",
+        "name": "EuclideanDistance__calculate",
+        "arguments": {
+          "pointA": [
+            3,
+            4
+          ],
+          "pointB": [
+            1,
+            2
+          ]
+        }
+      }
+    ],
+    "expected_count": 1,
+    "selection_ok": true,
+    "arguments_ok": true,
+    "passed": true,
+    "latency_ms": 947.7538999999524,
+    "response_kind": "tool"
+  },
+  {
+    "source": "BFCL",
+    "category": "multiple",
+    "case_id": "multiple_4",
+    "input_sha256": "e0bdb5344be306d0bd7b694947dc76915e0c1fa4fc243c7ef1dff6c7a64ea12e",
+    "predicted": [
+      {
+        "call_id": "call_00_TDU2sgLR3ntGBed3W4xj1836",
+        "name": "kinematics__calculate_displacement",
+        "arguments": {
+          "initial_speed": 20,
+          "acceleration": 10,
+          "time": 5
+        }
+      }
+    ],
+    "expected_count": 1,
+    "selection_ok": true,
+    "arguments_ok": true,
+    "passed": true,
+    "latency_ms": 1001.5120999996725,
+    "response_kind": "tool"
+  },
+  {
+    "source": "BFCL",
+    "category": "multiple",
+    "case_id": "multiple_5",
+    "input_sha256": "09982a805f868807769461c2bb720a7e68a9705b6975d3a8bc0c57b7ed815c06",
+    "predicted": [
+      {
+        "call_id": "call_00_3rBb7H2qjYz3yeqidLab0797",
+        "name": "weather__get_by_coordinates_date",
+        "arguments": {
+          "coordinates": [
+            46.603354,
+            1.888334
+          ],
+          "date": "2019-12-13"
+        }
+      }
+    ],
+    "expected_count": 1,
+    "selection_ok": true,
+    "arguments_ok": true,
+    "passed": true,
+    "latency_ms": 1073.7516000008327,
+    "response_kind": "tool"
+  },
+  {
+    "source": "BFCL",
+    "category": "parallel",
+    "case_id": "parallel_0",
+    "input_sha256": "e266889bf46627a7f6760d1a3e083bf1695bdc97538b6e3760795b8d0ca26494",
+    "predicted": [
+      {
+        "call_id": "call_00_sRmfW7U3Q2D5oq5ulTWI0576",
+        "name": "spotify__play",
+        "arguments": {
+          "artist": "Taylor Swift",
+          "duration": 20
+        }
+      },
+      {
+        "call_id": "call_01_FXiCx8IGRICF882pMRZE8424",
+        "name": "spotify__play",
+        "arguments": {
+          "artist": "Maroon 5",
+          "duration": 15
+        }
+      }
+    ],
+    "expected_count": 2,
+    "selection_ok": true,
+    "arguments_ok": true,
+    "passed": true,
+    "latency_ms": 1264.2789999990782,
+    "response_kind": "tool"
+  },
+  {
+    "source": "BFCL",
+    "category": "parallel",
+    "case_id": "parallel_1",
+    "input_sha256": "a5955274c994c3521ec352fc35b04111bb43270e39d682044a1540b5d5f13fb0",
+    "predicted": [
+      {
+        "call_id": "call_00_Nm6Bp9jBfmuWmem5t1UF7098",
+        "name": "calculate_em_force",
+        "arguments": {
+          "b_field": 5,
+          "area": 2,
+          "d_time": 4
+        }
+      },
+      {
+        "call_id": "call_01_VtOyysP5MixMPqPoe7Ad5029",
+        "name": "calculate_em_force",
+        "arguments": {
+          "b_field": 5,
+          "area": 2,
+          "d_time": 10
+        }
+      }
+    ],
+    "expected_count": 2,
+    "selection_ok": true,
+    "arguments_ok": true,
+    "passed": true,
+    "latency_ms": 1183.940499999153,
+    "response_kind": "tool"
+  },
+  {
+    "source": "BFCL",
+    "category": "parallel",
+    "case_id": "parallel_2",
+    "input_sha256": "fdffa31cb59192581b1ecffc4c5db2fbe6d478b93af7b31a983eb98c8db6d2f5",
+    "predicted": [
+      {
+        "call_id": "call_00_2NH1oYspOkRExrB1xuhf2234",
+        "name": "calculate_resistance",
+        "arguments": {
+          "length": 5,
+          "area": 0.01,
+          "resistivity": "copper"
+        }
+      },
+      {
+        "call_id": "call_01_GpLCh8iJcUkgguO9Olhy1845",
+        "name": "calculate_resistance",
+        "arguments": {
+          "length": 5,
+          "area": 0.01,
+          "resistivity": "aluminum"
+        }
+      }
+    ],
+    "expected_count": 2,
+    "selection_ok": true,
+    "arguments_ok": true,
+    "passed": true,
+    "latency_ms": 1045.036199999231,
+    "response_kind": "tool"
+  },
+  {
+    "source": "BFCL",
+    "category": "parallel",
+    "case_id": "parallel_3",
+    "input_sha256": "c6532ac4b290f5e24393a2b1f321e155c89730821e5252830932cbfa92499ab0",
+    "predicted": [
+      {
+        "call_id": "call_00_RNprAUUmzGOMGO6PkCXW0774",
+        "name": "protein_info__get_sequence_and_3D",
+        "arguments": {
+          "protein_name": "human HbA1c",
+          "model_3d": true
+        }
+      },
+      {
+        "call_id": "call_01_R1JgqtCSg3MOdNwBF8WJ8866",
+        "name": "protein_info__get_sequence_and_3D",
+        "arguments": {
+          "protein_name": "normal hemoglobin",
+          "model_3d": true
+        }
+      },
+      {
+        "call_id": "call_02_n9nd4PlFrAh285grgmkJ1530",
+        "name": "protein_info__get_sequence_and_3D",
+        "arguments": {
+          "protein_name": "rat hemoglobin",
+          "model_3d": true
+        }
+      }
+    ],
+    "expected_count": 3,
+    "selection_ok": true,
+    "arguments_ok": true,
+    "passed": true,
+    "latency_ms": 1333.5157000001345,
+    "response_kind": "tool"
+  },
+  {
+    "source": "BFCL",
+    "category": "parallel",
+    "case_id": "parallel_4",
+    "input_sha256": "f20217d342a2fc1c9ddc6764ef9a59ea75de3485b2cc6bf3371ac06bbcb60462",
+    "predicted": [
+      {
+        "call_id": "call_00_CXME4KJumZ1qFHskFlTe8354",
+        "name": "calculate_bmi",
+        "arguments": {
+          "height": 6,
+          "weight": 80
+        }
+      },
+      {
+        "call_id": "call_01_mxEHNnlI4jWIYUvUdiYp4524",
+        "name": "calculate_bmi",
+        "arguments": {
+          "height": 5.6,
+          "weight": 60
+        }
+      }
+    ],
+    "expected_count": 2,
+    "selection_ok": true,
+    "arguments_ok": true,
+    "passed": true,
+    "latency_ms": 761.6378999991866,
+    "response_kind": "tool"
+  },
+  {
+    "source": "BFCL",
+    "category": "parallel",
+    "case_id": "parallel_5",
+    "input_sha256": "31bbeb1163a98ba395a9045b25751b2233c04d1aab8173b8d33f333cfed30301",
+    "predicted": [
+      {
+        "call_id": "call_00_CrfHYCT31xUPPIPR4zwR1165",
+        "name": "streaming_services__shows_list_and_ratings",
+        "arguments": {
+          "streaming_service": "Netflix",
+          "show_list": [
+            "Friends"
+          ],
+          "sort_by_rating": true
+        }
+      },
+      {
+        "call_id": "call_01_A2RX74Y1q7Hb7p0NlsHh1627",
+        "name": "streaming_services__shows_list_and_ratings",
+        "arguments": {
+          "streaming_service": "Hulu",
+          "show_list": [
+            "The Office",
+            "Stranger Things"
+          ],
+          "sort_by_rating": true
+        }
+      }
+    ],
+    "expected_count": 2,
+    "selection_ok": true,
+    "arguments_ok": true,
+    "passed": true,
+    "latency_ms": 1496.5051999988646,
+    "response_kind": "tool"
+  },
+  {
+    "source": "BFCL",
+    "category": "irrelevance",
+    "case_id": "irrelevance_0",
+    "input_sha256": "08f330820c6aeafbfcef91617002a15465296c2c11f8c6c07ac2b5c635e98601",
+    "predicted": [],
+    "expected_count": 0,
+    "selection_ok": true,
+    "arguments_ok": true,
+    "passed": true,
+    "latency_ms": 1414.480999999796,
+    "response_kind": "text"
+  },
+  {
+    "source": "BFCL",
+    "category": "irrelevance",
+    "case_id": "irrelevance_1",
+    "input_sha256": "a920da17bca21af5175b7f51e6c5a278cd99f2db90eb5b5258b8fb4ed281a332",
+    "predicted": [
+      {
+        "call_id": "call_00_Tp7BJwpe7fjptLy61k3U4204",
+        "name": "math__sum",
+        "arguments": {
+          "numbers": [
+            1,
+            2,
+            3
+          ]
+        }
+      }
+    ],
+    "expected_count": 0,
+    "selection_ok": false,
+    "arguments_ok": false,
+    "passed": false,
+    "latency_ms": 796.2499999994179,
+    "response_kind": "tool"
+  },
+  {
+    "source": "BFCL",
+    "category": "irrelevance",
+    "case_id": "irrelevance_2",
+    "input_sha256": "52117f135d4c603695d1c3ad086bdd79cc463d728f69fa912e2a1e221ec09d36",
+    "predicted": [
+      {
+        "call_id": "call_00_cX189RZr5lVuAFN6oz6d1922",
+        "name": "distance_calculator__calculate",
+        "arguments": {
+          "coordinate_1": [
+            0,
+            0
+          ],
+          "coordinate_2": [
+            1,
+            1
+          ]
+        }
+      }
+    ],
+    "expected_count": 0,
+    "selection_ok": false,
+    "arguments_ok": false,
+    "passed": false,
+    "latency_ms": 819.9231999988115,
+    "response_kind": "tool"
+  },
+  {
+    "source": "BFCL",
+    "category": "irrelevance",
+    "case_id": "irrelevance_3",
+    "input_sha256": "1782cbfa58fde7345173f37d86dac1a5a70338128638da2ee98ef0beb0531260",
+    "predicted": [
+      {
+        "call_id": "call_00_f5N0mwYw68TkR3C60dxE0665",
+        "name": "find_critical_points",
+        "arguments": {
+          "function": "3*x + 2",
+          "variable": "x"
+        }
+      }
+    ],
+    "expected_count": 0,
+    "selection_ok": false,
+    "arguments_ok": false,
+    "passed": false,
+    "latency_ms": 778.1868999991275,
+    "response_kind": "tool"
+  },
+  {
+    "source": "BFCL",
+    "category": "irrelevance",
+    "case_id": "irrelevance_4",
+    "input_sha256": "02eb4dcca4c0feaff72a2e69ab685037f4e73f440d07bb3889c1973f02bd533a",
+    "predicted": [],
+    "expected_count": 0,
+    "selection_ok": true,
+    "arguments_ok": true,
+    "passed": true,
+    "latency_ms": 2171.5546000014,
+    "response_kind": "text"
+  },
+  {
+    "source": "BFCL",
+    "category": "irrelevance",
+    "case_id": "irrelevance_5",
+    "input_sha256": "ea716ba35df6fd0411e313f03a141f4dfc55620b1f7ca17d46c57983ec5f55a6",
+    "predicted": [
+      {
+        "call_id": "call_00_n9eDMSU6uXhN4dNsIbjg1422",
+        "name": "solve_quadratic_equation",
+        "arguments": {
+          "a": 1,
+          "b": 0,
+          "c": 0
+        }
+      }
+    ],
+    "expected_count": 0,
+    "selection_ok": false,
+    "arguments_ok": false,
+    "passed": false,
+    "latency_ms": 1026.3267999998789,
+    "response_kind": "tool"
+  },
+  {
+    "source": "BFCL",
+    "category": "multi_turn",
+    "case_id": "multi_turn_base_0",
+    "input_sha256": "b826fafd43eba6540b75353368fd88f6f0aff8b258448f44cd9f075224ecb5b3",
+    "predicted": [
+      {
+        "call_id": "call_00_NbYY56Gy2BsrD0Y4MjNb2417",
+        "name": "pwd",
+        "arguments": {}
+      },
+      {
+        "call_id": "call_00_7peRsCbhTPwmPJl0MbSb1237",
+        "name": "pwd",
+        "arguments": {}
+      },
+      {
+        "call_id": "call_01_zHULpnUKBr9YNVIZrG9F0018",
+        "name": "ls",
+        "arguments": {}
+      },
+      {
+        "call_id": "call_00_m8OzG25l6INAygwVTzyX4660",
+        "name": "pwd",
+        "arguments": {}
+      },
+      {
+        "call_id": "call_01_HmKSWtZ2LtiS2o5OrHoF9590",
+        "name": "ls",
+        "arguments": {}
+      },
+      {
+        "call_id": "call_00_rVoQ0GTJHyquGPqFUwiX4289",
+        "name": "pwd",
+        "arguments": {}
+      },
+      {
+        "call_id": "call_01_ApAatRhfftYoRmofeJWW8581",
+        "name": "ls",
+        "arguments": {}
+      }
+    ],
+    "expected_turns": 4,
+    "turns_passed": 0,
+    "selection_ok": false,
+    "arguments_ok": false,
+    "passed": false,
+    "latency_ms": 4321.667799998977
+  },
+  {
+    "source": "BFCL",
+    "category": "multi_turn",
+    "case_id": "multi_turn_base_1",
+    "input_sha256": "fa6cb3a6e78ed5e91e218fa6dd65f8976b1794c4128c9bedb2ce3069804efc69",
+    "predicted": [
+      {
+        "call_id": "call_00_gfkZFIsBGMfXfdfnJr3n1944",
+        "name": "pwd",
+        "arguments": {}
+      },
+      {
+        "call_id": "call_00_LmgpRAJuaivGkKrI2auc8551",
+        "name": "pwd",
+        "arguments": {}
+      },
+      {
+        "call_id": "call_00_HXNZfEYtEe1OfSIx6lyH3865",
+        "name": "pwd",
+        "arguments": {}
+      },
+      {
+        "call_id": "call_01_oO5kUxu6xagrM618Cr132753",
+        "name": "ls",
+        "arguments": {
+          "a": true
+        }
+      },
+      {
+        "call_id": "call_00_dddIpOjmuvaj2yk93KRR0548",
+        "name": "pwd",
+        "arguments": {}
+      },
+      {
+        "call_id": "call_01_LN8UAU1EFhFO7H7drfYN0638",
+        "name": "ls",
+        "arguments": {
+          "a": true
+        }
+      }
+    ],
+    "expected_turns": 4,
+    "turns_passed": 0,
+    "selection_ok": false,
+    "arguments_ok": false,
+    "passed": false,
+    "latency_ms": 4562.803199998598
+  },
+  {
+    "source": "BFCL",
+    "category": "multi_turn",
+    "case_id": "multi_turn_base_2",
+    "input_sha256": "d89d25f1c381825e332b390fa935c1ef1a054aa7d9797c2069fa66ab3dcaf4f2",
+    "predicted": [
+      {
+        "call_id": "call_00_Uwh4XSzBmlyYSIHWkyVS9989",
+        "name": "ls",
+        "arguments": {}
+      },
+      {
+        "call_id": "call_00_xDHdFYtvc2MjGSIawjTi3677",
+        "name": "ls",
+        "arguments": {}
+      },
+      {
+        "call_id": "call_00_UJ8ZkBWEADSKOV5Y8AAZ6048",
+        "name": "cd",
+        "arguments": {
+          "folder": "document"
+        }
+      },
+      {
+        "call_id": "call_00_YqZJlCfw173ktRRzhurG7501",
+        "name": "cd",
+        "arguments": {
+          "folder": "document"
+        }
+      }
+    ],
+    "expected_turns": 5,
+    "turns_passed": 0,
+    "selection_ok": false,
+    "arguments_ok": false,
+    "passed": false,
+    "latency_ms": 4566.551600000821
+  },
+  {
+    "source": "BFCL",
+    "category": "multi_turn",
+    "case_id": "multi_turn_base_3",
+    "input_sha256": "ea314840974a25d264827c18e0fc167eb66d82d855f92b80baa198b1f0051df3",
+    "predicted": [
+      {
+        "call_id": "call_00_cwFtXhWD48L5OSDU2mox8305",
+        "name": "find",
+        "arguments": {
+          "path": ".",
+          "name": "test"
+        }
+      },
+      {
+        "call_id": "call_00_1HH4zHlmQc0co8DzyKnO5520",
+        "name": "find",
+        "arguments": {
+          "path": ".",
+          "name": "test"
+        }
+      },
+      {
+        "call_id": "call_01_z2Tomj5Azgqxl44HcOmf8880",
+        "name": "pwd",
+        "arguments": {}
+      }
+    ],
+    "expected_turns": 2,
+    "turns_passed": 1,
+    "selection_ok": false,
+    "arguments_ok": false,
+    "passed": false,
+    "latency_ms": 2837.1976999987965
+  },
+  {
+    "source": "ToolSandbox projection",
+    "category": "stateful",
+    "case_id": "ts_cellular_off",
+    "input_sha256": "25d11bfefb445d0237a3decc92d489c9315e11947610e405e949b0d20b608943",
+    "predicted": [
+      {
+        "call_id": "call_00_qAPOtOMWyy6xa9DTtANv9410",
+        "name": "set_cellular_service_status",
+        "arguments": {
+          "enabled": false
+        }
+      }
+    ],
+    "expected_tools": [
+      "set_cellular_service_status"
+    ],
+    "selection_ok": true,
+    "arguments_ok": true,
+    "passed": true,
+    "latency_ms": 745.9988999999041
+  },
+  {
+    "source": "ToolSandbox projection",
+    "category": "stateful",
+    "case_id": "ts_wifi_on",
+    "input_sha256": "bc38f14268c4034aea670bebf6d8d2bf5c338406639a44949216ba07b7a7c45e",
+    "predicted": [
+      {
+        "call_id": "call_00_UO3sWqhQxOIl8NtNizDB1911",
+        "name": "set_wifi_status",
+        "arguments": {
+          "enabled": true
+        }
+      }
+    ],
+    "expected_tools": [
+      "set_wifi_status"
+    ],
+    "selection_ok": true,
+    "arguments_ok": true,
+    "passed": true,
+    "latency_ms": 744.9672000002465
+  },
+  {
+    "source": "ToolSandbox projection",
+    "category": "stateful",
+    "case_id": "ts_location_on",
+    "input_sha256": "260d823f99905f74432194598a6b1200def9821e282fb26aa09e2ac8dd06e0f5",
+    "predicted": [
+      {
+        "call_id": "call_00_Vwm7cypdjhjNpGR5pf8A9258",
+        "name": "set_location_service_status",
+        "arguments": {
+          "enabled": true
+        }
+      }
+    ],
+    "expected_tools": [
+      "set_location_service_status"
+    ],
+    "selection_ok": true,
+    "arguments_ok": true,
+    "passed": true,
+    "latency_ms": 688.8829999988957
+  },
+  {
+    "source": "ToolSandbox projection",
+    "category": "stateful",
+    "case_id": "ts_get_cellular",
+    "input_sha256": "f830721eb28a1622bbdbcf12641c2181a93ad90fc83ceb27c4cdfc4b40de3b42",
+    "predicted": [
+      {
+        "call_id": "call_00_sjwdagdmcKAmdZWBGef18016",
+        "name": "get_cellular_service_status",
+        "arguments": {}
+      }
+    ],
+    "expected_tools": [
+      "get_cellular_service_status"
+    ],
+    "selection_ok": true,
+    "arguments_ok": true,
+    "passed": true,
+    "latency_ms": 614.162200001374
+  },
+  {
+    "source": "ToolSandbox projection",
+    "category": "stateful",
+    "case_id": "ts_get_wifi",
+    "input_sha256": "e6fd641764cb2e95480b9cd4dde88df8eea8f50792a5fe047591b357a605fd3b",
+    "predicted": [
+      {
+        "call_id": "call_00_SCFQcTZn6ch6sykmffys4134",
+        "name": "get_wifi_status",
+        "arguments": {}
+      }
+    ],
+    "expected_tools": [
+      "get_wifi_status"
+    ],
+    "selection_ok": true,
+    "arguments_ok": true,
+    "passed": true,
+    "latency_ms": 631.3237000013032
+  },
+  {
+    "source": "ToolSandbox projection",
+    "category": "canonicalization",
+    "case_id": "ts_contact",
+    "input_sha256": "ea4e3b5007f4c7f3c71a733a2150f4c1247997ed706dc0151cdb77f83c614a6f",
+    "predicted": [
+      {
+        "call_id": "call_00_tOe3AkSKqVhWPdJFGbGI0944",
+        "name": "search_contacts",
+        "arguments": {
+          "name": "Alice Smith",
+          "phone": null
+        }
+      }
+    ],
+    "expected_tools": [
+      "search_contacts"
+    ],
+    "selection_ok": true,
+    "arguments_ok": true,
+    "passed": true,
+    "latency_ms": 1070.24199999978
+  },
+  {
+    "source": "ToolSandbox projection",
+    "category": "canonicalization",
+    "case_id": "ts_temp",
+    "input_sha256": "6fd0437da866f595f3d1fac20812f6b37f12e61b04833cf401dc76017f34f73a",
+    "predicted": [
+      {
+        "call_id": "call_00_BaDDkxcK5M9Va1rkRKuf3561",
+        "name": "search_weather",
+        "arguments": {
+          "city": "New York City"
+        }
+      }
+    ],
+    "expected_tools": [
+      "search_weather"
+    ],
+    "selection_ok": true,
+    "arguments_ok": true,
+    "passed": true,
+    "latency_ms": 1042.4606000015046
+  },
+  {
+    "source": "ToolSandbox projection",
+    "category": "canonicalization",
+    "case_id": "ts_event",
+    "input_sha256": "a405606431403ab035bf30d7b9cb63911e3047ed5409cdfdb57e69f07044865c",
+    "predicted": [
+      {
+        "call_id": "call_00_RQr62I1AIxGIitM1hkFl1684",
+        "name": "create_calendar_event",
+        "arguments": {
+          "title": "Budget Review",
+          "date": "2026-08-20"
+        }
+      }
+    ],
+    "expected_tools": [
+      "create_calendar_event"
+    ],
+    "selection_ok": true,
+    "arguments_ok": true,
+    "passed": true,
+    "latency_ms": 1167.9832999998325
+  },
+  {
+    "source": "ToolSandbox projection",
+    "category": "canonicalization",
+    "case_id": "ts_phone",
+    "input_sha256": "bf2ee33eb959f383a6960754f01c6198ca749661151d3b097a53276c6a251ee7",
+    "predicted": [
+      {
+        "call_id": "call_00_APveXG4vazSg9tDi5OpM8544",
+        "name": "search_contacts",
+        "arguments": {
+          "name": null,
+          "phone": "+1 415 555 0100"
+        }
+      }
+    ],
+    "expected_tools": [
+      "search_contacts"
+    ],
+    "selection_ok": true,
+    "arguments_ok": false,
+    "passed": false,
+    "latency_ms": 932.8734999999142
+  },
+  {
+    "source": "ToolSandbox projection",
+    "category": "canonicalization",
+    "case_id": "ts_units",
+    "input_sha256": "3c052fec58bba67878bd51460783a74e457be08b632592a0b0b096feb47fed7a",
+    "predicted": [
+      {
+        "call_id": "call_00_pf4NkZkjlRk9NvcttWOX7904",
+        "name": "convert_temperature",
+        "arguments": {
+          "value": 32,
+          "from_unit": "Fahrenheit",
+          "to_unit": "Celsius"
+        }
+      }
+    ],
+    "expected_tools": [
+      "convert_temperature"
+    ],
+    "selection_ok": true,
+    "arguments_ok": false,
+    "passed": false,
+    "latency_ms": 1138.1827000004705
+  },
+  {
+    "source": "ToolSandbox projection",
+    "category": "insufficient",
+    "case_id": "ts_where",
+    "input_sha256": "4575d199b2825396115b28a8dbfc4c15e4c01cedd69a91be829f6515a18798b8",
+    "predicted": [
+      {
+        "call_id": "call_00_jcpQexzzEIt7poWb6PEH7349",
+        "name": "get_location_service_status",
+        "arguments": {}
+      },
+      {
+        "call_id": "call_01_fpxq2vx5MegzA2KJ1tw53535",
+        "name": "get_wifi_status",
+        "arguments": {}
+      },
+      {
+        "call_id": "call_02_nwU6P3794kecuf9XA2o74647",
+        "name": "get_cellular_service_status",
+        "arguments": {}
+      }
+    ],
+    "expected_tools": [],
+    "selection_ok": false,
+    "arguments_ok": false,
+    "passed": false,
+    "latency_ms": 1316.3741000007576
+  },
+  {
+    "source": "ToolSandbox projection",
+    "category": "insufficient",
+    "case_id": "ts_weather_missing",
+    "input_sha256": "49c64f94c9fe5d32302613c1375cc816ca3d83e9dec24c408a00d70b52000b16",
+    "predicted": [],
+    "expected_tools": [],
+    "selection_ok": true,
+    "arguments_ok": true,
+    "passed": true,
+    "latency_ms": 764.9343000011868
+  },
+  {
+    "source": "ToolSandbox projection",
+    "category": "insufficient",
+    "case_id": "ts_message_missing",
+    "input_sha256": "16ed3b5d051936584df2965fd93c4f4998330bcbcf9cee7d8691d384352c65f1",
+    "predicted": [],
+    "expected_tools": [],
+    "selection_ok": true,
+    "arguments_ok": true,
+    "passed": true,
+    "latency_ms": 1228.8255000003119
+  },
+  {
+    "source": "ToolSandbox projection",
+    "category": "insufficient",
+    "case_id": "ts_event_missing",
+    "input_sha256": "5fdd3faea43b8a60e8600047fac8828207ab737aeb030724717627f4c7115872",
+    "predicted": [],
+    "expected_tools": [],
+    "selection_ok": true,
+    "arguments_ok": true,
+    "passed": true,
+    "latency_ms": 831.2086000005365
+  },
+  {
+    "source": "ToolSandbox projection",
+    "category": "insufficient",
+    "case_id": "ts_contact_ambiguous",
+    "input_sha256": "9345c43b7186f19927a17636a04e65aa6fd85c3cc012343bbf3acdd3ac32e9af",
+    "predicted": [
+      {
+        "call_id": "call_00_HOMlwqKTiHPcVCe6Y5QS9241",
+        "name": "search_contacts",
+        "arguments": {
+          "name": "Alex",
+          "phone": null
+        }
+      }
+    ],
+    "expected_tools": [],
+    "selection_ok": false,
+    "arguments_ok": false,
+    "passed": false,
+    "latency_ms": 1026.0324999999284
+  },
+  {
+    "source": "AgentForge",
+    "category": "dag_ok",
+    "case_id": "af_dag_ok_1",
+    "status": "success",
+    "expected_status": "success",
+    "passed": true,
+    "bounded": true,
+    "duplicate_side_effects": 0
+  },
+  {
+    "source": "AgentForge",
+    "category": "bad_ref",
+    "case_id": "af_bad_ref_1",
+    "status": "error",
+    "expected_status": "error",
+    "passed": true,
+    "bounded": true,
+    "duplicate_side_effects": 0
+  },
+  {
+    "source": "AgentForge",
+    "category": "timeout",
+    "case_id": "af_timeout_1",
+    "status": "timeout",
+    "expected_status": "timeout",
+    "passed": true,
+    "bounded": true,
+    "duplicate_side_effects": 0
+  },
+  {
+    "source": "AgentForge",
+    "category": "unknown",
+    "case_id": "af_unknown_1",
+    "status": "error",
+    "expected_status": "error",
+    "passed": true,
+    "bounded": true,
+    "duplicate_side_effects": 0
+  },
+  {
+    "source": "AgentForge",
+    "category": "schema",
+    "case_id": "af_schema_1",
+    "status": "error",
+    "expected_status": "error",
+    "passed": true,
+    "bounded": true,
+    "duplicate_side_effects": 0
+  },
+  {
+    "source": "AgentForge",
+    "category": "dag_ok",
+    "case_id": "af_dag_ok_2",
+    "status": "success",
+    "expected_status": "success",
+    "passed": true,
+    "bounded": true,
+    "duplicate_side_effects": 0
+  },
+  {
+    "source": "AgentForge",
+    "category": "bad_ref",
+    "case_id": "af_bad_ref_2",
+    "status": "error",
+    "expected_status": "error",
+    "passed": true,
+    "bounded": true,
+    "duplicate_side_effects": 0
+  },
+  {
+    "source": "AgentForge",
+    "category": "timeout",
+    "case_id": "af_timeout_2",
+    "status": "timeout",
+    "expected_status": "timeout",
+    "passed": true,
+    "bounded": true,
+    "duplicate_side_effects": 0
+  },
+  {
+    "source": "AgentForge",
+    "category": "unknown",
+    "case_id": "af_unknown_2",
+    "status": "error",
+    "expected_status": "error",
+    "passed": true,
+    "bounded": true,
+    "duplicate_side_effects": 0
+  },
+  {
+    "source": "AgentForge",
+    "category": "schema",
+    "case_id": "af_schema_2",
+    "status": "error",
+    "expected_status": "error",
+    "passed": true,
+    "bounded": true,
+    "duplicate_side_effects": 0
+  },
+  {
+    "source": "AgentForge",
+    "category": "dag_ok",
+    "case_id": "af_dag_ok_3",
+    "status": "success",
+    "expected_status": "success",
+    "passed": true,
+    "bounded": true,
+    "duplicate_side_effects": 0
+  },
+  {
+    "source": "AgentForge",
+    "category": "bad_ref",
+    "case_id": "af_bad_ref_3",
+    "status": "error",
+    "expected_status": "error",
+    "passed": true,
+    "bounded": true,
+    "duplicate_side_effects": 0
+  },
+  {
+    "source": "AgentForge",
+    "category": "timeout",
+    "case_id": "af_timeout_3",
+    "status": "timeout",
+    "expected_status": "timeout",
+    "passed": true,
+    "bounded": true,
+    "duplicate_side_effects": 0
+  },
+  {
+    "source": "AgentForge",
+    "category": "unknown",
+    "case_id": "af_unknown_3",
+    "status": "error",
+    "expected_status": "error",
+    "passed": true,
+    "bounded": true,
+    "duplicate_side_effects": 0
+  },
+  {
+    "source": "AgentForge",
+    "category": "schema",
+    "case_id": "af_schema_3",
+    "status": "error",
+    "expected_status": "error",
+    "passed": true,
+    "bounded": true,
+    "duplicate_side_effects": 0
+  }
+]
