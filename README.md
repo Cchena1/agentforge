@@ -4,7 +4,7 @@
 
 AgentForge 面向企业 Agent 研发中的模型输出不确定、多 Tool 协作冲突、长会话上下文膨胀和复杂文档证据失真等问题，设计异步 Agent 服务，覆盖模型调用、Tool Orchestration、分层 Memory、文档 RAG、可观测性与失败恢复。项目重点不是展示一段 Prompt，而是以可验证的数据契约、状态所有权和失败边界支撑工程交付。
 
-> **最近一次验收：2026 年 8 月 16 日。** Ruff 全仓检查通过；strict mypy 对 25 个 Python 文件检查通过；pytest 共 90 项测试通过并保留 1 条 Starlette/httpx 上游弃用警告。第三次 200 页 OHR-Bench Retrieval 评估中，Ground Truth、Formatting Noise、Semantic/OCR Noise 的 Recall@5 分别为 95.53%、95.53% 和 88.91%；按照项目范围约定，**未进行压力测试、吞吐量测试或持续负载测试**。
+> **最近一次验收：2026 年 8 月 17 日。** Ruff 全仓及新增 Benchmark 脚本检查通过；strict mypy 对 24 个 Source 文件检查通过；pytest 共 90 项测试通过并保留 1 条 Starlette/httpx 上游弃用警告。Tool Orchestration 60 项总体通过率为 80.00%，其中 BFCL 单轮可比子集为 84.62%、AgentForge Runtime 对抗集为 15/15；Memory 70 项中 LongMemEval Evidence Recall@5 为 26.33%、AgentForge 隔离与压缩集为 18/20。第三次 200 页 RAG Benchmark 的 Recall@5 为 95.53% / 95.53% / 88.91%；按照项目范围约定，**未进行压力测试、吞吐量测试或持续负载测试**。
 
 ## 项目价值
 
@@ -660,7 +660,7 @@ PowerShell: run.ps1 解析通过
 
 ### Result
 
-将企业 Agent 的模型、Tool、Memory 与 RAG 能力收敛为模块化 AgentForge 服务；25 个 Python 文件通过 strict mypy，90 项自动化测试覆盖正常路径、失败恢复、并发语义、RAG 迁移、FTS5 一致性和 Tenant/ACL 隔离；最近一次验收中 Ruff、mypy strict、pytest 和 JavaScript syntax check 均通过。项目保留三轮 200 页 Benchmark 证据，但不虚构压力测试、吞吐量或生产 SLA。
+将企业 Agent 的模型、Tool、Memory 与 RAG 能力收敛为模块化 AgentForge 服务；24 个 Source 文件通过 strict mypy，90 项自动化测试覆盖正常路径、失败恢复、并发语义、RAG 迁移、FTS5 一致性和 Tenant/ACL 隔离；最近一次验收中 Ruff、mypy strict、pytest 和 JavaScript syntax check 均通过。项目保留三轮 200 页 Benchmark 证据，但不虚构压力测试、吞吐量或生产 SLA。
 
 ## 评估范围与已知限制
 > 文档 RAG 验证边界：当前 90 项自动化测试覆盖路由、Attempt 上限、结构切片、异步 Job、版本一致性、ACL、FTS5 Backfill/更新/删除、候选多样化、Citation Schema 与内容完整性门控。第三次 200 页 Retrieval Benchmark 的 Recall@5 为 95.53% / 95.53% / 88.91%；真实 Docling 10 页回归仍仅证明内容完整性门控降低 False Acceptance，不能外推为生产 OCR 或复杂 PDF 解析质量。PaddleOCR Fallback、真实复杂 DOCX、Cloud Fallback 与答案级 Citation 仍未完成实文档闭环。未进行任何压力测试。
@@ -706,6 +706,8 @@ MIT
 - [第三次 200 页召回修复 Benchmark](eval/基于OmniDocBench和OHR-Bench的RAG基准测试v3/README.md)
 - [第三次 Benchmark 完整报告](eval/基于OmniDocBench和OHR-Bench的RAG基准测试v3/report.md)
 - [第三次 Benchmark 证据与对抗式审阅](eval/基于OmniDocBench和OHR-Bench的RAG基准测试v3/EVIDENCE.md)
+- [Tool Orchestration Benchmark：BFCL / ToolSandbox / AgentForge](eval/基于BFCL和ToolSandbox的Tool基准测试v1/report.md)
+- [Memory Benchmark：LongMemEval / AgentForge](eval/基于LongMemEval的Memory基准测试v1/report.md)
 
 本轮不进行压力测试；单次阶段耗时只用于故障定位，不用于声明吞吐量或 SLA。
 
