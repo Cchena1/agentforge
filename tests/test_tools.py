@@ -1,12 +1,14 @@
-﻿from __future__ import annotations
+from __future__ import annotations
 
 import asyncio
+from pathlib import Path
 
 import pytest
 from pydantic import BaseModel, ConfigDict, Field, ValidationError
 
 from agent_service.schemas import ExecutionPlan, PlannedToolCall, ToolStatus
 from agent_service.tools.base import AsyncToolExecutor, ToolDefinition, ToolRegistry
+from agent_service.tools.idempotency import SQLiteToolIdempotencyStore
 
 
 class Args(BaseModel):
@@ -77,8 +79,12 @@ async def test_independent_tools_run_concurrently_without_load_testing() -> None
         executor.execute_plan(
             ExecutionPlan(
                 calls=[
-                    PlannedToolCall(call_id="a", tool_name="work", arguments={"value": 1, "resource": "none"}),
-                    PlannedToolCall(call_id="b", tool_name="work", arguments={"value": 2, "resource": "none"}),
+                    PlannedToolCall(
+                        call_id="a", tool_name="work", arguments={"value": 1, "resource": "none"}
+                    ),
+                    PlannedToolCall(
+                        call_id="b", tool_name="work", arguments={"value": 2, "resource": "none"}
+                    ),
                 ]
             )
         )
@@ -127,8 +133,12 @@ async def test_dependencies_resolve_results_and_cycles_are_rejected() -> None:
         await executor.execute_plan(
             ExecutionPlan(
                 calls=[
-                    PlannedToolCall(call_id="a", tool_name="increment", arguments={"value": 1}, depends_on=["b"]),
-                    PlannedToolCall(call_id="b", tool_name="increment", arguments={"value": 2}, depends_on=["a"]),
+                    PlannedToolCall(
+                        call_id="a", tool_name="increment", arguments={"value": 1}, depends_on=["b"]
+                    ),
+                    PlannedToolCall(
+                        call_id="b", tool_name="increment", arguments={"value": 2}, depends_on=["a"]
+                    ),
                 ]
             )
         )
@@ -165,12 +175,23 @@ async def test_shared_resource_lock_prevents_conflicting_mutation() -> None:
     await executor.execute_plan(
         ExecutionPlan(
             calls=[
-                PlannedToolCall(call_id="a", tool_name="write", arguments={"value": 1, "resource": "same"}),
-                PlannedToolCall(call_id="b", tool_name="write", arguments={"value": 2, "resource": "same"}),
+                PlannedToolCall(
+                    call_id="a",
+                    tool_name="write",
+                    arguments={"value": 1, "resource": "same"},
+                    idempotency_key="write-a",
+                ),
+                PlannedToolCall(
+                    call_id="b",
+                    tool_name="write",
+                    arguments={"value": 2, "resource": "same"},
+                    idempotency_key="write-b",
+                ),
             ]
         )
     )
     assert max_active == 1
+
 
 @pytest.mark.asyncio
 async def test_capability_policy_and_write_approval_fail_closed() -> None:
@@ -215,7 +236,14 @@ async def test_capability_policy_and_write_approval_fail_closed() -> None:
     )
     results = await executor.execute_plan(
         ExecutionPlan(
-            calls=[PlannedToolCall(call_id="a", tool_name="write", arguments={"value": 1})]
+            calls=[
+                PlannedToolCall(
+                    call_id="a",
+                    tool_name="write",
+                    arguments={"value": 1},
+                    idempotency_key="write-a",
+                )
+            ]
         ),
         scope=ToolExecutionScope(
             actor_id="restricted-agent",
@@ -308,9 +336,7 @@ async def test_policy_exception_fails_closed_before_handler() -> None:
             output_contract="test",
         )
     )
-    executor = AsyncToolExecutor(
-        registry, timeout_seconds=2, max_parallel=1, policy=BrokenPolicy()
-    )
+    executor = AsyncToolExecutor(registry, timeout_seconds=2, max_parallel=1, policy=BrokenPolicy())
 
     results = await executor.execute_plan(
         ExecutionPlan(
@@ -356,3 +382,168 @@ async def test_event_sink_failure_does_not_break_tool_execution() -> None:
     )
 
     assert results[0].status is ToolStatus.SUCCESS
+
+
+@pytest.mark.asyncio
+async def test_write_tool_requires_idempotency_key_before_approval() -> None:
+    registry = ToolRegistry()
+    called = False
+
+    async def handler(args: Args) -> dict[str, object]:
+        nonlocal called
+        called = True
+        return {"summary": str(args.value)}
+
+    registry.register(
+        ToolDefinition(
+            name="write",
+            summary="test",
+            when_to_use="test",
+            when_not_to_use="never",
+            args_model=Args,
+            handler=handler,
+            output_contract="test",
+            side_effects="write",
+        )
+    )
+    executor = AsyncToolExecutor(registry, timeout_seconds=2, max_parallel=1)
+    results = await executor.execute_plan(
+        ExecutionPlan(
+            calls=[PlannedToolCall(call_id="a", tool_name="write", arguments={"value": 1})]
+        )
+    )
+
+    assert called is False
+    assert results[0].error is not None
+    assert results[0].error.code == "TOOL_IDEMPOTENCY_KEY_REQUIRED"
+
+
+@pytest.mark.asyncio
+async def test_sqlite_idempotency_ledger_replays_completed_write_after_restart(
+    tmp_path: Path,
+) -> None:
+    registry = ToolRegistry()
+    calls = 0
+
+    async def handler(args: Args) -> dict[str, object]:
+        nonlocal calls
+        calls += 1
+        return {"summary": str(args.value), "value": args.value}
+
+    registry.register(
+        ToolDefinition(
+            name="write",
+            summary="test",
+            when_to_use="test",
+            when_not_to_use="never",
+            args_model=Args,
+            handler=handler,
+            output_contract="test",
+            side_effects="write",
+        )
+    )
+    ledger_path = tmp_path / "tool-idempotency.sqlite3"
+    first_executor = AsyncToolExecutor(
+        registry,
+        timeout_seconds=2,
+        max_parallel=1,
+        idempotency_store=SQLiteToolIdempotencyStore(ledger_path, in_progress_ttl_seconds=30),
+    )
+    first = await first_executor.execute_plan(
+        ExecutionPlan(
+            calls=[
+                PlannedToolCall(
+                    call_id="first",
+                    tool_name="write",
+                    arguments={"value": 7},
+                    idempotency_key="order-7",
+                )
+            ]
+        )
+    )
+
+    restarted_executor = AsyncToolExecutor(
+        registry,
+        timeout_seconds=2,
+        max_parallel=1,
+        idempotency_store=SQLiteToolIdempotencyStore(ledger_path, in_progress_ttl_seconds=30),
+    )
+    replay = await restarted_executor.execute_plan(
+        ExecutionPlan(
+            calls=[
+                PlannedToolCall(
+                    call_id="replay",
+                    tool_name="write",
+                    arguments={"value": 7},
+                    idempotency_key="order-7",
+                )
+            ]
+        )
+    )
+    conflict = await restarted_executor.execute_plan(
+        ExecutionPlan(
+            calls=[
+                PlannedToolCall(
+                    call_id="conflict",
+                    tool_name="write",
+                    arguments={"value": 8},
+                    idempotency_key="order-7",
+                )
+            ]
+        )
+    )
+
+    assert calls == 1
+    assert first[0].status is ToolStatus.SUCCESS
+    assert replay[0].status is ToolStatus.SUCCESS
+    assert replay[0].call_id == "replay"
+    assert replay[0].data == first[0].data
+    assert conflict[0].error is not None
+    assert conflict[0].error.code == "TOOL_IDEMPOTENCY_CONFLICT"
+
+
+@pytest.mark.asyncio
+async def test_write_timeout_is_marked_indeterminate_and_not_retried() -> None:
+    registry = ToolRegistry()
+    calls = 0
+
+    async def handler(args: Args) -> dict[str, object]:
+        nonlocal calls
+        calls += 1
+        await asyncio.sleep(0.05)
+        return {"summary": str(args.value)}
+
+    registry.register(
+        ToolDefinition(
+            name="write",
+            summary="test",
+            when_to_use="test",
+            when_not_to_use="never",
+            args_model=Args,
+            handler=handler,
+            output_contract="test",
+            side_effects="write",
+        )
+    )
+    executor = AsyncToolExecutor(registry, timeout_seconds=0.01, max_parallel=1)
+    plan = ExecutionPlan(
+        calls=[
+            PlannedToolCall(
+                call_id="write-timeout",
+                tool_name="write",
+                arguments={"value": 1},
+                idempotency_key="write-timeout-key",
+            )
+        ]
+    )
+
+    first = await executor.execute_plan(plan)
+    second = await executor.execute_plan(plan)
+
+    assert calls == 1
+    assert first[0].status is ToolStatus.TIMEOUT
+    assert first[0].error is not None
+    assert first[0].error.code == "TOOL_WRITE_OUTCOME_UNKNOWN"
+    assert first[0].error.retryable is False
+    assert second[0].error is not None
+    assert second[0].error.code == "TOOL_WRITE_OUTCOME_UNKNOWN"

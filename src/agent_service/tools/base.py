@@ -1,7 +1,10 @@
-﻿from __future__ import annotations
+from __future__ import annotations
 
 import asyncio
+import hashlib
+import json
 import time
+import uuid
 from collections import defaultdict
 from collections.abc import Awaitable, Callable
 from dataclasses import dataclass, field
@@ -10,6 +13,11 @@ from typing import Any, Generic, Literal, Protocol, TypeVar
 from pydantic import BaseModel, ValidationError
 
 from ..schemas import ExecutionPlan, PlannedToolCall, ToolError, ToolResult, ToolStatus
+from .idempotency import (
+    IdempotencyState,
+    InMemoryToolIdempotencyStore,
+    ToolIdempotencyStore,
+)
 
 ArgsT = TypeVar("ArgsT", bound=BaseModel)
 ToolHandler = Callable[[ArgsT], Awaitable[dict[str, Any]]]
@@ -193,6 +201,7 @@ class CapabilityToolPolicy:
                 code="TOOL_WRITE_DENIED",
                 reason="write side effects are disabled for this execution scope",
             )
+
         return ToolPolicyDecision(
             allowed=True,
             requires_approval=(
@@ -240,6 +249,7 @@ class AsyncToolExecutor:
         approver: ToolApprover | None = None,
         guard: ToolGuard | None = None,
         event_sink: ToolEventSink | None = None,
+        idempotency_store: ToolIdempotencyStore | None = None,
     ) -> None:
         self.registry = registry
         self.timeout_seconds = timeout_seconds
@@ -247,6 +257,7 @@ class AsyncToolExecutor:
         self.approver = approver or StaticToolApprover(allow_write=True)
         self.guard = guard or AllowAllToolGuard()
         self.event_sink = event_sink or _discard_tool_event
+        self.idempotency_store = idempotency_store or InMemoryToolIdempotencyStore()
         self._semaphore = asyncio.Semaphore(max_parallel)
         self._resource_locks: defaultdict[str, asyncio.Lock] = defaultdict(asyncio.Lock)
 
@@ -318,12 +329,22 @@ class AsyncToolExecutor:
             resource_keys=resource_keys,
             scope=scope,
         )
+        invariant_failure = await self._apply_execution_invariants(context, started)
+        if invariant_failure is not None:
+            return invariant_failure
         policy_failure = await self._apply_policy(context, started)
         if policy_failure is not None:
             return policy_failure
         guard_failure = await self._apply_guard(context, started)
         if guard_failure is not None:
             return guard_failure
+
+        idempotency_owner: str | None = None
+        if context.tool.side_effects == "write":
+            idempotency_owner = uuid.uuid4().hex
+            reservation_result = await self._reserve_write_call(context, idempotency_owner, started)
+            if reservation_result is not None:
+                return reservation_result
 
         locks = [self._resource_locks[key] for key in resource_keys]
         await self._emit(context, "execution", "started", started=started)
@@ -347,33 +368,223 @@ class AsyncToolExecutor:
                 summary=str(data.get("summary", ""))[:2000],
                 latency_ms=(time.perf_counter() - started) * 1000,
             )
+            if idempotency_owner is not None:
+                persisted = await self._complete_write_call(
+                    context, idempotency_owner, result, started
+                )
+                if not persisted:
+                    return _error_result(
+                        call,
+                        started,
+                        "TOOL_WRITE_OUTCOME_UNKNOWN",
+                        "write completed but its idempotency result could not be persisted",
+                        False,
+                    )
             await self._emit(context, "execution", "success", started=started)
             return result
         except TimeoutError:
+            if idempotency_owner is not None:
+                await self._mark_write_indeterminate(context, idempotency_owner)
+                code = "TOOL_WRITE_OUTCOME_UNKNOWN"
+                message = "write tool timed out; the external side effect may have completed"
+                retryable = False
+            else:
+                code = "TOOL_TIMEOUT"
+                message = "tool execution timed out"
+                retryable = True
             await self._emit(
                 context,
                 "execution",
                 "timeout",
-                code="TOOL_TIMEOUT",
+                code=code,
                 started=started,
             )
             return _error_result(
                 call,
                 started,
-                "TOOL_TIMEOUT",
-                "tool execution timed out",
-                True,
+                code,
+                message,
+                retryable,
                 ToolStatus.TIMEOUT,
             )
         except Exception as exc:  # noqa: BLE001 - normalize third-party failures
+            if idempotency_owner is not None:
+                await self._mark_write_indeterminate(context, idempotency_owner)
+                code = "TOOL_WRITE_OUTCOME_UNKNOWN"
+                message = f"write tool failed after dispatch: {type(exc).__name__}"
+            else:
+                code = "TOOL_FAILURE"
+                message = str(exc)
             await self._emit(
                 context,
                 "execution",
                 "error",
-                code="TOOL_FAILURE",
+                code=code,
                 started=started,
             )
-            return _error_result(call, started, "TOOL_FAILURE", str(exc), False)
+            return _error_result(call, started, code, message, False)
+
+    async def _reserve_write_call(
+        self,
+        context: ToolInvocationContext,
+        owner_token: str,
+        started: float,
+    ) -> ToolResult | None:
+        idempotency_key = context.call.idempotency_key
+        if idempotency_key is None:
+            raise AssertionError("write idempotency invariant was not applied")
+        try:
+            request_json = json.dumps(
+                context.arguments.model_dump(mode="json"),
+                ensure_ascii=False,
+                separators=(",", ":"),
+                sort_keys=True,
+            )
+            request_fingerprint = hashlib.sha256(request_json.encode("utf-8")).hexdigest()
+            reservation = await self.idempotency_store.reserve(
+                context.tool.name,
+                idempotency_key,
+                owner_token,
+                request_fingerprint,
+            )
+        except Exception as exc:  # noqa: BLE001 - write execution must fail closed
+            await self._emit(
+                context,
+                "guard",
+                "denied",
+                code="TOOL_IDEMPOTENCY_STORE_FAILURE",
+                started=started,
+            )
+            return _error_result(
+                context.call,
+                started,
+                "TOOL_IDEMPOTENCY_STORE_FAILURE",
+                f"idempotency store failed closed: {type(exc).__name__}",
+                False,
+            )
+        if reservation.state is IdempotencyState.RESERVED:
+            return None
+        if reservation.state is IdempotencyState.COMPLETED and reservation.result is not None:
+            await self._emit(
+                context,
+                "execution",
+                "success",
+                code="TOOL_IDEMPOTENCY_REPLAY",
+                started=started,
+            )
+            return reservation.result.model_copy(
+                update={
+                    "call_id": context.call.call_id,
+                    "latency_ms": (time.perf_counter() - started) * 1000,
+                }
+            )
+        if reservation.state is IdempotencyState.IN_PROGRESS:
+            await self._emit(
+                context,
+                "guard",
+                "denied",
+                code="TOOL_IDEMPOTENCY_IN_PROGRESS",
+                started=started,
+            )
+            return _error_result(
+                context.call,
+                started,
+                "TOOL_IDEMPOTENCY_IN_PROGRESS",
+                "an execution with this idempotency key is already in progress",
+                True,
+            )
+        if reservation.state is IdempotencyState.CONFLICT:
+            await self._emit(
+                context,
+                "guard",
+                "denied",
+                code="TOOL_IDEMPOTENCY_CONFLICT",
+                started=started,
+            )
+            return _error_result(
+                context.call,
+                started,
+                "TOOL_IDEMPOTENCY_CONFLICT",
+                "this idempotency key was already used with different arguments",
+                False,
+            )
+        await self._emit(
+            context,
+            "guard",
+            "denied",
+            code="TOOL_WRITE_OUTCOME_UNKNOWN",
+            started=started,
+        )
+        return _error_result(
+            context.call,
+            started,
+            "TOOL_WRITE_OUTCOME_UNKNOWN",
+            "a prior write attempt has an indeterminate outcome; human reconciliation is required",
+            False,
+        )
+
+    async def _complete_write_call(
+        self,
+        context: ToolInvocationContext,
+        owner_token: str,
+        result: ToolResult,
+        started: float,
+    ) -> bool:
+        idempotency_key = context.call.idempotency_key
+        if idempotency_key is None:
+            raise AssertionError("write idempotency invariant was not applied")
+        try:
+            await self.idempotency_store.complete(
+                context.tool.name, idempotency_key, owner_token, result
+            )
+            return True
+        except Exception:  # noqa: BLE001 - preserve fail-closed write semantics
+            await self._mark_write_indeterminate(context, owner_token)
+            await self._emit(
+                context,
+                "execution",
+                "error",
+                code="TOOL_IDEMPOTENCY_STORE_FAILURE",
+                started=started,
+            )
+            return False
+
+    async def _mark_write_indeterminate(
+        self,
+        context: ToolInvocationContext,
+        owner_token: str,
+    ) -> None:
+        idempotency_key = context.call.idempotency_key
+        if idempotency_key is None:
+            return
+        try:
+            await self.idempotency_store.mark_indeterminate(
+                context.tool.name, idempotency_key, owner_token
+            )
+        except Exception:  # noqa: BLE001 - original tool failure remains primary
+            return
+
+    async def _apply_execution_invariants(
+        self,
+        context: ToolInvocationContext,
+        started: float,
+    ) -> ToolResult | None:
+        if context.tool.side_effects != "write" or context.call.idempotency_key is not None:
+            return None
+        await self._emit(
+            context,
+            "guard",
+            "denied",
+            code="TOOL_IDEMPOTENCY_KEY_REQUIRED",
+            started=started,
+        )
+        return _error_result(
+            context.call,
+            started,
+            "TOOL_IDEMPOTENCY_KEY_REQUIRED",
+            "write tools require an explicit idempotency key before approval",
+            False,
+        )
 
     async def _apply_policy(
         self,

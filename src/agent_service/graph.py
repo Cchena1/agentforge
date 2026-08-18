@@ -196,6 +196,7 @@ class AgentGraph:
                     tool_name=call["name"],
                     arguments=call["arguments"],
                     depends_on=[],
+                    idempotency_key=f"model-call:{call['call_id']}",
                 )
                 for call in state["pending_calls"]
             ]

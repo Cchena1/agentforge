@@ -90,3 +90,7 @@ The test suite emits one Starlette TestClient deprecation warning related to the
 ## 10. Re-review cadence
 
 Dependency health and optional integration decisions should be reviewed before each release that changes runtime packages, model providers, parser profiles, vector backends, or persisted formats. Research popularity alone is not an admission criterion.
+
+## P0 correctness milestone (2026-08-17)
+
+No runtime dependency was added. The implementation reuses existing Pydantic v2, aiosqlite, OpenTelemetry, Prometheus, OpenAI-compatible response metadata, and the existing Tool policy boundary. PostgreSQL, Redis checkpointing, and distributed workers were not introduced because the current LangGraph is compiled without a checkpointer and no measured workload identifies checkpoint contention. Admission of a new persistence service requires a multi-instance requirement, license/security review, a failure-mode PoC, and reproducible workload evidence.

@@ -18,15 +18,16 @@ The architecture follows these rules:
 
 | State | Owner | Persistence | Isolation key |
 |---|---|---|---|
-| Current turn, plan, tool calls, loop counters | LangGraph state | Request lifetime | Request/session |
+| Current turn, plan, tool calls, loop counters | LangGraph state | Request lifetime; no Checkpointer | Request/session |
 | Recent conversation and rolling summary | Short-term memory store | SQLite WAL | Session |
 | Durable semantic facts | Long-term memory store | Vectorized SQLite baseline | User namespace |
 | Document chunks | Vector-store adapter | SQLite or Qdrant | Source and document version |
 | Active document version | Version registry | SQLite WAL | Logical `source_id` |
 | Tool dependency graph and resource locks | Tool executor | Request lifetime | Tool call/resource key |
+| Write-call idempotency reservation and result replay | Tool idempotency store | SQLite in service; process-local only for embedded callers | Tool name/idempotency key |
 | Model route attempts | Model gateway | Request lifetime | Request and route |
 
-The graph carries typed IDs and compressed results. It does not duplicate entire documents, raw multi-agent traces, or uncontrolled conversation history.
+The graph carries typed IDs and compressed results. It does not duplicate entire documents, raw multi-agent traces, or uncontrolled conversation history. The current graph is compiled without a LangGraph Checkpointer: it is not crash-resumable and SQLite does not persist graph checkpoints. Durable ingestion jobs are owned by `ingestion_jobs.py` as a separate state machine.
 
 ## 3. Request flow
 
@@ -54,7 +55,7 @@ The recovery chain is deliberately ordered:
 
 1. Validate request and tool arguments.
 2. Execute the selected route or tool once.
-3. Retry only transient timeout, rate-limit, or server failures with bounded exponential backoff.
+3. Retry only transient timeout, rate-limit, or server failures with bounded exponential backoff; write Tools are excluded after dispatch unless the ledger has a completed replayable result.
 4. Revalidate every returned structure.
 5. Try an explicitly configured compatible fallback route when the current route is exhausted.
 6. Skip downstream tool calls whose dependencies failed.
@@ -62,6 +63,8 @@ The recovery chain is deliberately ordered:
 8. Return structured degradation or request human handoff when automation cannot remain trustworthy.
 
 Schema errors, permission errors, invalid paths, unsupported operations, and embedding-dimension mismatches are permanent for the current input and are not solved by blind retry.
+
+Write Tools have a stricter boundary: a missing idempotency key is rejected before approval, completed results are replayed from the ledger, and timeout/exception outcomes are marked indeterminate with `retryable=false`. The local ledger prevents duplicate handler dispatch for the same completed key but does not establish cross-system exactly-once semantics.
 
 ## 5. Function calling contracts
 
@@ -125,12 +128,12 @@ The coordinator merges these outputs under a bounded context budget. This reduce
 
 | Layer | Purpose | Retention behavior |
 |---|---|---|
-| Turn state | Current control-flow state and stop conditions | Ends with request/checkpoint policy |
+| Turn state | Current control-flow state and stop conditions | Ends with the request; no durable graph checkpoint |
 | Short-term memory | Recent messages plus rolling summary | Bounded by message and character budgets |
-| Long-term memory | Durable user-scoped semantic facts | Vector-linked and namespace isolated |
+| Long-term memory | Durable user-scoped semantic facts | Namespace isolated; validity, supersession, deletion, and embedding-profile aware |
 | Knowledge memory | Versioned source documents and citations | Controlled by RAG version lifecycle |
 
-Short-term memory stores a bounded recent window and compacts older context into a rolling summary. Long-term memory is keyed by user namespace and retrieved semantically. Production retention, deletion, export, consent, and PII policies remain required before handling sensitive data.
+Short-term memory stores a bounded recent window and compacts older context into a rolling summary. Long-term memory is keyed by user namespace and uses schema-v2 validity windows, `memory_key` supersession, namespace-scoped deletion, embedding-profile refresh, and a deterministic semantic/lexical/importance/recency score. Recall abstains below a configured threshold. Production legal hold, export, consent, authentication, and PII policies remain required before handling sensitive data.
 
 ## 9. Loop prevention
 
@@ -194,7 +197,7 @@ A deterministic version ID is derived from:
 
 The service hashes the file, parses it, and hashes it again. If the source changes during ingestion, the build is rejected before version registration.
 
-Identical content and pipeline profiles return an idempotent success without repeating parsing, embedding, or vector writes.
+Identical content and pipeline profiles return an idempotent success without repeating parsing, embedding, or vector writes. Active-version switching is atomic only inside the registry transaction: candidate vectors are prepared first and one pointer is switched after validation. This is not a distributed transaction across SQLite, Qdrant, or external stores; a crash may leave invisible orphan chunks while the previous active version remains readable.
 
 ## 12. Visibility and failure safety
 

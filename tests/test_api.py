@@ -206,3 +206,36 @@ def test_async_ingestion_job_not_found_is_explicit(tmp_path) -> None:
         cancelled = client.post("/rag/ingestions/ij_missing/cancel")
     assert missing.status_code == 404
     assert cancelled.status_code == 404
+
+
+def test_memory_delete_is_namespace_scoped(tmp_path) -> None:
+    config = Settings(workspace_root=tmp_path, state_dir=tmp_path / "state", api_key="")
+    with TestClient(create_app(config)) as client:
+        created = client.post(
+            "/memory",
+            json={
+                "namespace": "user:u1",
+                "memory_key": "preference",
+                "text": "Use SI units",
+            },
+        )
+        memory_id = created.json()["memory_id"]
+        wrong_namespace = client.delete(
+            f"/memory/{memory_id}", params={"namespace": "user:u2"}
+        )
+        deleted = client.delete(
+            f"/memory/{memory_id}", params={"namespace": "user:u1"}
+        )
+        missing = client.delete(
+            f"/memory/{memory_id}", params={"namespace": "user:u1"}
+        )
+
+    assert created.status_code == 200
+    assert wrong_namespace.status_code == 404
+    assert deleted.status_code == 200
+    assert deleted.json() == {
+        "memory_id": memory_id,
+        "namespace": "user:u1",
+        "deleted": True,
+    }
+    assert missing.status_code == 404

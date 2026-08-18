@@ -1,11 +1,12 @@
 ﻿from __future__ import annotations
 
+from types import SimpleNamespace
 from typing import Any
 
 import pytest
 from pydantic import BaseModel, ConfigDict
 
-from agent_service.llm import ModelGateway
+from agent_service.llm import ModelGateway, _model_usage
 from agent_service.schemas import ChatMessage, ModelTurn
 from agent_service.settings import ModelRoute, Settings
 
@@ -55,3 +56,28 @@ async def test_structured_output_missing_field_is_repaired_and_revalidated() -> 
     answer = await gateway.structured([ChatMessage(role="user", content="return JSON")], StructuredAnswer)
     assert answer == StructuredAnswer(answer="fixed", count=2)
     assert gateway.calls == 2
+
+
+def test_model_usage_extracts_tokens_and_estimates_cost() -> None:
+    response = SimpleNamespace(
+        usage=SimpleNamespace(
+            prompt_tokens=1_000,
+            completion_tokens=500,
+            prompt_tokens_details=SimpleNamespace(cached_tokens=200),
+            completion_tokens_details=SimpleNamespace(reasoning_tokens=100),
+        )
+    )
+    route = ModelRoute(
+        name="priced",
+        model="test",
+        input_cost_per_million_tokens=2.0,
+        output_cost_per_million_tokens=8.0,
+    )
+
+    usage = _model_usage(response, route)
+
+    assert usage.prompt_tokens == 1_000
+    assert usage.completion_tokens == 500
+    assert usage.cached_prompt_tokens == 200
+    assert usage.reasoning_tokens == 100
+    assert usage.estimated_cost_usd == pytest.approx(0.006)

@@ -22,6 +22,8 @@ class ModelRoute(BaseModel):
     api_key: SecretStr = Field(default=SecretStr(""))
     timeout_seconds: float = Field(default=60.0, gt=0, le=600)
     max_attempts: int = Field(default=3, ge=1, le=8)
+    input_cost_per_million_tokens: float = Field(default=0.0, ge=0)
+    output_cost_per_million_tokens: float = Field(default=0.0, ge=0)
 
 
 class Settings(BaseSettings):
@@ -53,6 +55,8 @@ class Settings(BaseSettings):
     fallback_routes_json: str = "[]"
     temperature: float = Field(default=0.2, ge=0, le=2)
     max_tokens: int | None = Field(default=None, ge=1)
+    model_input_cost_per_million_tokens: float = Field(default=0.0, ge=0)
+    model_output_cost_per_million_tokens: float = Field(default=0.0, ge=0)
 
     max_agent_steps: int = Field(default=8, ge=1, le=64)
     max_repeated_tool_calls: int = Field(default=2, ge=1, le=8)
@@ -65,6 +69,8 @@ class Settings(BaseSettings):
     reserved_output_tokens: int = Field(default=4096, ge=0, le=200_000)
     short_term_message_limit: int = Field(default=24, ge=4, le=200)
     short_term_char_budget: int = Field(default=24000, ge=2000)
+    memory_min_relevance_score: float = Field(default=0.35, ge=0, le=1)
+    memory_recency_half_life_days: float = Field(default=180.0, gt=0, le=3650)
     rag_top_k: int = Field(default=6, ge=1, le=30)
     rag_corrective_max_rounds: int = Field(default=2, ge=0, le=2)
     rag_query_max_parallel: int = Field(default=2, ge=1, le=4)
@@ -101,12 +107,10 @@ class Settings(BaseSettings):
             raise ValueError("RAG chunk budgets must satisfy overlap < target <= max tokens")
         if self.rag_cloud_fallback_enabled:
             raise ValueError(
-                "Cloud document fallback has no configured provider in v0.3; keep it disabled"
+                "Cloud document fallback has no configured provider in v0.4; keep it disabled"
             )
         if self.reserved_output_tokens >= self.context_token_budget:
-            raise ValueError(
-                "reserved_output_tokens must be smaller than context_token_budget"
-            )
+            raise ValueError("reserved_output_tokens must be smaller than context_token_budget")
         return self
 
     @property
@@ -127,6 +131,8 @@ class Settings(BaseSettings):
                 model=self.model,
                 base_url=self.base_url.rstrip("/"),
                 api_key=self.api_key,
+                input_cost_per_million_tokens=self.model_input_cost_per_million_tokens,
+                output_cost_per_million_tokens=self.model_output_cost_per_million_tokens,
             )
         ]
         try:

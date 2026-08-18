@@ -4,7 +4,7 @@
 
 AgentForge 面向企业 Agent 研发中的模型输出不确定、多 Tool 协作冲突、长会话上下文膨胀和复杂文档证据失真等问题，设计异步 Agent 服务，覆盖模型调用、Tool Orchestration、分层 Memory、文档 RAG、可观测性与失败恢复。项目重点不是展示一段 Prompt，而是以可验证的数据契约、状态所有权和失败边界支撑工程交付。
 
-> **最近一次验收：2026 年 8 月 17 日。** Ruff 全仓及新增 Benchmark 脚本检查通过；strict mypy 对 24 个 Source 文件检查通过；pytest 共 90 项测试通过并保留 1 条 Starlette/httpx 上游弃用警告。Tool Orchestration 60 项总体通过率为 80.00%，其中 BFCL 单轮可比子集为 84.62%、AgentForge Runtime 对抗集为 15/15；Memory 70 项中 LongMemEval Evidence Recall@5 为 26.33%、AgentForge 隔离与压缩集为 18/20。第三次 200 页 RAG Benchmark 的 Recall@5 为 95.53% / 95.53% / 88.91%；按照项目范围约定，**未进行压力测试、吞吐量测试或持续负载测试**。
+> **最近一次验收：2026 年 8 月 17 日。** Ruff 全仓及新增 Benchmark 脚本检查通过；strict mypy 对 27 个 Source 文件检查通过；pytest 共 97 项测试通过并保留 1 条 Starlette/httpx 上游弃用警告。Tool Orchestration 60 项总体通过率为 80.00%，其中 BFCL 单轮可比子集为 84.62%、AgentForge Runtime 对抗集为 15/15；Memory 70 项中 LongMemEval Evidence Recall@5 为 26.33%、AgentForge 隔离与压缩集为 18/20。第三次 200 页 RAG Benchmark 的 Recall@5 为 95.53% / 95.53% / 88.91%；按照项目范围约定，**未进行压力测试、吞吐量测试或持续负载测试**。
 
 ## 项目价值
 
@@ -92,12 +92,15 @@ flowchart TB
 | 层级 | 状态所有者 | 核心职责 |
 |---|---|---|
 | API Layer | FastAPI + Pydantic | 请求校验、兼容字段、错误响应和生命周期管理 |
-| Turn State | LangGraph state | 当前计划、消息、工具结果、步数、重复签名和停止条件 |
+| Turn State | LangGraph state | 当前计划、消息、工具结果、步数、重复签名和停止条件；当前无 Checkpointer，仅在请求生命周期内存在 |
 | Short-term Memory | SQLite WAL session store | 会话级最近消息、字符预算和 Rolling Summary |
 | Long-term Memory | Namespaced vector memory | 按用户命名空间保存可长期召回的语义事实 |
 | Knowledge Memory | RAG index | 原始文档、Chunk、Metadata、版本、ACL、检索分数和引用 |
 | Tool Runtime | Tool DAG executor | 依赖解析、并发控制、超时、资源锁和统一结果封装 |
 | Model Runtime | Async model gateway | Route、Retry、Fallback、JSON repair 和结构化输出验证 |
+
+
+> **运行时边界（v0.4.0）**：当前 LangGraph 未配置 Checkpointer，Turn State 不会跨进程恢复；SQLite 不是 LangGraph Checkpoint Store。RAG 的“原子激活”仅指候选版本校验完成后切换 Registry 中的 Active Pointer，不代表 SQLite、Qdrant 或外部存储间的分布式事务。
 
 ## Agent 状态流转
 
@@ -192,6 +195,7 @@ flowchart LR
 - 上游失败后，下游标记为 skipped，不猜测缺失输入。
 - 对同一外部资源的写操作使用资源锁，避免并发覆盖和状态冲突。
 - 每个工具单独设置 Timeout；取消和异常被转换为结构化结果，不泄漏未处理异常。
+- `side_effects=write` 的 Tool call 必须携带 `idempotency_key`，否则在审批和执行前 fail-closed；服务端使用 `tool_idempotency.sqlite3` 原子预留 Key、校验参数 Fingerprint、持久化成功结果并在重启后回放，超时或异常后的不确定副作用标记为 `TOOL_WRITE_OUTCOME_UNKNOWN`，禁止盲目重试。该 Ledger 提供本地重复执行防护，但跨系统 Exactly-once 仍需目标系统支持同一 Key 或事务语义。
 
 ### 工具描述如何减少模型误选
 
@@ -221,10 +225,10 @@ flowchart LR
 
 - **Turn State**：只保存当前轮执行所需信息，由 LangGraph 拥有，不作为长期事实库。
 - **Short-term Memory**：按 `session_id` 隔离，使用 SQLite WAL 保存最近消息；超过消息或字符预算后生成 Rolling Summary。
-- **Long-term Memory**：按 `user_id` 命名空间写入向量 Memory，记录可长期复用的偏好和事实。
+- **Long-term Memory**：按 `user_id` 命名空间写入向量 Memory；Schema v2 支持 `memory_key` 替换链、有效期、过期过滤、Namespace 删除、Embedding Profile 检查和低相关度拒绝召回。
 - **Knowledge Memory**：RAG 文档库独立于用户 Memory，包含来源、版本、ACL、Chunk 和 Citation metadata。
 
-上下文组装时采用“摘要 + 最近消息 + 相关长期记忆 + 授权知识片段”的组合，而不是把所有历史消息无界塞入 Prompt。
+上下文组装时采用“摘要 + 最近消息 + 相关长期记忆 + 授权知识片段”的组合，而不是把所有历史消息无界塞入 Prompt。Long-term Memory 召回使用 Semantic、Lexical、Importance 与 Recency 的确定性组合评分；低于阈值时返回空结果，避免为弱相关历史强行补全上下文。
 
 ### Multi-Agent 上下文隔离
 
@@ -395,7 +399,7 @@ flowchart LR
 工程边界：
 
 - **权限由代码执行，不由 Prompt 承诺**：`ToolExecutionScope` 约束工具 allowlist 和写权限；Policy、Approval、Guard 任一异常均 fail-closed。
-- **公开行为采用迁移窗口**：v0.3.x 默认 `AI_AGENT_TOOL_WRITE_APPROVAL_MODE=allow` 保持现有写工具行为并输出迁移告警；安全部署应显式设置为 `deny`。后续 Major Version 才能把默认值改为 `deny`。
+- **公开行为采用迁移窗口**：v0.3.x 引入且在 v0.4.x 仍默认 `AI_AGENT_TOOL_WRITE_APPROVAL_MODE=allow` 以保持现有写工具行为并输出迁移告警；安全部署应显式设置为 `deny`。后续 Major Version 才能把默认值改为 `deny`。
 - **遥测不能阻断业务**：Tool Runtime Event 只包含阶段、结果、side-effect 分类和错误码，不包含参数或工具正文；Event Sink 故障 fail-open。
 - **上下文按完整 Turn 裁剪**：保留 leading system messages 和最新完整 user/assistant/tool 单元，避免只留下 Tool Call 或 Tool Result 的半条链路。
 - **大结果只向模型发送 Preview**：完整结果以 SHA-256 内容寻址写入 `state/artifacts/tool-results/`，Artifact 使用 `schema_version=1` 的 JSON Envelope；当前不属于 SQLite Backup 集合，按可再生成的临时运行产物处理。
@@ -504,7 +508,9 @@ uv sync --all-groups --extra documents
 | `AI_AGENT_API_KEY` | 空 | 主模型 API Key；为空时启用受控本地 Fallback |
 | `AI_AGENT_BASE_URL` | OpenAI v1 endpoint | OpenAI-compatible 模型地址 |
 | `AI_AGENT_MODEL` | `gpt-4o-mini` | 主模型标识 |
-| `AI_AGENT_FALLBACK_ROUTES_JSON` | `[]` | 按顺序尝试的备用模型 Route |
+| `AI_AGENT_FALLBACK_ROUTES_JSON` | `[]` | 按顺序尝试的备用模型 Route；每个 Route 可显式配置输入/输出 Token 单价 |
+| `AI_AGENT_MODEL_INPUT_COST_PER_MILLION_TOKENS` | `0` | 主 Route 输入 Token 单价；为 0 时只记录 Token，不猜测成本 |
+| `AI_AGENT_MODEL_OUTPUT_COST_PER_MILLION_TOKENS` | `0` | 主 Route 输出 Token 单价；为 0 时只记录 Token，不猜测成本 |
 | `AI_AGENT_WORKSPACE_ROOT` | 当前目录 | 文件工具允许访问的根边界 |
 | `AI_AGENT_STATE_DIR` | `state` | SQLite Memory 和索引目录 |
 | `AI_AGENT_EMBEDDING_PROVIDER` | `hash` | `hash` 或 `openai` |
@@ -513,16 +519,18 @@ uv sync --all-groups --extra documents
 | `AI_AGENT_MAX_AGENT_STEPS` | `8` | Agent 最大 Graph step |
 | `AI_AGENT_MAX_REPEATED_TOOL_CALLS` | `2` | 同一 Tool call signature 最大重复次数 |
 | `AI_AGENT_MAX_PARALLEL_TOOLS` | `8` | Tool 并发上限 |
-| `AI_AGENT_TOOL_WRITE_APPROVAL_MODE` | `allow` | v0.3.x 兼容模式；生产建议显式设为 `deny`，写工具审批失败时 fail-closed |
+| `AI_AGENT_TOOL_WRITE_APPROVAL_MODE` | `allow` | v0.4.x 兼容模式；生产建议显式设为 `deny`，写工具审批失败时 fail-closed |
 | `AI_AGENT_TOOL_RESULT_INLINE_TOKEN_LIMIT` | `2500` | Tool Result 超过近似 Token 上限时写入 Artifact |
 | `AI_AGENT_TOOL_RESULT_PREVIEW_CHARS` | `4000` | Spill 后发送给模型的最大 Preview 字符数 |
 | `AI_AGENT_CONTEXT_TOKEN_BUDGET` | `64000` | 单次模型输入的近似总 Token 预算 |
 | `AI_AGENT_RESERVED_OUTPUT_TOKENS` | `4096` | 为模型输出预留的 Token 预算 |
+| `AI_AGENT_MEMORY_MIN_RELEVANCE_SCORE` | `0.35` | Long-term Memory 召回最低组合相关度；低于阈值受控拒绝 |
+| `AI_AGENT_MEMORY_RECENCY_HALF_LIFE_DAYS` | `180` | Long-term Memory Recency 分数半衰期 |
 
 备用模型 Route 示例：
 
 ```env
-AI_AGENT_FALLBACK_ROUTES_JSON=[{"name":"backup","model":"backup-model","base_url":"https://example.com/v1","api_key":"replace-me","timeout_seconds":45,"max_attempts":2}]
+AI_AGENT_FALLBACK_ROUTES_JSON=[{"name":"backup","model":"backup-model","base_url":"https://example.com/v1","api_key":"replace-me","timeout_seconds":45,"max_attempts":2,"input_cost_per_million_tokens":0,"output_cost_per_million_tokens":0}]
 ```
 
 ### 文档 RAG 新增配置（v0.3）
@@ -576,7 +584,8 @@ Pydantic 在启动前验证 `overlap < target <= max`。
 - `GET /config`
 - `POST /documents/ingest`
 - `POST /documents/search`
-- `POST /memory`
+- `POST /memory`：兼容原字段；可选 `memory_key`、`valid_from`、`expires_at`。
+- `DELETE /memory/{memory_id}?namespace=...`：仅删除匹配 Namespace 的长期记忆。
 
 `POST /documents/ingest` 增量支持 `tenant_id`（默认 `public`）和 `acl`（默认空，表示 Tenant 内可见），并返回 `version_id`、`content_sha256` 和 `idempotent`。
 
@@ -607,7 +616,7 @@ node --check server.js
 
 ```text
 Ruff:  all checks passed
-mypy:  success, no issues in 25 source files
+mypy:  success, no issues in 27 source files
 pytest: 87 passed, 1 warning
 RAG evaluator: 2 schema-valid example queries; no quality claim
 Node:  public/app.js 与 server.js syntax check 通过
@@ -660,10 +669,10 @@ PowerShell: run.ps1 解析通过
 
 ### Result
 
-将企业 Agent 的模型、Tool、Memory 与 RAG 能力收敛为模块化 AgentForge 服务；24 个 Source 文件通过 strict mypy，90 项自动化测试覆盖正常路径、失败恢复、并发语义、RAG 迁移、FTS5 一致性和 Tenant/ACL 隔离；最近一次验收中 Ruff、mypy strict、pytest 和 JavaScript syntax check 均通过。项目保留三轮 200 页 Benchmark 证据，但不虚构压力测试、吞吐量或生产 SLA。
+将企业 Agent 的模型、Tool、Memory 与 RAG 能力收敛为模块化 AgentForge 服务；27 个 Source 文件通过 strict mypy，97 项自动化测试覆盖正常路径、失败恢复、并发语义、RAG 迁移、FTS5 一致性和 Tenant/ACL 隔离；最近一次验收中 Ruff、mypy strict、pytest 和 JavaScript syntax check 均通过。项目保留三轮 200 页 Benchmark 证据，但不虚构压力测试、吞吐量或生产 SLA。
 
 ## 评估范围与已知限制
-> 文档 RAG 验证边界：当前 90 项自动化测试覆盖路由、Attempt 上限、结构切片、异步 Job、版本一致性、ACL、FTS5 Backfill/更新/删除、候选多样化、Citation Schema 与内容完整性门控。第三次 200 页 Retrieval Benchmark 的 Recall@5 为 95.53% / 95.53% / 88.91%；真实 Docling 10 页回归仍仅证明内容完整性门控降低 False Acceptance，不能外推为生产 OCR 或复杂 PDF 解析质量。PaddleOCR Fallback、真实复杂 DOCX、Cloud Fallback 与答案级 Citation 仍未完成实文档闭环。未进行任何压力测试。
+> 文档 RAG 验证边界：当前 97 项自动化测试覆盖路由、Attempt 上限、结构切片、异步 Job、版本一致性、ACL、FTS5 Backfill/更新/删除、候选多样化、Citation Schema 与内容完整性门控。第三次 200 页 Retrieval Benchmark 的 Recall@5 为 95.53% / 95.53% / 88.91%；真实 Docling 10 页回归仍仅证明内容完整性门控降低 False Acceptance，不能外推为生产 OCR 或复杂 PDF 解析质量。PaddleOCR Fallback、真实复杂 DOCX、Cloud Fallback 与答案级 Citation 仍未完成实文档闭环。未进行任何压力测试。
 
 
 1. **未进行压力测试。** 当前并发测试只验证并发语义和时间重叠，不声明吞吐量、饱和点、p95/p99 Latency 或长时间稳定性。
@@ -672,7 +681,7 @@ PowerShell: run.ps1 解析通过
 4. Qdrant adapter 使用内存模式完成功能测试，未验证远程服务持久化和生产索引调优。
 5. 默认 Reranker 仍是确定性 Fusion 与 Source/Page 多样化，不是 Cross-Encoder；当前只声明已冻结 200 页 Fixture 上的 Recall@K/MRR，不能外推到未知生产语料。
 6. Multi-Agent 当前为 library-level 组件，尚未提供公开编排 API、Cost Budget、授权模型和冲突仲裁策略。
-7. Long-term Memory 尚需补充生产级 Retention、Deletion、Export、Consent 和 PII 策略。
+7. Long-term Memory 已支持 Namespace-scoped hard deletion、有效期和替换链，但生产级 Retention、Legal Hold、Export、Consent、Authentication 与 PII 策略仍属于部署边界。
 8. SQLite exact dense + FTS5/BM25 适合本地评估和小规模语料；更大语料应在真实 Workload 验证后迁移到带 Sparse/Hybrid 能力的 Qdrant 或其他索引型 Vector Store。
 9. Ingestion Job 已持久化，但执行 Worker 仍为单进程内模型；多进程写入需要单写者部署或 Distributed Lease。
 10. Vector upsert 成功但 Active Pointer 切换前若进程崩溃，可能留下不可见 Orphan Chunk；GC 和 Retention policy 尚待实现。
@@ -727,6 +736,8 @@ flowchart LR
 ```
 
 - `GET /metrics`：Prometheus exposition；只使用稳定、低基数标签。
+- 模型链路记录 Route/Outcome、Prompt/Completion/Cached/Reasoning Tokens、显式价格下的估算成本，以及 RateLimit/Timeout/Network/Provider/Schema/Policy/Unknown 失败分类；不写入 Prompt 或 Completion 正文。
+- Memory 链路记录 `remember/recall/delete/reembed` 的稳定 Outcome 标签。
 - `GET /ready`：Readiness 与 state-lock 状态。
 - `X-Trace-ID`：关联 HTTP 请求与 OpenTelemetry Trace。
 - 本地 Trace 默认写入 `state/telemetry/traces.jsonl`，20 MiB 轮转、保留 5 份；可选 OTLP/HTTP。
@@ -740,4 +751,4 @@ uv run python -m agent_service.operations verify --backup-dir E:\agentforge-back
 uv run python -m agent_service.operations restore --backup-dir E:\agentforge-backups\afb_... --target-state-dir .\state-restored
 ```
 
-完整运行手册见 `docs/operations.md`，架构决策见 `docs/adr-010-observability-backup-recovery.md`。2026-08-15 的固定 200 页顺序功能与恢复 benchmark 见 `eval/基于OmniDocBench和OHR-Bench的RAG基准测试v2/report.md`；该测试不包含压力测试，也不重新评价 PDF Parser 质量。
+完整运行手册见 `docs/operations.md`，可观测性与灾备决策见 `docs/adr-010-observability-backup-recovery.md`，本轮 P0 边界见 `docs/adr-013-p0-correctness-boundaries.md`，Memory 迁移见 `docs/memory-v2-migration.md`。2026-08-15 的固定 200 页顺序功能与恢复 benchmark 见 `eval/基于OmniDocBench和OHR-Bench的RAG基准测试v2/report.md`；该测试不包含压力测试，也不重新评价 PDF Parser 质量。

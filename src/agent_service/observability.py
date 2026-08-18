@@ -158,6 +158,36 @@ class Observability:
             ("phase", "outcome", "side_effects"),
             registry=self.registry,
         )
+        self.model_requests = Counter(
+            "agentforge_model_requests_total",
+            "Model route requests by bounded outcome and degradation state.",
+            ("route", "outcome", "degraded"),
+            registry=self.registry,
+        )
+        self.model_tokens = Counter(
+            "agentforge_model_tokens_total",
+            "Model tokens by route and token class.",
+            ("route", "token_class"),
+            registry=self.registry,
+        )
+        self.model_estimated_cost = Counter(
+            "agentforge_model_estimated_cost_usd_total",
+            "Configured estimated model cost in USD by route.",
+            ("route",),
+            registry=self.registry,
+        )
+        self.failures = Counter(
+            "agentforge_failures_total",
+            "Normalized failures by component and bounded category.",
+            ("component", "category"),
+            registry=self.registry,
+        )
+        self.memory_operations = Counter(
+            "agentforge_memory_operations_total",
+            "Memory operations by bounded outcome.",
+            ("operation", "outcome"),
+            registry=self.registry,
+        )
         self.parser_fallbacks = Counter(
             "agentforge_parser_fallbacks_total",
             "Parser fallback transitions.",
@@ -260,6 +290,43 @@ class Observability:
             outcome=outcome,
             side_effects=side_effects,
         ).inc()
+
+    def record_model_usage(
+        self,
+        route: str,
+        outcome: str,
+        *,
+        degraded: bool,
+        prompt_tokens: int = 0,
+        completion_tokens: int = 0,
+        cached_prompt_tokens: int = 0,
+        reasoning_tokens: int = 0,
+        estimated_cost_usd: float = 0.0,
+    ) -> None:
+        if not self.metrics_enabled:
+            return
+        self.model_requests.labels(
+            route=route, outcome=outcome, degraded=str(degraded).lower()
+        ).inc()
+        token_values = {
+            "prompt": prompt_tokens,
+            "completion": completion_tokens,
+            "cached_prompt": cached_prompt_tokens,
+            "reasoning": reasoning_tokens,
+        }
+        for token_class, value in token_values.items():
+            if value:
+                self.model_tokens.labels(route=route, token_class=token_class).inc(value)
+        if estimated_cost_usd:
+            self.model_estimated_cost.labels(route=route).inc(estimated_cost_usd)
+
+    def record_failure(self, component: str, category: str) -> None:
+        if self.metrics_enabled:
+            self.failures.labels(component=component, category=category).inc()
+
+    def record_memory_operation(self, operation: str, outcome: str) -> None:
+        if self.metrics_enabled:
+            self.memory_operations.labels(operation=operation, outcome=outcome).inc()
 
     def render_metrics(self) -> tuple[bytes, str]:
         return generate_latest(self.registry), CONTENT_TYPE_LATEST

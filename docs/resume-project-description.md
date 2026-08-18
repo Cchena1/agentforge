@@ -29,7 +29,7 @@ Build an evaluation-ready asynchronous Agent service around those enterprise fai
 **Result**
 
 - Delivered a typed, modular Agent service with reproducible `uv.lock` dependency management and external-evaluator documentation.
-- Verified the current milestone with **90 passing tests**, **the documented Ruff gate passing (`src`, `main.py`, `tests`, and `scripts`)**, and **strict mypy passing across 25 Python files**.
+- Verified the current milestone with **97 passing tests**, **the documented Ruff gate passing (`src`, `main.py`, `tests`, and `scripts`)**, and **strict mypy passing across 27 Python files**.
 - Preserved existing API fields while adding `version_id`, `content_sha256`, `idempotent`, and retrieval `index_versions` during a documented migration window.
 - Demonstrated failure-safe RAG behavior: readers continue using the previous complete version until a replacement is fully stored and activated.
 - Produced implementation, migration, ADR, dependency, and acceptance evidence suitable for code review and interview discussion.
@@ -41,7 +41,7 @@ Build an evaluation-ready asynchronous Agent service around those enterprise fai
 - Implemented a **dependency-aware parallel tool DAG** with semaphores, `$ref` data flow, cycle detection, failure propagation, timeouts, and resource locks to prevent conflicting mutations.
 - Designed **layered memory and multi-agent isolation** using bounded session context, rolling summaries, user-namespaced vector memory, isolated worker context, and compressed citation-bearing results.
 - Delivered and evaluated **failure-safe document RAG** through three controlled **200-page** benchmark rounds; the 427-query retrieval baseline reached **73.30% Recall@5** on clean evidence, **70.26%** under formatting noise, and **57.38%** under semantic/OCR noise, while citation-schema validity remained **100%**.
-- Closed the local operational loop with **200/200 pages ingested**, **582 chunks**, **200/200 searchable after isolated restore**, **0 retrieval-signature mismatches**, **400 trace spans with 0 content-bearing attributes**, **4/4 validated SQLite backups**, **8 alert rules**, and **11/11 machine-checkable acceptance checks**; verified the codebase with **90 tests**, the documented Ruff gate, and strict mypy across **25 Python files**.
+- Closed the local operational loop with **200/200 pages ingested**, **582 chunks**, **200/200 searchable after isolated restore**, **0 retrieval-signature mismatches**, **400 trace spans with 0 content-bearing attributes**, **4/4 validated SQLite backups**, **8 alert rules**, and **11/11 machine-checkable acceptance checks**; verified the codebase with **97 tests**, the documented Ruff gate, and strict mypy across **27 Python files**.
 
 ## 60-second interview introduction
 
@@ -142,7 +142,7 @@ Build a local-first, failure-safe RAG subsystem and evaluate it under a fixed **
 - Re-ran **10 previously failed complex PDF pages** after the minimal parser fix: **10/10 parsed**, while the tightened content-quality gate accepted **6/10** and quarantined **4/10** OCR-required or low-coverage pages, preventing silent indexing of technically parsed but unusable content.
 - In the operational benchmark, ingested **200/200 pages** into **582 chunks** and **200 active versions**; after backup and isolated restore, **200/200 pages remained searchable**, database counts matched, and retrieval-signature mismatch was **0**.
 - Collected **400 trace spans** with **0 query/document content attributes**, validated **4/4 SQLite backup files** by size/hash/integrity, checked **8 Prometheus alert rules**, and passed **11/11 machine-checkable acceptance criteria**.
-- Verified the current repository with **90 passing tests**, the documented Ruff gate, and strict mypy across **25 Python files**. The benchmark does **not** claim pressure-tested capacity, enterprise disaster-recovery certification, or production OCR accuracy.
+- Verified the current repository with **97 passing tests**, the documented Ruff gate, and strict mypy across **27 Python files**. The benchmark does **not** claim pressure-tested capacity, enterprise disaster-recovery certification, or production OCR accuracy.
 
 ## 2026-08-16 retrieval repair evidence
 
