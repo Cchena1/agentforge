@@ -30,6 +30,8 @@ The deprecated top-level Demo compatibility stack and duplicate frontend were re
 | `docs/adr-010-observability-backup-recovery.md` | Metrics, OpenTelemetry Trace, alerting, verified backup and isolated restore decision |
 | `docs/adr-011-deepseek-harness-runtime-guardrails.md` | Tool middleware, context budget, artifact spill, capability isolation, and migration decision |
 | `docs/adr-012-bm25-retrieval-repair.md` | SQLite FTS5/BM25 repair, provider-aware fusion, diversity, fallback, and validation decision |
+| `docs/adr-013-p0-correctness-boundaries.md` | Correct runtime persistence claims, Memory v2, durable write-tool idempotency ledger, and model accounting |
+| `docs/memory-v2-migration.md` | Additive Memory schema-v2 upgrade, validation, backup, and rollback procedure |
 | `docs/operations.md` | Operator runbook for health, metrics, traces, alert response, backup and restore |
 | `docs/rag-versioning-migration.md` | Persistent-format compatibility, migration, and rollback |
 | `docs/rag-evaluation-contract.md` | Versioned golden-query schema and metric rules |
@@ -50,7 +52,7 @@ The deprecated top-level Demo compatibility stack and duplicate frontend were re
 | `graph.py` | LangGraph state machine and loop limits |
 | `llm.py` | Async model gateway, retries, fallbacks, and structured repair |
 | `tools/` | Function-calling registry and dependency-aware async executor |
-| `memory.py` | Session-scoped short-term and namespaced long-term memory |
+| `memory.py` | Session-scoped short-term memory plus versioned, validity-aware, namespaced long-term memory |
 | `multi_agent.py` | Isolated parallel workers and compressed results |
 | `documents.py` | Legacy parser/chunker compatibility during the migration window |
 | `document_models.py` | Parser-neutral canonical blocks, assets, attempts, quality, and chunks |

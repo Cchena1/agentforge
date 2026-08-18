@@ -4,7 +4,7 @@ from datetime import UTC, datetime
 from enum import StrEnum
 from typing import Any, Literal
 
-from pydantic import BaseModel, ConfigDict, Field, field_validator
+from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
 
 class StrictModel(BaseModel):
@@ -124,6 +124,7 @@ class PlannedToolCall(StrictModel):
     tool_name: str = Field(min_length=1, max_length=128)
     arguments: dict[str, Any] = Field(default_factory=dict)
     depends_on: list[str] = Field(default_factory=list, max_length=32)
+    idempotency_key: str | None = Field(default=None, min_length=1, max_length=256)
 
     @field_validator("depends_on")
     @classmethod
@@ -144,6 +145,14 @@ class ModelToolCall(StrictModel):
     arguments: dict[str, Any]
 
 
+class ModelUsage(StrictModel):
+    prompt_tokens: int = Field(default=0, ge=0)
+    completion_tokens: int = Field(default=0, ge=0)
+    cached_prompt_tokens: int = Field(default=0, ge=0)
+    reasoning_tokens: int = Field(default=0, ge=0)
+    estimated_cost_usd: float = Field(default=0.0, ge=0)
+
+
 class ModelTurn(StrictModel):
     content: str = ""
     tool_calls: list[ModelToolCall] = Field(default_factory=list)
@@ -151,6 +160,7 @@ class ModelTurn(StrictModel):
     route: str
     degraded: bool = False
     raw_finish_reason: str | None = None
+    usage: ModelUsage = Field(default_factory=ModelUsage)
 
 
 class DocumentIngestRequest(StrictModel):
@@ -268,6 +278,25 @@ class MemoryWrite(StrictModel):
     text: str = Field(min_length=1, max_length=20_000)
     importance: float = Field(default=0.5, ge=0, le=1)
     metadata: dict[str, str | int | float | bool] = Field(default_factory=dict)
+    memory_key: str | None = Field(default=None, min_length=1, max_length=256)
+    valid_from: datetime | None = None
+    expires_at: datetime | None = None
+
+    @field_validator("valid_from", "expires_at")
+    @classmethod
+    def normalize_timestamp(cls, value: datetime | None) -> datetime | None:
+        if value is None:
+            return None
+        if value.tzinfo is None:
+            return value.replace(tzinfo=UTC)
+        return value.astimezone(UTC)
+
+    @model_validator(mode="after")
+    def validate_validity_window(self) -> MemoryWrite:
+        if self.valid_from is not None and self.expires_at is not None:
+            if self.expires_at <= self.valid_from:
+                raise ValueError("expires_at must be later than valid_from")
+        return self
 
 
 class MemoryRecord(StrictModel):
@@ -277,3 +306,14 @@ class MemoryRecord(StrictModel):
     importance: float
     metadata: dict[str, Any]
     created_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
+    memory_key: str | None = None
+    valid_from: datetime | None = None
+    expires_at: datetime | None = None
+    embedding_profile: str | None = None
+    relevance_score: float | None = Field(default=None, ge=0, le=1)
+
+
+class MemoryDeleteResponse(StrictModel):
+    memory_id: str
+    namespace: str
+    deleted: bool

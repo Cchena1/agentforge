@@ -1,6 +1,6 @@
 # AgentForge 可观测性与灾备运行手册
 
-> 版本：0.3.x；日期：2026-08-15。默认 SQLite/Local-first 路径适用。所有备份命令都必须在 AgentForge 服务停止后执行。
+> 版本：0.4.x；更新日期：2026-08-17。默认 SQLite/Local-first 路径适用。所有备份命令都必须在 AgentForge 服务停止后执行。
 
 ## 1. 启动与健康检查
 
@@ -27,7 +27,7 @@ $env:AI_AGENT_TRACE_JSONL_BACKUP_COUNT = "5"
 $env:AI_AGENT_OTEL_EXPORTER_OTLP_ENDPOINT = "http://127.0.0.1:4318/v1/traces"
 ```
 
-禁止把 query、Prompt、原文、Chunk 正文、用户消息或 API key 写入 Span attributes。
+禁止把 query、Prompt、原文、Chunk 正文、用户消息或 API key 写入 Span attributes。模型 Span 只记录稳定 Route、Outcome、Failure Category 与供应商返回的 Token Usage；估算成本仅使用显式配置单价。
 
 ## 3. Prometheus 与告警
 
@@ -40,6 +40,16 @@ $env:AI_AGENT_OTEL_EXPORTER_OTLP_ENDPOINT = "http://127.0.0.1:4318/v1/traces"
 ```
 
 `alertmanager.example.yml` 的 webhook 是占位地址，上线前必须替换为企业通知渠道，并完成 firing/resolved 双向演练。
+
+### 3.1 P0 归因指标
+
+- `agentforge_model_requests_total{route,outcome}`：模型 Route 成功、失败与 Fallback 结果。
+- `agentforge_model_tokens_total{route,token_class}`：prompt/completion/cached/reasoning Token。
+- `agentforge_model_estimated_cost_usd_total{route}`：仅在配置单价后累计的估算成本。
+- `agentforge_failures_total{component,category}`：RateLimit/Timeout/Network/Provider/Schema/Policy/Unknown 等稳定归因。
+- `agentforge_memory_operations_total{operation,outcome}`：remember/recall/delete/reembed 结果。
+
+上述标签不得加入用户 ID、Session ID、Tool 参数、异常正文或其他高基数/敏感数据。
 
 ## 4. 备份、验证与恢复
 
@@ -78,3 +88,8 @@ uv run python -m agent_service.operations restore --backup-dir E:\agentforge-bac
 4. 固定问题集恢复前后检索 Chunk ID 签名一致。
 5. 服务可启动，`/health`、`/ready`、`/metrics` 正常。
 6. 失败时不激活恢复目录，不删除源状态。
+7. 若备份中存在 `tool_idempotency.sqlite3`，恢复后验证已完成 Key 可回放、`indeterminate` Key 仍拒绝重试；禁止人工删除未知结果记录后直接重放写操作。
+
+## 7. Memory v2 迁移
+
+升级前必须完成停服备份和 verify。首次 Memory 初始化执行 additive schema-v2 migration；旧记录保留并在 Embedding Profile 不匹配时懒更新。禁止旧版本二进制直接连接已使用 v0.4.0 的状态目录。完整步骤见 `docs/memory-v2-migration.md`。

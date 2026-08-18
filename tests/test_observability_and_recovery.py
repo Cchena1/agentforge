@@ -34,6 +34,18 @@ def test_metrics_trace_header_and_local_trace_evidence(tmp_path: Path) -> None:
         app.state.services.observability.record_tool_runtime_event(
             "policy", "denied", "write"
         )
+        app.state.services.observability.record_model_usage(
+            "primary",
+            "success",
+            degraded=False,
+            prompt_tokens=100,
+            completion_tokens=20,
+            cached_prompt_tokens=10,
+            reasoning_tokens=5,
+            estimated_cost_usd=0.001,
+        )
+        app.state.services.observability.record_failure("model", "timeout")
+        app.state.services.observability.record_memory_operation("recall", "abstained")
         metrics = client.get("/metrics")
         assert metrics.status_code == 200
         assert "agentforge_http_requests_total" in metrics.text
@@ -41,6 +53,11 @@ def test_metrics_trace_header_and_local_trace_evidence(tmp_path: Path) -> None:
         assert "agentforge_tool_runtime_events_total" in metrics.text
         assert 'phase="policy"' in metrics.text
         assert 'outcome="denied"' in metrics.text
+        assert "agentforge_model_tokens_total" in metrics.text
+        assert 'token_class="prompt"' in metrics.text
+        assert "agentforge_model_estimated_cost_usd_total" in metrics.text
+        assert 'component="model"' in metrics.text
+        assert 'operation="recall"' in metrics.text
         with pytest.raises(BackupError, match="state directory is in use"):
             BackupManager(config.resolved_state_dir).create(tmp_path / "backups")
 

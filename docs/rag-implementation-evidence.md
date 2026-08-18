@@ -123,8 +123,8 @@ Results are updated in the root `README.md` after the target copy is verified.
 
 ```text
 ruff check src main.py tests scripts benchmark-scripts: all checks passed
-mypy src scripts: success, no issues found in 25 source files
-pytest -q -p no:cacheprovider: 90 passed, 1 Starlette/httpx deprecation warning
+mypy src scripts: success, no issues found in 27 source files
+pytest -q -p no:cacheprovider: 97 passed, 1 Starlette/httpx deprecation warning
 benchmark adversarial audit: pass, 200 unique pages and 559 queries per variant
 pressure/load testing: not performed by design
 ```
@@ -208,9 +208,9 @@ A disjoint 50-page/132-query holdout reached Recall@5 of 99.24%, 99.24%, and 96.
 Verification:
 
 ```text
-pytest: 90 passed, 1 upstream Starlette/httpx deprecation warning
+pytest: 97 passed, 1 upstream Starlette/httpx deprecation warning
 ruff: all checks passed
-mypy strict: success, 25 source files
+mypy strict: success, 27 source files
 benchmark adversarial audit: pass, 200 unique pages, 559 queries per variant
 pressure/load test: not performed
 ```

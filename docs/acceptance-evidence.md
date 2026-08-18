@@ -16,6 +16,7 @@ This document maps engineering claims to implementation and tests. The latest ve
 | Async independent tools | `src/agent_service/tools/base.py` | `test_independent_tools_run_concurrently_without_load_testing` |
 | Tool dependency/conflict control | tool DAG, `$ref`, resource locks | dependency, cycle, and shared-lock tests |
 | Tool runtime policy | `ToolExecutionScope`, policy, approval, and guard gates | allowlist, write denial, and policy-failure tests |
+| Write-tool idempotency | executor invariant plus SQLite result ledger | missing-key rejection, argument-conflict rejection, restart replay, and indeterminate-timeout tests |
 | Bounded model context | complete-turn trimming and versioned content-addressed spill | context integrity, artifact hash/schema, and graph integration tests |
 | Layered memory | `src/agent_service/memory.py` | short-term isolation/compaction and long-term namespace tests |
 | Multi-agent isolation | `src/agent_service/multi_agent.py` | isolated context, compressed result, capability non-escalation, and spawn-denial tests |
@@ -155,9 +156,9 @@ The third 200-page Benchmark is frozen under `eval/基于OmniDocBench和OHR-Benc
 | Formatting Noise Recall@5 | 95.53% |
 | Semantic/OCR Noise Recall@5 | 88.91% |
 | Hit-level Citation Validity | 100% |
-| Pytest | 90 passed |
+| Pytest | 97 passed |
 | Ruff | passed |
-| Strict mypy | 25 source files passed |
+| Strict mypy | 27 source files passed |
 | Pressure/load test | not performed |
 
 Citation Validity is restricted to retrieval-hit schema, source/version identity, and quote membership. It is not answer-level semantic citation precision.

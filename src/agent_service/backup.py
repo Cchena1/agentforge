@@ -16,7 +16,7 @@ from typing import BinaryIO, Literal
 from pydantic import BaseModel, ConfigDict, Field
 
 BACKUP_SCHEMA_VERSION = 1
-APP_VERSION = "0.3.0"
+APP_VERSION = "0.4.0"
 
 
 class BackupError(RuntimeError):
@@ -115,14 +115,16 @@ class StateDirectoryLock:
 class BackupManager:
     """Verified offline backup and restore for the default SQLite deployment."""
 
-    def __init__(self, state_dir: Path, *, vector_backend: Literal["sqlite", "qdrant"] = "sqlite") -> None:
+    def __init__(
+        self, state_dir: Path, *, vector_backend: Literal["sqlite", "qdrant"] = "sqlite"
+    ) -> None:
         self.state_dir = state_dir.expanduser().resolve()
         self.vector_backend = vector_backend
 
     def create(self, output_dir: Path) -> Path:
         if self.vector_backend != "sqlite":
             raise BackupError(
-                "Qdrant backup is fail-closed in v0.3; use Qdrant collection snapshots before backing up app state"
+                "Qdrant backup is fail-closed in v0.4; use Qdrant collection snapshots before backing up app state"
             )
         output_root = output_dir.expanduser().resolve()
         output_root.mkdir(parents=True, exist_ok=True)
@@ -182,7 +184,9 @@ class BackupManager:
             manifest = BackupManifest.model_validate_json(manifest_path.read_text(encoding="utf-8"))
         except (OSError, ValueError) as exc:
             return VerificationResult(
-                backup_id="unknown", valid=False, files_verified=0,
+                backup_id="unknown",
+                valid=False,
+                files_verified=0,
                 errors=[f"manifest_invalid:{type(exc).__name__}"],
             )
         if manifest.schema_version != BACKUP_SCHEMA_VERSION:
@@ -215,7 +219,9 @@ class BackupManager:
         )
 
     @staticmethod
-    def restore(backup_dir: Path, target_state_dir: Path, *, replace_existing: bool = False) -> Path:
+    def restore(
+        backup_dir: Path, target_state_dir: Path, *, replace_existing: bool = False
+    ) -> Path:
         source = backup_dir.expanduser().resolve()
         target = target_state_dir.expanduser().resolve()
         if target.parent == target or source == target or source in target.parents:
@@ -263,9 +269,10 @@ class BackupManager:
 def _sqlite_backup(source: Path, destination: Path) -> None:
     source_uri = f"{source.resolve().as_uri()}?mode=ro"
     try:
-        with closing(sqlite3.connect(source_uri, uri=True)) as source_db, closing(
-            sqlite3.connect(destination)
-        ) as dest_db:
+        with (
+            closing(sqlite3.connect(source_uri, uri=True)) as source_db,
+            closing(sqlite3.connect(destination)) as dest_db,
+        ):
             source_db.backup(dest_db)
     except sqlite3.Error as exc:
         raise BackupError(f"SQLite backup failed for {source.name}: {exc}") from exc

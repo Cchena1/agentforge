@@ -35,6 +35,7 @@ from .schemas import (
     DocumentIngestRequest,
     DocumentIngestResponse,
     IngestionJobResponse,
+    MemoryDeleteResponse,
     MemoryRecord,
     MemoryWrite,
     RetrievalRequest,
@@ -45,6 +46,7 @@ from .settings import Settings, settings
 from .tools import (
     AsyncToolExecutor,
     CapabilityToolPolicy,
+    SQLiteToolIdempotencyStore,
     StaticToolApprover,
     ToolExecutionEvent,
     build_registry,
@@ -63,7 +65,7 @@ class Services:
         try:
             self.observability = observability or Observability(
                 service_name="agentforge-service",
-                service_version="0.3.0",
+                service_version="0.4.0",
                 environment=config.environment,
                 state_dir=config.resolved_state_dir,
                 metrics_enabled=config.metrics_enabled,
@@ -127,8 +129,11 @@ class Services:
                 self.embeddings,
                 message_limit=config.short_term_message_limit,
                 char_budget=config.short_term_char_budget,
+                min_relevance_score=config.memory_min_relevance_score,
+                recency_half_life_days=config.memory_recency_half_life_days,
+                observability=self.observability,
             )
-            self.gateway = ModelGateway(config)
+            self.gateway = ModelGateway(config, self.observability)
             self.registry = build_registry(config.workspace_root, self.rag)
 
             async def record_tool_event(event: ToolExecutionEvent) -> None:
@@ -149,10 +154,12 @@ class Services:
                 timeout_seconds=config.tool_timeout_seconds,
                 max_parallel=config.max_parallel_tools,
                 policy=CapabilityToolPolicy(require_write_approval=True),
-                approver=StaticToolApprover(
-                    allow_write=config.tool_write_approval_mode == "allow"
-                ),
+                approver=StaticToolApprover(allow_write=config.tool_write_approval_mode == "allow"),
                 event_sink=record_tool_event,
+                idempotency_store=SQLiteToolIdempotencyStore(
+                    config.resolved_state_dir / "tool_idempotency.sqlite3",
+                    in_progress_ttl_seconds=config.tool_timeout_seconds + 30,
+                ),
             )
             self.context_budget = ContextBudgetManager(
                 max_input_tokens=config.context_token_budget,
@@ -204,7 +211,7 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
 def create_app(config: Settings = settings) -> FastAPI:
     app_observability = Observability(
         service_name="agentforge-service",
-        service_version="0.3.0",
+        service_version="0.4.0",
         environment=config.environment,
         state_dir=config.resolved_state_dir,
         metrics_enabled=config.metrics_enabled,
@@ -224,7 +231,7 @@ def create_app(config: Settings = settings) -> FastAPI:
         finally:
             await services.close()
 
-    app = FastAPI(title=config.app_name, version="0.3.0", lifespan=configured_lifespan)
+    app = FastAPI(title=config.app_name, version="0.4.0", lifespan=configured_lifespan)
     FastAPIInstrumentor.instrument_app(
         app,
         tracer_provider=app_observability.tracer_provider,
@@ -280,7 +287,7 @@ def create_app(config: Settings = settings) -> FastAPI:
         svc = services()
         return {
             "status": "ok",
-            "version": "0.3.0",
+            "version": "0.4.0",
             "model_routes": [route.name for route in svc.gateway.routes],
             "online_model": svc.gateway.online,
             "memory": "sqlite-wal",
@@ -299,6 +306,8 @@ def create_app(config: Settings = settings) -> FastAPI:
             "api_key_configured": bool(config.api_key.get_secret_value()),
             "max_agent_steps": config.max_agent_steps,
             "embedding_provider": config.embedding_provider,
+            "memory_min_relevance_score": config.memory_min_relevance_score,
+            "memory_recency_half_life_days": config.memory_recency_half_life_days,
             "vector_backend": config.vector_backend,
             "rag_ocr_enabled": config.rag_ocr_enabled,
             "rag_parser_max_attempts": config.rag_parser_max_attempts,
@@ -404,6 +413,13 @@ def create_app(config: Settings = settings) -> FastAPI:
     @app.post("/memory", response_model=MemoryRecord)
     async def write_memory(request: MemoryWrite) -> MemoryRecord:
         return await services().memory.remember(request)
+
+    @app.delete("/memory/{memory_id}", response_model=MemoryDeleteResponse)
+    async def delete_memory(memory_id: str, namespace: str) -> MemoryDeleteResponse:
+        deleted = await services().memory.delete(namespace, memory_id)
+        if not deleted:
+            raise HTTPException(status_code=404, detail="memory not found in namespace")
+        return MemoryDeleteResponse(memory_id=memory_id, namespace=namespace, deleted=True)
 
     return app
 
