@@ -1,0 +1,3107 @@
+{
+  "schema_version": 1,
+  "queries": [
+    {
+      "qa_id": "01139f6f-ec0a-4b3d-8bf5-e9fa5b54dfb1",
+      "domain": "administration",
+      "answer_form": "String",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-031",
+        "ohr-032"
+      ],
+      "query_type": "multi_evidence",
+      "query_sha256": "df685ade3e12a92f117709e079d3dbd2086d14796122c38b9a7f71aad15a82e3"
+    },
+    {
+      "qa_id": "03848bb1-b073-466e-b28e-90e293468a46",
+      "domain": "academic",
+      "answer_form": "String",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-012",
+        "ohr-013"
+      ],
+      "query_type": "multi_evidence",
+      "query_sha256": "165b31084e411676a3679042adac5f5723c22d9d191f9b06d8cc38b1a139607b"
+    },
+    {
+      "qa_id": "0389924b-12ee-4082-a650-d521a0059ab1",
+      "domain": "academic",
+      "answer_form": "String",
+      "evidence_source": "multi",
+      "relevant_source_ids": [
+        "ohr-holdout-005",
+        "ohr-holdout-006"
+      ],
+      "query_type": "multi_evidence",
+      "query_sha256": "d4677f5c2e3090952321219b6c72599ba0ede867860ebdd65da6eef99d63625e"
+    },
+    {
+      "qa_id": "13169396-7edd-45ba-a901-cb3a82132bfe",
+      "domain": "finance",
+      "answer_form": "Numeric",
+      "evidence_source": "table",
+      "relevant_source_ids": [
+        "ohr-holdout-016"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "1e928b759491bb193247a7f5f0a0a3db8ff05c1f62719bdcae2d48739d190962"
+    },
+    {
+      "qa_id": "13195c25-e1f6-42de-b339-ddd036bfeb63",
+      "domain": "finance",
+      "answer_form": "String",
+      "evidence_source": "formula",
+      "relevant_source_ids": [
+        "ohr-holdout-016"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "851d6e4ca91e9d3725889ec6414876ac8151565adceb39127982d7646a217c6b"
+    },
+    {
+      "qa_id": "131bf956-c72a-4ac1-b0c9-7d347ae624a6",
+      "domain": "finance",
+      "answer_form": "Yes/No",
+      "evidence_source": "table",
+      "relevant_source_ids": [
+        "ohr-holdout-016"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "07b8cc0495582916b24b2b3bf0349ddc430f22f2d78e384b28f4213f2bfc366f"
+    },
+    {
+      "qa_id": "13337bb7-168c-4202-85d3-3f0978dfcadf",
+      "domain": "finance",
+      "answer_form": "Numeric",
+      "evidence_source": "table",
+      "relevant_source_ids": [
+        "ohr-holdout-017"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "fe2cc6e3ad52a580cd405aa45f0a044b716ea72ea5d4537ed4ba53236f5cfa69"
+    },
+    {
+      "qa_id": "13493ec4-fa5e-499e-a3ff-34b7c2ce6c9b",
+      "domain": "finance",
+      "answer_form": "String",
+      "evidence_source": "table",
+      "relevant_source_ids": [
+        "ohr-holdout-022"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "ae3d275770f9dce69a851329a8b6060f2ae3b8da1f7106c56c307da4519bfb93"
+    },
+    {
+      "qa_id": "13495931-f4bf-40fa-8b6b-bb82acea0c22",
+      "domain": "finance",
+      "answer_form": "Numeric",
+      "evidence_source": "table",
+      "relevant_source_ids": [
+        "ohr-holdout-022"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "4d8511e349b7bd30597d68d44fdab687a6061a207a8d34e6f35f1b8564a67930"
+    },
+    {
+      "qa_id": "13520473-55bf-45d5-8a72-e1230f006727",
+      "domain": "finance",
+      "answer_form": "Yes/No",
+      "evidence_source": "table",
+      "relevant_source_ids": [
+        "ohr-holdout-022"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "be97a15189ecb54ec220edce8d605d65dd15c070b9fc6e5158698f68793a2935"
+    },
+    {
+      "qa_id": "13b3e713-0c9a-42ec-a404-3f363fb32271",
+      "domain": "finance",
+      "answer_form": "String",
+      "evidence_source": "table",
+      "relevant_source_ids": [
+        "ohr-holdout-020"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "56f748d647b031cb1d17e6640608e3f4c64cb23a69c36f0d6096a264fd912a4d"
+    },
+    {
+      "qa_id": "13b44e7e-0eeb-4794-b9e7-63d92cd078c2",
+      "domain": "finance",
+      "answer_form": "Yes/No",
+      "evidence_source": "table",
+      "relevant_source_ids": [
+        "ohr-holdout-020"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "c757975025ca8781c8c3e37ff46310766daa8579b5051bd11386f2a81bfdc7c4"
+    },
+    {
+      "qa_id": "13b76328-4251-48a2-a753-9cad456b0866",
+      "domain": "finance",
+      "answer_form": "Numeric",
+      "evidence_source": "table",
+      "relevant_source_ids": [
+        "ohr-holdout-020"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "29ac6ab2b39fcb8b95abde8cbc839b23d58af5e434cd427bffe9be7f6a23f381"
+    },
+    {
+      "qa_id": "13e14526-d2e9-42b3-a80a-2294f3cfeea6",
+      "domain": "finance",
+      "answer_form": "Numeric",
+      "evidence_source": "table",
+      "relevant_source_ids": [
+        "ohr-holdout-018"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "f2e5097f37a42f662659c6be34cb60e0c23293da989a48128687d4f7184bd545"
+    },
+    {
+      "qa_id": "13e29a6f-ee22-4796-af06-98570b7bcab8",
+      "domain": "finance",
+      "answer_form": "Yes/No",
+      "evidence_source": "table",
+      "relevant_source_ids": [
+        "ohr-holdout-018"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "21b23dbff068442cc5c9d5026d9273ca4ddc1eed5c0d7d370052e8c0386d51d8"
+    },
+    {
+      "qa_id": "13e90002-caa4-4e10-be9d-3cf49e865042",
+      "domain": "finance",
+      "answer_form": "Numeric",
+      "evidence_source": "table",
+      "relevant_source_ids": [
+        "ohr-holdout-018"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "5924fb6d6db50c119341ebd946c28acc2491b656a29e3334570aaaec73c6c485"
+    },
+    {
+      "qa_id": "13f14080-3c0d-451a-9e00-559b2802e605",
+      "domain": "finance",
+      "answer_form": "String",
+      "evidence_source": "table",
+      "relevant_source_ids": [
+        "ohr-holdout-023"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "bcdf93fe2aead7e984e2c87578da678d7a0a530ec07d950fd17b98a6b527931f"
+    },
+    {
+      "qa_id": "14147859-a64c-42a4-b0c1-7411dcf52296",
+      "domain": "finance",
+      "answer_form": "Numeric",
+      "evidence_source": "table",
+      "relevant_source_ids": [
+        "ohr-holdout-023"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "062e4a5a51a3bae875bed379bdb2a9cf49c9804747c110c01e5b56e6369eaaf6"
+    },
+    {
+      "qa_id": "1419dcce-e53c-4dce-b909-a05f13618547",
+      "domain": "finance",
+      "answer_form": "Yes/No",
+      "evidence_source": "table",
+      "relevant_source_ids": [
+        "ohr-holdout-023"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "3b9af400ee95174430701c487291ee8c960c925fd857e123beaaa4260f633b99"
+    },
+    {
+      "qa_id": "142d58d4-2969-4db3-843b-9a35fcc825d6",
+      "domain": "finance",
+      "answer_form": "Numeric",
+      "evidence_source": "table",
+      "relevant_source_ids": [
+        "ohr-holdout-021"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "43778fa6aa7785dbef6da46e602cd77efd6ec527f9f859eb809590f849c4f7a5"
+    },
+    {
+      "qa_id": "142ea869-cfd9-4339-b4f0-bdee5dcd25b7",
+      "domain": "finance",
+      "answer_form": "String",
+      "evidence_source": "table",
+      "relevant_source_ids": [
+        "ohr-holdout-021"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "cb0aadf149818b8351efd40c8c29c7c14b460de8cda06bc10f6ff6c8d0d89499"
+    },
+    {
+      "qa_id": "1430e795-eb88-4e01-935d-13ea3e1634b7",
+      "domain": "finance",
+      "answer_form": "Numeric",
+      "evidence_source": "table",
+      "relevant_source_ids": [
+        "ohr-holdout-021"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "e5f5c39e9c9f2656165ccc053cf7f89a0f5d0dea90545a870dbea7ab5f7fbf2d"
+    },
+    {
+      "qa_id": "14318eb0-9a04-4183-81f1-35fb8968e5e1",
+      "domain": "finance",
+      "answer_form": "Numeric",
+      "evidence_source": "table",
+      "relevant_source_ids": [
+        "ohr-049"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "a00c5b5393df7e766301cb5df3ff1eaee327153a9182f8510dff4f74e01a6d0b"
+    },
+    {
+      "qa_id": "143a863b-a651-4b48-a0f1-f143a529c5c4",
+      "domain": "finance",
+      "answer_form": "Free-form",
+      "evidence_source": "table",
+      "relevant_source_ids": [
+        "ohr-049"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "f5262f646cb6cc67b509bc159a76f81a00421e73580deb2d40060cf5516c08cd"
+    },
+    {
+      "qa_id": "143f5774-4b97-4969-8d1a-1119f04ccd77",
+      "domain": "finance",
+      "answer_form": "Numeric",
+      "evidence_source": "table",
+      "relevant_source_ids": [
+        "ohr-049"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "cffc09899645aa24fe0350b049f25d6142735c29b53e07be5e1b78e1d214ce94"
+    },
+    {
+      "qa_id": "1450e2ed-3da1-44bc-b565-e82a79a975ca",
+      "domain": "finance",
+      "answer_form": "Numeric",
+      "evidence_source": "table",
+      "relevant_source_ids": [
+        "ohr-060"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "e088113e81e6bfb1ff7f83fb9e0babe2b09390b50412f228d06488ba4623b09e"
+    },
+    {
+      "qa_id": "1480f037-d39a-4bb0-962b-68d41880fa4b",
+      "domain": "finance",
+      "answer_form": "String",
+      "evidence_source": "formula",
+      "relevant_source_ids": [
+        "ohr-058"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "29dd34f0e20dd1dbf266ee5e29909be05e8b4a2db4b6230aea12bc1fb200ed82"
+    },
+    {
+      "qa_id": "14827a89-5e63-44c6-b0ac-79dd0b5aafef",
+      "domain": "finance",
+      "answer_form": "String",
+      "evidence_source": "table",
+      "relevant_source_ids": [
+        "ohr-058"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "ec7236d116ee335521c0ff502adb829c874c864fdb74ac52f40dfa1b55282338"
+    },
+    {
+      "qa_id": "148680de-b9e7-49c6-96f4-8941ad283c0d",
+      "domain": "finance",
+      "answer_form": "Numeric",
+      "evidence_source": "table",
+      "relevant_source_ids": [
+        "ohr-058"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "1ffe44159134df73d1cef31b23966b66a4e6db6298315c9ee45891fbdcd3e91a"
+    },
+    {
+      "qa_id": "1498ae4d-578c-4f3f-a359-2e06dbcc08e9",
+      "domain": "finance",
+      "answer_form": "Numeric",
+      "evidence_source": "table",
+      "relevant_source_ids": [
+        "ohr-holdout-019"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "9967359e0bbafef86328f0f7d958a48c691d5649554ab00f53559517fcb14c6e"
+    },
+    {
+      "qa_id": "14998517-6e5e-4126-9082-9e6189a14e1a",
+      "domain": "finance",
+      "answer_form": "String",
+      "evidence_source": "table",
+      "relevant_source_ids": [
+        "ohr-holdout-019"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "9e0bef35876e02f636d6fd074f2135cd08a824bec0f4960b54e88ff1828661c6"
+    },
+    {
+      "qa_id": "149a0cef-0c6b-4940-bf13-abcd6b9e25fb",
+      "domain": "finance",
+      "answer_form": "Numeric",
+      "evidence_source": "table",
+      "relevant_source_ids": [
+        "ohr-holdout-019"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "c828e7ac5d63a928bd185afdf24da18694cefd68a58ac0b4925f00990ff1147f"
+    },
+    {
+      "qa_id": "19faa06e-0c0a-4967-b579-501a62fda854",
+      "domain": "law",
+      "answer_form": "String",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-086"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "cb35d7cae184f5009eda4941dd8926da946133062b44526f1cd6d1fd34097602"
+    },
+    {
+      "qa_id": "1a00cb00-31f1-44f4-8c9d-c9a84da3ea8f",
+      "domain": "law",
+      "answer_form": "Numeric",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-086"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "98ba46c7f06e96e8b75983e68c56a844b6c32c9d573110d0f2c4af09dd2542d7"
+    },
+    {
+      "qa_id": "1a266e6c-0f03-4ad4-820d-8a8fe5c7120e",
+      "domain": "law",
+      "answer_form": "String",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-085"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "57282af7223d86fe263fead7a5dcd2c7d5d65f129cdc4f7c696667b74dedb7ae"
+    },
+    {
+      "qa_id": "1a34e471-f038-4e07-9d55-932c7f41f949",
+      "domain": "law",
+      "answer_form": "Yes/No",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-085"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "6a8ae2b321b5dfaedb4749b6145cf0c4eb0811e700a37f407425f8e78315085c"
+    },
+    {
+      "qa_id": "1a47b4a9-ffb4-4662-944d-b1d2243974b8",
+      "domain": "law",
+      "answer_form": "String",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-083"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "90f384cf90ea85dfdbe0f5c60bd83b09825f7e38bab4d557c587f26908d6b512"
+    },
+    {
+      "qa_id": "1a876490-6bc0-47af-b348-d420b6605c8d",
+      "domain": "law",
+      "answer_form": "String",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-087"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "81472cde8265a8d9c780792f2a0b34975a2a78dccd9c9aab03190a1af9557eb1"
+    },
+    {
+      "qa_id": "1a8e75a0-d905-4a48-a7f0-398110237a0f",
+      "domain": "law",
+      "answer_form": "Numeric",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-087"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "e9868d22340b72650b8887b3d202f9c8bdb89da1b42bf88cf5f604a7609643f1"
+    },
+    {
+      "qa_id": "1a8fbfdb-a941-404b-bb42-a6d69ecc67c8",
+      "domain": "law",
+      "answer_form": "Yes/No",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-087"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "48bc9ee5dc2cc0ef66a80be47247177e6e9c79d30e3ab0016207d1f0189f7e33"
+    },
+    {
+      "qa_id": "1d721ac3-dc76-4a47-b3ac-172978648cf9",
+      "domain": "law",
+      "answer_form": "Numeric",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-holdout-027"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "4928fa75f9900bdaf31611f27c2514b5f1098497a8d24b2b2c5b46c87db9e5d8"
+    },
+    {
+      "qa_id": "1daf1a12-db19-49b5-94fa-fe77e9f9cbb4",
+      "domain": "law",
+      "answer_form": "Yes/No",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-holdout-024"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "9dde0747cbeacd44e5ac1ac8df40c49b2aa004188b5807bbaa4b019c4a17a10e"
+    },
+    {
+      "qa_id": "1dafc318-d82c-4825-9eb7-e4e373df18f6",
+      "domain": "law",
+      "answer_form": "String",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-holdout-024"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "a97179377897de7f74bf7ab9c2878a392aca38d48ec2187d1a0c310b26a3d533"
+    },
+    {
+      "qa_id": "1db1da26-42e5-42da-b527-351219cc9acc",
+      "domain": "law",
+      "answer_form": "String",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-holdout-025"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "a6cb3d09d31673726f5bed0c2cf6c903dff9ba16c72f43e8ab59c69de93a46a3"
+    },
+    {
+      "qa_id": "1db53334-fb03-43a1-9576-d4155ec17dbe",
+      "domain": "law",
+      "answer_form": "Numeric",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-holdout-025"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "78d2f4c47c5e7e797c372619ef97d151f953edd08b3e6e570e5e77480a846282"
+    },
+    {
+      "qa_id": "1dda7a0f-4d56-48df-9620-fd879a156483",
+      "domain": "law",
+      "answer_form": "String",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-holdout-028"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "aaf6cbefde688e135d08111e5f747782cb4cc528a27370b59fe66d6f550c70f8"
+    },
+    {
+      "qa_id": "1e385e0d-59b5-4cf0-916b-babc4b580f58",
+      "domain": "law",
+      "answer_form": "String",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-holdout-030"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "c94cf6ce0806d3f9bdfd0902fd2a86cd2f1fda3758333a31d79c57eea47d6db1"
+    },
+    {
+      "qa_id": "1e486763-ecc1-473a-b6da-8ea4104f6fa2",
+      "domain": "law",
+      "answer_form": "Yes/No",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-holdout-030"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "816036b00df85cde7f1b1b4a562904053e88bc46bf28cd5345f2b403d3bcf703"
+    },
+    {
+      "qa_id": "2367ad9e-8dcd-4d64-b9e8-e4ee8b7f6d7a",
+      "domain": "law",
+      "answer_form": "String",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-080"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "40b81035f5d6b0a80346c46887002ecef8f2f0a02f866d0fa0e389340387a938"
+    },
+    {
+      "qa_id": "237f91cb-cc28-4e3d-9db0-2d929f141ca2",
+      "domain": "law",
+      "answer_form": "String",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-080"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "3346be7e1fc7055430b9261b6af1e84f13fc8e7e0216a4d968138dea7d7434ba"
+    },
+    {
+      "qa_id": "238b0af3-cf0d-49bb-92a7-d8b4bdd8c3c3",
+      "domain": "law",
+      "answer_form": "String",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-080"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "9fea3126582991f44091d104dba4ea64b5d21f7e243691b2fd13bfdb9f856496"
+    },
+    {
+      "qa_id": "23a59293-3ffe-4e99-9fe5-162e9a726e89",
+      "domain": "law",
+      "answer_form": "Yes/No",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-078"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "6dbfc7d17332f7ab9f1bec260488f2c0c87345b2cc8b962b967aeaf0bd11c6d1"
+    },
+    {
+      "qa_id": "2776c381-3ab4-4e25-bc22-e39e36283e54",
+      "domain": "law",
+      "answer_form": "Yes/No",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-075"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "d49e775275271cee1b50525b3e14c18f584ef148fd7ff57cad4b7456212c53c4"
+    },
+    {
+      "qa_id": "499e9ebb-93fd-411f-b674-bb4c633609a2",
+      "domain": "manual",
+      "answer_form": "String",
+      "evidence_source": "table",
+      "relevant_source_ids": [
+        "ohr-095"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "1418d658cf76db2c1ef4f366c0ac772d7d03c7770d30285158134135f6242832"
+    },
+    {
+      "qa_id": "49a815dc-7f51-48de-9812-8635495deb56",
+      "domain": "manual",
+      "answer_form": "String",
+      "evidence_source": "formula",
+      "relevant_source_ids": [
+        "ohr-095"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "abe2345510cc2a9821686b8d1a04cff8ffe5ccfe57787b21eabb6bc2e42bbf66"
+    },
+    {
+      "qa_id": "49af952d-431d-49d8-8fc7-301ce0a82395",
+      "domain": "manual",
+      "answer_form": "String",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-089"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "f77caa554bc0b2f46fa83b12ae99d91d242e52a4ce5089f0f457aa582811b441"
+    },
+    {
+      "qa_id": "49b3fe66-3b4c-4730-a53d-f737c2185e77",
+      "domain": "manual",
+      "answer_form": "String",
+      "evidence_source": "formula",
+      "relevant_source_ids": [
+        "ohr-089"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "3952ace1dd11ab524f20ddbb613219ee9ccb72d29e8e6d26f3665e10186a28d5"
+    },
+    {
+      "qa_id": "49bcf4a8-bc62-44a8-9f93-e802e1c25cd1",
+      "domain": "manual",
+      "answer_form": "String",
+      "evidence_source": "formula",
+      "relevant_source_ids": [
+        "ohr-089"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "8f696e45418a780df635c7e8e9563565448044f2faeef133f6581e3a8f57a30f"
+    },
+    {
+      "qa_id": "49bf1bd2-3aaa-4be6-a994-6bed26fef269",
+      "domain": "manual",
+      "answer_form": "String",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-091"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "7b394d43034ffa15e1ca10b05185b5efa0295d03c342b49a90ca96695f2bd36f"
+    },
+    {
+      "qa_id": "49c066d8-39f9-4789-83dc-25c9b2087dca",
+      "domain": "manual",
+      "answer_form": "Numeric",
+      "evidence_source": "table",
+      "relevant_source_ids": [
+        "ohr-091"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "5cc67289b6e9a8084c8a6740f5b2b9d8d2f6ef50101b51388c065cfd693a715b"
+    },
+    {
+      "qa_id": "49c1ce42-ee12-4a33-aa88-3ae17ca6a633",
+      "domain": "manual",
+      "answer_form": "Numeric",
+      "evidence_source": "table",
+      "relevant_source_ids": [
+        "ohr-091"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "5d6d3b0024447ef195a9f79962b364018476076876e0b61867ffec83e7c4dbe1"
+    },
+    {
+      "qa_id": "49c7c9e8-3bec-4480-aec6-88d45ad68541",
+      "domain": "manual",
+      "answer_form": "String",
+      "evidence_source": "table",
+      "relevant_source_ids": [
+        "ohr-088"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "223fd408a12ca718d3a670d87bf300762c3a403018bfbb8cd9c1013637731ee8"
+    },
+    {
+      "qa_id": "49cf808d-25e7-4238-a474-2ec74af05b76",
+      "domain": "manual",
+      "answer_form": "Yes/No",
+      "evidence_source": "table",
+      "relevant_source_ids": [
+        "ohr-088"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "68357c16d94591297408c7940d9d0b88bfebb699ab8dbe6d5381dd800a7257bc"
+    },
+    {
+      "qa_id": "49dd3b0e-a29d-46e0-af57-14d7a0be4a1c",
+      "domain": "manual",
+      "answer_form": "String",
+      "evidence_source": "table",
+      "relevant_source_ids": [
+        "ohr-088"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "c2a2092b32f7a84288192d5e9b62a5a59d01d05ed464373076999f385b495598"
+    },
+    {
+      "qa_id": "49e19b4d-61c6-48ce-8d5d-97908a2a1b8e",
+      "domain": "manual",
+      "answer_form": "Numeric",
+      "evidence_source": "table",
+      "relevant_source_ids": [
+        "ohr-094"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "00c03cefe6f8bb6e3c928394aa19a7048f2e02bf640bdb80686db9c5661cf096"
+    },
+    {
+      "qa_id": "49e78dcc-9dd3-49c3-8b75-471e1a340ed5",
+      "domain": "manual",
+      "answer_form": "String",
+      "evidence_source": "table",
+      "relevant_source_ids": [
+        "ohr-094"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "86c1fed29ee0b9b035ecf29887b7e626593761f8318102d0e5fd2db96ca0a88d"
+    },
+    {
+      "qa_id": "49e86c3b-afdd-4fbb-94e9-b1deb4eb1e34",
+      "domain": "manual",
+      "answer_form": "Yes/No",
+      "evidence_source": "table",
+      "relevant_source_ids": [
+        "ohr-094"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "841e757226632ef5832f677a147b24c70ec7216e77009e298b255df3c3541295"
+    },
+    {
+      "qa_id": "49fcba05-6171-43cd-9894-6afec047a884",
+      "domain": "manual",
+      "answer_form": "String",
+      "evidence_source": "table",
+      "relevant_source_ids": [
+        "ohr-092"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "4c8df8255ed7968008693542cce786d8523d0728347a352701554c004db7b676"
+    },
+    {
+      "qa_id": "4a058311-c479-4523-af31-b7de4cd003c5",
+      "domain": "manual",
+      "answer_form": "Numeric",
+      "evidence_source": "table",
+      "relevant_source_ids": [
+        "ohr-092"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "05ef404b809e91de26384a47db47b5521e6d5b39347d1a2fdd42ce63a50dc3d6"
+    },
+    {
+      "qa_id": "4a082de7-4f6d-4f01-b0dc-2737db807618",
+      "domain": "manual",
+      "answer_form": "String",
+      "evidence_source": "table",
+      "relevant_source_ids": [
+        "ohr-092"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "53ace1beed363e5c949fc0716e86b1255898f7b6563153d99cdd096242f29a10"
+    },
+    {
+      "qa_id": "4a4b2d54-1962-4d4a-94d0-04cc0ad8dc14",
+      "domain": "manual",
+      "answer_form": "String",
+      "evidence_source": "table",
+      "relevant_source_ids": [
+        "ohr-093"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "a147e2add57b23a0734b89c2c8fa6783c91d5e8652b54ffa790285430a5f8438"
+    },
+    {
+      "qa_id": "4a4ece57-9d98-410d-9c8b-845cb78166d2",
+      "domain": "manual",
+      "answer_form": "Numeric",
+      "evidence_source": "table",
+      "relevant_source_ids": [
+        "ohr-093"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "560370a6a02eb2175efd094d86ca6306cbeaa284544def9bc92f729e1f03384e"
+    },
+    {
+      "qa_id": "4a5f7899-ee82-4918-b805-1d7499aa0225",
+      "domain": "manual",
+      "answer_form": "Yes/No",
+      "evidence_source": "table",
+      "relevant_source_ids": [
+        "ohr-093"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "59d9581c7190544e717766a46bf6a3f4afbeebcad6497f09acd75ffbe74059c4"
+    },
+    {
+      "qa_id": "4a814d53-964d-4b77-a025-f0ae35354579",
+      "domain": "manual",
+      "answer_form": "String",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-097"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "994b2e73f587f0da2303cb5cac698feb5d24154d06dd6084b28939b8409d3570"
+    },
+    {
+      "qa_id": "4a8b77da-5cfa-48b1-9836-78eef3ca5f64",
+      "domain": "manual",
+      "answer_form": "Numeric",
+      "evidence_source": "table",
+      "relevant_source_ids": [
+        "ohr-097"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "f6fc7b27a2fea509d309591c680fb34f9f460fa2013924b4583b18603c021f81"
+    },
+    {
+      "qa_id": "4c43745b-8063-4ef2-a534-28bbb20ed719",
+      "domain": "news",
+      "answer_form": "Numeric",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-114"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "fb657cf588d771ed943bb72d49402d9897b1fe029523f4fdea39dc1e2fd82708"
+    },
+    {
+      "qa_id": "4c4b91fe-6c14-4fc6-9750-ca7e246cb09c",
+      "domain": "news",
+      "answer_form": "String",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-114"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "28afacdd16146657f35fcc1b47bc57277360a9a9154718aec69053ee790255b2"
+    },
+    {
+      "qa_id": "4c5b5072-7bdc-406d-ae19-b84936df59df",
+      "domain": "news",
+      "answer_form": "Yes/No",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-114"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "5b7bad7f1146574b1bcc41de2a2c37ce9324845c97208bd6e85465e7862115f4"
+    },
+    {
+      "qa_id": "4de9ddda-a81f-4b67-acc8-8981651c115f",
+      "domain": "news",
+      "answer_form": "String",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-109"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "89c743502c43bdf3aa941a0dcc6342f125ee67d3950f5253cc31e8ebd93876d0"
+    },
+    {
+      "qa_id": "4deaa29b-debe-4758-8431-e88c4427635e",
+      "domain": "news",
+      "answer_form": "String",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-109"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "587c08348d29fb7632fa9cd58b7b6534e5a9fc8aa0431c1d0da8b168909b0f7d"
+    },
+    {
+      "qa_id": "4df746d7-fa2e-41ad-97cb-44c2f7183702",
+      "domain": "news",
+      "answer_form": "Numeric",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-109"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "9441f3ac5f6ca17efeb9b55394a5a6027daf744164c06bdad882aedddc95f205"
+    },
+    {
+      "qa_id": "4e60ae0c-df6a-4985-aecb-0b067dcc900a",
+      "domain": "news",
+      "answer_form": "String",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-127"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "727aa864511c67013244ea571f3a57565d54bdde89488b9d599f545682df67d8"
+    },
+    {
+      "qa_id": "4e676ca1-0502-411a-89bb-9204f5bfd913",
+      "domain": "news",
+      "answer_form": "Numeric",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-127"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "a843b299cff182177d8037dafe66817ef057da803b3456955090c1e9c8d60d2a"
+    },
+    {
+      "qa_id": "4ef230bf-3230-48af-bce3-72c73866bdcd",
+      "domain": "news",
+      "answer_form": "Numeric",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-holdout-039"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "9af29febc105ad63af4397192237889ced0dea42cdcd019c6c76262958c8954c"
+    },
+    {
+      "qa_id": "4f02870e-8755-4cff-9dc3-f0b2fa03111a",
+      "domain": "news",
+      "answer_form": "String",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-holdout-039"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "d1c28b73b6f8ff3b1a8a54b13b1727ba60c04000f4cd4a57658c1382126733fb"
+    },
+    {
+      "qa_id": "4fbf673c-99d6-4c9b-bc27-d09b2641aaac",
+      "domain": "news",
+      "answer_form": "String",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-holdout-038"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "efb81a3b4d7cecbc47e47bcf0f6c7fef79c616f4201b8eaef7ef81406d99c5ad"
+    },
+    {
+      "qa_id": "4fc8bc09-c849-4c44-ad0a-361415754246",
+      "domain": "news",
+      "answer_form": "Numeric",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-holdout-038"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "7cf5bd678e0fe492fe2523036aa026e50a02560b67294174dc7f06de864625a4"
+    },
+    {
+      "qa_id": "501631d2-10ae-4362-ad93-be7fa442ff4c",
+      "domain": "news",
+      "answer_form": "String",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-holdout-040"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "27a75a0001c7faa4604945c4f414d9278a4737acd3201e985b44e4c9f7a3b632"
+    },
+    {
+      "qa_id": "5019b572-f109-4c67-a0f8-0547d71388ef",
+      "domain": "news",
+      "answer_form": "String",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-holdout-040"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "988d903f907f6fe23bb1a26f98cac564ef4a5f858a26678b62f9dc403a4e5863"
+    },
+    {
+      "qa_id": "501de827-f8f2-4123-89f0-07fabbb1b775",
+      "domain": "news",
+      "answer_form": "String",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-holdout-040"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "c425ef0b94bafdd0729950c2b23616fe8a19ce0e43186a8dc0e2baad000bd61b"
+    },
+    {
+      "qa_id": "5027d27b-57b5-4e7e-832c-933af222a0b3",
+      "domain": "news",
+      "answer_form": "String",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-holdout-042"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "bcea2a24ae6f61098147994b68994674db6f9f43b06374fbfad8716254f4f082"
+    },
+    {
+      "qa_id": "502e4f40-0a01-4a86-bbfa-754913ee5ee8",
+      "domain": "news",
+      "answer_form": "String",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-holdout-042"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "8de8c148bf8ad60cd77bb982dc10e2e3bcc2a7d1928fe3988587cf993ee6e7f9"
+    },
+    {
+      "qa_id": "5033bbc9-b32f-47c7-b136-4aa84e451a63",
+      "domain": "news",
+      "answer_form": "String",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-holdout-042"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "ec6d176d8403ee8cb5cf21f228224cf1cc9ecaf45fd6b44c3b46ce600c0c2663"
+    },
+    {
+      "qa_id": "503a65d5-82ed-45ab-9fde-522dd429e0c9",
+      "domain": "news",
+      "answer_form": "String",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-112"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "ab60ef15bf56e4e2619b498fff51e3807b7a273fdf411266e7808431c4a6df85"
+    },
+    {
+      "qa_id": "5041b3d0-8950-4262-a797-765abc854e3f",
+      "domain": "news",
+      "answer_form": "Numeric",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-112"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "19fcce39632fafc3c16118e597905ca888d32117379bdcd6322e44a95e9ff48e"
+    },
+    {
+      "qa_id": "505378ae-62b7-4142-8621-2ff765e8dd25",
+      "domain": "news",
+      "answer_form": "Yes/No",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-112"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "a167946ed20dfc50d8f3293a7625fc649682ad9f137cf4c384b5d9c2937ab6d2"
+    },
+    {
+      "qa_id": "50962d28-c556-4194-93e5-013e0cf5412c",
+      "domain": "news",
+      "answer_form": "String",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-113"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "79ea09ab825edb077a6003a222e2107cc87e583fa2a9a3692ac83250ccdbd5c3"
+    },
+    {
+      "qa_id": "509dbfdf-944e-43df-8a12-d0df3988ba0f",
+      "domain": "news",
+      "answer_form": "Numeric",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-113"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "5f86d270de13ab06794fa22899f4573d4aecc7f1a796bf382c8614858ba74db8"
+    },
+    {
+      "qa_id": "509e1a74-5b95-4ba0-919c-b2d20d4b830f",
+      "domain": "news",
+      "answer_form": "Numeric",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-113"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "8ef62308763aedeeca89ebe0d97777fe9feee7ac391edfa9148cd5a9a40184b8"
+    },
+    {
+      "qa_id": "51174082-1a5b-48a3-8631-e2ca4ac5fe85",
+      "domain": "news",
+      "answer_form": "String",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-holdout-043"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "051b9d85e55d0d35293d4590622cabff4f826218d44dfa4aea0b44e4d1bf8b05"
+    },
+    {
+      "qa_id": "511cc1dd-73bd-452c-a5fb-b346dc880a29",
+      "domain": "news",
+      "answer_form": "Numeric",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-holdout-043"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "7010a87337b1cfb5faba9f947bb5c4124fd2898bfe1a6334e1c98a67ffa11fe4"
+    },
+    {
+      "qa_id": "5129fb7c-6288-41a5-8c45-782198a6416d",
+      "domain": "news",
+      "answer_form": "Yes/No",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-holdout-043"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "8233228bda904dfc312c3bc71d9b19ca11665ddca389f56c4f5e6a42ff656c07"
+    },
+    {
+      "qa_id": "51a41407-cd4d-4bf6-a5e9-9b78b25f6b0f",
+      "domain": "news",
+      "answer_form": "Numeric",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-holdout-041"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "de1ae6b9490fe36b9cfd7e7edbfc8d1e36e6c5b2a6ac135e786457a118a9978e"
+    },
+    {
+      "qa_id": "5295dcaf-4f65-4f21-afa2-be1307fce776",
+      "domain": "news",
+      "answer_form": "Numeric",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-holdout-044"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "7695bb0a2a5e91923485cb0087589a091c2f7f97e24a6aa4e612bd97bba7ff7d"
+    },
+    {
+      "qa_id": "5297c01f-561d-4b1e-9e79-33a3f007b0de",
+      "domain": "news",
+      "answer_form": "String",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-holdout-044"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "6293b95c330d8da02b65bd3e1d2a593e66f3b3fcaea90028ef4c1819315d5b64"
+    },
+    {
+      "qa_id": "529fefba-97bf-46b3-9768-ba9a1fa9abd6",
+      "domain": "news",
+      "answer_form": "String",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-holdout-044"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "6a39fde7a9c42b56cbc6c5bcb7a8a299b68f7cbe13fd497af4a78a90e200cc7c"
+    },
+    {
+      "qa_id": "5447353b-c9dc-4fb4-b567-7aaf4f462933",
+      "domain": "news",
+      "answer_form": "String",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-115"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "d7bbec3a3a8c0c355aa392c0fa5f9981025fd18ba31644bf2dce3d6533d1cefd"
+    },
+    {
+      "qa_id": "54496139-add6-4d20-93f3-f048d814a978",
+      "domain": "news",
+      "answer_form": "Numeric",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-115"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "b85f0ef696ece65dc487e8a9f7267dcbeb9c4cc028fbeb5ca424395797e06deb"
+    },
+    {
+      "qa_id": "544ee3e6-f41e-4fac-af15-cf44ff2099c5",
+      "domain": "news",
+      "answer_form": "String",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-115"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "0d341c2a76c80ad8e755e349331a8bfa8fc9c99516ef70cbfaecf52d62415402"
+    },
+    {
+      "qa_id": "549cab97-2e43-467a-85dc-12d65ddd1f48",
+      "domain": "news",
+      "answer_form": "String",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-110"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "87093e87f6408aa7554c0b12be09521ca6675cca0f3cff022d48300df511e69b"
+    },
+    {
+      "qa_id": "549cb47e-5209-408e-9f7a-78a660f65ad0",
+      "domain": "news",
+      "answer_form": "String",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-110"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "dca3dbb4f7281ef058847bf5583a722dab15a45fa478dc34d4fb77a2678d5530"
+    },
+    {
+      "qa_id": "54a428c3-53ec-4d88-9994-59c40995e98c",
+      "domain": "news",
+      "answer_form": "Numeric",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-110"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "face801dce0470c5d37fa1332c86a6e62548cb068713ccc2e5566597fbdbe8ff"
+    },
+    {
+      "qa_id": "565246eb-5037-4e12-8523-7c7fccbbeccf",
+      "domain": "academic",
+      "answer_form": "Numeric",
+      "evidence_source": "formula",
+      "relevant_source_ids": [
+        "ohr-021"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "9c21ccbdf954f2930b91bf04166d0ac89eba2372bab78c9241c0874aee151024"
+    },
+    {
+      "qa_id": "56e16c2b-659b-4dcb-9bca-e27d331978eb",
+      "domain": "academic",
+      "answer_form": "Numeric",
+      "evidence_source": "formula",
+      "relevant_source_ids": [
+        "ohr-017"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "854b0694074e2418afa74cbb7a675d42fd2d140494b35196caa1a5428dea513e"
+    },
+    {
+      "qa_id": "57446b2d-ddb3-48ee-af8b-6cbeb759f3ec",
+      "domain": "academic",
+      "answer_form": "Numeric",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-011"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "2cc2720127bf7de62284bb32a15cf91997d22834ac46eaf755d667ed5f5fb59a"
+    },
+    {
+      "qa_id": "575812c8-2347-4fc4-9e76-ca348fdf18e7",
+      "domain": "academic",
+      "answer_form": "String",
+      "evidence_source": "formula",
+      "relevant_source_ids": [
+        "ohr-011"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "57c4a4089b3e971a014d4425a74cb1fe760a0a327dbf999db97002c83b186e82"
+    },
+    {
+      "qa_id": "575b4b67-ce92-4ea9-9fd4-1997b13a56f2",
+      "domain": "academic",
+      "answer_form": "String",
+      "evidence_source": "table",
+      "relevant_source_ids": [
+        "ohr-012"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "39d4e561adc90b1fb706b457868ed22df397290263d1ef7b22917855eadca543"
+    },
+    {
+      "qa_id": "576882a9-9a30-42b6-866f-aaa146250ac8",
+      "domain": "academic",
+      "answer_form": "String",
+      "evidence_source": "formula",
+      "relevant_source_ids": [
+        "ohr-017"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "abada9fe8371cfd754b8fa0fcc84361b32cac5bd9fb69c7f08567334d31c0fa6"
+    },
+    {
+      "qa_id": "576e97f5-a76a-47e5-abc3-3f39d9ea8334",
+      "domain": "academic",
+      "answer_form": "String",
+      "evidence_source": "formula",
+      "relevant_source_ids": [
+        "ohr-017"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "0bc35738ddf817e676058e904a782b70fc52cc8145e08b7732441b87cca7577b"
+    },
+    {
+      "qa_id": "5776da51-f8c0-4d19-afd8-e8ebe14880c0",
+      "domain": "academic",
+      "answer_form": "Numeric",
+      "evidence_source": "formula",
+      "relevant_source_ids": [
+        "ohr-017"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "171d486a998869a354c0602d39718f3b0c722e6110771978c2916c3d7265b34f"
+    },
+    {
+      "qa_id": "57b0757b-412b-465b-9586-377856e9ae41",
+      "domain": "academic",
+      "answer_form": "String",
+      "evidence_source": "formula",
+      "relevant_source_ids": [
+        "ohr-021"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "034fd155560650d79c9e9e96f1bdab8d0b5234eb7988582914be60379d71b52d"
+    },
+    {
+      "qa_id": "57d11a18-15d7-4a3a-8434-f31310d81218",
+      "domain": "academic",
+      "answer_form": "String",
+      "evidence_source": "formula",
+      "relevant_source_ids": [
+        "ohr-012"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "116613166f182d02e311febf27f1bb320a6aa7553a76d0794fe44af2e6e9e8c2"
+    },
+    {
+      "qa_id": "57d6ba6a-801c-481c-97a5-4ce125d4d82a",
+      "domain": "academic",
+      "answer_form": "String",
+      "evidence_source": "formula",
+      "relevant_source_ids": [
+        "ohr-012"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "cf41280deacf94746de6f5624078a16d73f076df38fcd462a5f414f8a30b38f8"
+    },
+    {
+      "qa_id": "57e663a4-be2e-4945-9717-b33e666fffc0",
+      "domain": "academic",
+      "answer_form": "String",
+      "evidence_source": "formula",
+      "relevant_source_ids": [
+        "ohr-012"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "59afd62440a807c86b43367fcef4d4a4a6489938d0c064b2853d27469aeec447"
+    },
+    {
+      "qa_id": "6228186d-c698-482e-a1f8-dc2773140fe9",
+      "domain": "academic",
+      "answer_form": "Numeric",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-008"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "afee32301f4db296482e8c9b3220a172a39b66c6832cf1d269c5cdcf2aae43da"
+    },
+    {
+      "qa_id": "62565a95-5487-45c3-b762-6f4975fd3537",
+      "domain": "academic",
+      "answer_form": "String",
+      "evidence_source": "table",
+      "relevant_source_ids": [
+        "ohr-005"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "44021f2408963eb40e036b9b1e37597e9ceb26da2a838908ce63afa7dd17da21"
+    },
+    {
+      "qa_id": "625862f8-b712-40ce-b3c5-3c5a82e02823",
+      "domain": "academic",
+      "answer_form": "String",
+      "evidence_source": "formula",
+      "relevant_source_ids": [
+        "ohr-005"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "697622707141d29904680940fc38803344ef7410200fec003d960114d3df8ca1"
+    },
+    {
+      "qa_id": "62b22fd5-51c6-42e4-af48-744f7abc9f0b",
+      "domain": "academic",
+      "answer_form": "Numeric",
+      "evidence_source": "table",
+      "relevant_source_ids": [
+        "ohr-010"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "20d74fe8585349d11b375548ac19e058d7649e56a2d0c94235bc0edec0be3cca"
+    },
+    {
+      "qa_id": "62b7aabd-1be4-443d-a010-31fad1e06f00",
+      "domain": "academic",
+      "answer_form": "Numeric",
+      "evidence_source": "table",
+      "relevant_source_ids": [
+        "ohr-010"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "b6ef96300bf205b12fc7203a64726742a9b380bca380e29700b143e82103c71c"
+    },
+    {
+      "qa_id": "62bd730c-1c28-4c71-81c5-212805554221",
+      "domain": "academic",
+      "answer_form": "String",
+      "evidence_source": "formula",
+      "relevant_source_ids": [
+        "ohr-010"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "0e4b7ba25212536c191dc9806ce05f4ca0b5d87459339e9617082ccc7631362f"
+    },
+    {
+      "qa_id": "62fe8d68-95f4-4a1f-a1d2-92ab36f4851f",
+      "domain": "academic",
+      "answer_form": "Numeric",
+      "evidence_source": "table",
+      "relevant_source_ids": [
+        "ohr-010"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "d9b787e4ed1e08eb655b61344260db4cecac182bf08321b5323dd87914520826"
+    },
+    {
+      "qa_id": "6304b6a9-0104-436b-ad65-30012de7e815",
+      "domain": "academic",
+      "answer_form": "String",
+      "evidence_source": "table",
+      "relevant_source_ids": [
+        "ohr-010"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "cc44d3378e2406fdee3ebb61b1eafb1dd2978041a6e27572b510b5a84a6ce491"
+    },
+    {
+      "qa_id": "630ac131-3f41-4b3a-a493-c8292e7d609a",
+      "domain": "academic",
+      "answer_form": "Numeric",
+      "evidence_source": "table",
+      "relevant_source_ids": [
+        "ohr-010"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "5ca29ceb8d53366cfe03eef8370605c1315096115f513571cf526657fc88ed39"
+    },
+    {
+      "qa_id": "6321fa69-7151-448f-9115-66e40ed58159",
+      "domain": "academic",
+      "answer_form": "Numeric",
+      "evidence_source": "table",
+      "relevant_source_ids": [
+        "ohr-005"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "ef64ccf7fccd818839a9e3c0844f135043d9ad9c780978fd46994beff6eedddc"
+    },
+    {
+      "qa_id": "632927c5-7851-46ac-812d-3a1ae21c4499",
+      "domain": "academic",
+      "answer_form": "Numeric",
+      "evidence_source": "table",
+      "relevant_source_ids": [
+        "ohr-005"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "2d2f44e93591b8440d7cbaeef491456a649d8a352126437a5a3cfef8fc1cb2d6"
+    },
+    {
+      "qa_id": "632f7547-6f4c-4ed5-9ac1-442b00608459",
+      "domain": "academic",
+      "answer_form": "Numeric",
+      "evidence_source": "table",
+      "relevant_source_ids": [
+        "ohr-005"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "c1a20d9b9999925f0415e5e654b74aa789cb177e48c4c197e3d9174d1ad3404c"
+    },
+    {
+      "qa_id": "63c0738f-7442-49eb-981c-8d72fb184fa6",
+      "domain": "academic",
+      "answer_form": "String",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-holdout-003"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "bf6332202adc73c7b3689fb1e320c1aac4d8bd463576262552831469af9f8a2a"
+    },
+    {
+      "qa_id": "63d8ccb1-72fa-4cfb-8b3e-a0713d5b624b",
+      "domain": "academic",
+      "answer_form": "Numeric",
+      "evidence_source": "table",
+      "relevant_source_ids": [
+        "ohr-holdout-008"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "b2b8233cb4f15d5e581119d40db716b34fb92f5a08a7f51f77eb88b6c0f453fa"
+    },
+    {
+      "qa_id": "63eca19a-ed36-46ce-af91-4af5d2c1d26b",
+      "domain": "academic",
+      "answer_form": "Yes/No",
+      "evidence_source": "formula",
+      "relevant_source_ids": [
+        "ohr-holdout-008"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "0f78c13320ae6e45beea4c8ef51578edcb9ab92e974c7e937ae5b77bd4029a01"
+    },
+    {
+      "qa_id": "63edc7e0-7ff6-415e-923c-9ef4eb002884",
+      "domain": "academic",
+      "answer_form": "Numeric",
+      "evidence_source": "formula",
+      "relevant_source_ids": [
+        "ohr-holdout-007"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "869479d573f11f6c493c5cab707bbcb7babb731e8f13204f6d06c35bd31657ec"
+    },
+    {
+      "qa_id": "6401b180-301f-4124-bd17-bfd0baa227b8",
+      "domain": "academic",
+      "answer_form": "String",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-holdout-007"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "5487d80ae9df5dbcb9188810672c750bbc47c8fdb7ba83c06fbdefbd3f2c3919"
+    },
+    {
+      "qa_id": "6409df32-cc4e-46da-9e09-89b952526d45",
+      "domain": "academic",
+      "answer_form": "String",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-holdout-007"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "d2d8b624120c3a98e7264baa43ed2c239fe21550068eefbbe2a36b493e89e620"
+    },
+    {
+      "qa_id": "6432ecf9-ec6e-4de3-ab9e-71cd9a14d560",
+      "domain": "academic",
+      "answer_form": "Numeric",
+      "evidence_source": "table",
+      "relevant_source_ids": [
+        "ohr-holdout-006"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "246709216c879438b300c80682f51c8d7c7ca3dffcb23bff0c72331353568fbd"
+    },
+    {
+      "qa_id": "6437f920-3b10-463a-b138-90278c286cd4",
+      "domain": "academic",
+      "answer_form": "Numeric",
+      "evidence_source": "table",
+      "relevant_source_ids": [
+        "ohr-holdout-006"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "e98570a569a9b1a8b305e3d731eb558d37e88fd6ac128ebd4a8c98283ba3b7ae"
+    },
+    {
+      "qa_id": "6440055b-0de1-4edb-a036-9ec4be054bf5",
+      "domain": "academic",
+      "answer_form": "String",
+      "evidence_source": "table",
+      "relevant_source_ids": [
+        "ohr-holdout-006"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "37506baefef2a2958e81beb2847c4ba1255dabdd427c352a3e9b2964be4d080a"
+    },
+    {
+      "qa_id": "64426c12-d8ea-45db-8c9a-e79cb55dc17a",
+      "domain": "academic",
+      "answer_form": "Numeric",
+      "evidence_source": "table",
+      "relevant_source_ids": [
+        "ohr-holdout-005"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "9efc7c907cc879f5ec6e35a70caed296aaeb1c3e53ce00027982fa4075a59f65"
+    },
+    {
+      "qa_id": "647a0ae6-acc0-42af-a826-a1a6d6950dd8",
+      "domain": "academic",
+      "answer_form": "String",
+      "evidence_source": "formula",
+      "relevant_source_ids": [
+        "ohr-holdout-004"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "57d3199a3b7097f5036029389799ddc43b0f39376c15b8728e7f2b001794b134"
+    },
+    {
+      "qa_id": "648f0804-0ffb-4b5e-a094-9cf4caaedfbf",
+      "domain": "academic",
+      "answer_form": "String",
+      "evidence_source": "table",
+      "relevant_source_ids": [
+        "ohr-holdout-007"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "e5ab9d38064142f675f43567d677677ec47e2012f7a8540b4f19ab33dc20438f"
+    },
+    {
+      "qa_id": "649c7312-991c-4b26-8189-fcb97c091096",
+      "domain": "academic",
+      "answer_form": "Numeric",
+      "evidence_source": "table",
+      "relevant_source_ids": [
+        "ohr-holdout-007"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "b8a95890a2e6707f65e1f3b65196b900f8deaa99265f1abd69b3a7d4ad1b6f9f"
+    },
+    {
+      "qa_id": "649f3159-2863-48da-838c-05cc5a80ba4b",
+      "domain": "academic",
+      "answer_form": "String",
+      "evidence_source": "formula",
+      "relevant_source_ids": [
+        "ohr-holdout-007"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "da9b39cc77a9c52985daa9b6560758868381da055a4e18d15031fae0b660f651"
+    },
+    {
+      "qa_id": "64afbf49-3cc9-49a9-bae1-a24ea792b2b4",
+      "domain": "academic",
+      "answer_form": "Numeric",
+      "evidence_source": "table",
+      "relevant_source_ids": [
+        "ohr-holdout-005"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "fbf90e5ceef38760ba8d4328b59a72a21b8a943ff33dc25c963ea6756f39a7bf"
+    },
+    {
+      "qa_id": "64b2507c-4d15-44a4-88fa-964a1679910b",
+      "domain": "academic",
+      "answer_form": "Numeric",
+      "evidence_source": "table",
+      "relevant_source_ids": [
+        "ohr-holdout-005"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "e01dae1fe4d56500d1f68194b47a6733b346c3bda562205ee141d660e95958bc"
+    },
+    {
+      "qa_id": "64b3150a-0692-4601-9e5e-41e5f1ecb028",
+      "domain": "academic",
+      "answer_form": "String",
+      "evidence_source": "table",
+      "relevant_source_ids": [
+        "ohr-holdout-005"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "7aadd2f4d54b30d494d57dcfc45c023ec819e63a2579485490daaec22eb727a7"
+    },
+    {
+      "qa_id": "64bb8ce8-81b0-41e8-ad65-f5ea30ff4a7f",
+      "domain": "academic",
+      "answer_form": "Numeric",
+      "evidence_source": "table",
+      "relevant_source_ids": [
+        "ohr-holdout-006"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "e29e9e17b6e3f3e6d614f79621ab64729d01424f12f433b51b4fe3d2598c187b"
+    },
+    {
+      "qa_id": "64bbb12d-da3f-4691-baed-9352b79f178c",
+      "domain": "academic",
+      "answer_form": "Numeric",
+      "evidence_source": "table",
+      "relevant_source_ids": [
+        "ohr-holdout-006"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "df2e86cf5204434b733c51696ad8ae64fbc7b2d8c545d420c21de7dbef44c01e"
+    },
+    {
+      "qa_id": "64bd8bcc-ed81-4dcd-8626-8bc5fb1d0776",
+      "domain": "academic",
+      "answer_form": "Numeric",
+      "evidence_source": "table",
+      "relevant_source_ids": [
+        "ohr-holdout-006"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "e98570a569a9b1a8b305e3d731eb558d37e88fd6ac128ebd4a8c98283ba3b7ae"
+    },
+    {
+      "qa_id": "64ebeb65-9f7e-41a1-bbe1-17d4c0b915ec",
+      "domain": "academic",
+      "answer_form": "Numeric",
+      "evidence_source": "table",
+      "relevant_source_ids": [
+        "ohr-holdout-008"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "37c36fa996bc1e125b9213386cc95ddb492357348076bab2a121d7ffdfc9538a"
+    },
+    {
+      "qa_id": "64f12da1-5533-4f0d-94b4-58729be038e1",
+      "domain": "academic",
+      "answer_form": "String",
+      "evidence_source": "table",
+      "relevant_source_ids": [
+        "ohr-holdout-008"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "564b9f8b2a20ff1a3cda33da057d026022cfc7ce19b44ec81a42ff19ed61af3c"
+    },
+    {
+      "qa_id": "64f4eddc-0f0a-4ad7-8fef-7e58a98d63d6",
+      "domain": "academic",
+      "answer_form": "String",
+      "evidence_source": "table",
+      "relevant_source_ids": [
+        "ohr-holdout-008"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "cd3020e22718d9a5a8a0e95d4145de5b957c24c8e6f90268bce2126b854b4fee"
+    },
+    {
+      "qa_id": "803f7110-8570-4b76-ae75-5d7bc6743c52",
+      "domain": "textbook",
+      "answer_form": "String",
+      "evidence_source": "table",
+      "relevant_source_ids": [
+        "ohr-137"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "1020521776e79109e2cca8ef274e81d0b9b98f7f77cd70040d91af3d60fd8e79"
+    },
+    {
+      "qa_id": "8107fa58-3243-43ed-b4a7-6efc4e91f5c6",
+      "domain": "administration",
+      "answer_form": "String",
+      "evidence_source": "table",
+      "relevant_source_ids": [
+        "ohr-043"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "e04c9c9dc5bd60686798e9da439b2e05aaa01d00f7e3bdea81e0c250dee682d6"
+    },
+    {
+      "qa_id": "81160efd-454e-46ac-b3a9-e6c716b7fd1c",
+      "domain": "administration",
+      "answer_form": "String",
+      "evidence_source": "table",
+      "relevant_source_ids": [
+        "ohr-holdout-014"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "2e798e9c8e733b16a6af6a0cd14647f373b558557b376451250f786f1b819ccf"
+    },
+    {
+      "qa_id": "843e08e3-37b3-4967-a8ca-9f92e799b0d0",
+      "domain": "textbook",
+      "answer_form": "Numeric",
+      "evidence_source": "table",
+      "relevant_source_ids": [
+        "ohr-149"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "2382e1bf33d73ddde30d8372103b8da9b029fef85cb70c602a851ddfe20b65ae"
+    },
+    {
+      "qa_id": "84eb42d3-67c4-4071-ba8a-82eaad527daa",
+      "domain": "manual",
+      "answer_form": "String",
+      "evidence_source": "table",
+      "relevant_source_ids": [
+        "ohr-102"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "7c7286040b7f706bc528dd2637761b527aca3311ec123e99a180de716603c146"
+    },
+    {
+      "qa_id": "888a6e35-11f8-4609-aa94-3558f8e54978",
+      "domain": "textbook",
+      "answer_form": "List",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-holdout-045"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "38263c7c1bce5c8284aaa1dc45b754fb747c07868be94b952d0babc4b54c7e9a"
+    },
+    {
+      "qa_id": "8890d869-4350-4385-ac27-74164c3b5608",
+      "domain": "textbook",
+      "answer_form": "List",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-holdout-046"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "1858156f56cc01a46c3ab724fff5e329c9759532b92a1edb7d2da4324aedd06f"
+    },
+    {
+      "qa_id": "8897e430-2e74-43b1-b73b-47a4e56616bd",
+      "domain": "textbook",
+      "answer_form": "String",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-holdout-047"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "549b5417dcf0ecfb89b4632b0511247cf00067becbe056f93c313418b03e8426"
+    },
+    {
+      "qa_id": "88985e95-a2f6-4ae9-a276-64e588c92623",
+      "domain": "textbook",
+      "answer_form": "String",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-holdout-047"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "d54c2e5673e00dcbace197f62723eb8077376e6d8d3a732c532a247c02f382fc"
+    },
+    {
+      "qa_id": "889c8ae2-4e3c-4f2d-8332-559dcad00273",
+      "domain": "textbook",
+      "answer_form": "String",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-holdout-048"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "0fea23d73d1a98badddfe106a798e0e781e803c95813c41e364f71e58a0d9db4"
+    },
+    {
+      "qa_id": "889ce881-fa7f-4bc5-9c14-aa1b2511544a",
+      "domain": "textbook",
+      "answer_form": "Numeric",
+      "evidence_source": "multi",
+      "relevant_source_ids": [
+        "ohr-137"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "df61e63de5d404cb30ddc890b48191cff8aab0ed46fadfb9a24bb96b630912df"
+    },
+    {
+      "qa_id": "889d357a-f8f7-4ecb-b15c-a32215035bba",
+      "domain": "textbook",
+      "answer_form": "Numeric",
+      "evidence_source": "table",
+      "relevant_source_ids": [
+        "ohr-137"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "59da405323633bafe1fc8795798335227731c455adb1f6cde5cb8ebcbff0413a"
+    },
+    {
+      "qa_id": "8dc8bea3-5093-48d3-9827-19fec6b29a3c",
+      "domain": "administration",
+      "answer_form": "String",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-holdout-013"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "9505ebb7e66cd8ce44e6d864b924a302adb4a56f99408ccbcc085047895379cb"
+    },
+    {
+      "qa_id": "8dc9cfe4-d164-4c2d-a842-b6a4fb269610",
+      "domain": "administration",
+      "answer_form": "String",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-holdout-013"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "54463dee52c0519e78b5542aef1e5d48efe8d9df98bc0d535881a73332071922"
+    },
+    {
+      "qa_id": "8dcbc8a3-42a9-4bc9-95af-a26bfef1ad2d",
+      "domain": "administration",
+      "answer_form": "String",
+      "evidence_source": "table",
+      "relevant_source_ids": [
+        "ohr-holdout-014"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "b1c470c4e027d4b8a4daeee330e138afc0ed81054c35cd07f106ec034ed288cb"
+    },
+    {
+      "qa_id": "8dd0d526-ed18-4365-a34f-4bb680ad8bd3",
+      "domain": "administration",
+      "answer_form": "List",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-holdout-015"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "f26998d092e7facd0b7a00b9139a219508a0f3b85a639944ddf41bdfafeba90e"
+    },
+    {
+      "qa_id": "90c7aaa4-573d-44a5-8e43-f27d0ac37e20",
+      "domain": "textbook",
+      "answer_form": "List",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-130"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "31fb37937404e0975acb3866b4b281eb6af5c5f56e1ee534f0a47d9c28d1a8a9"
+    },
+    {
+      "qa_id": "90c88d77-ac71-4a6d-8ace-5e9614414edd",
+      "domain": "textbook",
+      "answer_form": "String",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-130"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "9c9497a9540da56b34c725c19fc6cb1b21f57447a5ca2a691dc42854c25b6a6f"
+    },
+    {
+      "qa_id": "90d0d880-06fe-4557-ab4b-e88599ad8f5f",
+      "domain": "textbook",
+      "answer_form": "String",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-132"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "3fd3744065a6696459a1e38537a4edced57e4d242051e6d7357b073b7459c178"
+    },
+    {
+      "qa_id": "90d0eab5-77ac-47d1-8c90-5495b3911a02",
+      "domain": "textbook",
+      "answer_form": "String",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-132"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "5bcbe3d0a0ac295a273e4ad064bcf83cb9053e079fd62193915e64abf76658a9"
+    },
+    {
+      "qa_id": "90e9c1f1-a0f9-473e-ad0e-b005e596e960",
+      "domain": "textbook",
+      "answer_form": "String",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-135"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "ecf48ed919dab6d6a5ed5f6ac2bbd69a8bbffc417e8abdac1ca3085019c351e6"
+    },
+    {
+      "qa_id": "90eab93a-234e-4197-88c3-0c635b394f39",
+      "domain": "textbook",
+      "answer_form": "String",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-135"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "c0ff89ec6f11935291b5b961b7187aef229a197a82871abe64cf29576773db7c"
+    },
+    {
+      "qa_id": "9c546b13-f581-4c4c-bdb3-784510aac204",
+      "domain": "textbook",
+      "answer_form": "List",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-143"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "2048bbb8e7be56275294658b07f0a05c0cbae803247c398d4155cad7329632dc"
+    },
+    {
+      "qa_id": "9c55462c-d3da-4e15-a31c-892174a52520",
+      "domain": "textbook",
+      "answer_form": "Numeric",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-143"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "a3eb8ece68b7ded93fa8a241a3962ec1865f46fb7353091ba57c9561b99df6fb"
+    },
+    {
+      "qa_id": "9c555ec5-6bb0-45fa-b28e-6ea0bc4e47b5",
+      "domain": "textbook",
+      "answer_form": "String",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-144"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "29ae694c64368869cbe4a86f43eef7d711629db6d1daef47aa4b721abb4e2aef"
+    },
+    {
+      "qa_id": "9c5704f1-1cb2-48e4-bff4-579a643cc556",
+      "domain": "textbook",
+      "answer_form": "List",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-144"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "081d44d2ed58a2328ee0185ead839cca0740de2f4725c7a3a5663271db82d079"
+    },
+    {
+      "qa_id": "9c5db72a-d5a7-4028-ac3d-c6a410f84581",
+      "domain": "textbook",
+      "answer_form": "String",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-147"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "a342d476e8b415ed1751aa93f1895749cd3062e321d3281201473acec1f4cbf6"
+    },
+    {
+      "qa_id": "9c5e4f7d-7434-4af4-ac28-85ffbe4c0c35",
+      "domain": "textbook",
+      "answer_form": "List",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-147"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "689b591b8bc01f8826c00465cf7a604287dca802f9b60f315b7a1e803e3254fe"
+    },
+    {
+      "qa_id": "9c62e74b-f4c5-4930-95fd-05af54d20e4e",
+      "domain": "textbook",
+      "answer_form": "List",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-148"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "83b17fe25d9b657ef7803f59bc11b39fd2b8025995fe2d4ae63c5f30ebc738d4"
+    },
+    {
+      "qa_id": "9c63765b-74e0-4bbb-8a80-33a7a5fd89c8",
+      "domain": "textbook",
+      "answer_form": "String",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-148"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "a1ecb10e7d17f9f16f03d42d5d3b21315c8d44de8c4a8ce53bd6bfbd7abf2388"
+    },
+    {
+      "qa_id": "9c65836e-8e9a-4a56-a6aa-e560a18df6f5",
+      "domain": "textbook",
+      "answer_form": "List",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-148"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "eccd986b8dff693fc16d3213fcb79bee3834caa9deb383207ed9721aad226bac"
+    },
+    {
+      "qa_id": "9c6725b2-7765-4a0a-95a6-ee8b3ced1be5",
+      "domain": "textbook",
+      "answer_form": "List",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-149"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "fc0815bb90738d3413b1624363b8146a9e4ef21d9a4c52f3ca4106ca74844276"
+    },
+    {
+      "qa_id": "9c6a4f19-6165-4ec6-b91d-55c727357c1d",
+      "domain": "textbook",
+      "answer_form": "List",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-149"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "1f143c052a4d1a2f3c3c5187a275b9391c326bc0359265b609a4c81811a5f98d"
+    },
+    {
+      "qa_id": "9d36ac5f-6f5e-4d0b-90fe-25aa4aed444f",
+      "domain": "administration",
+      "answer_form": "String",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-030"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "6b5a0b9892408dea8901b93f8b54e1a64b7555e354cbdd96d8035f5672fe9770"
+    },
+    {
+      "qa_id": "9fc8602d-4497-424e-8131-0b1f1b688283",
+      "domain": "manual",
+      "answer_form": "String",
+      "evidence_source": "table",
+      "relevant_source_ids": [
+        "ohr-101"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "32dcc49d8790f21c4a66b0c91724beba8a8602628f7366b10ccb6e93c739b064"
+    },
+    {
+      "qa_id": "9fca1904-4ced-44a0-b876-4f0327af8220",
+      "domain": "manual",
+      "answer_form": "String",
+      "evidence_source": "table",
+      "relevant_source_ids": [
+        "ohr-101"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "0e4ed61de8c0bd48f0f63fe7cd45d5b6697d6912a0fff42e25a66205a2650861"
+    },
+    {
+      "qa_id": "9fcaea47-17da-45dc-bbde-bfbe148f03be",
+      "domain": "manual",
+      "answer_form": "String",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-102"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "40ac0167d94af9e613b7098b5a0b6d0a0a7fbc2d627696d702e32fceb87ac9b3"
+    },
+    {
+      "qa_id": "9fcbc2e9-98f2-4434-a9a9-f410b1759e79",
+      "domain": "manual",
+      "answer_form": "List",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-102"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "7b510a09010ea7cd8968a15e5cf6ffee39ed1d9b750939ead53aebb7603d2164"
+    },
+    {
+      "qa_id": "9fcfa1f8-5d80-41dd-badd-ad915bf5c161",
+      "domain": "manual",
+      "answer_form": "List",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-105"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "9269b1e09e0434c0dcd7a2204485a7bdb71960bb0e908e4d6f1fb8eb8376fe77"
+    },
+    {
+      "qa_id": "a027b0a8-f738-4f88-a050-c7246358f99b",
+      "domain": "administration",
+      "answer_form": "String",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-023"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "ebfb40d2627b6276610867d82f9b090cec35dec765b7793118496e95f9456789"
+    },
+    {
+      "qa_id": "a58e553a-cdf2-42f7-a52e-b0974ec9a19f",
+      "domain": "textbook",
+      "answer_form": "Numeric",
+      "evidence_source": "formula",
+      "relevant_source_ids": [
+        "ohr-137"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "5ed92f7918b410c2f42b8afbbe21a35ba0ca100ba282565055868159b170a1c1"
+    },
+    {
+      "qa_id": "a5903b26-031b-4872-b606-b1769a7ed7dd",
+      "domain": "textbook",
+      "answer_form": "Numeric",
+      "evidence_source": "formula",
+      "relevant_source_ids": [
+        "ohr-137"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "87753cf5987e0d2b6e27feedc6788f3722bb3c546ea55ee3dd1367154bd27e3f"
+    },
+    {
+      "qa_id": "a5ee8e69-2b87-4dc6-90d6-d746e0065102",
+      "domain": "administration",
+      "answer_form": "String",
+      "evidence_source": "formula",
+      "relevant_source_ids": [
+        "ohr-043"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "c4e5bd893f4fd16ceee831af54812cdea49d414f44f291bc8a63aded43764f87"
+    },
+    {
+      "qa_id": "a5ef30cd-4ac1-42c8-97f3-1293026fe7ce",
+      "domain": "administration",
+      "answer_form": "Numeric",
+      "evidence_source": "formula",
+      "relevant_source_ids": [
+        "ohr-043"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "700681fb8d99af54f4d9c4d3d200c70fb842d617d811751969de8574edb5341d"
+    },
+    {
+      "qa_id": "aa5a19bc-8bbd-42a4-87aa-0a67f8da80da",
+      "domain": "finance",
+      "answer_form": "Numeric",
+      "evidence_source": "chart",
+      "relevant_source_ids": [
+        "ohr-045"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "688463f3c8185af6fa9c4a40f4b5c0078692f97a73f95aacfb9316ef8bf8b2db"
+    },
+    {
+      "qa_id": "aa5bffa0-8fd0-4b07-91cf-5294bdd245dc",
+      "domain": "finance",
+      "answer_form": "String",
+      "evidence_source": "chart",
+      "relevant_source_ids": [
+        "ohr-045"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "a58a67312baa583b82ad219e0fa5d4e1f41b7f348777882d4852a5c7ee3fa193"
+    },
+    {
+      "qa_id": "aa5fa3fb-e1d6-4db9-87d8-951386be921a",
+      "domain": "finance",
+      "answer_form": "Numeric",
+      "evidence_source": "chart",
+      "relevant_source_ids": [
+        "ohr-045"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "0dd547a6664f17b3c4710ab9cf3f7bf283958acc287346e7b643467cb29fdf76"
+    },
+    {
+      "qa_id": "aa7b6d64-844e-46df-9c34-198a766c7fca",
+      "domain": "finance",
+      "answer_form": "Numeric",
+      "evidence_source": "chart",
+      "relevant_source_ids": [
+        "ohr-049"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "e2b93ef6d55bb264af7c0bd99920e47f821d7123b6e8cf9bd41a7c14a427db61"
+    },
+    {
+      "qa_id": "aa7ce24e-25f2-4d0d-ab1e-a8949994dde6",
+      "domain": "finance",
+      "answer_form": "String",
+      "evidence_source": "chart",
+      "relevant_source_ids": [
+        "ohr-049"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "6fb0fe2a3661379da28ce05562d3f55ff00888c404ed697e46acbba8d5dbb09a"
+    },
+    {
+      "qa_id": "aa7fbb07-7aa3-4054-96da-4c64b4cb87f8",
+      "domain": "finance",
+      "answer_form": "Numeric",
+      "evidence_source": "chart",
+      "relevant_source_ids": [
+        "ohr-049"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "ebda08d249050f1a304e62d88da48a0debc2c21acea9dc0602e002da9dc227f8"
+    },
+    {
+      "qa_id": "aa83440d-50d9-4834-80c8-4e0b9fd6fd19",
+      "domain": "finance",
+      "answer_form": "String",
+      "evidence_source": "chart",
+      "relevant_source_ids": [
+        "ohr-049"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "b12214162872aa8c098fbd8526d68d65a18a78dffb677acfa555c77f80f8477f"
+    },
+    {
+      "qa_id": "aa8416e6-84c3-4f33-9b75-34705c76ded5",
+      "domain": "finance",
+      "answer_form": "Numeric",
+      "evidence_source": "chart",
+      "relevant_source_ids": [
+        "ohr-049"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "d0827c3bcaf6942af7fbc6fea9ab79d68f22b42b06559547edfdd3ebac02d7f9"
+    },
+    {
+      "qa_id": "aa85c9bc-a493-4a50-a417-62275583031c",
+      "domain": "finance",
+      "answer_form": "String",
+      "evidence_source": "chart",
+      "relevant_source_ids": [
+        "ohr-050"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "3f7ad4b41120331555c9e824262ca57316d9c6ddeed49d74097ed6e576183e22"
+    },
+    {
+      "qa_id": "aa861df5-24bd-4011-8ba2-0e0688e2c431",
+      "domain": "finance",
+      "answer_form": "Numeric",
+      "evidence_source": "chart",
+      "relevant_source_ids": [
+        "ohr-050"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "9e4074332853248a32ff5e6b2d1d5c74270be2908791a969c169136756087845"
+    },
+    {
+      "qa_id": "aa87b4f8-d29e-4635-8ee8-7598042c13dd",
+      "domain": "finance",
+      "answer_form": "String",
+      "evidence_source": "chart",
+      "relevant_source_ids": [
+        "ohr-050"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "f0e9e781d61ed30132be1c008533dffd60fa87e40f3ba097e20e040fd634cbab"
+    },
+    {
+      "qa_id": "aa8ba520-317b-4b67-8d2d-614dafb9b710",
+      "domain": "finance",
+      "answer_form": "Numeric",
+      "evidence_source": "chart",
+      "relevant_source_ids": [
+        "ohr-050"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "7ad9e26015a6c0e86f1350850657e1bb10a1bce2ee4f3442a05f31fa5e6cb63b"
+    },
+    {
+      "qa_id": "aa99ffaa-c047-46b8-9a9c-1c38a8af5dde",
+      "domain": "finance",
+      "answer_form": "String",
+      "evidence_source": "chart",
+      "relevant_source_ids": [
+        "ohr-052"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "43f1b47cae7aa2f2366cad88fe3bafd777cc7d910f68db436324ba004ac99b21"
+    },
+    {
+      "qa_id": "aa9a0dae-6163-40b2-ad27-e1b2e1360ee7",
+      "domain": "finance",
+      "answer_form": "Numeric",
+      "evidence_source": "chart",
+      "relevant_source_ids": [
+        "ohr-052"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "ecb40b4f1da079b1bf406e02835d8c396d7b835e208b68bfb0f21bb59133c899"
+    },
+    {
+      "qa_id": "aa9a300a-2855-4296-b2fc-b4ffdf89623a",
+      "domain": "finance",
+      "answer_form": "Numeric",
+      "evidence_source": "chart",
+      "relevant_source_ids": [
+        "ohr-052"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "640b0f721322c61d68481ba421cbfccb1f72c6c243445de5c77dbf9d5a4eac89"
+    },
+    {
+      "qa_id": "aa9bd994-663b-494b-b27b-e412b950f94b",
+      "domain": "finance",
+      "answer_form": "Numeric",
+      "evidence_source": "chart",
+      "relevant_source_ids": [
+        "ohr-052"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "ac19dcaa5f4367f83bdbc1b69900ed48edc8dcdc1ba2abaef7f78fd62617f0c1"
+    },
+    {
+      "qa_id": "aaa03d56-7778-492a-9173-f701c1855c0b",
+      "domain": "finance",
+      "answer_form": "Numeric",
+      "evidence_source": "chart",
+      "relevant_source_ids": [
+        "ohr-052"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "030ba2e247179d2622387f79e4428f507109f263ef0e390d3c0301476cdc6880"
+    },
+    {
+      "qa_id": "ac3eb3b7-26ea-400d-976c-98033c99de5a",
+      "domain": "finance",
+      "answer_form": "Numeric",
+      "evidence_source": "chart",
+      "relevant_source_ids": [
+        "ohr-045"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "659b1ab821666050e2f0d594cb5f4a4d694b789dca322d3a3c5e50a716bd8021"
+    },
+    {
+      "qa_id": "ac4551a7-8973-4d07-b1e4-56dcffa13b6f",
+      "domain": "finance",
+      "answer_form": "String",
+      "evidence_source": "chart",
+      "relevant_source_ids": [
+        "ohr-045"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "0f500b6df85f70727b4a60ef6819fc5eaa77fdad41e7fd588b3f41424363d3e2"
+    },
+    {
+      "qa_id": "ac457bb6-d02e-483b-bc3f-99a6f9b6a8b3",
+      "domain": "finance",
+      "answer_form": "Numeric",
+      "evidence_source": "chart",
+      "relevant_source_ids": [
+        "ohr-045"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "795c4296956f9d5ed417f223ca4ab21ee4f4f32f3d924d8c426ebe0d3a283246"
+    },
+    {
+      "qa_id": "ac48f0c8-dbc2-415f-9194-87aabac6358e",
+      "domain": "finance",
+      "answer_form": "Numeric",
+      "evidence_source": "chart",
+      "relevant_source_ids": [
+        "ohr-046"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "0807eac87c6b1e01574f9ad9d8a77f17ca31abeecfcf31feb693ac1cd05108c3"
+    },
+    {
+      "qa_id": "ac4b1911-0987-4756-bad6-3c8bb7b10075",
+      "domain": "finance",
+      "answer_form": "String",
+      "evidence_source": "chart",
+      "relevant_source_ids": [
+        "ohr-046"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "669e05f9c7c8274b6599bf3803397063cefb8160cc47d5ee579d2018e5ebaf82"
+    },
+    {
+      "qa_id": "ac4ebce0-a02a-4b21-a2a7-d0fcc683ad33",
+      "domain": "finance",
+      "answer_form": "String",
+      "evidence_source": "chart",
+      "relevant_source_ids": [
+        "ohr-046"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "4a199062d74645f611513a4023f030297ebc844063bae04bbe6ff7e0a532e23d"
+    },
+    {
+      "qa_id": "ac616942-41ea-4d74-bd50-7cfc1b16c0d1",
+      "domain": "finance",
+      "answer_form": "String",
+      "evidence_source": "chart",
+      "relevant_source_ids": [
+        "ohr-049"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "d34aa8ad35793bce5dcaf05e5a202af31a13ba3a8e2b663320837f70698e814d"
+    },
+    {
+      "qa_id": "ac6267d4-9ee7-4537-9503-46a1aa2261eb",
+      "domain": "finance",
+      "answer_form": "String",
+      "evidence_source": "chart",
+      "relevant_source_ids": [
+        "ohr-049"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "d1b76a108f53fb24d743e9c1b038cb1d745862ff15e65056dadce02826d86d54"
+    },
+    {
+      "qa_id": "ac63457b-c470-40c6-bad8-1464959b0d07",
+      "domain": "finance",
+      "answer_form": "Numeric",
+      "evidence_source": "formula",
+      "relevant_source_ids": [
+        "ohr-050"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "7c4fab6b74069c6b0eafd4f08beb80328a572c3dc5440b39d33afac2fd5fdcb0"
+    },
+    {
+      "qa_id": "ac637119-27b2-4b2f-b5db-3bed79fbac17",
+      "domain": "finance",
+      "answer_form": "String",
+      "evidence_source": "formula",
+      "relevant_source_ids": [
+        "ohr-050"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "8f31771692cc946d31c7d04bb535ae3aae6dad5c44055c5c8009b4718436414c"
+    },
+    {
+      "qa_id": "ac640544-4e03-4540-aeac-f05e6901d7db",
+      "domain": "finance",
+      "answer_form": "String",
+      "evidence_source": "formula",
+      "relevant_source_ids": [
+        "ohr-050"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "061208e1497831363fcd749a27adfbb926ab1386741a95986e14df47910246f4"
+    },
+    {
+      "qa_id": "ac642b4c-49b2-4ded-9c31-d9b25a2b745b",
+      "domain": "finance",
+      "answer_form": "Numeric",
+      "evidence_source": "formula",
+      "relevant_source_ids": [
+        "ohr-050"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "ce3f10473f061b58fcbcb944cca6f901c19ad5b6d4af7eaf257e3c2f848bfa65"
+    },
+    {
+      "qa_id": "ac697744-376f-43f4-8ce5-a06ce2d58c55",
+      "domain": "finance",
+      "answer_form": "Numeric",
+      "evidence_source": "chart",
+      "relevant_source_ids": [
+        "ohr-052"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "06cb84ed22cba3ab4428347dc379ce652f605cd8f590890c6530762531552b97"
+    },
+    {
+      "qa_id": "ac6cebe4-3c48-43e7-a1bd-544550cecc81",
+      "domain": "finance",
+      "answer_form": "Numeric",
+      "evidence_source": "chart",
+      "relevant_source_ids": [
+        "ohr-052"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "a887197a8250e045a85fe80478269be8930412f2f99076f0359c3926394f56cf"
+    },
+    {
+      "qa_id": "ac6f5306-330b-403c-a873-ac090d67e4e0",
+      "domain": "finance",
+      "answer_form": "String",
+      "evidence_source": "chart",
+      "relevant_source_ids": [
+        "ohr-052"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "86510f4271a76f542132fb699312cd887830b7b011541c07cc64f00d80e51bba"
+    },
+    {
+      "qa_id": "ac705f76-fe7a-495b-8afc-3e3aa6c19f8d",
+      "domain": "finance",
+      "answer_form": "Numeric",
+      "evidence_source": "chart",
+      "relevant_source_ids": [
+        "ohr-052"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "d860f155d7e3483c69c0d870bdecdcf6018ff281df4177d2fd4bca16f7d6f1e2"
+    },
+    {
+      "qa_id": "ac73189c-6fdc-4e00-a0d9-da583db4cb81",
+      "domain": "finance",
+      "answer_form": "Numeric",
+      "evidence_source": "chart",
+      "relevant_source_ids": [
+        "ohr-052"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "add4751168839134205ee9b3730286c6f1c4633c4953fb452154e2af195ea0a6"
+    },
+    {
+      "qa_id": "b3aebc89-d985-4b79-ab4d-7f2fffa279a8",
+      "domain": "law",
+      "answer_form": "String",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-083",
+        "ohr-086"
+      ],
+      "query_type": "multi_evidence",
+      "query_sha256": "3ab11b2c9854d35d63984d27a08b34f7631663c71bb26ec765226b6116c72abd"
+    },
+    {
+      "qa_id": "b51cd5b6-d563-45fe-a14c-f5d2fb723c13",
+      "domain": "academic",
+      "answer_form": "String",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-012",
+        "ohr-013"
+      ],
+      "query_type": "multi_evidence",
+      "query_sha256": "723f28708dd107995b6cf207094e5a39635020916cdf50524cec66d27ef4e987"
+    },
+    {
+      "qa_id": "b60a4f3c-8643-4ab2-9b8f-1ab3e4eb61a8",
+      "domain": "manual",
+      "answer_form": "String",
+      "evidence_source": "multi",
+      "relevant_source_ids": [
+        "ohr-101",
+        "ohr-102"
+      ],
+      "query_type": "multi_evidence",
+      "query_sha256": "1012c483f570c87ec4a088e38101e9bd5b2f8672510bb2ed7143f4a0622343b1"
+    },
+    {
+      "qa_id": "b74a227a-e5a2-4fa1-83d5-978d924e9d90",
+      "domain": "academic",
+      "answer_form": "String",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-011",
+        "ohr-021"
+      ],
+      "query_type": "multi_evidence",
+      "query_sha256": "dcb699ff4ba7ef6384aa6538c4ca749475a344aae1f9e93654a5ca250eaddd7e"
+    },
+    {
+      "qa_id": "b75b396e-21ac-4108-b6b4-b49e41dd137a",
+      "domain": "law",
+      "answer_form": "String",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-083",
+        "ohr-086"
+      ],
+      "query_type": "multi_evidence",
+      "query_sha256": "2f1e9a29c3d765d34b6bb6f0fff6bedb484aa1222ea7f9b5a37a8e1e478ac298"
+    },
+    {
+      "qa_id": "b75db71e-a453-4fe9-b48f-653e7b1bcb6b",
+      "domain": "law",
+      "answer_form": "String",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-holdout-026",
+        "ohr-holdout-029"
+      ],
+      "query_type": "multi_evidence",
+      "query_sha256": "6eb4a2fc431fce9b162af9f51df0f9805ae5d6ef60f067d3e67ac0658935d3d4"
+    },
+    {
+      "qa_id": "b75e40c8-af77-4361-871d-883ccb6af5a2",
+      "domain": "law",
+      "answer_form": "String",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-holdout-026",
+        "ohr-holdout-029"
+      ],
+      "query_type": "multi_evidence",
+      "query_sha256": "8a7e8a613f48b46f33307f29a6873fc293a0f7832b61fc9a664546a94d7607d5"
+    },
+    {
+      "qa_id": "b76cedff-dfeb-4c45-b152-d0219a0777e2",
+      "domain": "manual",
+      "answer_form": "String",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-102",
+        "ohr-104"
+      ],
+      "query_type": "multi_evidence",
+      "query_sha256": "53143f363442fc594b0d7b18c4d622788d79c58f18b14c55749021c8c2c7e129"
+    },
+    {
+      "qa_id": "b76cfca2-5cf1-4f05-a927-2cd1c7639a9f",
+      "domain": "manual",
+      "answer_form": "String",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-102",
+        "ohr-104"
+      ],
+      "query_type": "multi_evidence",
+      "query_sha256": "1b24fae97df9ed66ae8a663c2a9274a0877ef3bdffe0495ca36ef749fa68c07a"
+    },
+    {
+      "qa_id": "b79c2dce-62c8-49dd-b427-0a1a6432a56f",
+      "domain": "administration",
+      "answer_form": "String",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-024",
+        "ohr-027"
+      ],
+      "query_type": "multi_evidence",
+      "query_sha256": "0c8dd79313e055b0602ba530854968a03469c1bf75fa85740c243e59f64dd3b7"
+    },
+    {
+      "qa_id": "b79c51a3-00fd-4201-b1ba-d5d87f9bc925",
+      "domain": "administration",
+      "answer_form": "String",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-031",
+        "ohr-032"
+      ],
+      "query_type": "multi_evidence",
+      "query_sha256": "10712185ba45b7b62c0ca0658a9cfa7fb2ef8c3713ce257deab82a25385976df"
+    },
+    {
+      "qa_id": "b79c77f9-0b8d-4b81-b36f-6f21643e43db",
+      "domain": "administration",
+      "answer_form": "String",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-033",
+        "ohr-034"
+      ],
+      "query_type": "multi_evidence",
+      "query_sha256": "bd337b86837978bf514c9f165b528d0c1e7b9fa6bcf087ddf70e81c086b39cea"
+    },
+    {
+      "qa_id": "b825afe6-a6eb-4d23-b58e-39abfa6c1aba",
+      "domain": "textbook",
+      "answer_form": "String",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-holdout-045",
+        "ohr-holdout-047"
+      ],
+      "query_type": "multi_evidence",
+      "query_sha256": "dd40aaf85daa92e5a0b6d1a148879ceb69855d694e5715052bee5c89119f4f73"
+    },
+    {
+      "qa_id": "b84eed2d-d8e8-4ae0-a25a-537b7c5c82e1",
+      "domain": "academic",
+      "answer_form": "String",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-012",
+        "ohr-013"
+      ],
+      "query_type": "multi_evidence",
+      "query_sha256": "e33f1c59281fc3bfb2d49737fe858f763d5707149b8e9fa5f84f4aed10a5dfb6"
+    },
+    {
+      "qa_id": "b84f3ace-0e4c-4637-b0d1-be6bb17a3c09",
+      "domain": "academic",
+      "answer_form": "String",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-012",
+        "ohr-013"
+      ],
+      "query_type": "multi_evidence",
+      "query_sha256": "0f085c961c274a193d14bd8ed374148dc818fbc887cb44dad20f2bcc68f7b69d"
+    },
+    {
+      "qa_id": "b858af32-f6db-41b4-a4a9-6fb506bda203",
+      "domain": "law",
+      "answer_form": "Yes/No",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-078",
+        "ohr-080"
+      ],
+      "query_type": "multi_evidence",
+      "query_sha256": "45b1edf9e5716be5cf91092f991279c4b6bd76e70bfcf8ba3b5008dd4217e12a"
+    },
+    {
+      "qa_id": "b858d4d8-e685-44a1-9086-18162ea79e43",
+      "domain": "law",
+      "answer_form": "String",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-078",
+        "ohr-080"
+      ],
+      "query_type": "multi_evidence",
+      "query_sha256": "bb823a5f9ec2f5ad2e05b64838860b7a72ed3e5609d6c7cf7bb0451d88608872"
+    },
+    {
+      "qa_id": "b86a685d-159f-40df-89ed-109eeae1a562",
+      "domain": "manual",
+      "answer_form": "String",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-100",
+        "ohr-105"
+      ],
+      "query_type": "multi_evidence",
+      "query_sha256": "38ece33e666810137cc25bb32fb76303873eb8c4d40635d74465695331c4cdce"
+    },
+    {
+      "qa_id": "b8928cb2-7f9a-46a9-a138-a1e7e8e07d17",
+      "domain": "administration",
+      "answer_form": "String",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-025",
+        "ohr-028"
+      ],
+      "query_type": "multi_evidence",
+      "query_sha256": "6ab4bf265487b17ace3fd3b07fe263f5aff32d87b0490cf6bcf0a351a493cbb7"
+    },
+    {
+      "qa_id": "c41b983c-8826-440f-97a3-dd008bdb89ad",
+      "domain": "academic",
+      "answer_form": "String",
+      "evidence_source": "reading_order",
+      "relevant_source_ids": [
+        "ohr-005"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "7e86119362586e126a51d5c0c6c0efb611e05ffd8622cfb5a0bf87da5267d330"
+    },
+    {
+      "qa_id": "c42e767d-d2e3-45ed-b268-a1bd4e8ad375",
+      "domain": "academic",
+      "answer_form": "String",
+      "evidence_source": "reading_order",
+      "relevant_source_ids": [
+        "ohr-holdout-002"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "802f5575123e41c74f7708d7860b156cbfa1f6b89beef0bed63ecf500a4a59ef"
+    },
+    {
+      "qa_id": "c42fff86-ab9a-474f-9c63-a848611a095e",
+      "domain": "academic",
+      "answer_form": "String",
+      "evidence_source": "reading_order",
+      "relevant_source_ids": [
+        "ohr-holdout-002"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "8ad077078de02e89604acc92d3d540af65c48c1aa837186accafb13cff5f7e41"
+    },
+    {
+      "qa_id": "ce15d847-f5c4-4a10-865d-a2f2c24c9196",
+      "domain": "finance",
+      "answer_form": "Numeric",
+      "evidence_source": "chart",
+      "relevant_source_ids": [
+        "ohr-045"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "a34227eb904a396cda035d63ef683c626865c057694b582add898601e7ee3989"
+    },
+    {
+      "qa_id": "ce15da37-286c-468a-8810-dd2003e2f67c",
+      "domain": "finance",
+      "answer_form": "String",
+      "evidence_source": "chart",
+      "relevant_source_ids": [
+        "ohr-045"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "21c8370e57d45f9b0a61c239b4df2d6aa07151915ca5a368343385d8a2449768"
+    },
+    {
+      "qa_id": "ce1601f3-e44d-4730-a07e-3224748e5976",
+      "domain": "finance",
+      "answer_form": "Numeric",
+      "evidence_source": "chart",
+      "relevant_source_ids": [
+        "ohr-045"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "6143751c924f1726aab421da2e16a88572ec307fb075cc826104667187202970"
+    },
+    {
+      "qa_id": "ce16c811-679a-472b-bd5c-5f9e70d64ec3",
+      "domain": "finance",
+      "answer_form": "Numeric",
+      "evidence_source": "chart",
+      "relevant_source_ids": [
+        "ohr-046"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "266da9ccd7ae3ccaa101b9f6d5adfc1441b9dbffd6df8335c4292d5a50feb202"
+    },
+    {
+      "qa_id": "ce170193-65e6-41d9-9d27-46047929c6e3",
+      "domain": "finance",
+      "answer_form": "String",
+      "evidence_source": "chart",
+      "relevant_source_ids": [
+        "ohr-046"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "6b2b9b958630e017193596be47ba341b3e98336c45d69e30f4e9de7fcec2f4bf"
+    },
+    {
+      "qa_id": "ce180220-8e88-42b9-ae28-1d9904db8f74",
+      "domain": "finance",
+      "answer_form": "Numeric",
+      "evidence_source": "chart",
+      "relevant_source_ids": [
+        "ohr-046"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "587365e7f5d4ca32dd5f8f57cdf4c400bc829a98b774e91148aa243c250c6ef6"
+    },
+    {
+      "qa_id": "ce1c4081-e345-49fa-88ec-fb32e7f2d0cf",
+      "domain": "finance",
+      "answer_form": "Numeric",
+      "evidence_source": "chart",
+      "relevant_source_ids": [
+        "ohr-049"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "cf5e03faef11cceba7185097e9a8ff96fd11a8f0c4b1594d5a29e19bfbd50029"
+    },
+    {
+      "qa_id": "ce1d7823-98e1-4e75-a7cd-1474798f7ade",
+      "domain": "finance",
+      "answer_form": "String",
+      "evidence_source": "chart",
+      "relevant_source_ids": [
+        "ohr-049"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "6fb0fe2a3661379da28ce05562d3f55ff00888c404ed697e46acbba8d5dbb09a"
+    },
+    {
+      "qa_id": "ce1e80e9-6ac5-4aa6-b32f-e9e05fa25668",
+      "domain": "finance",
+      "answer_form": "Numeric",
+      "evidence_source": "chart",
+      "relevant_source_ids": [
+        "ohr-049"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "9ad18cb94f2e0562ef9f089542aab7bed7ed261973cdfec72e710a9d0d432886"
+    },
+    {
+      "qa_id": "ce1f1434-9b3e-4c95-9233-738f7a5ad16c",
+      "domain": "finance",
+      "answer_form": "String",
+      "evidence_source": "chart",
+      "relevant_source_ids": [
+        "ohr-049"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "9d28fd806d826bb31d3eb41d5e5cf330a05e4471b3c17d39055e99d90e2d87df"
+    },
+    {
+      "qa_id": "ce1f96bd-ad45-4fc3-989f-8c6f0f8d87e1",
+      "domain": "finance",
+      "answer_form": "Numeric",
+      "evidence_source": "chart",
+      "relevant_source_ids": [
+        "ohr-049"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "df9ac7e4eef61e5d4133dfa85d8e8e7d967ae3b416273c6064e40ce53e4a80a2"
+    },
+    {
+      "qa_id": "ce1fb7e3-5fe4-4e13-9efb-0c3ac0b276c1",
+      "domain": "finance",
+      "answer_form": "Numeric",
+      "evidence_source": "chart",
+      "relevant_source_ids": [
+        "ohr-050"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "11b4f72d8fac0ebc6ec4b40a6816d22e3140d3600e0d3d15d396ce08e94630af"
+    },
+    {
+      "qa_id": "ce204858-83f0-4e2e-9214-3f4cab4eb1e8",
+      "domain": "finance",
+      "answer_form": "String",
+      "evidence_source": "chart",
+      "relevant_source_ids": [
+        "ohr-050"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "3de384d4c608b3d87c61c44e6421d2a8fb83bf8c4265f34c5a198128d693b543"
+    },
+    {
+      "qa_id": "ce2143f3-d7f4-42a9-b9af-6d9bca68def6",
+      "domain": "finance",
+      "answer_form": "Numeric",
+      "evidence_source": "chart",
+      "relevant_source_ids": [
+        "ohr-050"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "7341f9a880dff3be764cb3b18c1c94a8a0898b0ee82b9efcd8e7780ef41b16ad"
+    },
+    {
+      "qa_id": "ce220f3b-561a-4c52-9a1e-142ab589401e",
+      "domain": "finance",
+      "answer_form": "String",
+      "evidence_source": "chart",
+      "relevant_source_ids": [
+        "ohr-050"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "2aa4240a06395e689eb62a36e3d33a26a5fe51aa75f30f3a08fa3507067bb000"
+    },
+    {
+      "qa_id": "ce23fef0-f9ac-41cd-a0f3-4f7d8992e530",
+      "domain": "finance",
+      "answer_form": "Numeric",
+      "evidence_source": "chart",
+      "relevant_source_ids": [
+        "ohr-050"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "77db83113491f71bce7613d12cf7462742753fd8aa745e56c5fb2a3a6459065c"
+    },
+    {
+      "qa_id": "ce28c87d-4607-4d65-94a0-955d4aab4669",
+      "domain": "finance",
+      "answer_form": "Numeric",
+      "evidence_source": "chart",
+      "relevant_source_ids": [
+        "ohr-052"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "43f1b47cae7aa2f2366cad88fe3bafd777cc7d910f68db436324ba004ac99b21"
+    },
+    {
+      "qa_id": "ce28d9c3-0c9d-4307-9dc5-5c552c587b17",
+      "domain": "finance",
+      "answer_form": "Numeric",
+      "evidence_source": "chart",
+      "relevant_source_ids": [
+        "ohr-052"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "f8d13405dcc9e9b626e6206c2b419e84558d893bae2ee4ef1ef85792a6dbbed2"
+    },
+    {
+      "qa_id": "ce28fb71-2859-497f-b983-884cb2b2de82",
+      "domain": "finance",
+      "answer_form": "Numeric",
+      "evidence_source": "chart",
+      "relevant_source_ids": [
+        "ohr-052"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "1d6ab977f59bac27137ebe8fbb55f42b5e11ff8e42b0a8c1b3e09345e978b6ff"
+    },
+    {
+      "qa_id": "ececcf7f-3c97-48ca-b2f1-2def7200d1ab",
+      "domain": "textbook",
+      "answer_form": "Numeric",
+      "evidence_source": "formula",
+      "relevant_source_ids": [
+        "ohr-149"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "64c9abb0768f6da59c9e0d817544dc329f956271af259ad547fcd5c8b31f6fa6"
+    },
+    {
+      "qa_id": "eced7a72-f903-4b8c-8df5-abdd6dd497d2",
+      "domain": "textbook",
+      "answer_form": "Numeric",
+      "evidence_source": "text",
+      "relevant_source_ids": [
+        "ohr-146"
+      ],
+      "query_type": "single_evidence",
+      "query_sha256": "e1f7d1a26df3c69f2556a3d9e6fe3b15f318a0b02026b4a9da02a46c8788c2cc"
+    }
+  ]
+}

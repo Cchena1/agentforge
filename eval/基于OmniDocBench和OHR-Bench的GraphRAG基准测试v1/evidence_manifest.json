@@ -1,0 +1,95 @@
+{
+  "schema_version": 1,
+  "files": [
+    {
+      "path": "DATA_SOURCES.md",
+      "bytes": 1857,
+      "sha256": "eca3d87f25b0c2f03d3a0ebc27f9fd46b7d525668b324896c01efb38f44a1592"
+    },
+    {
+      "path": "EVIDENCE.md",
+      "bytes": 2514,
+      "sha256": "b8ff157e590c0ff045d1cc1ea94e7a3ba1e4f9b5207dbce5cc81d1a87b297c67"
+    },
+    {
+      "path": "manifests/query_inventory.json",
+      "bytes": 101137,
+      "sha256": "58926c6447bb9970a018152bb55895245fce08d78746050212072c842ac0ffa3"
+    },
+    {
+      "path": "manifests/sample_inventory.json",
+      "bytes": 69221,
+      "sha256": "d6dbbc1431882abbe2d3f69d49f9d06b3b175b188a2267c7fb8e5bcaf6e3ebf9"
+    },
+    {
+      "path": "README.md",
+      "bytes": 3546,
+      "sha256": "e1605bdc1b0169722ac6c978c1733d576a2495f993c628262f7103c3c9477960"
+    },
+    {
+      "path": "report.md",
+      "bytes": 14167,
+      "sha256": "291702d00b76a79502331990935bec36620ca7c4d8f9f8138123f023d8e44ed4"
+    },
+    {
+      "path": "results/adversarial_gate.json",
+      "bytes": 4664,
+      "sha256": "40ea1d2a71ff6fa924413d5f4f1f1993f9547a27bfa1f56df80f54ad34287431"
+    },
+    {
+      "path": "results/benchmark_summary.json",
+      "bytes": 431373,
+      "sha256": "422332f10cc81094a88ed37826fbcc893f1b68a245a46f63b0bb4b523c696f30"
+    },
+    {
+      "path": "results/environment.json",
+      "bytes": 966,
+      "sha256": "2bf59a4db50b9b6ede7a03a53c6597b3591d6e1839d3993243fc74ba39ce4e6c"
+    },
+    {
+      "path": "results/formatting_noise_moderate_graphrag_fallback.json",
+      "bytes": 237727,
+      "sha256": "8c838f9d911f26ae84f070058ade5ce8e58e8582583bb25b2d343277949ea8a7"
+    },
+    {
+      "path": "results/formatting_noise_moderate_hybrid_baseline.json",
+      "bytes": 235126,
+      "sha256": "19eb545988651d27426c2ea980e8253fd363fb80c04dfcf5a3dc365a8d80c380"
+    },
+    {
+      "path": "results/gt_text_graphrag_fallback.json",
+      "bytes": 237776,
+      "sha256": "886cefc82c7996ec90e3369b63183fd96c399b1b0c8fb509337dd095a449cd68"
+    },
+    {
+      "path": "results/gt_text_hybrid_baseline.json",
+      "bytes": 234962,
+      "sha256": "6924f134af5b46ac91f3d9629ac9b78d4eb2f46310a0c5eaf2193a65d67bbfa7"
+    },
+    {
+      "path": "results/semantic_noise_MinerU_moderate_graphrag_fallback.json",
+      "bytes": 239008,
+      "sha256": "e42ad58e351060db70d23398d70f92a703790b017d6578d7a83d6f85cbed4da5"
+    },
+    {
+      "path": "results/semantic_noise_MinerU_moderate_hybrid_baseline.json",
+      "bytes": 235959,
+      "sha256": "aca3ed04ba1f1d4f8658a01830ad6dd355226e67160c9b5a19aa4318410cc38f"
+    },
+    {
+      "path": "scripts/adversarial_audit.py",
+      "bytes": 5516,
+      "sha256": "9d7737442b34d2ebec219f28f52101ac2800a75ad3941276e4aee75c8e2ede74"
+    },
+    {
+      "path": "scripts/generate_evidence_manifest.py",
+      "bytes": 919,
+      "sha256": "3f72c932ba5a675efcd8f274ed2a7272cf377fa29004c87fb223619d8efa56bb"
+    },
+    {
+      "path": "scripts/run_benchmark.py",
+      "bytes": 33447,
+      "sha256": "f89948e73ade5e340221c5f191ca2adc51a7281731a862fb2e18d7e067a2bab1"
+    }
+  ]
+}

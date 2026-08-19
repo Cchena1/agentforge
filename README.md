@@ -4,7 +4,7 @@
 
 AgentForge 面向企业 Agent 研发中的模型输出不确定、多 Tool 协作冲突、长会话上下文膨胀和复杂文档证据失真等问题，设计异步 Agent 服务，覆盖模型调用、Tool Orchestration、分层 Memory、文档 RAG、可观测性与失败恢复。项目重点不是展示一段 Prompt，而是以可验证的数据契约、状态所有权和失败边界支撑工程交付。
 
-> **最近一次验收：2026 年 8 月 19 日。** Ruff 全仓及新增 Benchmark 脚本检查通过；strict mypy 对 29 个 Source 文件检查通过；pytest 共 108 项测试通过并保留 1 条 Starlette/httpx 上游弃用警告。Tool Orchestration 60 项总体通过率为 80.00%，其中 BFCL 单轮可比子集为 84.62%、AgentForge Runtime 对抗集为 15/15；Memory 70 项中 LongMemEval Evidence Recall@5 为 26.33%、AgentForge 隔离与压缩集为 18/20。第三次 200 页 RAG Benchmark 的 Recall@5 为 95.53% / 95.53% / 88.91%；按照项目范围约定，**未进行压力测试、吞吐量测试或持续负载测试**。
+> **最近一次验收：2026 年 8 月 19 日。** Ruff 全仓及新增 Benchmark 脚本检查通过；strict mypy 对 29 个 Source 文件检查通过；pytest 共 108 项测试通过并保留 1 条 Starlette/httpx 上游弃用警告。Tool Orchestration 60 项总体通过率为 80.00%，其中 BFCL 单轮可比子集为 84.62%、AgentForge Runtime 对抗集为 15/15；Memory 70 项中 LongMemEval Evidence Recall@5 为 26.33%、AgentForge 隔离与压缩集为 18/20。第三次 200 页 RAG Benchmark 的 Recall@5 为 95.53% / 95.53% / 88.91%；新增 100 页 GraphRAG 对照中，三个场景的整体 Recall@5 均未高于 Hybrid Baseline，标准文本 Multi-evidence All-evidence Recall@5 从 86.36% 提升至 90.91%，但因 Graph 降级率为 9.64%–14.64%，质量门判定为 Fail。按照项目范围约定，**未进行压力测试、吞吐量测试或持续负载测试**。
 
 ## 项目价值
 
@@ -13,7 +13,7 @@ AgentForge 面向企业 Agent 研发中的模型输出不确定、多 Tool 协�
 - **异步化**：模型、Memory、RAG、工具和 Multi-Agent worker 全链路采用 async API；无依赖工具并发执行。
 - **契约优先**：Pydantic v2 定义请求、模型结构化输出、工具参数和响应格式，错误数据在进入业务逻辑前被拦截。
 - **可解释 RAG**：检索结果携带 source、chunk、page/locator、quote、score 和索引版本快照，可生成可追溯引用。
-- **GraphRAG 探索**：在独立分支中增加版本化 Document–Section–Entity 知识图谱、关系型 Query 路由、最多二跳 Local Search 与有界 Reflection/Rewrite；图失败时回退既有 Hybrid Retrieval。
+- **GraphRAG 探索**：以可选插件增加版本化 Document–Section–Entity 知识图谱、关系型 Query 路由、最多二跳 Local Search 与有界 Reflection/Rewrite；图失败或超时时回退既有 Hybrid Retrieval。
 - **真实语义向量**：生产默认从 Hash 测试替身迁移到 `BAAI/bge-m3`（Sentence Transformers）；文档与查询分别使用 `encode_document` / `encode_query`。
 - **数据隔离**：知识库以 `(tenant_id, source_id)` 标识文档，ACL 在评分前过滤，未授权数据和版本信息均不可见。
 - **可迁移性**：SQLite 提供零服务本地基线，Qdrant 提供面向更大语料的 HNSW 与 metadata filtering；持久化格式采用版本化迁移策略。
@@ -39,7 +39,7 @@ uv run pytest -q
 
 > 从 Hash、其他模型或其他维度迁移时必须重建 RAG 索引。Qdrant 应使用新 Collection 完成候选构建与验证后再切换，不能在同一 Collection 混写不同维度。旧 `embed()` 插件当前处于兼容窗口，新插件应实现 `embed_documents()` 与 `embed_query()`。
 
-详见 [ADR-014](docs/adr-014-graph-aware-retrieval.md)。当前只实现 Local GraphRAG；Community Detection、Global Search、DRIFT Search 和真实模型 Benchmark 不在本次最小修复范围。
+详见 [ADR-014](docs/adr-014-graph-aware-retrieval.md)。当前只实现 Local GraphRAG；已使用真实 `BAAI/bge-m3` 完成 100 页 Retrieval Benchmark，但 Community Detection、Global Search、DRIFT Search 和在线 LLM 图谱抽取仍不在当前范围。
 
 ## 外部评估快速路径
 
@@ -687,7 +687,7 @@ GitHub: `https://github.com/Cchena1/agentforge`
 
 **技术栈：** Python、FastAPI、LangGraph、asyncio、Pydantic v2、Tenacity、Docling、Sentence Transformers、SQLite/Qdrant、OpenTelemetry、Prometheus、pytest、mypy
 
-- **RAG（S/A/R）：** 针对双栏、扫描件、表格及跨章节关系问题，搭建 Docling 主解析、页级 OCR Fallback、Parent-Child Chunking、BM25 + Dense Hybrid Retrieval、RRF 和版本化原子索引；进一步增加实体关系图谱、真实语义 Embedding 插件、Query 路由、最多二跳扩展及有界 Reflection/Rewrite。既有三轮 200 页 Benchmark 中，第三轮标准文本、格式干扰、语义/OCR 噪声场景 Recall@5 分别为 **95.53% / 95.53% / 88.91%**；GraphRAG 新链路已通过功能测试，暂不将其表述为新的检索增益。
+- **RAG（S/A/R）：** 针对双栏、扫描件、表格及跨章节关系问题，搭建 Docling 主解析、页级 OCR Fallback、Parent-Child Chunking、BM25 + Dense Hybrid Retrieval、RRF 和版本化原子索引；进一步增加实体关系图谱、真实语义 Embedding 插件、Query 路由、最多二跳扩展及有界 Reflection/Rewrite。既有三轮 200 页 Benchmark 中，第三轮标准文本、格式干扰、语义/OCR 噪声场景 Recall@5 分别为 **95.53% / 95.53% / 88.91%**；新增 100 页、1,680 次检索的 GraphRAG 对照中，标准文本 Multi-evidence All-evidence Recall@5 从 **86.36% 提升至 90.91%**，但整体 Recall@5 无净增益且 Graph 降级率为 **9.64%–14.64%**，因此保留为可配置探索路径。
 - **Memory（S/A/R）：** 针对长会话 Token 膨胀、工具大结果挤占上下文和多租户串扰，构建 Recent Messages、Rolling Summary、Long-term Vector Memory 与 Content Hash 外置结果的分层体系，通过 Session/User/Tenant Namespace、TTL、替换链和 Hard Delete 管理状态生命周期；在 70 项 Memory Benchmark 中，隔离与压缩对抗集通过 **18/20**，租户隔离、滚动摘要和工具结果外置核心场景全部通过，并量化定位长期语义召回与时间推理缺口。
 - **Tools（S/A/R）：** 针对模型误选 Tool、参数缺失、依赖冲突、循环调用及超时重试导致的副作用，建立 Schema-first Tool Registry；以 Pydantic 拦截错误输入，通过依赖 DAG、`$ref`、Semaphore、Resource Lock 和 Idempotency Token 编排并发，按错误类型执行 Retry、Fallback 或 Human Handoff。60 项 Tool Benchmark 总体通过率 **80.00%**，BFCL 可比子集通过率 **84.62%**，15 项 DAG、锁、重试、降级与幂等对抗用例 **15/15** 通过。
 - **工程质量（S/A/R）：** 针对异步链路难定位、索引切换失败和状态恢复不一致问题，接入 OpenTelemetry、Prometheus 告警、结构化错误归因与备份恢复校验；通过 Active Version、Tenant/ACL 前置过滤、最大 Agent Steps 和重复调用检测限制故障扩散。当前 **29 个 Source 文件**通过 strict mypy，**108 项自动化测试**通过，Ruff 全仓检查通过；项目明确未进行压力测试，不虚构 QPS、P99 或生产 SLA。
@@ -695,7 +695,7 @@ GitHub: `https://github.com/Cchena1/agentforge`
 ## 评估范围与已知限制
 > 文档 RAG 验证边界：当前 108 项自动化测试覆盖路由、Attempt 上限、结构切片、异步 Job、版本一致性、ACL、FTS5 Backfill/更新/删除、候选多样化、Citation Schema 与内容完整性门控。第三次 200 页 Retrieval Benchmark 的 Recall@5 为 95.53% / 95.53% / 88.91%；真实 Docling 10 页回归仍仅证明内容完整性门控降低 False Acceptance，不能外推为生产 OCR 或复杂 PDF 解析质量。PaddleOCR Fallback、真实复杂 DOCX、Cloud Fallback 与答案级 Citation 仍未完成实文档闭环。未进行任何压力测试。
 
-> GraphRAG 新增能力已通过单元与集成测试；当前环境未安装 `semantic` extra，未下载或运行真实 `BAAI/bge-m3` 权重，因此不把 Mock Adapter 结果表述为模型效果或生产性能结论。
+> GraphRAG 已在 CPU 环境使用真实 `BAAI/bge-m3`（1024 维）完成 100 页、1,680 次受控检索；证据完整性门通过，但质量门因多证据路由覆盖率仅 45.45%、Graph 降级率为 9.64%–14.64%而失败。在线 Model Gateway 预检返回 HTTP 404，本轮只验证 Heuristic KG、Deterministic Planner/Reflection Fallback，不将其表述为生产性能结论。
 
 1. **未进行压力测试。** 当前并发测试只验证并发语义和时间重叠，不声明吞吐量、饱和点、p95/p99 Latency 或长时间稳定性。
 2. 验收未使用生产模型凭据，因此未覆盖真实 Provider 的 Function Calling 差异、Rate Limit 和跨 Provider Fallback。
@@ -726,7 +726,7 @@ MIT
 
 ## 外部 Benchmark 证据
 
-项目已完成三轮固定总工作量为 200 页的 RAG 工程评估：首轮定位 Parser/Retrieval 缺陷，第二轮验证 Metrics、Trace、告警与备份恢复闭环，第三轮针对召回率最小修复执行 150 页纵向对照与 50 页 Unseen Holdout。为控制仓库体积与第三方数据分发风险，Git 只保存来源、Hash、去文本化样本清单、汇总指标、逐查询排名和脱敏失败证据，不保存官方大型数据集、页面图片、临时 PDF 或 SQLite 索引。
+项目已完成三轮固定总工作量为 200 页的 RAG 工程评估：首轮定位 Parser/Retrieval 缺陷，第二轮验证 Metrics、Trace、告警与备份恢复闭环，第三轮针对召回率最小修复执行 150 页纵向对照与 50 页 Unseen Holdout；另完成一轮 100 页 GraphRAG 受控对照，验证真实语义 Embedding、Multi-evidence 图扩展、路由、超时降级和质量门。为控制仓库体积与第三方数据分发风险，Git 只保存来源、Hash、去文本化样本清单、汇总指标、逐查询排名和脱敏失败证据，不保存官方大型数据集、页面图片、临时 PDF 或 SQLite 索引。
 
 - [基于 OmniDocBench 和 OHR-Bench 的 RAG 基准测试](eval/基于OmniDocBench和OHR-Bench的RAG基准测试/README.md)
 - [完整 Benchmark 报告](eval/基于OmniDocBench和OHR-Bench的RAG基准测试/report.md)
@@ -739,6 +739,9 @@ MIT
 - [第三次 Benchmark 证据与对抗式审阅](eval/基于OmniDocBench和OHR-Bench的RAG基准测试v3/EVIDENCE.md)
 - [Tool Orchestration Benchmark：BFCL / ToolSandbox / AgentForge](eval/基于BFCL和ToolSandbox的Tool基准测试v1/report.md)
 - [Memory Benchmark：LongMemEval / AgentForge](eval/基于LongMemEval的Memory基准测试v1/report.md)
+- [GraphRAG 100 页 Benchmark](eval/基于OmniDocBench和OHR-Bench的GraphRAG基准测试v1/README.md)
+- [GraphRAG Benchmark 完整报告](eval/基于OmniDocBench和OHR-Bench的GraphRAG基准测试v1/report.md)
+- [GraphRAG Benchmark 证据与对抗式审阅](eval/基于OmniDocBench和OHR-Bench的GraphRAG基准测试v1/EVIDENCE.md)
 
 本轮不进行压力测试；单次阶段耗时只用于故障定位，不用于声明吞吐量或 SLA。
 

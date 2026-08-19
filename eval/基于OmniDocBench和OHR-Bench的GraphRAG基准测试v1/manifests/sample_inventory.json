@@ -1,0 +1,1818 @@
+{
+  "schema_version": 1,
+  "unique_pages": 100,
+  "selection_policy": "all multi-evidence pages + all prior semantic/OCR failure pages + deterministic domain fill",
+  "domain_quotas": {
+    "academic": 15,
+    "administration": 14,
+    "finance": 15,
+    "law": 14,
+    "manual": 14,
+    "news": 14,
+    "textbook": 14
+  },
+  "samples": [
+    {
+      "sample_id": "ohr-005",
+      "benchmark": "OHR-Bench",
+      "cohort": "longitudinal_150",
+      "row_idx": 7,
+      "domain": "academic",
+      "doc_name": "academic/2305.02437v3",
+      "page_idx": 7,
+      "qa_count": 6,
+      "selection_reasons": [
+        "prior_semantic_ocr_failure"
+      ],
+      "text_sha256": {
+        "gt_text": "5d4dc1b21b5780267fe62c4e97efbc7e8b2a08f1e0c2c9a6b1dd091411b65eb7",
+        "formatting_noise_moderate": "e7930482b9738777ec25ca316491c9f9f193f59b5634f1d0d5fc955458049801",
+        "semantic_noise_MinerU_moderate": "a122f441603d22e79a343792b028033d56b68ec514de74e4831f281f3f975c55"
+      }
+    },
+    {
+      "sample_id": "ohr-008",
+      "benchmark": "OHR-Bench",
+      "cohort": "longitudinal_150",
+      "row_idx": 11,
+      "domain": "academic",
+      "doc_name": "academic/2305.02437v3",
+      "page_idx": 11,
+      "qa_count": 1,
+      "selection_reasons": [
+        "prior_semantic_ocr_failure"
+      ],
+      "text_sha256": {
+        "gt_text": "b98943669b1c1aabe4d7fdfb396136c7452b85914bfee440826f207ffc3689be",
+        "formatting_noise_moderate": "50bd4175e75754b573aa7f1497e8887d4defbac1d293914cbc852cc2d10a10c0",
+        "semantic_noise_MinerU_moderate": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "sample_id": "ohr-010",
+      "benchmark": "OHR-Bench",
+      "cohort": "longitudinal_150",
+      "row_idx": 18,
+      "domain": "academic",
+      "doc_name": "academic/2305.02437v3",
+      "page_idx": 18,
+      "qa_count": 6,
+      "selection_reasons": [
+        "prior_semantic_ocr_failure"
+      ],
+      "text_sha256": {
+        "gt_text": "eece18dc62fdf5e72ceb933fba4128fa7742f9784ac4721d84ce56c842e74316",
+        "formatting_noise_moderate": "e84bf3820423115cd5743fd97695beea9c0ae4093fe1e1a27e4dd479d7befcc1",
+        "semantic_noise_MinerU_moderate": "7a2bed5a5af40664facc9163b0eb5c84c49a906bc930cd3fea5d86697f0d766f"
+      }
+    },
+    {
+      "sample_id": "ohr-011",
+      "benchmark": "OHR-Bench",
+      "cohort": "longitudinal_150",
+      "row_idx": 21,
+      "domain": "academic",
+      "doc_name": "academic/2305.14160v4",
+      "page_idx": 1,
+      "qa_count": 3,
+      "selection_reasons": [
+        "multi_evidence_coverage"
+      ],
+      "text_sha256": {
+        "gt_text": "cfa2f2bf577e5da6651e6e5cb17f83a49b6d0e41ada574e2577f95a6b3ecb444",
+        "formatting_noise_moderate": "863b5cc5cd6733472ff8d8b0173511330b744dde255850ba27e391e4bd74d07d",
+        "semantic_noise_MinerU_moderate": "71f9676a42cd93a2309e93eb9c4101b9b307582af477ad453ca00b1d7b6b3275"
+      }
+    },
+    {
+      "sample_id": "ohr-012",
+      "benchmark": "OHR-Bench",
+      "cohort": "longitudinal_150",
+      "row_idx": 22,
+      "domain": "academic",
+      "doc_name": "academic/2305.14160v4",
+      "page_idx": 2,
+      "qa_count": 8,
+      "selection_reasons": [
+        "multi_evidence_coverage",
+        "prior_semantic_ocr_failure"
+      ],
+      "text_sha256": {
+        "gt_text": "77a66d14bbd58b05e6408c572fad18b40ad36ce27628ecd9e82a26d0afc30df8",
+        "formatting_noise_moderate": "5ece126951c8a75493e7a90b347cbf2d9007f3541bb988459b50a82ed623079e",
+        "semantic_noise_MinerU_moderate": "e94de789c80eff980e7d6c69867065658b40c81afe8a34c507b06931c1d20ce2"
+      }
+    },
+    {
+      "sample_id": "ohr-013",
+      "benchmark": "OHR-Bench",
+      "cohort": "longitudinal_150",
+      "row_idx": 23,
+      "domain": "academic",
+      "doc_name": "academic/2305.14160v4",
+      "page_idx": 3,
+      "qa_count": 4,
+      "selection_reasons": [
+        "multi_evidence_coverage",
+        "prior_semantic_ocr_failure"
+      ],
+      "text_sha256": {
+        "gt_text": "072737845df601a56787deb701ea9717af29c97bf33d37ee1c43e690c0794611",
+        "formatting_noise_moderate": "13af93f1b38584bf4c76c20dc91bf451c5a52ea3929d6e237481c490a52a9d93",
+        "semantic_noise_MinerU_moderate": "560b2d3f4c7162fa2b80dbccde9b0c0460a6ef6db18495d874c90c4cffda6931"
+      }
+    },
+    {
+      "sample_id": "ohr-017",
+      "benchmark": "OHR-Bench",
+      "cohort": "longitudinal_150",
+      "row_idx": 27,
+      "domain": "academic",
+      "doc_name": "academic/2305.14160v4",
+      "page_idx": 7,
+      "qa_count": 4,
+      "selection_reasons": [
+        "prior_semantic_ocr_failure"
+      ],
+      "text_sha256": {
+        "gt_text": "5a87ee944b404754aa62e2713b426f848a30c987abd7cadcfb06a32ec1c31c9a",
+        "formatting_noise_moderate": "e5c75a70a737533ce05288341e275e61a0d1af1855e8731defd73c95dcf69ac8",
+        "semantic_noise_MinerU_moderate": "d2a5441eb82d69e4995577780398a9b01d5e17481ee91980da1b40a8a79f6398"
+      }
+    },
+    {
+      "sample_id": "ohr-021",
+      "benchmark": "OHR-Bench",
+      "cohort": "longitudinal_150",
+      "row_idx": 33,
+      "domain": "academic",
+      "doc_name": "academic/2305.14160v4",
+      "page_idx": 13,
+      "qa_count": 3,
+      "selection_reasons": [
+        "multi_evidence_coverage"
+      ],
+      "text_sha256": {
+        "gt_text": "eaeeac6b3397935d004a58a7d81398903b7f2b4ba28f17fb3cd56755364b42c8",
+        "formatting_noise_moderate": "78b64226069d6b97c2488acb40b1591d2fe64c8362037c57fbcb98ed86f1ec5b",
+        "semantic_noise_MinerU_moderate": "ec3c9ad6dd94119ec5000f61525a656dbafe165332f8cae452ef8ad1cbecda2f"
+      }
+    },
+    {
+      "sample_id": "ohr-023",
+      "benchmark": "OHR-Bench",
+      "cohort": "longitudinal_150",
+      "row_idx": 1252,
+      "domain": "administration",
+      "doc_name": "administration/DUDE_2b2b79bdd3b40f8cdb638363579f2b68",
+      "page_idx": 6,
+      "qa_count": 1,
+      "selection_reasons": [
+        "prior_semantic_ocr_failure"
+      ],
+      "text_sha256": {
+        "gt_text": "630d628da9a245389b41c3332dc8424e459f4aeaa79e69713e9e0b1353dcb78f",
+        "formatting_noise_moderate": "69a99ac6566ae918ea6d908b9e053ad3632ad9ffa83b83f3494a269266599b19",
+        "semantic_noise_MinerU_moderate": "aad660eec1f5649d8086092a052614feb79590181c186886faafcf6b08c286df"
+      }
+    },
+    {
+      "sample_id": "ohr-024",
+      "benchmark": "OHR-Bench",
+      "cohort": "longitudinal_150",
+      "row_idx": 1258,
+      "domain": "administration",
+      "doc_name": "administration/DUDE_2b2b79bdd3b40f8cdb638363579f2b68",
+      "page_idx": 12,
+      "qa_count": 1,
+      "selection_reasons": [
+        "multi_evidence_coverage"
+      ],
+      "text_sha256": {
+        "gt_text": "17bfb4b7097fe854e75cce219ddf46b466c420f203aa72f05393b4a1cfd47555",
+        "formatting_noise_moderate": "f75e125ed3d7c18d30c99d29448eb1b378071ebf9a9900bcb68896ab2876bc5a",
+        "semantic_noise_MinerU_moderate": "fd539b8cf06f51e405c60aa55ddf7a51c71033ac600a3535ee1a9e733d6d07d7"
+      }
+    },
+    {
+      "sample_id": "ohr-025",
+      "benchmark": "OHR-Bench",
+      "cohort": "longitudinal_150",
+      "row_idx": 1261,
+      "domain": "administration",
+      "doc_name": "administration/DUDE_2b2b79bdd3b40f8cdb638363579f2b68",
+      "page_idx": 15,
+      "qa_count": 1,
+      "selection_reasons": [
+        "multi_evidence_coverage"
+      ],
+      "text_sha256": {
+        "gt_text": "57481648b358d285cc97d33a488d478d59508e9e40c4c49704630b25b0a6b241",
+        "formatting_noise_moderate": "674336db391e179d0829be9b5a9e8c1f9bc762f81f011cad81a76d1ada41d319",
+        "semantic_noise_MinerU_moderate": "8d4a01365ebc3e05d06184af04eea4286e2e392022df47f92b61082f89e91607"
+      }
+    },
+    {
+      "sample_id": "ohr-027",
+      "benchmark": "OHR-Bench",
+      "cohort": "longitudinal_150",
+      "row_idx": 1264,
+      "domain": "administration",
+      "doc_name": "administration/DUDE_2b2b79bdd3b40f8cdb638363579f2b68",
+      "page_idx": 18,
+      "qa_count": 1,
+      "selection_reasons": [
+        "multi_evidence_coverage"
+      ],
+      "text_sha256": {
+        "gt_text": "c57c668b3b078ce4e58269faeb01bc146526f8eb43dbb65c0c9872c66c9a5f38",
+        "formatting_noise_moderate": "c116e5eee71c76e1ed6ee937a9e1b56b44fb0bd4e4df7d4be6cc1ebaf4ad0803",
+        "semantic_noise_MinerU_moderate": "640d0816ff65bd277e72f89dd9dbcb073e00441c851c232900eeffb895e12db0"
+      }
+    },
+    {
+      "sample_id": "ohr-028",
+      "benchmark": "OHR-Bench",
+      "cohort": "longitudinal_150",
+      "row_idx": 1265,
+      "domain": "administration",
+      "doc_name": "administration/DUDE_2b2b79bdd3b40f8cdb638363579f2b68",
+      "page_idx": 19,
+      "qa_count": 1,
+      "selection_reasons": [
+        "multi_evidence_coverage"
+      ],
+      "text_sha256": {
+        "gt_text": "c97398368977805ad8e8bbc025501f39148cbe54844bb733d7501b9edef4667e",
+        "formatting_noise_moderate": "2ec7ed61891477e5e510d667d3a72de431a79b1c646287f668e74ab4738fca91",
+        "semantic_noise_MinerU_moderate": "b0a23c1a58b0905ca5614fcb0c6ab4a6d909940bd93f9389721331f0b27c175c"
+      }
+    },
+    {
+      "sample_id": "ohr-030",
+      "benchmark": "OHR-Bench",
+      "cohort": "longitudinal_150",
+      "row_idx": 1267,
+      "domain": "administration",
+      "doc_name": "administration/DUDE_2b4e174de43ed5cb6ccf233d3cf2fd05",
+      "page_idx": 1,
+      "qa_count": 1,
+      "selection_reasons": [
+        "prior_semantic_ocr_failure"
+      ],
+      "text_sha256": {
+        "gt_text": "16a9fe830533361a2f6be3f23b7b6e36cb22ba6a31e2301f9e14936251cb1568",
+        "formatting_noise_moderate": "28416faacd64c115af47006f75fc1f88ac537ea07d2894382be53c7815577923",
+        "semantic_noise_MinerU_moderate": "518dff16dba9ca5d36c070fd1d455a82d627a124494821f73d1f6eabe97512db"
+      }
+    },
+    {
+      "sample_id": "ohr-031",
+      "benchmark": "OHR-Bench",
+      "cohort": "longitudinal_150",
+      "row_idx": 1268,
+      "domain": "administration",
+      "doc_name": "administration/DUDE_2b4e174de43ed5cb6ccf233d3cf2fd05",
+      "page_idx": 2,
+      "qa_count": 2,
+      "selection_reasons": [
+        "multi_evidence_coverage"
+      ],
+      "text_sha256": {
+        "gt_text": "504fc9e024c8cd07a27e7e1ab75dd0dfaf1c4a43480d835591f8d5e92c8d5b16",
+        "formatting_noise_moderate": "8285ca50d9e2cfcaab8ec6f0341276f401ea708e52fcd71a56b48b69f01c2b2a",
+        "semantic_noise_MinerU_moderate": "3c2b8d6783c5bb76cdfe277fe6230db41e610d41be3ba8e12c3c7001a581ad93"
+      }
+    },
+    {
+      "sample_id": "ohr-032",
+      "benchmark": "OHR-Bench",
+      "cohort": "longitudinal_150",
+      "row_idx": 1269,
+      "domain": "administration",
+      "doc_name": "administration/DUDE_2b4e174de43ed5cb6ccf233d3cf2fd05",
+      "page_idx": 3,
+      "qa_count": 2,
+      "selection_reasons": [
+        "multi_evidence_coverage"
+      ],
+      "text_sha256": {
+        "gt_text": "e5e02324c307d2f308f58f01f694030a52d30184783d3ca3cb4f897e053d37ba",
+        "formatting_noise_moderate": "2ede116cf6a6179924640fe3f90ceb8bcb00a3729e3a0854f41c23665a32d502",
+        "semantic_noise_MinerU_moderate": "15ac15690832a36ab34c6ecdca9cf52e14ddcfae2bc23488b8d3b0bd01917fa5"
+      }
+    },
+    {
+      "sample_id": "ohr-033",
+      "benchmark": "OHR-Bench",
+      "cohort": "longitudinal_150",
+      "row_idx": 1270,
+      "domain": "administration",
+      "doc_name": "administration/DUDE_2c0d16df6abaa877ee1bdeb8d924f844",
+      "page_idx": 0,
+      "qa_count": 1,
+      "selection_reasons": [
+        "multi_evidence_coverage"
+      ],
+      "text_sha256": {
+        "gt_text": "878788c3f1626b75ed834dc39c70fcaffc29e7d2eddead1086c43a614616a17d",
+        "formatting_noise_moderate": "d1ece18f0087592037ece951b988fa56ec8e85fc3fb18da7afbf5c100a6030a3",
+        "semantic_noise_MinerU_moderate": "e1e6038d5c6db2d16e1a82255d17ed01d377be9c1ce422aace209fa69b688384"
+      }
+    },
+    {
+      "sample_id": "ohr-034",
+      "benchmark": "OHR-Bench",
+      "cohort": "longitudinal_150",
+      "row_idx": 1272,
+      "domain": "administration",
+      "doc_name": "administration/DUDE_2c0d16df6abaa877ee1bdeb8d924f844",
+      "page_idx": 2,
+      "qa_count": 1,
+      "selection_reasons": [
+        "multi_evidence_coverage"
+      ],
+      "text_sha256": {
+        "gt_text": "436519d54d03f213ab3ee1e41949fe44b02e6433d434209a59661af5aff3f3bc",
+        "formatting_noise_moderate": "b6af7a715977037d24c339d82e03052460ba1bc40f50b56052a8dcbf437da316",
+        "semantic_noise_MinerU_moderate": "ac84cd5db094e87e22a2e80b1eefd29cebe99309072c1d2f3e6f3b8c147fe941"
+      }
+    },
+    {
+      "sample_id": "ohr-043",
+      "benchmark": "OHR-Bench",
+      "cohort": "longitudinal_150",
+      "row_idx": 1296,
+      "domain": "administration",
+      "doc_name": "administration/DUDE_2d071d2a3ef2e812c45e5c3fff0b502a",
+      "page_idx": 18,
+      "qa_count": 3,
+      "selection_reasons": [
+        "prior_semantic_ocr_failure"
+      ],
+      "text_sha256": {
+        "gt_text": "204b45ea5eb93621e209bd0b893b4c97badc15bddc7272675f797bdbf4ce35bd",
+        "formatting_noise_moderate": "3672db27b6fbb0a15c73cbb2b676122ba4204767c4f70ba4e2d4f47bd75e9b2c",
+        "semantic_noise_MinerU_moderate": "7b729994b0e44ba1c8b343b2bae1fa5882ea2cc0de669ceec7e8666d0a7a210a"
+      }
+    },
+    {
+      "sample_id": "ohr-045",
+      "benchmark": "OHR-Bench",
+      "cohort": "longitudinal_150",
+      "row_idx": 2500,
+      "domain": "finance",
+      "doc_name": "finance/AES_2022_10K",
+      "page_idx": 56,
+      "qa_count": 9,
+      "selection_reasons": [
+        "prior_semantic_ocr_failure"
+      ],
+      "text_sha256": {
+        "gt_text": "5a3ec793c3434105eea5cc3ed102d932d663affb56b81c0dcea0eab5f92502ee",
+        "formatting_noise_moderate": "7a382cc86e5e9cdb060780d8293c11b8da499ba95287971b30703f50b50f438a",
+        "semantic_noise_MinerU_moderate": "2d983886eefe0a5fc8e555fca297a70277f7116862b51e7a5db940b044ce1833"
+      }
+    },
+    {
+      "sample_id": "ohr-046",
+      "benchmark": "OHR-Bench",
+      "cohort": "longitudinal_150",
+      "row_idx": 2530,
+      "domain": "finance",
+      "doc_name": "finance/AES_2022_10K",
+      "page_idx": 86,
+      "qa_count": 6,
+      "selection_reasons": [
+        "prior_semantic_ocr_failure"
+      ],
+      "text_sha256": {
+        "gt_text": "e740a1c10eedd0611e1486af8938b0681d250e9f64a09b1653737191d3ec5ce9",
+        "formatting_noise_moderate": "c55e0942c33dcccb30b0d9094a9d3a5be2ca0d5922d4bae05918ae07ddae82ad",
+        "semantic_noise_MinerU_moderate": "f228b0e3615178e2101173ddede44dc089ab46e8f04e5bdfad0ed5e1ff738a60"
+      }
+    },
+    {
+      "sample_id": "ohr-049",
+      "benchmark": "OHR-Bench",
+      "cohort": "longitudinal_150",
+      "row_idx": 2539,
+      "domain": "finance",
+      "doc_name": "finance/AES_2022_10K",
+      "page_idx": 95,
+      "qa_count": 15,
+      "selection_reasons": [
+        "prior_semantic_ocr_failure"
+      ],
+      "text_sha256": {
+        "gt_text": "961a84df1ec4bc830b6d1e24721850c2d1c3853e2f22d0199a3baa6a8e7395be",
+        "formatting_noise_moderate": "3f91a81c26cc62ffb6be9a815fd3b007eb2d3e1387a34e6cc2ea0f4027007864",
+        "semantic_noise_MinerU_moderate": "94403288a2eb44a3eb29c10439775b8998a7a5ecfaf790b4994417b5c3b29008"
+      }
+    },
+    {
+      "sample_id": "ohr-050",
+      "benchmark": "OHR-Bench",
+      "cohort": "longitudinal_150",
+      "row_idx": 2541,
+      "domain": "finance",
+      "doc_name": "finance/AES_2022_10K",
+      "page_idx": 97,
+      "qa_count": 13,
+      "selection_reasons": [
+        "prior_semantic_ocr_failure"
+      ],
+      "text_sha256": {
+        "gt_text": "6d593a09c66f59de2b79b04fc73c85c7a8b4e7e797ae725cab6a48c8e58151d6",
+        "formatting_noise_moderate": "b21532fb77e5fcf5e93fbbdbafd739218bdf04c36de378fb9acfabf8e423e04d",
+        "semantic_noise_MinerU_moderate": "00df1280c722e2d3edcf2ea4622aea32a172ca51a143ca473135fea9ed66c8ff"
+      }
+    },
+    {
+      "sample_id": "ohr-052",
+      "benchmark": "OHR-Bench",
+      "cohort": "longitudinal_150",
+      "row_idx": 2555,
+      "domain": "finance",
+      "doc_name": "finance/AES_2022_10K",
+      "page_idx": 111,
+      "qa_count": 13,
+      "selection_reasons": [
+        "prior_semantic_ocr_failure"
+      ],
+      "text_sha256": {
+        "gt_text": "05f0cdeb4772bdca503fe300ece0802f9cb97160d7e1e1f648193a54e601fa55",
+        "formatting_noise_moderate": "a7e87cd7e99c69f20559d38980ee8768ccc03900cfb868dd59f869d7ed205c42",
+        "semantic_noise_MinerU_moderate": "057daebe213ef7716111fc5f19e6a5ed95f737f6c33ab8bc787f84ea14f2871a"
+      }
+    },
+    {
+      "sample_id": "ohr-058",
+      "benchmark": "OHR-Bench",
+      "cohort": "longitudinal_150",
+      "row_idx": 2577,
+      "domain": "finance",
+      "doc_name": "finance/AES_2022_10K",
+      "page_idx": 133,
+      "qa_count": 3,
+      "selection_reasons": [
+        "prior_semantic_ocr_failure"
+      ],
+      "text_sha256": {
+        "gt_text": "bab72398ddfed91254ea545f32334d6f7bb5fe022f69a53018086901c0062844",
+        "formatting_noise_moderate": "304a13c0cc59c5706da8607e4d514bbf73818bfbe6ecaf80b6cadc2143e8e194",
+        "semantic_noise_MinerU_moderate": "8ace78d1c7ee142b22d65f0576a83a8ba4901d05058490bdc0c62cdb6ea1f572"
+      }
+    },
+    {
+      "sample_id": "ohr-060",
+      "benchmark": "OHR-Bench",
+      "cohort": "longitudinal_150",
+      "row_idx": 2594,
+      "domain": "finance",
+      "doc_name": "finance/AES_2022_10K",
+      "page_idx": 150,
+      "qa_count": 1,
+      "selection_reasons": [
+        "prior_semantic_ocr_failure"
+      ],
+      "text_sha256": {
+        "gt_text": "1231a404d758e78e3d3d720de2f727d795a2030e8c68ae93604c15e4760d97d2",
+        "formatting_noise_moderate": "d15f4c2818c58c57fa2379c1358e1dda93ddedb194b9f142c971f8581a131a03",
+        "semantic_noise_MinerU_moderate": "c511da38a4f1f050e36a866a6a85143b7873d7ce93e38dd346df70bbddbd212f"
+      }
+    },
+    {
+      "sample_id": "ohr-075",
+      "benchmark": "OHR-Bench",
+      "cohort": "longitudinal_150",
+      "row_idx": 4512,
+      "domain": "law",
+      "doc_name": "law/AIRTECHINTERNATIONALGROUPINC_05_08_2000-EX-10.4-FRANCHISE AGREEMENT",
+      "page_idx": 14,
+      "qa_count": 1,
+      "selection_reasons": [
+        "prior_semantic_ocr_failure"
+      ],
+      "text_sha256": {
+        "gt_text": "0a9d3a0b6890aa5161f34c3c54bb3dd931363ee4f8852227ec409c9e32742c06",
+        "formatting_noise_moderate": "27c0df0a838ab4ccbfe42154bf000114dfb5c065e8b0e6fd610ec87f3503c019",
+        "semantic_noise_MinerU_moderate": "92154991025b895a17abf4ff0fc5578896d42a0c8c5d90daa1f14d94bd120c88"
+      }
+    },
+    {
+      "sample_id": "ohr-078",
+      "benchmark": "OHR-Bench",
+      "cohort": "longitudinal_150",
+      "row_idx": 4515,
+      "domain": "law",
+      "doc_name": "law/AMERICASSHOPPINGMALLINC_12_10_1999-EX-10.2-SITE DEVELOPMENT AND HOSTING AGREEMENT",
+      "page_idx": 1,
+      "qa_count": 3,
+      "selection_reasons": [
+        "multi_evidence_coverage"
+      ],
+      "text_sha256": {
+        "gt_text": "08a54a80ab52160904551bebe31052d1bc58cfa6c5fef6487f1b7a752d9a086b",
+        "formatting_noise_moderate": "4b14a5cfe7c6e64763352d5846551f2e587d76619c48121c2280d13ec3b6d974",
+        "semantic_noise_MinerU_moderate": "65c12b17699b0bd19fc5b064e443b9c4e2ccaf1c6772d894b41c3e69a2f808ef"
+      }
+    },
+    {
+      "sample_id": "ohr-080",
+      "benchmark": "OHR-Bench",
+      "cohort": "longitudinal_150",
+      "row_idx": 4517,
+      "domain": "law",
+      "doc_name": "law/AMERICASSHOPPINGMALLINC_12_10_1999-EX-10.2-SITE DEVELOPMENT AND HOSTING AGREEMENT",
+      "page_idx": 3,
+      "qa_count": 5,
+      "selection_reasons": [
+        "multi_evidence_coverage"
+      ],
+      "text_sha256": {
+        "gt_text": "b81318c6844e745964846837103a69d13943146953ead02a63e8d053a23a69ba",
+        "formatting_noise_moderate": "75a1c8f8c46ca73a1e0591e2f86eb795679662dcdba1fbf199d568cdeb82fd56",
+        "semantic_noise_MinerU_moderate": "00d9e7b8f0d21f23c8f56308d289ab05f8e7b12db2e5df4e2ce85176de802c04"
+      }
+    },
+    {
+      "sample_id": "ohr-083",
+      "benchmark": "OHR-Bench",
+      "cohort": "longitudinal_150",
+      "row_idx": 4521,
+      "domain": "law",
+      "doc_name": "law/ASIANDRAGONGROUPINC_08_11_2005-EX-10.5-Reseller Agreement",
+      "page_idx": 2,
+      "qa_count": 3,
+      "selection_reasons": [
+        "multi_evidence_coverage"
+      ],
+      "text_sha256": {
+        "gt_text": "4bb1e7afb16725140423afcf61f852bcb96d6e194bce51748f47488460ac5130",
+        "formatting_noise_moderate": "64196b68f75ac8891084589d56a287343acea19e55a367c29df45008dead3e20",
+        "semantic_noise_MinerU_moderate": "89c92a2c0b412553d3014776df7fa5adc8b1797977fcb29b8d770bfcfa596d54"
+      }
+    },
+    {
+      "sample_id": "ohr-085",
+      "benchmark": "OHR-Bench",
+      "cohort": "longitudinal_150",
+      "row_idx": 4523,
+      "domain": "law",
+      "doc_name": "law/ASIANDRAGONGROUPINC_08_11_2005-EX-10.5-Reseller Agreement",
+      "page_idx": 4,
+      "qa_count": 2,
+      "selection_reasons": [
+        "prior_semantic_ocr_failure"
+      ],
+      "text_sha256": {
+        "gt_text": "16c27417c3e5397182913716b0d14692b2bf707244a14c5756bb68f46cba6f67",
+        "formatting_noise_moderate": "7225a4224ca71e8599760780ef15817abea28f7708074b1afda9244cad315c43",
+        "semantic_noise_MinerU_moderate": "77613f1950c2a43d45784379674fdc288c4547300612199bdddcf11aa44a981f"
+      }
+    },
+    {
+      "sample_id": "ohr-086",
+      "benchmark": "OHR-Bench",
+      "cohort": "longitudinal_150",
+      "row_idx": 4524,
+      "domain": "law",
+      "doc_name": "law/ASIANDRAGONGROUPINC_08_11_2005-EX-10.5-Reseller Agreement",
+      "page_idx": 5,
+      "qa_count": 4,
+      "selection_reasons": [
+        "multi_evidence_coverage"
+      ],
+      "text_sha256": {
+        "gt_text": "e34a8fc00d2eaa1a207648f08f14fe7d91aff71cb970f711cbd51cc83dcd0386",
+        "formatting_noise_moderate": "454db8c32c012123d6588e1a993fd3495db9c775144ae0edc3d8f640dc08e497",
+        "semantic_noise_MinerU_moderate": "09080c77ff03572a68e1016ca41d2995564db93206934c99189ca8dd49d7b439"
+      }
+    },
+    {
+      "sample_id": "ohr-087",
+      "benchmark": "OHR-Bench",
+      "cohort": "longitudinal_150",
+      "row_idx": 4525,
+      "domain": "law",
+      "doc_name": "law/ASIANDRAGONGROUPINC_08_11_2005-EX-10.5-Reseller Agreement",
+      "page_idx": 6,
+      "qa_count": 3,
+      "selection_reasons": [
+        "prior_semantic_ocr_failure"
+      ],
+      "text_sha256": {
+        "gt_text": "befdec42f69e8975cf3e728d284edc6e6d4e8874df63fd380a5d7c93f5d5c67d",
+        "formatting_noise_moderate": "3e1108a59f816eed911dec890bf417c5fe66cfb6fbe69554fc2bcdcb261f30e8",
+        "semantic_noise_MinerU_moderate": "c13da96b6043c0741ca7a1b91ddafc8c97a2f11e9b461583ca58348696929e44"
+      }
+    },
+    {
+      "sample_id": "ohr-088",
+      "benchmark": "OHR-Bench",
+      "cohort": "longitudinal_150",
+      "row_idx": 5750,
+      "domain": "manual",
+      "doc_name": "manual/DSA-278777",
+      "page_idx": 5,
+      "qa_count": 3,
+      "selection_reasons": [
+        "deterministic_domain_fill"
+      ],
+      "text_sha256": {
+        "gt_text": "8f52ffdf85ab7a789e5ef4b9e2b328fd822eb84eb07911b7c4c2e4db2c962fcc",
+        "formatting_noise_moderate": "b2aaf4d50c376cdf791ca0d117d510c39d9747feabde53a085190573cf77f85f",
+        "semantic_noise_MinerU_moderate": "5562ae40ae152cfe9052b619c938e89150fc4a045b7b4046342926e2ab923a60"
+      }
+    },
+    {
+      "sample_id": "ohr-089",
+      "benchmark": "OHR-Bench",
+      "cohort": "longitudinal_150",
+      "row_idx": 5751,
+      "domain": "manual",
+      "doc_name": "manual/DSA-278777",
+      "page_idx": 6,
+      "qa_count": 3,
+      "selection_reasons": [
+        "deterministic_domain_fill"
+      ],
+      "text_sha256": {
+        "gt_text": "0ef170af63f22794b5fdfb9270d5c43c1d8d7f5c30fa709af38e207718d57943",
+        "formatting_noise_moderate": "14ba2ed5b75e9e4c71abe72181e881c7d3c919a8ac45d40c7dfb134122a1338a",
+        "semantic_noise_MinerU_moderate": "1a6bf1b455594cd0507db8751b74542d27ec27b693e061e8086209caabbc8847"
+      }
+    },
+    {
+      "sample_id": "ohr-090",
+      "benchmark": "OHR-Bench",
+      "cohort": "longitudinal_150",
+      "row_idx": 5752,
+      "domain": "manual",
+      "doc_name": "manual/DSA-278777",
+      "page_idx": 7,
+      "qa_count": 1,
+      "selection_reasons": [
+        "prior_semantic_ocr_failure"
+      ],
+      "text_sha256": {
+        "gt_text": "75d630a9a047a409027101716a29622822097eba6436c217555b18afc879b7c9",
+        "formatting_noise_moderate": "1757ed9fb9a437a1ebc90ce93a82e0f41bb644ce34506b1c5c19c78a84dbe1d0",
+        "semantic_noise_MinerU_moderate": "746c101e0c170a14d4a670917d007dce15dfd8eb04b01e4dbe613057e4e32245"
+      }
+    },
+    {
+      "sample_id": "ohr-091",
+      "benchmark": "OHR-Bench",
+      "cohort": "longitudinal_150",
+      "row_idx": 5753,
+      "domain": "manual",
+      "doc_name": "manual/DSA-278777",
+      "page_idx": 8,
+      "qa_count": 3,
+      "selection_reasons": [
+        "deterministic_domain_fill"
+      ],
+      "text_sha256": {
+        "gt_text": "daef069581038e1397c1a3afafc098029b201d55803e28833e87fb974505ed03",
+        "formatting_noise_moderate": "6e534996eefb029ab8dd28a3443afa1e9f7d8519d5caa9aa0ff8139ce68774c2",
+        "semantic_noise_MinerU_moderate": "3d937d4d3924001b7fa437d48770c1be91de9d9660a68ce280e5e7f5fc64fda0"
+      }
+    },
+    {
+      "sample_id": "ohr-092",
+      "benchmark": "OHR-Bench",
+      "cohort": "longitudinal_150",
+      "row_idx": 5754,
+      "domain": "manual",
+      "doc_name": "manual/DSA-278777",
+      "page_idx": 9,
+      "qa_count": 3,
+      "selection_reasons": [
+        "deterministic_domain_fill"
+      ],
+      "text_sha256": {
+        "gt_text": "01090fe4b794ad27ae56aad60d9f6589fb90e3aec35c1bfab5a65dd5a9b46e14",
+        "formatting_noise_moderate": "62904826f68457623bb874d171f735ba0c6fa463b945cd3cd00537c2baf5af1c",
+        "semantic_noise_MinerU_moderate": "99fd25e7062a6e26e66ab3ea476934f501d5d4fa405e88c59ce883173dc3cab9"
+      }
+    },
+    {
+      "sample_id": "ohr-093",
+      "benchmark": "OHR-Bench",
+      "cohort": "longitudinal_150",
+      "row_idx": 5756,
+      "domain": "manual",
+      "doc_name": "manual/DSA-278777",
+      "page_idx": 11,
+      "qa_count": 3,
+      "selection_reasons": [
+        "deterministic_domain_fill"
+      ],
+      "text_sha256": {
+        "gt_text": "b5c1a5d531082ef41d63f5e73ee1ff4985fe5a82a9bec5999fb25ea9e49d81b0",
+        "formatting_noise_moderate": "6bddb7baa02a36a25b733285aeb374545aa609d6be1d609b936cb089856c6344",
+        "semantic_noise_MinerU_moderate": "b738f9b41ae15c455a1e5fce4248ad38fb80a34c9d1c5f1c1a50eaff164b1d97"
+      }
+    },
+    {
+      "sample_id": "ohr-094",
+      "benchmark": "OHR-Bench",
+      "cohort": "longitudinal_150",
+      "row_idx": 5757,
+      "domain": "manual",
+      "doc_name": "manual/DSA-278777",
+      "page_idx": 12,
+      "qa_count": 3,
+      "selection_reasons": [
+        "prior_semantic_ocr_failure"
+      ],
+      "text_sha256": {
+        "gt_text": "3a7d631693c9b534693abdbae0af2dd87b0f373aa321668ae7499fbea948167b",
+        "formatting_noise_moderate": "b82c247bae2dbaaf47fb4bf3cc7f5ba92d03b89871a9420543afea5415f95841",
+        "semantic_noise_MinerU_moderate": "8a3e0663a13a13e5811bad8919be38bf451cc4a0b91f8b85c0cc6155c418fc59"
+      }
+    },
+    {
+      "sample_id": "ohr-095",
+      "benchmark": "OHR-Bench",
+      "cohort": "longitudinal_150",
+      "row_idx": 5758,
+      "domain": "manual",
+      "doc_name": "manual/DSA-278777",
+      "page_idx": 13,
+      "qa_count": 2,
+      "selection_reasons": [
+        "deterministic_domain_fill"
+      ],
+      "text_sha256": {
+        "gt_text": "65548e5515ff056ad374ee3fc7e61e920d1a37f35a956bb6f50ff4441aa08aaf",
+        "formatting_noise_moderate": "750021db92c579818758feb0c78afc01a86740244d8f6552f99b36923c7aa830",
+        "semantic_noise_MinerU_moderate": "90e0895c77560c3f3b3798f9f9e134f8eed2379ef63798e5f3510fb8159913af"
+      }
+    },
+    {
+      "sample_id": "ohr-097",
+      "benchmark": "OHR-Bench",
+      "cohort": "longitudinal_150",
+      "row_idx": 5764,
+      "domain": "manual",
+      "doc_name": "manual/DSA-278777",
+      "page_idx": 19,
+      "qa_count": 2,
+      "selection_reasons": [
+        "deterministic_domain_fill"
+      ],
+      "text_sha256": {
+        "gt_text": "53bc7baf91d362154433db3e030a59897dd78099ed03353bcbbe1e36d1fb2bcf",
+        "formatting_noise_moderate": "d5078babbdea00f0c52f022f87f701c70b721cdac30d27ac47c4bc358ab3b550",
+        "semantic_noise_MinerU_moderate": "89663225331473cb407388f5eec96cc6eedcd4eca7c1199133434955ab371928"
+      }
+    },
+    {
+      "sample_id": "ohr-100",
+      "benchmark": "OHR-Bench",
+      "cohort": "longitudinal_150",
+      "row_idx": 5771,
+      "domain": "manual",
+      "doc_name": "manual/DUDE_074d888605a7db82a24dda46a4fb1cf6",
+      "page_idx": 3,
+      "qa_count": 1,
+      "selection_reasons": [
+        "multi_evidence_coverage"
+      ],
+      "text_sha256": {
+        "gt_text": "40deedd5df973015602f1d75d2aa73141eafbe09217ef34c0507749c2e046e87",
+        "formatting_noise_moderate": "9c151a73c3029ed82bb4babe0d7f972cd3ab28c1ff4223e4a65591cc358b8909",
+        "semantic_noise_MinerU_moderate": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "sample_id": "ohr-101",
+      "benchmark": "OHR-Bench",
+      "cohort": "longitudinal_150",
+      "row_idx": 5772,
+      "domain": "manual",
+      "doc_name": "manual/DUDE_074d888605a7db82a24dda46a4fb1cf6",
+      "page_idx": 4,
+      "qa_count": 3,
+      "selection_reasons": [
+        "multi_evidence_coverage"
+      ],
+      "text_sha256": {
+        "gt_text": "8a63416855757398f44cc78074aa54c08d979127c7f0e1d8c9e4d0b3ab750133",
+        "formatting_noise_moderate": "58d62a25f2c064c557a480d6aa9db1648159678bba9b8d806d4a98a42a8411f5",
+        "semantic_noise_MinerU_moderate": "726e0f6985429688644df9f0733fa790cdee7e6855016b76406e94a05078721a"
+      }
+    },
+    {
+      "sample_id": "ohr-102",
+      "benchmark": "OHR-Bench",
+      "cohort": "longitudinal_150",
+      "row_idx": 5773,
+      "domain": "manual",
+      "doc_name": "manual/DUDE_074d888605a7db82a24dda46a4fb1cf6",
+      "page_idx": 5,
+      "qa_count": 6,
+      "selection_reasons": [
+        "multi_evidence_coverage"
+      ],
+      "text_sha256": {
+        "gt_text": "7ff6543c7d75799f1f98cfa650e034030e461790c6e29b8857059d27a450973a",
+        "formatting_noise_moderate": "9dba50c7c6dbb0acc7d5b3b49e5b8ca517de8462bed25db5e3bea0275d25dd58",
+        "semantic_noise_MinerU_moderate": "9c0f96a3e56e8d57898d25180ba649394f0a2072640767000245ee194c283197"
+      }
+    },
+    {
+      "sample_id": "ohr-104",
+      "benchmark": "OHR-Bench",
+      "cohort": "longitudinal_150",
+      "row_idx": 5777,
+      "domain": "manual",
+      "doc_name": "manual/DUDE_074d888605a7db82a24dda46a4fb1cf6",
+      "page_idx": 9,
+      "qa_count": 2,
+      "selection_reasons": [
+        "multi_evidence_coverage"
+      ],
+      "text_sha256": {
+        "gt_text": "873a44fe52d948d18dc997f33bd5b0c21106a0075850e43441c3a2fbe2b2c818",
+        "formatting_noise_moderate": "51421cbf5327e4bb53d6d68d988db5a9b69af6e7eb6b29b629c92366519945bc",
+        "semantic_noise_MinerU_moderate": "f62b2d35e4b5c1b0b872ce124c01c82a2fa456582f254e0ffee4a2c2a4c9f325"
+      }
+    },
+    {
+      "sample_id": "ohr-105",
+      "benchmark": "OHR-Bench",
+      "cohort": "longitudinal_150",
+      "row_idx": 5778,
+      "domain": "manual",
+      "doc_name": "manual/DUDE_074d888605a7db82a24dda46a4fb1cf6",
+      "page_idx": 10,
+      "qa_count": 2,
+      "selection_reasons": [
+        "multi_evidence_coverage"
+      ],
+      "text_sha256": {
+        "gt_text": "fbb1062861b8bc55043e0a9a39e6d4ee69c8984f83c1a6a099111619fda123ec",
+        "formatting_noise_moderate": "8a5430fc38ebba3c8a470ee7537834ebc3f69282fb2832fbdc82aeb6ef4d0473",
+        "semantic_noise_MinerU_moderate": "0e55979e87b50fefa70fa562115d55e725a800fb66a027bb0b3a14e55d31d01b"
+      }
+    },
+    {
+      "sample_id": "ohr-109",
+      "benchmark": "OHR-Bench",
+      "cohort": "longitudinal_150",
+      "row_idx": 7400,
+      "domain": "news",
+      "doc_name": "news/05_05",
+      "page_idx": 0,
+      "qa_count": 3,
+      "selection_reasons": [
+        "prior_semantic_ocr_failure"
+      ],
+      "text_sha256": {
+        "gt_text": "6ed3437f6c87d2002342ffaf88929515a55744e77628f112ced41a814ba297c6",
+        "formatting_noise_moderate": "f36c917d712cfb755de2c9dacce0f3e4ed5d09295592b623432d441d5284b35c",
+        "semantic_noise_MinerU_moderate": "45fe058b939b9fb9e8820976e273a620e85b4b7c62e3f9eb2030df11c8666475"
+      }
+    },
+    {
+      "sample_id": "ohr-110",
+      "benchmark": "OHR-Bench",
+      "cohort": "longitudinal_150",
+      "row_idx": 7401,
+      "domain": "news",
+      "doc_name": "news/05_06",
+      "page_idx": 0,
+      "qa_count": 3,
+      "selection_reasons": [
+        "deterministic_domain_fill"
+      ],
+      "text_sha256": {
+        "gt_text": "b3cde7c8ba1cd86e56f8930846280c91b79ac7cf40bb1c545a8ebb369d282e5a",
+        "formatting_noise_moderate": "7f4feeada37736e5ac521805b4816109d437ffc4571cbdda841f9217855a13cf",
+        "semantic_noise_MinerU_moderate": "2d65e46063e3068778a0e4a4d8f98261d834ed329435607cfaa67398b075cf35"
+      }
+    },
+    {
+      "sample_id": "ohr-112",
+      "benchmark": "OHR-Bench",
+      "cohort": "longitudinal_150",
+      "row_idx": 7403,
+      "domain": "news",
+      "doc_name": "news/05_08",
+      "page_idx": 0,
+      "qa_count": 3,
+      "selection_reasons": [
+        "deterministic_domain_fill"
+      ],
+      "text_sha256": {
+        "gt_text": "78d31344c41e523ad1b8a359316c1a4b3f3b07cfa3d5d48fb90af926cebb0097",
+        "formatting_noise_moderate": "d9cbb69ba4ffcadae2d355e1a003b5e15f63cab5daa105729ebf85cf1f93ddbc",
+        "semantic_noise_MinerU_moderate": "a6e0d9529ecec18dfee912598c0f1c134e9afe67e282292994ce8f55e5c01842"
+      }
+    },
+    {
+      "sample_id": "ohr-113",
+      "benchmark": "OHR-Bench",
+      "cohort": "longitudinal_150",
+      "row_idx": 7404,
+      "domain": "news",
+      "doc_name": "news/05_09",
+      "page_idx": 0,
+      "qa_count": 3,
+      "selection_reasons": [
+        "deterministic_domain_fill"
+      ],
+      "text_sha256": {
+        "gt_text": "3c2442b059ae0138b6ff15be1c6cdd3ef679088f12faf0d5f134af2503b19c9f",
+        "formatting_noise_moderate": "9ade77837248e12c7b189e3bfc4c5371819c155b8c3dae50938e7dc5550ca5b3",
+        "semantic_noise_MinerU_moderate": "8b129b17375725c7b71df00e0b171afafcdc86df7aae51101917dd10d47e9648"
+      }
+    },
+    {
+      "sample_id": "ohr-114",
+      "benchmark": "OHR-Bench",
+      "cohort": "longitudinal_150",
+      "row_idx": 7406,
+      "domain": "news",
+      "doc_name": "news/05_11",
+      "page_idx": 0,
+      "qa_count": 3,
+      "selection_reasons": [
+        "deterministic_domain_fill"
+      ],
+      "text_sha256": {
+        "gt_text": "9239bc83f632f3733fcb0935120447101d37969db14bce01e415a43dbd618331",
+        "formatting_noise_moderate": "67cf1be4baf72b5c612779f4cbb38bfb892c82584d2a2d8a5012764a0c0a803f",
+        "semantic_noise_MinerU_moderate": "5bc83d9c0772ed2576afdeea00ba5e77825e346e098a55536a952e3c9b480f56"
+      }
+    },
+    {
+      "sample_id": "ohr-115",
+      "benchmark": "OHR-Bench",
+      "cohort": "longitudinal_150",
+      "row_idx": 7407,
+      "domain": "news",
+      "doc_name": "news/05_12",
+      "page_idx": 0,
+      "qa_count": 3,
+      "selection_reasons": [
+        "deterministic_domain_fill"
+      ],
+      "text_sha256": {
+        "gt_text": "d187e1a8772ca369e0fab3c6457ed2ac00182ee433dd752b1a4a4484bc0d539a",
+        "formatting_noise_moderate": "1797e3525e3b9cf809d04b6e71bb7f6f25917040e2a27c136f878d283de19fff",
+        "semantic_noise_MinerU_moderate": "0d5747befc22620be054a7a1a3f53d181df7eedc711a681bc85cab595d7a96b2"
+      }
+    },
+    {
+      "sample_id": "ohr-127",
+      "benchmark": "OHR-Bench",
+      "cohort": "longitudinal_150",
+      "row_idx": 7419,
+      "domain": "news",
+      "doc_name": "news/05_24",
+      "page_idx": 0,
+      "qa_count": 2,
+      "selection_reasons": [
+        "prior_semantic_ocr_failure"
+      ],
+      "text_sha256": {
+        "gt_text": "d71f60d089cb3f24d4bc501bf2730006a3036b42fd84e99b279d0292665c0b2c",
+        "formatting_noise_moderate": "6cd576f721a0b864455c4deae5d2a93754fdf7c6ed733988538012c9d8d6495d",
+        "semantic_noise_MinerU_moderate": "53478a6707880db7c6152feacdacdb4104e3684c893d0953970da87043fdf199"
+      }
+    },
+    {
+      "sample_id": "ohr-130",
+      "benchmark": "OHR-Bench",
+      "cohort": "longitudinal_150",
+      "row_idx": 8001,
+      "domain": "textbook",
+      "doc_name": "textbook/DUDE_7612210e7d99dfeea6f75d1a2632349c",
+      "page_idx": 8,
+      "qa_count": 2,
+      "selection_reasons": [
+        "prior_semantic_ocr_failure"
+      ],
+      "text_sha256": {
+        "gt_text": "d0e719ed124e2f3f4f276334426bd299dd3c2eebef734fc4a50ff691578ef035",
+        "formatting_noise_moderate": "5e921538c226f2bc50f9f94479bd4beb22d5b0f9c903cd0d0862952b5dcf1ea2",
+        "semantic_noise_MinerU_moderate": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "sample_id": "ohr-132",
+      "benchmark": "OHR-Bench",
+      "cohort": "longitudinal_150",
+      "row_idx": 8004,
+      "domain": "textbook",
+      "doc_name": "textbook/DUDE_7612210e7d99dfeea6f75d1a2632349c",
+      "page_idx": 11,
+      "qa_count": 2,
+      "selection_reasons": [
+        "prior_semantic_ocr_failure"
+      ],
+      "text_sha256": {
+        "gt_text": "659758b3a89c37a97e024ac301d0732079ab3ec82c13a93d5736590a007f514a",
+        "formatting_noise_moderate": "cb584ef5e8227299dab15ec4b443562b95e149dae1ad35ed8170b2085b8c02d6",
+        "semantic_noise_MinerU_moderate": "34ae89a68530dc9b63ba08bb033ca63206ca195214e8d56a3011b14f947eabba"
+      }
+    },
+    {
+      "sample_id": "ohr-135",
+      "benchmark": "OHR-Bench",
+      "cohort": "longitudinal_150",
+      "row_idx": 8011,
+      "domain": "textbook",
+      "doc_name": "textbook/DUDE_7612210e7d99dfeea6f75d1a2632349c",
+      "page_idx": 18,
+      "qa_count": 2,
+      "selection_reasons": [
+        "deterministic_domain_fill"
+      ],
+      "text_sha256": {
+        "gt_text": "390ec7171771e00d19fac39c5339f44045d3285d9673b5790b1be37216cf9fc4",
+        "formatting_noise_moderate": "12650e70765050d758aacf8a4a31fb6c15a586d3ea3ecd0566970a4853bfe2bb",
+        "semantic_noise_MinerU_moderate": "fd8f5774c103057079acbdebe2b6948fe35cff0044b5361655cb8fab7b553773"
+      }
+    },
+    {
+      "sample_id": "ohr-137",
+      "benchmark": "OHR-Bench",
+      "cohort": "longitudinal_150",
+      "row_idx": 8013,
+      "domain": "textbook",
+      "doc_name": "textbook/DUDE_8149dd3df914efe0c23823acad64299a",
+      "page_idx": 0,
+      "qa_count": 5,
+      "selection_reasons": [
+        "prior_semantic_ocr_failure"
+      ],
+      "text_sha256": {
+        "gt_text": "7170004bd0776989852fde40f8dd25408d9c06138dc0a2eac66f9ce138b109e0",
+        "formatting_noise_moderate": "6cd3893237de7bdd79ecd620581df86ddc25ea008f4a2e68d5ca73c4cc1ef797",
+        "semantic_noise_MinerU_moderate": "a7f51350e9640ca920deb07b433bbaff7a91cc0a992eb771d25f04339be097fc"
+      }
+    },
+    {
+      "sample_id": "ohr-143",
+      "benchmark": "OHR-Bench",
+      "cohort": "longitudinal_150",
+      "row_idx": 8034,
+      "domain": "textbook",
+      "doc_name": "textbook/DUDE_89a3da3457ce1451bc01e4b83fb95f04",
+      "page_idx": 0,
+      "qa_count": 2,
+      "selection_reasons": [
+        "deterministic_domain_fill"
+      ],
+      "text_sha256": {
+        "gt_text": "ac360531a92974fe6228dfddfb3206c524b08b2e975482dafd27b6f44a26fba7",
+        "formatting_noise_moderate": "274afa039478eb1b6181e5a83ace8e8c4825b97d91314924b973183d1f9154f0",
+        "semantic_noise_MinerU_moderate": "b402f3009933ca4782da779e781bc4a7fdde70a5e83e9078a671f358f9bbfd4f"
+      }
+    },
+    {
+      "sample_id": "ohr-144",
+      "benchmark": "OHR-Bench",
+      "cohort": "longitudinal_150",
+      "row_idx": 8036,
+      "domain": "textbook",
+      "doc_name": "textbook/DUDE_89a3da3457ce1451bc01e4b83fb95f04",
+      "page_idx": 2,
+      "qa_count": 2,
+      "selection_reasons": [
+        "deterministic_domain_fill"
+      ],
+      "text_sha256": {
+        "gt_text": "ef55a388287d9f73314ab861dd4ff989cf0f254f1b3a227c3d30acbdd2fe2ba0",
+        "formatting_noise_moderate": "73de7dc33daa00a21ef0327cfa1d424a10b616c2dc891d65a0176d424059a5ae",
+        "semantic_noise_MinerU_moderate": "050c4247066e392e31e017f02b3c746d184dad6f35d2f6731950c04574aba839"
+      }
+    },
+    {
+      "sample_id": "ohr-146",
+      "benchmark": "OHR-Bench",
+      "cohort": "longitudinal_150",
+      "row_idx": 8038,
+      "domain": "textbook",
+      "doc_name": "textbook/DUDE_89a3da3457ce1451bc01e4b83fb95f04",
+      "page_idx": 4,
+      "qa_count": 1,
+      "selection_reasons": [
+        "prior_semantic_ocr_failure"
+      ],
+      "text_sha256": {
+        "gt_text": "694c98e0cbb3bd05b2930e19ecf185a8fe77e967ff17e556d3227e727ca4f251",
+        "formatting_noise_moderate": "60107916558da5da61c280abcfc8eb69d29f8678031aee98eac35abbd6f9ce06",
+        "semantic_noise_MinerU_moderate": "2e546f24b2beee0eefcfdaf3ef4d43ce9e35af81b78359e9adc30e859405e97a"
+      }
+    },
+    {
+      "sample_id": "ohr-147",
+      "benchmark": "OHR-Bench",
+      "cohort": "longitudinal_150",
+      "row_idx": 8039,
+      "domain": "textbook",
+      "doc_name": "textbook/DUDE_89a3da3457ce1451bc01e4b83fb95f04",
+      "page_idx": 5,
+      "qa_count": 2,
+      "selection_reasons": [
+        "deterministic_domain_fill"
+      ],
+      "text_sha256": {
+        "gt_text": "28f3b58079c6f34e90630313de459667a95f9d98f13232688db86cb76773ac0d",
+        "formatting_noise_moderate": "9f0b11b910bcb55125ad856d43010ca7dab5d6605d60424ece5049893aae1aac",
+        "semantic_noise_MinerU_moderate": "f36cd04fa31b21d2f596fd71c5506bf31669d4ea595b5d515bace63bf15a7a17"
+      }
+    },
+    {
+      "sample_id": "ohr-148",
+      "benchmark": "OHR-Bench",
+      "cohort": "longitudinal_150",
+      "row_idx": 8040,
+      "domain": "textbook",
+      "doc_name": "textbook/DUDE_89a3da3457ce1451bc01e4b83fb95f04",
+      "page_idx": 6,
+      "qa_count": 3,
+      "selection_reasons": [
+        "deterministic_domain_fill"
+      ],
+      "text_sha256": {
+        "gt_text": "5d2f60b4de02993a7284eef38fc227106fcc89c57693c7cd78f7cbeaa068bc3e",
+        "formatting_noise_moderate": "26982c550b3c2e3b3bdfcf451cbab5719fcdae1b4629580c17adc31a1451e1b0",
+        "semantic_noise_MinerU_moderate": "53ef5a9f92537f0192e9f95f0c6175df92a0d68ffa9387c61bf478dd735d5507"
+      }
+    },
+    {
+      "sample_id": "ohr-149",
+      "benchmark": "OHR-Bench",
+      "cohort": "longitudinal_150",
+      "row_idx": 8041,
+      "domain": "textbook",
+      "doc_name": "textbook/DUDE_89a3da3457ce1451bc01e4b83fb95f04",
+      "page_idx": 7,
+      "qa_count": 4,
+      "selection_reasons": [
+        "deterministic_domain_fill"
+      ],
+      "text_sha256": {
+        "gt_text": "83042979694b1192d9d5d8652382cb1489878070c2f9431fd1d560c2a305f6b9",
+        "formatting_noise_moderate": "7cbd7cce526f80ef3fb3ed4974e3f73d6b99ccb056e57b65d78a3c10605ff54f",
+        "semantic_noise_MinerU_moderate": "d322e4730ca97307740be9c65ec2376d0d4e9b53636682cbd680933171918305"
+      }
+    },
+    {
+      "sample_id": "ohr-holdout-002",
+      "benchmark": "OHR-Bench",
+      "cohort": "unseen_holdout_50",
+      "row_idx": 104,
+      "domain": "academic",
+      "doc_name": "academic/2404.10198v2",
+      "page_idx": 0,
+      "qa_count": 2,
+      "selection_reasons": [
+        "deterministic_domain_fill"
+      ],
+      "text_sha256": {
+        "gt_text": "af4f6dd7ce56f4ee6c7b81c10eab9ec9141dc8b074235b0d3849e2fd11aa0de7",
+        "formatting_noise_moderate": "699d0c81659ab7433e8ba4d67baed5c9e8cbf0d5f56ddc69e4aa0ac75c4102d9",
+        "semantic_noise_MinerU_moderate": "be3bfc3d76c113136ee9d3bf4c5f2b3ffef7f8fee1074b3068c4786f93f6a6fc"
+      }
+    },
+    {
+      "sample_id": "ohr-holdout-003",
+      "benchmark": "OHR-Bench",
+      "cohort": "unseen_holdout_50",
+      "row_idx": 105,
+      "domain": "academic",
+      "doc_name": "academic/2404.10198v2",
+      "page_idx": 1,
+      "qa_count": 1,
+      "selection_reasons": [
+        "deterministic_domain_fill"
+      ],
+      "text_sha256": {
+        "gt_text": "8844554c7c20aab726db80dda2817af28ef79472753c2b10fc9018706ecd7c56",
+        "formatting_noise_moderate": "84d23b304f1a1aa24ab338a3f4846bce948577f2a45007d2eeb922c2095d90d2",
+        "semantic_noise_MinerU_moderate": "9c69b06d5200f02a062cbc60c919eef334678390b8d6e0fb9d66bfc870a38290"
+      }
+    },
+    {
+      "sample_id": "ohr-holdout-004",
+      "benchmark": "OHR-Bench",
+      "cohort": "unseen_holdout_50",
+      "row_idx": 106,
+      "domain": "academic",
+      "doc_name": "academic/2404.10198v2",
+      "page_idx": 2,
+      "qa_count": 1,
+      "selection_reasons": [
+        "deterministic_domain_fill"
+      ],
+      "text_sha256": {
+        "gt_text": "b79bc32505c24f7647f3e8ca37d15ba211ece96ccb0de589f33115cbfaad61f7",
+        "formatting_noise_moderate": "262f893241bfc489d1deccd709a15782381ba9b8b81aad9e32ea9cd68d74677c",
+        "semantic_noise_MinerU_moderate": "85802f5a96b024270415d08052317cfdcb77183f4e3236576b9e07adedfefac2"
+      }
+    },
+    {
+      "sample_id": "ohr-holdout-005",
+      "benchmark": "OHR-Bench",
+      "cohort": "unseen_holdout_50",
+      "row_idx": 107,
+      "domain": "academic",
+      "doc_name": "academic/2404.10198v2",
+      "page_idx": 3,
+      "qa_count": 5,
+      "selection_reasons": [
+        "multi_evidence_coverage"
+      ],
+      "text_sha256": {
+        "gt_text": "a876b08191720d414b956f9766a0aba6f1f3f1c56356e808690fd7dc8eb7aa4b",
+        "formatting_noise_moderate": "41f5760b8fe5a76196e0253cee9f3428a46b125b419e9e748fab1bacfb805bea",
+        "semantic_noise_MinerU_moderate": "b209180bda09bb2f21d10f6186d93a706775d2a3feb1cb0ecb1b226032d0a59d"
+      }
+    },
+    {
+      "sample_id": "ohr-holdout-006",
+      "benchmark": "OHR-Bench",
+      "cohort": "unseen_holdout_50",
+      "row_idx": 108,
+      "domain": "academic",
+      "doc_name": "academic/2404.10198v2",
+      "page_idx": 4,
+      "qa_count": 7,
+      "selection_reasons": [
+        "multi_evidence_coverage"
+      ],
+      "text_sha256": {
+        "gt_text": "d8cc60185cf635302f352e8900db12ff05ec5ffe770ebfd6e512f082d34d3eae",
+        "formatting_noise_moderate": "789175ffb2af33b63ebe7a2cdc0de4e96907edb0411aa8a97da2036a5fbfd9a2",
+        "semantic_noise_MinerU_moderate": "e74fefedd0881d887aec2e43adc03966ef93848ea3c7754e325c1d5778cc78bd"
+      }
+    },
+    {
+      "sample_id": "ohr-holdout-007",
+      "benchmark": "OHR-Bench",
+      "cohort": "unseen_holdout_50",
+      "row_idx": 109,
+      "domain": "academic",
+      "doc_name": "academic/2404.10198v2",
+      "page_idx": 5,
+      "qa_count": 6,
+      "selection_reasons": [
+        "deterministic_domain_fill"
+      ],
+      "text_sha256": {
+        "gt_text": "d180de9a3924c5b9be83326efc1b956c32e29b64736d291ad1755cffcce55951",
+        "formatting_noise_moderate": "9d04d8ad5ccbfbe157d696d542994a7f793061e0cb78fe470659a9e604ec4fac",
+        "semantic_noise_MinerU_moderate": "5a7fd60d2fda35836e6b3461da4a9a5b36ca8df8deca1e376b852582c5213730"
+      }
+    },
+    {
+      "sample_id": "ohr-holdout-008",
+      "benchmark": "OHR-Bench",
+      "cohort": "unseen_holdout_50",
+      "row_idx": 111,
+      "domain": "academic",
+      "doc_name": "academic/2404.10198v2",
+      "page_idx": 7,
+      "qa_count": 5,
+      "selection_reasons": [
+        "deterministic_domain_fill"
+      ],
+      "text_sha256": {
+        "gt_text": "4c13e2843d3bbc10ba312e3ca8293955998ed1947b69bdd67fc15b047d0d1b5c",
+        "formatting_noise_moderate": "f8fc3364a896b5971042a6953365bde6d9dbcbe96e4d60f2361f7ea4129a76d5",
+        "semantic_noise_MinerU_moderate": "e90e20235bbeb75d37622513af765107d84851270666896951ff4426a6921bf9"
+      }
+    },
+    {
+      "sample_id": "ohr-holdout-013",
+      "benchmark": "OHR-Bench",
+      "cohort": "unseen_holdout_50",
+      "row_idx": 1358,
+      "domain": "administration",
+      "doc_name": "administration/DUDE_2d071d2a3ef2e812c45e5c3fff0b502a",
+      "page_idx": 80,
+      "qa_count": 2,
+      "selection_reasons": [
+        "deterministic_domain_fill"
+      ],
+      "text_sha256": {
+        "gt_text": "d68ade2f8adea42b2f9ba86c108c046c155cb92b2fb9eb1178ebb461b7ebd386",
+        "formatting_noise_moderate": "315be06ed18eb54f71eb16e6eca8b0a053a65c7f49d3e0a5bfa11f642d620b3d",
+        "semantic_noise_MinerU_moderate": "7f508e1afe395d70ea6e0070cf01344d00b32d63c1c03d5b6adda5e18cc0ccc6"
+      }
+    },
+    {
+      "sample_id": "ohr-holdout-014",
+      "benchmark": "OHR-Bench",
+      "cohort": "unseen_holdout_50",
+      "row_idx": 1363,
+      "domain": "administration",
+      "doc_name": "administration/DUDE_2d071d2a3ef2e812c45e5c3fff0b502a",
+      "page_idx": 85,
+      "qa_count": 2,
+      "selection_reasons": [
+        "deterministic_domain_fill"
+      ],
+      "text_sha256": {
+        "gt_text": "85e24885680c68cbb291b3c21a0983068b9141a528d0881da438b6e177a736f8",
+        "formatting_noise_moderate": "c667fe2f1cb208d2610106b7f9c98cce8c4dcebc2cdd4c1dfe10c2fe1d3d2673",
+        "semantic_noise_MinerU_moderate": "5f3c6dd01eff8c523be05c0d07e4f86cf28da6878a8bd7ba6f186125e81d97b0"
+      }
+    },
+    {
+      "sample_id": "ohr-holdout-015",
+      "benchmark": "OHR-Bench",
+      "cohort": "unseen_holdout_50",
+      "row_idx": 1373,
+      "domain": "administration",
+      "doc_name": "administration/DUDE_2d071d2a3ef2e812c45e5c3fff0b502a",
+      "page_idx": 95,
+      "qa_count": 1,
+      "selection_reasons": [
+        "prior_semantic_ocr_failure"
+      ],
+      "text_sha256": {
+        "gt_text": "409cd3e67e9a8db95f92bc6e709941302c0999d608d156547b060cdcc37abb32",
+        "formatting_noise_moderate": "a362e7add4c7938c9feda4cbe84b863d4271270a16b89b6b9d0289918d42e708",
+        "semantic_noise_MinerU_moderate": "204aa81be95498ad615342907fd302c5c360b4a2d6719bbe805003791e6fb485"
+      }
+    },
+    {
+      "sample_id": "ohr-holdout-016",
+      "benchmark": "OHR-Bench",
+      "cohort": "unseen_holdout_50",
+      "row_idx": 2605,
+      "domain": "finance",
+      "doc_name": "finance/AES_2022_10K",
+      "page_idx": 161,
+      "qa_count": 3,
+      "selection_reasons": [
+        "deterministic_domain_fill"
+      ],
+      "text_sha256": {
+        "gt_text": "61b8a511ada6788db4c3bb2ccbf50cf93f5844d8f8a181a98040d2739ecd2062",
+        "formatting_noise_moderate": "fafb1b36d296b5fb44250c742975f31f8c35883449de19ef66b49315c5a55cb6",
+        "semantic_noise_MinerU_moderate": "6540d34eecd7ec6046a6d0e54e65b4f046d22a163241b477fe763dcd92fb6f0e"
+      }
+    },
+    {
+      "sample_id": "ohr-holdout-017",
+      "benchmark": "OHR-Bench",
+      "cohort": "unseen_holdout_50",
+      "row_idx": 2612,
+      "domain": "finance",
+      "doc_name": "finance/AES_2022_10K",
+      "page_idx": 168,
+      "qa_count": 1,
+      "selection_reasons": [
+        "deterministic_domain_fill"
+      ],
+      "text_sha256": {
+        "gt_text": "29a657834bdf386a5b58a47d2ba2d3ae3c67f0e5e04456d730427c7b43061ee8",
+        "formatting_noise_moderate": "58ecaabdc170435816c4ac8c242b21472b2e13daabbfef68d9749ab62b94e542",
+        "semantic_noise_MinerU_moderate": "66e38309e217cdab87bf23a6b046115c91620c13a317089079580bf828260766"
+      }
+    },
+    {
+      "sample_id": "ohr-holdout-018",
+      "benchmark": "OHR-Bench",
+      "cohort": "unseen_holdout_50",
+      "row_idx": 2658,
+      "domain": "finance",
+      "doc_name": "finance/AES_2022_10K",
+      "page_idx": 214,
+      "qa_count": 3,
+      "selection_reasons": [
+        "deterministic_domain_fill"
+      ],
+      "text_sha256": {
+        "gt_text": "f2a8185c738d19804f4179744243d92003180538a1debd964fc6513f39608c0e",
+        "formatting_noise_moderate": "224e3243b8c1b3350092231856c86c8002a1614681884d2a4e783475e5d1109d",
+        "semantic_noise_MinerU_moderate": "02500f02dc18d1e9c19b00bcae435305435513aa922c229ea8cba89e891bcf68"
+      }
+    },
+    {
+      "sample_id": "ohr-holdout-019",
+      "benchmark": "OHR-Bench",
+      "cohort": "unseen_holdout_50",
+      "row_idx": 2660,
+      "domain": "finance",
+      "doc_name": "finance/AES_2022_10K",
+      "page_idx": 216,
+      "qa_count": 3,
+      "selection_reasons": [
+        "deterministic_domain_fill"
+      ],
+      "text_sha256": {
+        "gt_text": "2a58313c08b5ca2f31fe9c9048d681fe62ab6d9f90c55ebb4a0a3c2d7694184d",
+        "formatting_noise_moderate": "a4546ce27e9cd4e268c5f5c2667891250ce24bea0add65b3fa0136fcc97819d9",
+        "semantic_noise_MinerU_moderate": "efad34854a4d73c34b76ff29d44df002f2948298a2a21ccf5c9bd7b7f25df5f5"
+      }
+    },
+    {
+      "sample_id": "ohr-holdout-020",
+      "benchmark": "OHR-Bench",
+      "cohort": "unseen_holdout_50",
+      "row_idx": 2673,
+      "domain": "finance",
+      "doc_name": "finance/AES_2022_10K",
+      "page_idx": 229,
+      "qa_count": 3,
+      "selection_reasons": [
+        "deterministic_domain_fill"
+      ],
+      "text_sha256": {
+        "gt_text": "f272b7cb5aac5edf5834c1e4cde4afb32fd685606f0f21de48da9d273b6fad30",
+        "formatting_noise_moderate": "bb17d842be926872b0e51de4294c8b65db87c782e4ac206e0e7006a0d6d09b44",
+        "semantic_noise_MinerU_moderate": "289b107d2bf9039249db0253c4a992d918790ad6b8d3fbd3767f8d64aa295aba"
+      }
+    },
+    {
+      "sample_id": "ohr-holdout-021",
+      "benchmark": "OHR-Bench",
+      "cohort": "unseen_holdout_50",
+      "row_idx": 2674,
+      "domain": "finance",
+      "doc_name": "finance/AES_2022_10K",
+      "page_idx": 230,
+      "qa_count": 3,
+      "selection_reasons": [
+        "prior_semantic_ocr_failure"
+      ],
+      "text_sha256": {
+        "gt_text": "b11b626c80057d94a5cf295071d0d643555a2e49e45d90a3dd80099836136438",
+        "formatting_noise_moderate": "47c5fc4ed35eddb4e4b38497e98a7460ca68c3c9f51276224851d69c943b2b9d",
+        "semantic_noise_MinerU_moderate": "49d82c2115362b026b597aea9efd759bc9eed11fc9c63d498c93d3d1b96f5fe0"
+      }
+    },
+    {
+      "sample_id": "ohr-holdout-022",
+      "benchmark": "OHR-Bench",
+      "cohort": "unseen_holdout_50",
+      "row_idx": 2685,
+      "domain": "finance",
+      "doc_name": "finance/AES_2022_10K",
+      "page_idx": 241,
+      "qa_count": 3,
+      "selection_reasons": [
+        "deterministic_domain_fill"
+      ],
+      "text_sha256": {
+        "gt_text": "084d2085dc9341ff4ec11b02e13f592af2c5661a030d16ae63c7e947de13f762",
+        "formatting_noise_moderate": "cf798c18188165de7e873ce4e71174c9f5c744bdc5e29e6ba558cd4139e876cc",
+        "semantic_noise_MinerU_moderate": "94b8df53d0d99696368572f6315f711848af88fb4dafb14dfd0d90cf9b01186f"
+      }
+    },
+    {
+      "sample_id": "ohr-holdout-023",
+      "benchmark": "OHR-Bench",
+      "cohort": "unseen_holdout_50",
+      "row_idx": 2687,
+      "domain": "finance",
+      "doc_name": "finance/AES_2022_10K",
+      "page_idx": 243,
+      "qa_count": 3,
+      "selection_reasons": [
+        "deterministic_domain_fill"
+      ],
+      "text_sha256": {
+        "gt_text": "106a9869ee5a94d529adfd5791a119ad88c6da794f771a4e3cdf613d4ffa7101",
+        "formatting_noise_moderate": "a052c2691fa93b251f2eafb0ffeaeb510f61260e2fbdd7a69b1797d785cd7365",
+        "semantic_noise_MinerU_moderate": "7a7d89fab9a82ff52b23d26a4d66e1366e996d0255090e50cecb9daea2785f03"
+      }
+    },
+    {
+      "sample_id": "ohr-holdout-024",
+      "benchmark": "OHR-Bench",
+      "cohort": "unseen_holdout_50",
+      "row_idx": 4603,
+      "domain": "law",
+      "doc_name": "law/Array BioPharma Inc. - LICENSE, DEVELOPMENT AND COMMERCIALIZATION AGREEMENT",
+      "page_idx": 22,
+      "qa_count": 2,
+      "selection_reasons": [
+        "deterministic_domain_fill"
+      ],
+      "text_sha256": {
+        "gt_text": "6d588acf75798cb266404b983bb1f3a879273bad4a90269e9268387f455286de",
+        "formatting_noise_moderate": "3b2c25b578bce6621d39f23fead44fae58425e4ffe5b4bec2d793a34b4dfb7d3",
+        "semantic_noise_MinerU_moderate": "4453b90814e940aa4eab43cd8e331bfb89761b8352136d261c18aa777b59c6bb"
+      }
+    },
+    {
+      "sample_id": "ohr-holdout-025",
+      "benchmark": "OHR-Bench",
+      "cohort": "unseen_holdout_50",
+      "row_idx": 4622,
+      "domain": "law",
+      "doc_name": "law/Array BioPharma Inc. - LICENSE, DEVELOPMENT AND COMMERCIALIZATION AGREEMENT",
+      "page_idx": 41,
+      "qa_count": 2,
+      "selection_reasons": [
+        "prior_semantic_ocr_failure"
+      ],
+      "text_sha256": {
+        "gt_text": "a337bed6b0d394a10576ffee5fc6d76cd6125d2d0034a755c52218ef63490566",
+        "formatting_noise_moderate": "53d51f5bde538b7a3a74e81f63aabd97329d9147f7be0b85afaf05417d1e562b",
+        "semantic_noise_MinerU_moderate": "f39aaf2d8b01c08eb2c764334d70317cca524b10e3815c2d7f1d169b3ccd66fe"
+      }
+    },
+    {
+      "sample_id": "ohr-holdout-026",
+      "benchmark": "OHR-Bench",
+      "cohort": "unseen_holdout_50",
+      "row_idx": 4623,
+      "domain": "law",
+      "doc_name": "law/Array BioPharma Inc. - LICENSE, DEVELOPMENT AND COMMERCIALIZATION AGREEMENT",
+      "page_idx": 42,
+      "qa_count": 2,
+      "selection_reasons": [
+        "multi_evidence_coverage"
+      ],
+      "text_sha256": {
+        "gt_text": "17f3b3a62bcf40afc98d69896c871e826955f64ba663a327c81ebab71449de45",
+        "formatting_noise_moderate": "3b865eea2463e3242491e7f0c94899c0abbe5e197e02e2519b27f2d1c2f0b2d5",
+        "semantic_noise_MinerU_moderate": "d07d5c188203c56e00f8723739c0c631c55c1d7f63cc9e2d8daae32d2497833d"
+      }
+    },
+    {
+      "sample_id": "ohr-holdout-027",
+      "benchmark": "OHR-Bench",
+      "cohort": "unseen_holdout_50",
+      "row_idx": 4632,
+      "domain": "law",
+      "doc_name": "law/Array BioPharma Inc. - LICENSE, DEVELOPMENT AND COMMERCIALIZATION AGREEMENT",
+      "page_idx": 51,
+      "qa_count": 1,
+      "selection_reasons": [
+        "deterministic_domain_fill"
+      ],
+      "text_sha256": {
+        "gt_text": "ace9d854660e657c1bfeb2d9f8e6ef4be86c8a2ec708814bff02615b312ba00c",
+        "formatting_noise_moderate": "b96cf7c5ceab58175f1e775c56f4f944edab651330ebc1e32ff3003fa937126d",
+        "semantic_noise_MinerU_moderate": "d9b7345ad3e68fabe49ff61d2788b9d95ea070904620f3df0db32dca5f2437a5"
+      }
+    },
+    {
+      "sample_id": "ohr-holdout-028",
+      "benchmark": "OHR-Bench",
+      "cohort": "unseen_holdout_50",
+      "row_idx": 4641,
+      "domain": "law",
+      "doc_name": "law/Array BioPharma Inc. - LICENSE, DEVELOPMENT AND COMMERCIALIZATION AGREEMENT",
+      "page_idx": 60,
+      "qa_count": 1,
+      "selection_reasons": [
+        "prior_semantic_ocr_failure"
+      ],
+      "text_sha256": {
+        "gt_text": "d09f98e3a7844f8da55afe61e2ca03286fbf199ac4f0c48dc96df5a76c8e6b84",
+        "formatting_noise_moderate": "20b5b231f68ce6d835e254163983d1b3fb331fb96b3246290c0b147a9abbd5e2",
+        "semantic_noise_MinerU_moderate": "34e6f09f33f133e9b47757f8517e0f11ada67bcfd29091b3b9d71584a200999d"
+      }
+    },
+    {
+      "sample_id": "ohr-holdout-029",
+      "benchmark": "OHR-Bench",
+      "cohort": "unseen_holdout_50",
+      "row_idx": 4644,
+      "domain": "law",
+      "doc_name": "law/Array BioPharma Inc. - LICENSE, DEVELOPMENT AND COMMERCIALIZATION AGREEMENT",
+      "page_idx": 63,
+      "qa_count": 2,
+      "selection_reasons": [
+        "multi_evidence_coverage"
+      ],
+      "text_sha256": {
+        "gt_text": "f17c541e2f59c26c6a2229f7f28ad78a14824ef07574aa6d4b2e7c7cd4709a98",
+        "formatting_noise_moderate": "0fc3a2e1a57837c309546ecaf4ea31a5222f974bd64f423dee5ef8ccf7952056",
+        "semantic_noise_MinerU_moderate": "3fdec01fc61de78fe50dd4bc0be34b4ee046b2ad3517a10303c9c8fe0565ef01"
+      }
+    },
+    {
+      "sample_id": "ohr-holdout-030",
+      "benchmark": "OHR-Bench",
+      "cohort": "unseen_holdout_50",
+      "row_idx": 4655,
+      "domain": "law",
+      "doc_name": "law/Array BioPharma Inc. - LICENSE, DEVELOPMENT AND COMMERCIALIZATION AGREEMENT",
+      "page_idx": 74,
+      "qa_count": 2,
+      "selection_reasons": [
+        "deterministic_domain_fill"
+      ],
+      "text_sha256": {
+        "gt_text": "cb64ebaa594a0e24e6c99ca1286fa229d3ca49db071abc17f54beb9ad7ecdac6",
+        "formatting_noise_moderate": "63a8e8f668b2ce2dc7faa583ef8533a265f900f719fc2d308d3e9afc330b2ee7",
+        "semantic_noise_MinerU_moderate": "2fc757addb77c376f1bf1126c1284c7ab0962351d1fbb8cc8b5a2da40e140ae8"
+      }
+    },
+    {
+      "sample_id": "ohr-holdout-038",
+      "benchmark": "OHR-Bench",
+      "cohort": "unseen_holdout_50",
+      "row_idx": 7500,
+      "domain": "news",
+      "doc_name": "news/08_14",
+      "page_idx": 0,
+      "qa_count": 2,
+      "selection_reasons": [
+        "deterministic_domain_fill"
+      ],
+      "text_sha256": {
+        "gt_text": "e5f4e88ec34faa2e0475e3a75ab5b3080af1c230b4c15488a571e1a0594ae332",
+        "formatting_noise_moderate": "a5776e7772148c3e7e695acc7a29c1a7563453fb43a863cd3997788fe222db16",
+        "semantic_noise_MinerU_moderate": "75027102b27166d4bf09a89fa7ef6db5f6de11709671e9c4ee3e745492b73834"
+      }
+    },
+    {
+      "sample_id": "ohr-holdout-039",
+      "benchmark": "OHR-Bench",
+      "cohort": "unseen_holdout_50",
+      "row_idx": 7501,
+      "domain": "news",
+      "doc_name": "news/08_15",
+      "page_idx": 0,
+      "qa_count": 2,
+      "selection_reasons": [
+        "deterministic_domain_fill"
+      ],
+      "text_sha256": {
+        "gt_text": "57a2600b451899977c17a8d866344049955caa3b84d42f19a37e5ef67dae45fe",
+        "formatting_noise_moderate": "af2e3f7c18898a3b32631c792246a4762359043a36da5257b4ebce7f42de87bf",
+        "semantic_noise_MinerU_moderate": "e6af74305a9dac879a58f782342905bded507022deed595549c2a9e1559fe7f9"
+      }
+    },
+    {
+      "sample_id": "ohr-holdout-040",
+      "benchmark": "OHR-Bench",
+      "cohort": "unseen_holdout_50",
+      "row_idx": 7502,
+      "domain": "news",
+      "doc_name": "news/08_16",
+      "page_idx": 0,
+      "qa_count": 3,
+      "selection_reasons": [
+        "deterministic_domain_fill"
+      ],
+      "text_sha256": {
+        "gt_text": "c9baee3870652782afc5a9ffd4709812a65810e20cdac16c02deb2a177b3ba7d",
+        "formatting_noise_moderate": "3c61c27a0d0a0afb600abbf19d2651a6dc015bf1066380f548291ed423fbe8d8",
+        "semantic_noise_MinerU_moderate": "c2a7ca275ccf55aefc944ecb1a8938e3bb882b7277c8fba652b20e01dcd3e42c"
+      }
+    },
+    {
+      "sample_id": "ohr-holdout-041",
+      "benchmark": "OHR-Bench",
+      "cohort": "unseen_holdout_50",
+      "row_idx": 7503,
+      "domain": "news",
+      "doc_name": "news/08_17",
+      "page_idx": 0,
+      "qa_count": 1,
+      "selection_reasons": [
+        "deterministic_domain_fill"
+      ],
+      "text_sha256": {
+        "gt_text": "16c6686835555f72fa75c550fb2247d84e25b53ba1ee09ef961ad087249bc514",
+        "formatting_noise_moderate": "794c19b558fa5089e6b537c69201885ef2d358b8d6c84c8d394ede3ea8b1f215",
+        "semantic_noise_MinerU_moderate": "8c19bd6cd24092ae16f11f63c4a8aa2c9c4badf1466193ca5200397296376a26"
+      }
+    },
+    {
+      "sample_id": "ohr-holdout-042",
+      "benchmark": "OHR-Bench",
+      "cohort": "unseen_holdout_50",
+      "row_idx": 7504,
+      "domain": "news",
+      "doc_name": "news/08_18",
+      "page_idx": 0,
+      "qa_count": 3,
+      "selection_reasons": [
+        "deterministic_domain_fill"
+      ],
+      "text_sha256": {
+        "gt_text": "ac3a9d01936eeffabfc4b9c8a076feeffa1dde45f711c64024d46d2a08f084af",
+        "formatting_noise_moderate": "b55d5a4ab9fc6aad5a1cc50b2c29f6026990927007eb871ac5fb0525626f80bc",
+        "semantic_noise_MinerU_moderate": "6b5bd74af12c7127208e37a86b6e598dc5e5085067511bb1ac75195d18d70790"
+      }
+    },
+    {
+      "sample_id": "ohr-holdout-043",
+      "benchmark": "OHR-Bench",
+      "cohort": "unseen_holdout_50",
+      "row_idx": 7505,
+      "domain": "news",
+      "doc_name": "news/08_19",
+      "page_idx": 0,
+      "qa_count": 3,
+      "selection_reasons": [
+        "deterministic_domain_fill"
+      ],
+      "text_sha256": {
+        "gt_text": "9f5484fd5d1007a97114b9468970f8bfb622380fed8aeb0e5cb156577b3f1504",
+        "formatting_noise_moderate": "568fddfef79a4504e802ee68f8e04fc4e9427e2f08af0932354db9acc8eb6097",
+        "semantic_noise_MinerU_moderate": "9ac09088132ef7aea3233fe902ac64b4b1733b2d8cd5014fba47197335e0b1c5"
+      }
+    },
+    {
+      "sample_id": "ohr-holdout-044",
+      "benchmark": "OHR-Bench",
+      "cohort": "unseen_holdout_50",
+      "row_idx": 7506,
+      "domain": "news",
+      "doc_name": "news/08_20",
+      "page_idx": 0,
+      "qa_count": 3,
+      "selection_reasons": [
+        "deterministic_domain_fill"
+      ],
+      "text_sha256": {
+        "gt_text": "5ca65b8f6da10be5d4499cb7975592a1c5c892d0ccff4fe01535c107bac05286",
+        "formatting_noise_moderate": "09883cfa488d86a685920d20b9790dac7a0580b626e499898b73830791be7160",
+        "semantic_noise_MinerU_moderate": "e4c72915a0ac5bfc23be76aafc124b5a601b9269084429590194058bc37a32fe"
+      }
+    },
+    {
+      "sample_id": "ohr-holdout-045",
+      "benchmark": "OHR-Bench",
+      "cohort": "unseen_holdout_50",
+      "row_idx": 8102,
+      "domain": "textbook",
+      "doc_name": "textbook/DUDE_f1efdd6aa8441a8fd29ebddcc1945fa3",
+      "page_idx": 2,
+      "qa_count": 2,
+      "selection_reasons": [
+        "multi_evidence_coverage"
+      ],
+      "text_sha256": {
+        "gt_text": "31481f3a21ad45883df39a5e65e0164ceb948c46a2714831709233c8ba473fe7",
+        "formatting_noise_moderate": "4f0bfd0b031e52a0928248932b96c1b3ad4f23fb46e1e0c74fe29bd93febf01e",
+        "semantic_noise_MinerU_moderate": "cbf0d7703a131f33fe6a8d3cf423c145cc12b45a564df83d1fd59563021438f5"
+      }
+    },
+    {
+      "sample_id": "ohr-holdout-046",
+      "benchmark": "OHR-Bench",
+      "cohort": "unseen_holdout_50",
+      "row_idx": 8104,
+      "domain": "textbook",
+      "doc_name": "textbook/DUDE_f1efdd6aa8441a8fd29ebddcc1945fa3",
+      "page_idx": 4,
+      "qa_count": 1,
+      "selection_reasons": [
+        "deterministic_domain_fill"
+      ],
+      "text_sha256": {
+        "gt_text": "eb8115ffcf73f9fd6bda84b5e55297fa42948847a49bdc8641ad7337a1ee25ed",
+        "formatting_noise_moderate": "108e8a2c5ce95bb6ef486297a15df2b308e132d2eb6403aef424d2f6b1533c99",
+        "semantic_noise_MinerU_moderate": "5152d663ebaf388b658f6a6fc80bce959c87bc2686e0283254d0adc591549c08"
+      }
+    },
+    {
+      "sample_id": "ohr-holdout-047",
+      "benchmark": "OHR-Bench",
+      "cohort": "unseen_holdout_50",
+      "row_idx": 8105,
+      "domain": "textbook",
+      "doc_name": "textbook/DUDE_f1efdd6aa8441a8fd29ebddcc1945fa3",
+      "page_idx": 5,
+      "qa_count": 3,
+      "selection_reasons": [
+        "multi_evidence_coverage"
+      ],
+      "text_sha256": {
+        "gt_text": "b53411f7abc3955bf8e03233dc270a3001eb2b51a16500f44b2f10c9355c492f",
+        "formatting_noise_moderate": "77164ce66d592c9c76ad34629f329a2443ab6f9c1178a7e5e6ce0646a9c5be73",
+        "semantic_noise_MinerU_moderate": "b74ea79e7e75f80655de27d7d903ff671ed33f04ab30064a93582959898ddf0d"
+      }
+    },
+    {
+      "sample_id": "ohr-holdout-048",
+      "benchmark": "OHR-Bench",
+      "cohort": "unseen_holdout_50",
+      "row_idx": 8106,
+      "domain": "textbook",
+      "doc_name": "textbook/DUDE_f1efdd6aa8441a8fd29ebddcc1945fa3",
+      "page_idx": 6,
+      "qa_count": 1,
+      "selection_reasons": [
+        "deterministic_domain_fill"
+      ],
+      "text_sha256": {
+        "gt_text": "22dea00dd3ea92d0d69c9b31168f041bcac1c222149cdb12416e5f0b60299cec",
+        "formatting_noise_moderate": "bea4dc730916401c4b130618e6d13c7e6a8e3b742a53c99d6b3353c6a46e68d6",
+        "semantic_noise_MinerU_moderate": "bbe5f4a8f7dffb3d87a051506ea08b27b3253d5d138b665058c2841de68671f3"
+      }
+    }
+  ]
+}

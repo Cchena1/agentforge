@@ -1,0 +1,27 @@
+{
+  "run_date": "2026-08-19",
+  "python": "3.12.13 (main, Jun 23 2026, 15:23:43) [MSC v.1944 64 bit (AMD64)]",
+  "platform": "Windows-10-10.0.19045-SP0",
+  "embedding_model": "BAAI/bge-m3",
+  "embedding_dimension": 1024,
+  "embedding_device": "cpu",
+  "embedding_profile": "sentence-transformers:BAAI/bge-m3:1024:benchmark-cache-v1",
+  "graph_extractor": "heuristic-entity-cooccurrence-v1",
+  "query_planner": "deterministic-query-plan-v2",
+  "evidence_reflector": "deterministic-evidence-gate-v1",
+  "online_llm_graph_path": "not_run_configured_gateway_returned_http_404_during_preflight",
+  "page_budget": 100,
+  "query_count": 280,
+  "multi_evidence_queries": 22,
+  "variants": [
+    "gt_text",
+    "formatting_noise_moderate",
+    "semantic_noise_MinerU_moderate"
+  ],
+  "arms": [
+    "hybrid_baseline",
+    "graphrag_fallback"
+  ],
+  "model_and_query_embedding_prepare_seconds": 44.768057499999486,
+  "load_or_pressure_test": false
+}

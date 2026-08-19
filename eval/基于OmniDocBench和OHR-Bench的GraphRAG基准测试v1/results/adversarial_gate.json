@@ -1,0 +1,101 @@
+{
+  "schema_version": 1,
+  "integrity_status": "pass",
+  "quality_gate_status": "fail",
+  "integrity_checks": {
+    "exactly_100_unique_pages": true,
+    "exactly_280_queries": true,
+    "exactly_22_multi_evidence_queries": true,
+    "manifest_contains_no_raw_text": true,
+    "query_manifest_contains_no_raw_query_or_answer": true,
+    "gt_text:record_counts": true,
+    "gt_text:query_identity": true,
+    "gt_text:citations_valid": true,
+    "gt_text:bounded_graph_hops": true,
+    "gt_text:bounded_corrective_retrieval": true,
+    "formatting_noise_moderate:record_counts": true,
+    "formatting_noise_moderate:query_identity": true,
+    "formatting_noise_moderate:citations_valid": true,
+    "formatting_noise_moderate:bounded_graph_hops": true,
+    "formatting_noise_moderate:bounded_corrective_retrieval": true,
+    "semantic_noise_MinerU_moderate:record_counts": true,
+    "semantic_noise_MinerU_moderate:query_identity": true,
+    "semantic_noise_MinerU_moderate:citations_valid": true,
+    "semantic_noise_MinerU_moderate:bounded_graph_hops": true,
+    "semantic_noise_MinerU_moderate:bounded_corrective_retrieval": true,
+    "artifact_size_below_1gb": true,
+    "no_large_raw_formats": true
+  },
+  "quality_checks": {
+    "gt_text:overall_recall5_regression_le_2pp": true,
+    "gt_text:multi_evidence_all_recall_not_worse": true,
+    "gt_text:graph_degraded_rate_le_1pct": false,
+    "gt_text:multi_evidence_graph_route_rate_ge_80pct": false,
+    "formatting_noise_moderate:overall_recall5_regression_le_2pp": true,
+    "formatting_noise_moderate:multi_evidence_all_recall_not_worse": true,
+    "formatting_noise_moderate:graph_degraded_rate_le_1pct": false,
+    "formatting_noise_moderate:multi_evidence_graph_route_rate_ge_80pct": false,
+    "semantic_noise_MinerU_moderate:overall_recall5_regression_le_2pp": true,
+    "semantic_noise_MinerU_moderate:multi_evidence_all_recall_not_worse": true,
+    "semantic_noise_MinerU_moderate:graph_degraded_rate_le_1pct": false,
+    "semantic_noise_MinerU_moderate:multi_evidence_graph_route_rate_ge_80pct": false
+  },
+  "observations": {
+    "gt_text": {
+      "baseline_recall_at_5": 0.9571428571428572,
+      "graphrag_recall_at_5": 0.9571428571428572,
+      "baseline_multi_all_evidence_recall_at_5": 0.8636363636363636,
+      "graphrag_multi_all_evidence_recall_at_5": 0.9090909090909091,
+      "graph_degraded_retrieval_rate": 0.12142857142857143,
+      "multi_evidence_graph_route_rate": 0.45454545454545453,
+      "comparison": {
+        "queries": 280,
+        "graphrag_net_recall5_change": 0.0,
+        "graph_added_relevant_page_count": 1,
+        "graph_lost_relevant_page_count": 0,
+        "multi_evidence_all_hit_gain_count": 1,
+        "multi_evidence_all_hit_regression_count": 0,
+        "multi_evidence_graph_route_count": 10,
+        "single_evidence_graph_route_count": 39
+      }
+    },
+    "formatting_noise_moderate": {
+      "baseline_recall_at_5": 0.9571428571428572,
+      "graphrag_recall_at_5": 0.9571428571428572,
+      "baseline_multi_all_evidence_recall_at_5": 0.8636363636363636,
+      "graphrag_multi_all_evidence_recall_at_5": 0.8636363636363636,
+      "graph_degraded_retrieval_rate": 0.14642857142857144,
+      "multi_evidence_graph_route_rate": 0.45454545454545453,
+      "comparison": {
+        "queries": 280,
+        "graphrag_net_recall5_change": 0.0,
+        "graph_added_relevant_page_count": 0,
+        "graph_lost_relevant_page_count": 0,
+        "multi_evidence_all_hit_gain_count": 0,
+        "multi_evidence_all_hit_regression_count": 0,
+        "multi_evidence_graph_route_count": 10,
+        "single_evidence_graph_route_count": 39
+      }
+    },
+    "semantic_noise_MinerU_moderate": {
+      "baseline_recall_at_5": 0.8535714285714285,
+      "graphrag_recall_at_5": 0.8535714285714285,
+      "baseline_multi_all_evidence_recall_at_5": 0.7727272727272727,
+      "graphrag_multi_all_evidence_recall_at_5": 0.7727272727272727,
+      "graph_degraded_retrieval_rate": 0.09642857142857143,
+      "multi_evidence_graph_route_rate": 0.45454545454545453,
+      "comparison": {
+        "queries": 280,
+        "graphrag_net_recall5_change": 0.0,
+        "graph_added_relevant_page_count": 0,
+        "graph_lost_relevant_page_count": 0,
+        "multi_evidence_all_hit_gain_count": 0,
+        "multi_evidence_all_hit_regression_count": 0,
+        "multi_evidence_graph_route_count": 10,
+        "single_evidence_graph_route_count": 39
+      }
+    }
+  },
+  "artifact_bytes": 2145218,
+  "note": "Quality-gate failure is a benchmark finding, not evidence corruption."
+}
