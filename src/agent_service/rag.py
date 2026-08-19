@@ -12,9 +12,18 @@ from typing import Any, Protocol
 from .document_models import CANONICAL_DOCUMENT_SCHEMA_VERSION, Chunk, ParsedDocument
 from .documents import resolve_workspace_file
 from .embeddings import EmbeddingProvider
+from .graph_retrieval import (
+    GraphRetriever,
+    StoreBackedStructuralGraphRetriever,
+    should_expand_graph,
+)
 from .observability import Observability
-from .query_planning import QueryVariant, build_query_plan
-from .rag_registry import ActiveDocumentVersion, InMemoryVersionRegistry, VersionRegistry
+from .query_planning import DeterministicQueryPlanner, QueryPlanner, QueryVariant
+from .rag_registry import (
+    ActiveDocumentVersion,
+    InMemoryVersionRegistry,
+    VersionRegistry,
+)
 from .schemas import (
     DocumentIngestRequest,
     DocumentIngestResponse,
@@ -52,6 +61,11 @@ class RAGService:
                  version_registry: VersionRegistry | None = None, *, max_corrective_rounds: int = 2,
                  query_max_parallel: int = 2, query_timeout_seconds: float = 10.0,
                  query_min_relevance_score: float = 0.2, query_rrf_k: int = 60,
+                 query_planner: QueryPlanner | None = None,
+                 graph_retriever: GraphRetriever | None = None,
+                 graph_enabled: bool = True, graph_max_seed_hits: int = 3,
+                 graph_neighbors_per_seed: int = 2, graph_max_neighbors: int = 6,
+                 graph_timeout_seconds: float = 3.0,
                  observability: Observability | None = None) -> None:
         if not 0 <= max_corrective_rounds <= 2:
             raise ValueError("max_corrective_rounds must be between 0 and 2")
@@ -63,6 +77,14 @@ class RAGService:
             raise ValueError("query_min_relevance_score must be between 0 and 1")
         if not 1 <= query_rrf_k <= 1000:
             raise ValueError("query_rrf_k must be between 1 and 1000")
+        if not 1 <= graph_max_seed_hits <= 10:
+            raise ValueError("graph_max_seed_hits must be between 1 and 10")
+        if not 1 <= graph_neighbors_per_seed <= 5:
+            raise ValueError("graph_neighbors_per_seed must be between 1 and 5")
+        if not 1 <= graph_max_neighbors <= 20:
+            raise ValueError("graph_max_neighbors must be between 1 and 20")
+        if not 0 < graph_timeout_seconds <= 30:
+            raise ValueError("graph_timeout_seconds must be between 0 and 30")
         self.workspace_root = workspace_root
         self.parser = parser
         self.chunker = chunker
@@ -74,6 +96,13 @@ class RAGService:
         self.query_timeout_seconds = query_timeout_seconds
         self.query_min_relevance_score = query_min_relevance_score
         self.query_rrf_k = query_rrf_k
+        self.query_planner = query_planner or DeterministicQueryPlanner()
+        self.graph_retriever = graph_retriever or StoreBackedStructuralGraphRetriever(store)
+        self.graph_enabled = graph_enabled
+        self.graph_max_seed_hits = graph_max_seed_hits
+        self.graph_neighbors_per_seed = graph_neighbors_per_seed
+        self.graph_max_neighbors = graph_max_neighbors
+        self.graph_timeout_seconds = graph_timeout_seconds
         self.observability = observability
         self._source_locks: dict[str, asyncio.Lock] = {}
 
@@ -202,7 +231,9 @@ class RAGService:
         authorized_active = {source_id: item for source_id, item in tenant_active.items()
                              if not item.acl or principal_set.intersection(item.acl)}
         active_versions = {source_id: item.version_id for source_id, item in authorized_active.items()}
-        plan = build_query_plan(query, max_variants=self.max_corrective_rounds + 1)
+        plan = await self.query_planner.plan(
+            query, max_variants=self.max_corrective_rounds + 1
+        )
         warnings = list(plan.warnings)
         semaphore = asyncio.Semaphore(self.query_max_parallel)
         subqueries = [variant for variant in plan.variants[1:] if variant.kind == "subquery"]
@@ -229,6 +260,31 @@ class RAGService:
         hits = _fuse_query_results(results, self.query_rrf_k)
         if len(results) > 1:
             warnings.append(f"query_fusion:rrf:{len(results)}")
+        if self.graph_enabled and hits and should_expand_graph(plan):
+            try:
+                async with asyncio.timeout(self.graph_timeout_seconds):
+                    graph_result = await self.graph_retriever.expand(
+                        query,
+                        plan,
+                        hits,
+                        max_seed_hits=self.graph_max_seed_hits,
+                        max_neighbors=self.graph_max_neighbors,
+                        neighbors_per_seed=self.graph_neighbors_per_seed,
+                        source_ids=source_ids,
+                        active_versions=active_versions,
+                        legacy_excluded_source_ids=set(tenant_active),
+                        tenant_id=tenant_id,
+                        principals=principals,
+                    )
+                graph_hits = _verified_hits(list(graph_result.hits), active_versions)
+                if len(graph_hits) < len(graph_result.hits):
+                    warnings.append("invalid_citations_dropped:graph")
+                warnings.extend(graph_result.warnings)
+                hits = _merge_graph_hits(hits, graph_hits)
+            except TimeoutError:
+                warnings.append("degraded_retrieval:graph:TimeoutError")
+            except Exception as exc:  # noqa: BLE001 - isolate optional graph branch
+                warnings.append(f"degraded_retrieval:graph:{type(exc).__name__}")
         warnings = list(dict.fromkeys(warnings))
         degraded = any(_is_degradation_warning(item) for item in warnings)
         return RetrievalResponse(hits=hits[:top_k],
@@ -336,6 +392,18 @@ def _fuse_query_results(results: list[_QuerySearchResult], rrf_k: int) -> list[R
                 best_scores[key] = hit.rerank_score
     return sorted(best_hits.values(), key=lambda hit: (
         scores[_retrieval_hit_key(hit)], hit.rerank_score), reverse=True)
+
+
+def _merge_graph_hits(
+    direct_hits: list[RetrievalHit], graph_hits: list[RetrievalHit]
+) -> list[RetrievalHit]:
+    merged = {_retrieval_hit_key(hit): hit for hit in direct_hits}
+    for hit in graph_hits:
+        key = _retrieval_hit_key(hit)
+        current = merged.get(key)
+        if current is None or hit.rerank_score > current.rerank_score:
+            merged[key] = hit
+    return sorted(merged.values(), key=lambda hit: hit.rerank_score, reverse=True)
 
 
 def _retrieval_hit_key(hit: RetrievalHit) -> str:

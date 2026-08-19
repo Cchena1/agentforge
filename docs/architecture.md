@@ -298,9 +298,10 @@ Architectural rationale and rejected alternatives are recorded in `docs/adr-006-
 - `document_models.py` owns parser-neutral blocks, assets, attempts, quality reports, locations, and parent-child chunks.
 - `document_pipeline.py` owns parser adapters, deterministic quality routing, repeating page-artifact classification, and token-aware chunking.
 - `ingestion_jobs.py` owns durable asynchronous job state and restart recovery.
-- `query_planning.py` owns deterministic query normalization, explicit decomposition, and protected-anchor drift checks.
-- `rag.py` owns content identity, immutable candidate versions, embedding/index stages, active-version validation, evidence gating, bounded query execution, and cross-query RRF.
-- `vector_store.py` owns authorization-filtered Vector/FTS5-BM25/Metadata scoring, embedding-profile-aware fusion, source/page diversification, FTS fallback warnings, and code-generated citations.
+- `query_planning.py` owns the replaceable `QueryPlanner` contract, deterministic normalization, explicit decomposition, and protected-anchor drift checks.
+- `graph_retrieval.py` owns graph routing and the replaceable, one-hop `GraphRetriever` contract; it does not own vector persistence.
+- `rag.py` owns content identity, immutable candidate versions, embedding/index stages, active-version validation, evidence gating, bounded query execution, cross-query RRF, and graph-branch failure isolation.
+- `vector_store.py` owns authorization-filtered Vector/FTS5-BM25/Metadata scoring, embedding-profile-aware fusion, SQLite structural-neighbor capability, source/page diversification, FTS fallback warnings, and code-generated citations.
 
 ### Dependency graph
 
@@ -315,6 +316,9 @@ flowchart LR
     RAG --> Chunker["ParentChildChunker"]
     RAG --> Embed["EmbeddingProvider"]
     RAG --> Store["SQLite / Qdrant"]
+    RAG --> Planner["QueryPlanner plugin"]
+    RAG --> Graph["GraphRetriever plugin"]
+    Graph --> Store
     RAG --> Registry["Version Registry"]
     Store --> Citation["Validated Citation"]
 ```
@@ -334,10 +338,14 @@ flowchart LR
     S --> T["TaskGroup + Semaphore + timeout"]
     N --> T
     T --> F
-    F --> V["Citation verification"]
+    F --> R{"Compound / relational?"}
+    R -->|No| V["Citation verification"]
+    R -->|Yes| G["One-hop parent / heading expansion"]
+    G --> M["Score-decayed bounded merge"]
+    M --> V
 ```
 
-The original query is authoritative and is never replaced. Only explicit `?`, `;`, or newline boundaries outside quoted phrases create subqueries. Versions, numbers/units, quoted phrases, acronyms, identifiers, and negation are protected anchors. Normalized fallback runs only when the original evidence gate is not satisfied. For explicit compound questions, the original query and subqueries run concurrently; ordinary questions run the original first and trigger normalized fallback only when the evidence gate fails. All branches use bounded fan-out and per-branch timeout, and failures retain any verified evidence. End-to-end `latency_ms` is wall-clock latency, not the sum of parallel branch durations.
+The original query is authoritative and is never replaced. Only explicit `?`, `;`, or newline boundaries outside quoted phrases create subqueries. Versions, numbers/units, quoted phrases, acronyms, identifiers, and negation are protected anchors. Normalized fallback runs only when the original evidence gate is not satisfied. For explicit compound questions, the original query and subqueries run concurrently; ordinary questions run the original first and trigger normalized fallback only when the evidence gate fails. All branches use bounded fan-out and per-branch timeout, and failures retain any verified evidence. End-to-end `latency_ms` is wall-clock latency, not the sum of parallel branch durations. Compound or relational questions may enter GraphRAG-lite after direct retrieval: at most three seeds expand to same-parent or same-heading neighbors for one hop, with score decay, a six-neighbor cap, and an independent timeout. This is structural graph retrieval, not full entity/community GraphRAG.
 
 
 ### Bounded failure policy
@@ -349,6 +357,7 @@ The original query is authoritative and is never replaced. Only explicit `?`, `;
 | Query plan | 1 original + at most 2 additional queries | preserve original intent and protected anchors |
 | Query branch | configured timeout, default 10 s | keep verified branches and mark degraded retrieval |
 | Query concurrency | configured, default 2 | bounded `TaskGroup` execution; no unbounded fan-out |
+| Structural graph traversal | 1 hop; 3 seeds; 2 neighbors/seed; 6 total by default | keep direct evidence and emit warning on graph failure |
 | Structured model repair | 1 repair after initial response | reject invalid output |
 | Agent steps | configured, default 8 | handoff/degraded response |
 | Repeated tool signature | configured, default 2 | stop loop |

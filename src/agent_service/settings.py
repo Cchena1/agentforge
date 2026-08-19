@@ -77,6 +77,11 @@ class Settings(BaseSettings):
     rag_query_timeout_seconds: float = Field(default=10.0, gt=0, le=60)
     rag_query_min_relevance_score: float = Field(default=0.2, ge=0, le=1)
     rag_query_rrf_k: int = Field(default=60, ge=1, le=1000)
+    rag_graph_enabled: bool = True
+    rag_graph_max_seed_hits: int = Field(default=3, ge=1, le=10)
+    rag_graph_neighbors_per_seed: int = Field(default=2, ge=1, le=5)
+    rag_graph_max_neighbors: int = Field(default=6, ge=1, le=20)
+    rag_graph_timeout_seconds: float = Field(default=3.0, gt=0, le=30)
     rag_ocr_enabled: bool = False
     rag_cloud_fallback_enabled: bool = False
     rag_parser_max_attempts: int = Field(default=3, ge=1, le=3)

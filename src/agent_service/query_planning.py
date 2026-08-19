@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import re
-from typing import Literal
+from typing import Literal, Protocol
 
 from pydantic import BaseModel, ConfigDict, Field
 
@@ -28,6 +28,24 @@ class QueryPlan(BaseModel):
     variants: tuple[QueryVariant, ...] = Field(min_length=1, max_length=4)
     discarded_variants: tuple[str, ...] = ()
     warnings: tuple[str, ...] = ()
+
+
+class QueryPlanner(Protocol):
+    """Replaceable query-planning boundary for deterministic or model-backed planners."""
+
+    @property
+    def profile_id(self) -> str: ...
+
+    async def plan(self, query: str, *, max_variants: int = 3) -> QueryPlan: ...
+
+
+class DeterministicQueryPlanner:
+    """Default zero-LLM-cost planner with bounded rewrite and drift guards."""
+
+    profile_id = "deterministic-query-plan-v1"
+
+    async def plan(self, query: str, *, max_variants: int = 3) -> QueryPlan:
+        return build_query_plan(query, max_variants=max_variants)
 
 
 _TOKEN_PATTERN = re.compile(r"[^\W_]+(?:[-./][^\W_]+)*", flags=re.UNICODE)
