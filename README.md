@@ -4,7 +4,7 @@
 
 AgentForge 面向企业 Agent 研发中的模型输出不确定、多 Tool 协作冲突、长会话上下文膨胀和复杂文档证据失真等问题，设计异步 Agent 服务，覆盖模型调用、Tool Orchestration、分层 Memory、文档 RAG、可观测性与失败恢复。项目重点不是展示一段 Prompt，而是以可验证的数据契约、状态所有权和失败边界支撑工程交付。
 
-> **最近一次验收：2026 年 8 月 17 日。** Ruff 全仓及新增 Benchmark 脚本检查通过；strict mypy 对 27 个 Source 文件检查通过；pytest 共 97 项测试通过并保留 1 条 Starlette/httpx 上游弃用警告。Tool Orchestration 60 项总体通过率为 80.00%，其中 BFCL 单轮可比子集为 84.62%、AgentForge Runtime 对抗集为 15/15；Memory 70 项中 LongMemEval Evidence Recall@5 为 26.33%、AgentForge 隔离与压缩集为 18/20。第三次 200 页 RAG Benchmark 的 Recall@5 为 95.53% / 95.53% / 88.91%；按照项目范围约定，**未进行压力测试、吞吐量测试或持续负载测试**。
+> **最近一次验收：2026 年 8 月 19 日。** Ruff 全仓及新增 Benchmark 脚本检查通过；strict mypy 对 29 个 Source 文件检查通过；pytest 共 108 项测试通过并保留 1 条 Starlette/httpx 上游弃用警告。Tool Orchestration 60 项总体通过率为 80.00%，其中 BFCL 单轮可比子集为 84.62%、AgentForge Runtime 对抗集为 15/15；Memory 70 项中 LongMemEval Evidence Recall@5 为 26.33%、AgentForge 隔离与压缩集为 18/20。第三次 200 页 RAG Benchmark 的 Recall@5 为 95.53% / 95.53% / 88.91%；按照项目范围约定，**未进行压力测试、吞吐量测试或持续负载测试**。
 
 ## 项目价值
 
@@ -13,9 +13,33 @@ AgentForge 面向企业 Agent 研发中的模型输出不确定、多 Tool 协�
 - **异步化**：模型、Memory、RAG、工具和 Multi-Agent worker 全链路采用 async API；无依赖工具并发执行。
 - **契约优先**：Pydantic v2 定义请求、模型结构化输出、工具参数和响应格式，错误数据在进入业务逻辑前被拦截。
 - **可解释 RAG**：检索结果携带 source、chunk、page/locator、quote、score 和索引版本快照，可生成可追溯引用。
+- **GraphRAG 探索**：在独立分支中增加版本化 Document–Section–Entity 知识图谱、关系型 Query 路由、最多二跳 Local Search 与有界 Reflection/Rewrite；图失败时回退既有 Hybrid Retrieval。
+- **真实语义向量**：生产默认从 Hash 测试替身迁移到 `BAAI/bge-m3`（Sentence Transformers）；文档与查询分别使用 `encode_document` / `encode_query`。
 - **数据隔离**：知识库以 `(tenant_id, source_id)` 标识文档，ACL 在评分前过滤，未授权数据和版本信息均不可见。
 - **可迁移性**：SQLite 提供零服务本地基线，Qdrant 提供面向更大语料的 HNSW 与 metadata filtering；持久化格式采用版本化迁移策略。
 - **可复现性**：使用 `uv.lock` 锁定依赖，配套 Ruff、mypy、pytest、Node syntax check 和离线 RAG evaluator。
+
+## GraphRAG 可选能力运行
+
+默认配置使用本地 BGE-M3 语义向量，首次运行会下载模型权重：
+
+```powershell
+uv sync --extra semantic --extra documents
+Copy-Item .env.example .env
+uv run uvicorn main:app --reload
+```
+
+若只运行离线测试，可显式选择测试替身：
+
+```powershell
+$env:AI_AGENT_ENVIRONMENT = "test"
+$env:AI_AGENT_EMBEDDING_PROVIDER = "hash"
+uv run pytest -q
+```
+
+> 从 Hash、其他模型或其他维度迁移时必须重建 RAG 索引。Qdrant 应使用新 Collection 完成候选构建与验证后再切换，不能在同一 Collection 混写不同维度。旧 `embed()` 插件当前处于兼容窗口，新插件应实现 `embed_documents()` 与 `embed_query()`。
+
+详见 [ADR-014](docs/adr-014-graph-aware-retrieval.md)。当前只实现 Local GraphRAG；Community Detection、Global Search、DRIFT Search 和真实模型 Benchmark 不在本次最小修复范围。
 
 ## 外部评估快速路径
 
@@ -449,7 +473,7 @@ flowchart LR
 ### 克隆与安装
 
 ```powershell
-git clone https://github.com/chenchufan8-prog/agentforge.git
+git clone https://github.com/Cchena1/agentforge.git
 cd agentforge
 Copy-Item .env.example .env
 uv sync --all-groups
@@ -458,7 +482,7 @@ uv sync --all-groups
 Bash：
 
 ```bash
-git clone https://github.com/chenchufan8-prog/agentforge.git
+git clone https://github.com/Cchena1/agentforge.git
 cd agentforge
 cp .env.example .env
 uv sync --all-groups
@@ -549,8 +573,14 @@ AI_AGENT_FALLBACK_ROUTES_JSON=[{"name":"backup","model":"backup-model","base_url
 | `AI_AGENT_RAG_QUERY_TIMEOUT_SECONDS` | `10` | 单 Query 分支端到端 Timeout |
 | `AI_AGENT_RAG_QUERY_MIN_RELEVANCE_SCORE` | `0.2` | Evidence Gate 的确定性最低 Rerank Score；Lexical 命中可直接通过 |
 | `AI_AGENT_RAG_QUERY_RRF_K` | `60` | 跨 Query Reciprocal Rank Fusion 常数 |
+| `AI_AGENT_RAG_GRAPH_ENABLED` | `true` | 对显式复合/关系型 Query 启用 GraphRAG-lite 单跳结构扩展 |
+| `AI_AGENT_RAG_GRAPH_MAX_SEED_HITS` | `3` | 进入结构图扩展的直接命中上限 |
+| `AI_AGENT_RAG_GRAPH_NEIGHBORS_PER_SEED` | `2` | 每个 Seed 最多补充的同 Parent/Heading 邻居 |
+| `AI_AGENT_RAG_GRAPH_MAX_NEIGHBORS` | `6` | 单次查询结构图邻居总上限 |
+| `AI_AGENT_RAG_GRAPH_TIMEOUT_SECONDS` | `3` | 可选 Graph Branch 的独立 Timeout |
 
 Pydantic 在启动前验证 `overlap < target <= max`。
+GraphRAG-lite 只利用已有 Parent-Child/Heading 结构做单跳扩展，不等同于包含实体抽取、社区检测和 Global Search 的完整 GraphRAG；当前 SQLite Backend 支持结构邻居，Qdrant Backend 会保留直接检索并返回 Unsupported Warning。
 ## API 契约
 
 ### `POST /chat`
@@ -616,8 +646,8 @@ node --check server.js
 
 ```text
 Ruff:  all checks passed
-mypy:  success, no issues in 27 source files
-pytest: 87 passed, 1 warning
+mypy:  success, no issues in 29 source files
+pytest: 108 passed, 1 warning
 RAG evaluator: 2 schema-valid example queries; no quality claim
 Node:  public/app.js 与 server.js syntax check 通过
 PowerShell: run.ps1 解析通过
@@ -649,31 +679,23 @@ PowerShell: run.ps1 解析通过
 
 ## 简历项目描述（STAR）
 
-### Situation
+### AgentForge｜插件化企业 Agent 工程平台
 
-原项目是单文件 Agent Demo，缺少明确的数据契约、异步编排、失败恢复、Memory 分层、RAG 生命周期和可复现验收，不足以支撑真实工程评估。
+GitHub: `https://github.com/Cchena1/agentforge`
 
-### Task
+**项目简介：** 面向企业 Agent 研发中的模型输出不确定、多 Tool 协作冲突、长会话上下文膨胀与复杂文档证据失真等问题，设计异步、契约优先的 Agent 服务；将 Model Gateway、Tool、Memory、RAG 与 Storage 抽象为可替换插件，通过状态边界、版本化数据与分级容错形成可验证、可降级、可追踪的工程链路。
 
-将 Demo 重构为可维护的 Agent 服务，在兼容既有 `POST /chat` 契约的前提下，补齐 Retry/Fallback、Function Calling、Pydantic 校验、异步多工具、Multi-Agent 隔离、分层 Memory、RAG、引用溯源和工程质量门禁。
+**技术栈：** Python、FastAPI、LangGraph、asyncio、Pydantic v2、Tenacity、Docling、Sentence Transformers、SQLite/Qdrant、OpenTelemetry、Prometheus、pytest、mypy
 
-### Action
-
-- 使用 LangGraph 建模 Agent 状态和终止条件，以步数、重复签名和 Timeout 防止失控循环。
-- 实现 Async Model Gateway，仅重试瞬时故障，并支持多 Route Fallback、JSON repair 和 Human Handoff。
-- 使用 Pydantic v2 建立 Schema-first Tool contract，在执行前拦截缺字段、错误类型和未知参数。
-- 使用 DAG、`asyncio`、Semaphore 和 resource lock 编排多工具依赖与并发冲突。
-- 构建 SQLite Short-term Memory、Rolling Summary 和 Namespaced Long-term Vector Memory。
-- 实现版本化 RAG Pipeline，包括语义优先 Chunk、扫描件 Fallback、Embedding adapter、SQLite/Qdrant、融合检索、ACL pre-filter、原子激活和 Citation。
-- 使用 `uv.lock`、Ruff、mypy strict、pytest 和离线 evaluator 建立可复现质量门禁。
-
-### Result
-
-将企业 Agent 的模型、Tool、Memory 与 RAG 能力收敛为模块化 AgentForge 服务；27 个 Source 文件通过 strict mypy，97 项自动化测试覆盖正常路径、失败恢复、并发语义、RAG 迁移、FTS5 一致性和 Tenant/ACL 隔离；最近一次验收中 Ruff、mypy strict、pytest 和 JavaScript syntax check 均通过。项目保留三轮 200 页 Benchmark 证据，但不虚构压力测试、吞吐量或生产 SLA。
+- **RAG（S/A/R）：** 针对双栏、扫描件、表格及跨章节关系问题，搭建 Docling 主解析、页级 OCR Fallback、Parent-Child Chunking、BM25 + Dense Hybrid Retrieval、RRF 和版本化原子索引；进一步增加实体关系图谱、真实语义 Embedding 插件、Query 路由、最多二跳扩展及有界 Reflection/Rewrite。既有三轮 200 页 Benchmark 中，第三轮标准文本、格式干扰、语义/OCR 噪声场景 Recall@5 分别为 **95.53% / 95.53% / 88.91%**；GraphRAG 新链路已通过功能测试，暂不将其表述为新的检索增益。
+- **Memory（S/A/R）：** 针对长会话 Token 膨胀、工具大结果挤占上下文和多租户串扰，构建 Recent Messages、Rolling Summary、Long-term Vector Memory 与 Content Hash 外置结果的分层体系，通过 Session/User/Tenant Namespace、TTL、替换链和 Hard Delete 管理状态生命周期；在 70 项 Memory Benchmark 中，隔离与压缩对抗集通过 **18/20**，租户隔离、滚动摘要和工具结果外置核心场景全部通过，并量化定位长期语义召回与时间推理缺口。
+- **Tools（S/A/R）：** 针对模型误选 Tool、参数缺失、依赖冲突、循环调用及超时重试导致的副作用，建立 Schema-first Tool Registry；以 Pydantic 拦截错误输入，通过依赖 DAG、`$ref`、Semaphore、Resource Lock 和 Idempotency Token 编排并发，按错误类型执行 Retry、Fallback 或 Human Handoff。60 项 Tool Benchmark 总体通过率 **80.00%**，BFCL 可比子集通过率 **84.62%**，15 项 DAG、锁、重试、降级与幂等对抗用例 **15/15** 通过。
+- **工程质量（S/A/R）：** 针对异步链路难定位、索引切换失败和状态恢复不一致问题，接入 OpenTelemetry、Prometheus 告警、结构化错误归因与备份恢复校验；通过 Active Version、Tenant/ACL 前置过滤、最大 Agent Steps 和重复调用检测限制故障扩散。当前 **29 个 Source 文件**通过 strict mypy，**108 项自动化测试**通过，Ruff 全仓检查通过；项目明确未进行压力测试，不虚构 QPS、P99 或生产 SLA。
 
 ## 评估范围与已知限制
-> 文档 RAG 验证边界：当前 97 项自动化测试覆盖路由、Attempt 上限、结构切片、异步 Job、版本一致性、ACL、FTS5 Backfill/更新/删除、候选多样化、Citation Schema 与内容完整性门控。第三次 200 页 Retrieval Benchmark 的 Recall@5 为 95.53% / 95.53% / 88.91%；真实 Docling 10 页回归仍仅证明内容完整性门控降低 False Acceptance，不能外推为生产 OCR 或复杂 PDF 解析质量。PaddleOCR Fallback、真实复杂 DOCX、Cloud Fallback 与答案级 Citation 仍未完成实文档闭环。未进行任何压力测试。
+> 文档 RAG 验证边界：当前 108 项自动化测试覆盖路由、Attempt 上限、结构切片、异步 Job、版本一致性、ACL、FTS5 Backfill/更新/删除、候选多样化、Citation Schema 与内容完整性门控。第三次 200 页 Retrieval Benchmark 的 Recall@5 为 95.53% / 95.53% / 88.91%；真实 Docling 10 页回归仍仅证明内容完整性门控降低 False Acceptance，不能外推为生产 OCR 或复杂 PDF 解析质量。PaddleOCR Fallback、真实复杂 DOCX、Cloud Fallback 与答案级 Citation 仍未完成实文档闭环。未进行任何压力测试。
 
+> GraphRAG 新增能力已通过单元与集成测试；当前环境未安装 `semantic` extra，未下载或运行真实 `BAAI/bge-m3` 权重，因此不把 Mock Adapter 结果表述为模型效果或生产性能结论。
 
 1. **未进行压力测试。** 当前并发测试只验证并发语义和时间重叠，不声明吞吐量、饱和点、p95/p99 Latency 或长时间稳定性。
 2. 验收未使用生产模型凭据，因此未覆盖真实 Provider 的 Function Calling 差异、Rate Limit 和跨 Provider Fallback。

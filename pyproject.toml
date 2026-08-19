@@ -5,7 +5,7 @@ description = "AgentForge: async, schema-first agent service with LangGraph, lay
 readme = "README.md"
 requires-python = ">=3.12,<3.15"
 license = { text = "MIT" }
-authors = [{ name = "chenchufan8-prog" }]
+authors = [{ name = "Cchena1" }]
 dependencies = [
   "aiosqlite>=0.21,<1",
   "fastapi>=0.116,<1",
@@ -28,6 +28,7 @@ dependencies = [
 [project.optional-dependencies]
 documents = ["docling>=2.50,<3"]
 vector = ["qdrant-client>=1.15,<2"]
+semantic = ["sentence-transformers>=5,<6"]
 
 [dependency-groups]
 dev = [

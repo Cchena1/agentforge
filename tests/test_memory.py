@@ -131,7 +131,7 @@ async def test_memory_schema_v1_is_forward_migrated_and_reembedded(tmp_path) -> 
     recalled = await store.recall("user:u1", "legacy solver note", top_k=1)
 
     assert recalled[0].memory_id == "legacy"
-    assert recalled[0].embedding_profile == "hash-blake2b-v1:384"
+    assert recalled[0].embedding_profile == "hash-blake2b-test-only-v1:384"
     with sqlite3.connect(db_path) as db:
         version = db.execute(
             "SELECT schema_version FROM memory_schema_metadata WHERE component = 'memory'"
@@ -141,4 +141,4 @@ async def test_memory_schema_v1_is_forward_migrated_and_reembedded(tmp_path) -> 
             "FROM long_term_memories WHERE memory_id = 'legacy'"
         ).fetchone()
     assert version == (2,)
-    assert migrated == ("hash-blake2b-v1:384", now, None)
+    assert migrated == ("hash-blake2b-test-only-v1:384", now, None)

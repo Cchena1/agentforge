@@ -19,13 +19,33 @@ from .document_pipeline import (
     ParentChildChunker,
     QualityGatedDocumentParser,
 )
-from .embeddings import EmbeddingProvider, HashEmbedding, OpenAIEmbedding
+from .embeddings import (
+    EmbeddingProvider,
+    HashEmbedding,
+    OpenAIEmbedding,
+    SentenceTransformerEmbedding,
+)
 from .graph import AgentGraph
+from .graph_retrieval import (
+    FallbackGraphRetriever,
+    KnowledgeGraphRetriever,
+    StoreBackedStructuralGraphRetriever,
+)
 from .ingestion_jobs import IngestionJobManager
+from .knowledge_graph import (
+    FallbackKnowledgeGraphExtractor,
+    HeuristicKnowledgeGraphExtractor,
+    KnowledgeGraphBuilder,
+    KnowledgeGraphExtractor,
+    LLMKnowledgeGraphExtractor,
+    SQLiteKnowledgeGraphStore,
+)
 from .llm import ModelGateway
 from .memory import MemoryStore
 from .observability import Observability, current_trace_id
+from .query_planning import AdaptiveQueryPlanner, DeterministicQueryPlanner
 from .rag import RAGService
+from .rag_reflection import AdaptiveEvidenceReflector, DeterministicEvidenceReflector
 from .rag_registry import SQLiteVersionRegistry
 from .schemas import (
     ChatMessage,
@@ -74,17 +94,28 @@ class Services:
                 trace_jsonl_backup_count=config.trace_jsonl_backup_count,
                 otlp_endpoint=config.otel_exporter_otlp_endpoint,
             )
-            if config.embedding_provider == "openai" and config.api_key.get_secret_value():
+            self.gateway = ModelGateway(config, self.observability)
+            if config.embedding_provider == "sentence_transformers":
+                self.embeddings: EmbeddingProvider = SentenceTransformerEmbedding(
+                    config.embedding_model,
+                    dimension=config.embedding_dimension,
+                    device=config.embedding_device,
+                    batch_size=config.embedding_batch_size,
+                    max_parallel=config.embedding_max_parallel,
+                )
+            elif config.embedding_provider == "openai":
+                if not config.api_key.get_secret_value().strip():
+                    raise ValueError("OpenAI embeddings require AI_AGENT_API_KEY")
                 embedding_client = AsyncOpenAI(
                     api_key=config.api_key.get_secret_value(),
                     base_url=config.base_url,
                     max_retries=0,
                 )
-                self.embeddings: EmbeddingProvider = OpenAIEmbedding(
-                    embedding_client, config.embedding_model
+                self.embeddings = OpenAIEmbedding(
+                    embedding_client, config.embedding_model, config.embedding_dimension
                 )
             else:
-                self.embeddings = HashEmbedding()
+                self.embeddings = HashEmbedding(config.embedding_dimension)
             self.vector_store: VectorStore
             if config.vector_backend == "qdrant":
                 self.vector_store = QdrantVectorStore(
@@ -104,6 +135,38 @@ class Services:
                 max_tokens=config.rag_chunk_max_tokens,
                 overlap_tokens=config.rag_chunk_overlap_tokens,
             )
+            heuristic_extractor = HeuristicKnowledgeGraphExtractor()
+            graph_extractor: KnowledgeGraphExtractor = heuristic_extractor
+            if self.gateway.online:
+                graph_extractor = FallbackKnowledgeGraphExtractor(
+                    LLMKnowledgeGraphExtractor(
+                        self.gateway,
+                        batch_size=config.rag_graph_extraction_batch_size,
+                        max_parallel=config.rag_graph_extraction_parallelism,
+                        timeout_seconds=config.rag_graph_extraction_timeout_seconds,
+                    ),
+                    heuristic_extractor,
+                )
+            graph_builder = KnowledgeGraphBuilder(graph_extractor)
+            graph_store = SQLiteKnowledgeGraphStore(
+                config.resolved_state_dir / "knowledge_graph.sqlite3"
+            )
+            graph_retriever = FallbackGraphRetriever(
+                KnowledgeGraphRetriever(graph_store),
+                StoreBackedStructuralGraphRetriever(self.vector_store),
+            )
+            deterministic_planner = DeterministicQueryPlanner()
+            query_planner = (
+                AdaptiveQueryPlanner(self.gateway, deterministic_planner)
+                if config.rag_model_query_planning_enabled and self.gateway.online
+                else deterministic_planner
+            )
+            deterministic_reflector = DeterministicEvidenceReflector()
+            evidence_reflector = (
+                AdaptiveEvidenceReflector(self.gateway, deterministic_reflector)
+                if config.rag_reflection_enabled and self.gateway.online
+                else deterministic_reflector
+            )
             self.rag = RAGService(
                 config.workspace_root,
                 parser,
@@ -116,6 +179,17 @@ class Services:
                 query_timeout_seconds=config.rag_query_timeout_seconds,
                 query_min_relevance_score=config.rag_query_min_relevance_score,
                 query_rrf_k=config.rag_query_rrf_k,
+                query_planner=query_planner,
+                evidence_reflector=evidence_reflector,
+                knowledge_graph_builder=graph_builder,
+                knowledge_graph_store=graph_store,
+                graph_retriever=graph_retriever,
+                graph_enabled=config.rag_graph_enabled,
+                graph_max_seed_hits=config.rag_graph_max_seed_hits,
+                graph_neighbors_per_seed=config.rag_graph_neighbors_per_seed,
+                graph_max_neighbors=config.rag_graph_max_neighbors,
+                graph_max_hops=config.rag_graph_max_hops,
+                graph_timeout_seconds=config.rag_graph_timeout_seconds,
                 observability=self.observability,
             )
             self.ingestion_jobs = IngestionJobManager(
@@ -133,7 +207,6 @@ class Services:
                 recency_half_life_days=config.memory_recency_half_life_days,
                 observability=self.observability,
             )
-            self.gateway = ModelGateway(config, self.observability)
             self.registry = build_registry(config.workspace_root, self.rag)
 
             async def record_tool_event(event: ToolExecutionEvent) -> None:

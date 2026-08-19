@@ -77,6 +77,17 @@ class Settings(BaseSettings):
     rag_query_timeout_seconds: float = Field(default=10.0, gt=0, le=60)
     rag_query_min_relevance_score: float = Field(default=0.2, ge=0, le=1)
     rag_query_rrf_k: int = Field(default=60, ge=1, le=1000)
+    rag_graph_enabled: bool = True
+    rag_graph_max_seed_hits: int = Field(default=3, ge=1, le=10)
+    rag_graph_neighbors_per_seed: int = Field(default=2, ge=1, le=5)
+    rag_graph_max_neighbors: int = Field(default=6, ge=1, le=20)
+    rag_graph_max_hops: int = Field(default=2, ge=1, le=2)
+    rag_graph_timeout_seconds: float = Field(default=3.0, gt=0, le=30)
+    rag_graph_extraction_batch_size: int = Field(default=4, ge=1, le=8)
+    rag_graph_extraction_parallelism: int = Field(default=2, ge=1, le=8)
+    rag_graph_extraction_timeout_seconds: float = Field(default=45.0, gt=0, le=180)
+    rag_model_query_planning_enabled: bool = True
+    rag_reflection_enabled: bool = True
     rag_ocr_enabled: bool = False
     rag_cloud_fallback_enabled: bool = False
     rag_parser_max_attempts: int = Field(default=3, ge=1, le=3)
@@ -84,8 +95,12 @@ class Settings(BaseSettings):
     rag_chunk_target_tokens: int = Field(default=500, ge=64, le=4096)
     rag_chunk_max_tokens: int = Field(default=650, ge=128, le=8192)
     rag_chunk_overlap_tokens: int = Field(default=60, ge=0, le=1024)
-    embedding_provider: Literal["hash", "openai"] = "hash"
-    embedding_model: str = "text-embedding-3-small"
+    embedding_provider: Literal["sentence_transformers", "openai", "hash"] = "sentence_transformers"
+    embedding_model: str = "BAAI/bge-m3"
+    embedding_dimension: int = Field(default=1024, ge=64, le=4096)
+    embedding_device: str | None = None
+    embedding_batch_size: int = Field(default=16, ge=1, le=256)
+    embedding_max_parallel: int = Field(default=1, ge=1, le=8)
     vector_backend: Literal["sqlite", "qdrant"] = "sqlite"
     qdrant_url: str = "http://localhost:6333"
     qdrant_collection: str = "agent_documents"
@@ -111,6 +126,8 @@ class Settings(BaseSettings):
             )
         if self.reserved_output_tokens >= self.context_token_budget:
             raise ValueError("reserved_output_tokens must be smaller than context_token_budget")
+        if self.embedding_provider == "hash" and self.environment.casefold() not in {"test", "local"}:
+            raise ValueError("hash embeddings are a test-only provider outside local/test environments")
         return self
 
     @property

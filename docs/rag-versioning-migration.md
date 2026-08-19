@@ -199,3 +199,25 @@ Job states are `queued`, `parsing`, `quality_check`, `fallback`, `chunking`, `em
 - The document schema version participates in the pipeline profile and therefore in immutable `version_id` generation. A future incompatible canonical-model revision must rebuild a candidate version and activate it through the normal migration window; readers must not infer a conversion from old metadata.
 - `rag_ingestion_jobs.sqlite3` adds `schema_version INTEGER NOT NULL DEFAULT 1` through an additive startup migration. Existing v0.3-compatible rows receive version 1. A non-terminal row with an unsupported future version is marked `failed` rather than deserialized heuristically.
 - Removal of schema-1 readers is reserved for a documented breaking release after a migration and rebuild window.
+
+
+## v0.5 GraphRAG / Embedding Profile 迁移窗口
+
+本版本将默认 Embedding Profile 从测试用 Hash 改为 `sentence-transformers:BAAI/bge-m3:1024`，并把 Knowledge Graph Builder/Extractor Profile 纳入不可变 `version_id` 计算。因此旧 Hash 版本不会被误认为新语义版本。
+
+迁移步骤：
+
+1. 安装 `semantic` extra 并验证模型可加载；
+2. 为每个 Source 创建新候选版本，禁止原地改写旧 Chunk 向量；
+3. SQLite 允许不同版本记录共存，但只有 Active Version 可见；
+4. Qdrant 必须创建与新维度匹配的新 Collection；
+5. 完成检索、Citation、Tenant/ACL 和图扩展验证后原子切换；
+6. 保留旧索引到回滚窗口结束，再按数据保留策略删除。
+
+兼容阶段：旧 Embedding 插件仅实现 `embed()` 时仍可通过 Adapter 运行，但会在后续 Major Version 删除。删除前必须确认所有内部与外部插件均实现 `embed_documents()` 和 `embed_query()`。
+
+### Semantic Runtime 失败策略
+
+- 默认配置依赖 `uv sync --extra semantic` 安装 Sentence Transformers 运行时。
+- semantic extra 缺失、模型维度不匹配或模型加载失败时，服务启动/首次初始化明确失败，不会静默降级到 Hash Embedding。
+- 如需离线测试，必须显式设置 `APP_ENV=test` 与 `EMBEDDING_PROVIDER=hash`；该配置不得用于生产索引。
