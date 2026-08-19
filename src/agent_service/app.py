@@ -116,11 +116,6 @@ class Services:
                 query_timeout_seconds=config.rag_query_timeout_seconds,
                 query_min_relevance_score=config.rag_query_min_relevance_score,
                 query_rrf_k=config.rag_query_rrf_k,
-                graph_enabled=config.rag_graph_enabled,
-                graph_max_seed_hits=config.rag_graph_max_seed_hits,
-                graph_neighbors_per_seed=config.rag_graph_neighbors_per_seed,
-                graph_max_neighbors=config.rag_graph_max_neighbors,
-                graph_timeout_seconds=config.rag_graph_timeout_seconds,
                 observability=self.observability,
             )
             self.ingestion_jobs = IngestionJobManager(

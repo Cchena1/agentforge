@@ -160,17 +160,3 @@ Review conclusion: the improvement is architectural reuse, not a new runtime dep
 | Evidence | Third 200-page Benchmark: Recall@5 95.53% clean, 95.53% formatting noise, 88.91% semantic/OCR noise |
 
 Official design references used during the review: SQLite FTS5/BM25 documentation and Qdrant Hybrid Queries documentation. The latter is a future adapter reference, not evidence that the current Qdrant path is hybrid.
-
-
-## 2026-08-18 Graph-aware retrieval admission review
-
-| Review item | Finding |
-|---|---|
-| Capability gap | Hybrid retrieval did not use existing `parent_id` / `heading_path` relationships for bridge evidence |
-| Microsoft GraphRAG | MIT-licensed official project; full indexing includes entity/relationship extraction and community workflows |
-| LangGraph Agentic RAG | Official workflow reference for bounded retrieve/grade/rewrite control flow |
-| Existing capability | Parent-child chunks, active-version filtering, tenant/ACL filtering, Pydantic contracts and asyncio timeouts already exist |
-| Decision | Add plugin protocols and SQLite one-hop structural expansion; do not add a graph database or LLM indexing dependency |
-| Persistence impact | None; reuse canonical `metadata_json`; no SQLite schema migration |
-| Backend gap | Qdrant structural-neighbor adapter remains unsupported and fails open to verified direct retrieval with a warning |
-| Revisit trigger | Failed cases must demonstrate cross-document entity/community reasoning that structural one-hop expansion cannot solve |

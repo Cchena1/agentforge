@@ -549,14 +549,8 @@ AI_AGENT_FALLBACK_ROUTES_JSON=[{"name":"backup","model":"backup-model","base_url
 | `AI_AGENT_RAG_QUERY_TIMEOUT_SECONDS` | `10` | 单 Query 分支端到端 Timeout |
 | `AI_AGENT_RAG_QUERY_MIN_RELEVANCE_SCORE` | `0.2` | Evidence Gate 的确定性最低 Rerank Score；Lexical 命中可直接通过 |
 | `AI_AGENT_RAG_QUERY_RRF_K` | `60` | 跨 Query Reciprocal Rank Fusion 常数 |
-| `AI_AGENT_RAG_GRAPH_ENABLED` | `true` | 对显式复合/关系型 Query 启用 GraphRAG-lite 单跳结构扩展 |
-| `AI_AGENT_RAG_GRAPH_MAX_SEED_HITS` | `3` | 进入结构图扩展的直接命中上限 |
-| `AI_AGENT_RAG_GRAPH_NEIGHBORS_PER_SEED` | `2` | 每个 Seed 最多补充的同 Parent/Heading 邻居 |
-| `AI_AGENT_RAG_GRAPH_MAX_NEIGHBORS` | `6` | 单次查询结构图邻居总上限 |
-| `AI_AGENT_RAG_GRAPH_TIMEOUT_SECONDS` | `3` | 可选 Graph Branch 的独立 Timeout |
 
 Pydantic 在启动前验证 `overlap < target <= max`。
-GraphRAG-lite 只利用已有 Parent-Child/Heading 结构做单跳扩展，不等同于包含实体抽取、社区检测和 Global Search 的完整 GraphRAG；当前 SQLite Backend 支持结构邻居，Qdrant Backend 会保留直接检索并返回 Unsupported Warning。
 ## API 契约
 
 ### `POST /chat`
