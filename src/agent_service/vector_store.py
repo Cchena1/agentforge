@@ -15,7 +15,7 @@ from typing import Any, Protocol
 import aiosqlite
 from pydantic import TypeAdapter
 
-from .embeddings import EmbeddingProvider, cosine_similarity
+from .embeddings import EmbeddingProvider, cosine_similarity, embed_query_compat
 from .schemas import Citation, DocumentLocation, RetrievalHit
 
 _LOCATION_ADAPTER: TypeAdapter[DocumentLocation] = TypeAdapter(DocumentLocation)
@@ -294,7 +294,7 @@ class SQLiteVectorStore:
             rows = await cursor.fetchall()
 
         self._retrieval_diagnostics.set(())
-        query_vector = (await self.embedding_provider.embed([query]))[0]
+        query_vector = await embed_query_compat(self.embedding_provider, query)
         query_terms = _term_counts(query)
         row_list = list(rows)
         candidate_limit = max(top_k * 4, 20)
@@ -949,7 +949,7 @@ class QdrantVectorStore:
             )
             must_conditions.append(Filter(should=visible_filters))
         query_filter = Filter(must=must_conditions) if must_conditions else None
-        query_vector = (await self.embedding_provider.embed([query]))[0]
+        query_vector = await embed_query_compat(self.embedding_provider, query)
         response = await self.client.query_points(
             collection_name=self.collection,
             query=query_vector,

@@ -174,3 +174,16 @@ Official design references used during the review: SQLite FTS5/BM25 documentatio
 | Persistence impact | None; reuse canonical `metadata_json`; no SQLite schema migration |
 | Backend gap | Qdrant structural-neighbor adapter remains unsupported and fails open to verified direct retrieval with a warning |
 | Revisit trigger | Failed cases must demonstrate cross-document entity/community reasoning that structural one-hop expansion cannot solve |
+
+
+## 2026-08-19 GraphRAG / Semantic Embedding 依赖评审
+
+| 依赖或项目 | 用途 | 许可证/维护判断 | 决策 |
+|---|---|---|---|
+| `sentence-transformers>=5,<6`（锁定解析为 5.7.0） | 本地 Query/Document 语义向量接口 | Apache-2.0；仅作为 `semantic` extra，避免基础安装强制拉取模型运行栈 | 采用 |
+| `BAAI/bge-m3` | 中英文及多语言 Dense Embedding，1024 维 | MIT；模型卡声明 8192 Token 与多检索模式；本项目只使用 Dense | 采用默认模型，真实资源占用待验证 |
+| Microsoft GraphRAG | 实体关系索引、Local/Global/DRIFT 架构参考 | 官方研究项目；完整索引成本较高 | 借鉴架构，不引入 Runtime |
+| Neo4j GraphRAG for Python | KG Builder 和 Retriever 插件边界参考 | 官方持续维护；需要 Neo4j 服务与额外运维 | 不作为默认依赖，保留 Store Adapter 扩展点 |
+| `aiosqlite`（已有） | Local-first 版本化图存储 | 已在项目中使用，无新增依赖 | 用于最小 PoC |
+
+新增依赖不复制第三方源码；所有实现基于公开接口与架构模式重新落地。若未来引入 Neo4j Adapter，必须单独评审服务许可证、备份恢复、权限模型和部署成本。

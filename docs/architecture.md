@@ -421,3 +421,27 @@ State ownership is separated:
 - `Observability` owns bounded-cardinality counters; telemetry failures cannot change Tool execution outcomes.
 
 The artifact envelope is schema-versioned from its first release. It is deliberately excluded from the current SQLite backup contract because no artifact restore/read API exists yet. If artifacts become user-visible evidence or inputs to later turns, a retention, authorization, backup and migration ADR is required first.
+
+
+## 2026-08-19 GraphRAG Exploration 增量架构
+
+```mermaid
+stateDiagram-v2
+    [*] --> Plan
+    Plan --> Hybrid: Fact Query
+    Plan --> Hybrid: Relational Query
+    Plan --> GraphLocal: Relational / Multi-hop
+    Hybrid --> Fuse
+    GraphLocal --> Fuse
+    GraphLocal --> Hybrid: Timeout / Empty / Failure
+    Fuse --> Reflect
+    Reflect --> Complete: Evidence Sufficient
+    Reflect --> Rewrite: Evidence Insufficient and Budget Available
+    Rewrite --> Hybrid
+    Reflect --> Abstain: Budget Exhausted
+```
+
+- `KnowledgeGraphExtractor`、`KnowledgeGraphStore`、`QueryPlanner`、`EvidenceReflector` 与 `EmbeddingProvider` 均为可替换插件边界。
+- `RAGService` 拥有查询总预算和激活顺序；Graph Store 不直接切换 Active Version。
+- 图检索只读 Active Version，并在遍历和证据回传两次执行 Tenant/ACL/Source 过滤。
+- 最大二跳是硬上限；Document→Section 枢纽边不参与 Local Search，防止图扩展退化为全量召回。

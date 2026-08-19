@@ -12,7 +12,12 @@ from typing import TYPE_CHECKING
 
 import aiosqlite
 
-from .embeddings import EmbeddingProvider, cosine_similarity
+from .embeddings import (
+    EmbeddingProvider,
+    cosine_similarity,
+    embed_documents_compat,
+    embed_query_compat,
+)
 from .schemas import ChatMessage, MemoryRecord, MemoryWrite
 
 if TYPE_CHECKING:
@@ -230,7 +235,7 @@ class MemoryStore:
 
     async def remember(self, item: MemoryWrite) -> MemoryRecord:
         await self.initialize()
-        embedding = (await self.embedding_provider.embed([item.text]))[0]
+        embedding = await embed_query_compat(self.embedding_provider, item.text)
         now = datetime.now(UTC)
         valid_from = item.valid_from or now
         record = MemoryRecord(
@@ -289,7 +294,7 @@ class MemoryStore:
         await self.initialize()
         now = datetime.now(UTC)
         now_iso = now.isoformat()
-        query_vector = (await self.embedding_provider.embed([query]))[0]
+        query_vector = await embed_query_compat(self.embedding_provider, query)
         async with aiosqlite.connect(self.db_path) as db:
             db.row_factory = sqlite3.Row
             rows = list(
@@ -341,7 +346,9 @@ class MemoryStore:
                 stale.append(row)
         if not stale:
             return rows
-        vectors = await self.embedding_provider.embed([str(row["text"]) for row in stale])
+        vectors = await embed_documents_compat(
+            self.embedding_provider, [str(row["text"]) for row in stale]
+        )
         await db.executemany(
             """UPDATE long_term_memories
                SET embedding_json = ?, embedding_profile = ?
